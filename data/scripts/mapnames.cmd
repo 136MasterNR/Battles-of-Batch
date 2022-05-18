@@ -1,0 +1,13 @@
+SET /P BUILD=<"%DATA_SCRIPTS%\list\map.txt"
+BREAK>"%DATA_TMP%\tmprun.cmd"
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET COUNT=0
+FOR %%A IN (%BUILD:,= %) DO (
+	SHIFT
+	SET /A COUNT=COUNT+1
+	ECHO.SET "MAP.NAME.!COUNT!=%%~A">>"%DATA_TMP%\tmprun.cmd"
+)
+ENDLOCAL
+CALL "%DATA_TMP%\tmprun.cmd"
+DEL /Q "%DATA_TMP%\tmprun.cmd"
+GOTO EOF

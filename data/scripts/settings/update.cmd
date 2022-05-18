@@ -1,0 +1,16 @@
+IF NOT DEFINED VERCODE EXIT
+SET NEW.VALUE=
+IF "%UPDATE.VALUE%"=="TRUE" (SET NEW.VALUE=FALSE)ELSE SET NEW.VALUE=TRUE
+SET "FILE=%SETTINGS.LOAD%"
+SET /A Line#ToSearch=5
+SET "Replacement=SET UPDATE.VALUE=%NEW.VALUE%"
+(FOR /F "tokens=1*delims=:" %%a IN ('findstr /n "^" "%FILE%"') DO (
+	SET "Line=%%b"
+	IF %%a equ %Line#ToSearch% SET "Line=%Replacement%"
+	SETLOCAL ENABLEDELAYEDEXPANSION
+	ECHO(!Line!
+	ENDLOCAL
+))>"%FILE%.new"
+MOVE "%FILE%.new" "%FILE%">NUL
+CALL %SETTINGS.LOAD%
+GOTO :EOF
