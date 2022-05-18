@@ -1,4 +1,4 @@
-# Battles of Batch
+# <img src="data/images/icon_256.ico" width="30" height="30"> Battles of Batch
 _Copyright (C) 2019~2022 HTSoft-Studios™_
 
 Battles of Batch is a game which runs on Window's MS-DOS terminal. It's an RPG text game, where you fight enemies in various battles. This project was started by 136MasterNR in 13th August 2021.
@@ -7,8 +7,9 @@ Battles of Batch is a game which runs on Window's MS-DOS terminal. It's an RPG t
   - Download the wizard here: [BattlesOfBatch-Setup.exe](https://htssoft.tk/get-download/BattlesOfBatch-Setup.exe)
   - Download manually here: [battlesofbatch-latest.zip](https://htssoft.tk/get-download/battlesofbatch-latest.zip)
 
-Battles of Batch is currently only available on Windows, with required command line version at least 10.0.1.
-This project uses ANSI as a text formatter. We use ANSI to format the colors on the window and manage displayed text. It is required to work properly.
+Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher.
+
+This project uses ANSI as a text formatter. We use ANSI to format the colors on the window and manage displayed text. It is required for almost anything to work properly.
 
 # About
 ### Contact (#1.0)
