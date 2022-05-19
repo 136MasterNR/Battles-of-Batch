@@ -99,15 +99,11 @@ Please note that downloading the game from the source code is not recommended be
   - More Info Soon!
 
 # Miscellaneous
-
-## Cheats
-
-  - Go to the menu and type `cheats` [WARNING]
-
+### Cheats
+  - Go to the menu and type `cheats` (WARNING: IT WILL RESET YOUR SAVES, CREATE A BACKUP FIRST!)
 
 # Develope
-
-## Code your own level
+### Code your own level
   - Coming soon!
 
 # Thanks you for choosing our projects! :shipit:
