@@ -2,7 +2,7 @@
 
 # <img src="data/images/icon_256.ico" width="32" height="32"> Battles of Batch
   
-<a href="">![](https://badgen.net/badge/icon/windows?icon=windows&label)</a>
+![](https://badgen.net/badge/icon/windows?icon=windows&label) ![](https://badgen.net/github/release/136MasterNR/Battles-of-Batch) ![](https://badgen.net/github/stars/136MasterNR/Battles-of-Batch)
 
 ##### _Copyright (C) 2019~2022 HTSoft-Studios™_
 
