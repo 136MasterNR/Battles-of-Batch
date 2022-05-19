@@ -110,5 +110,5 @@ Please note that downloading the game from the source code is not recommended be
 ## Code your own level
   - Coming soon!
 
-### Tons more infromation will be added to this readme, some time™.
 # Thanks you for choosing our projects! :shipit:
+### Tons more infromation will be added to this readme, some time™.
