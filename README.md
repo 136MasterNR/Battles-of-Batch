@@ -1,4 +1,4 @@
-# <p align="center"><img src="data/images/icon_256.ico" width="30" height="30"> Battles of Batch</p>
+# <p align="center"><img src="data/images/icon_256.ico" width="32" height="32"> Battles of Batch</p>
 ##### _<p align="center">Copyright (C) 2019~2022 HTSoft-Studios™</p>_
 
 Battles of Batch is a game which runs on Window's MS-DOS terminal. It's an RPG text game, where you fight enemies in various battles. This project was started by 136MasterNR in 13th August 2021.
@@ -9,7 +9,9 @@ Battles of Batch is a game which runs on Window's MS-DOS terminal. It's an RPG t
 
 Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher.
 
-== This project uses ANSI as a text formatter. We use ANSI to format the colors on the window and manage displayed text. It is required for almost anything to work properly. ==
+This project uses ANSI as a text formatter. We use ANSI to format the colors on the window and manage displayed text. It is required for almost anything to work properly.
+
+Warning: Your antivirus might detect the wizard as a malware, but that's a false positive. I made the wizard with PowerShell and converted it to EXE using  [PS2EXE](https://github.com/MScholtes/PS2EXE) which is falsely detected as a malware due to vandalism on that software.
 
 Please note that downloading the game from this repository is not recommended because it contains features which are yet not finished or not tested out. This repository also contains files that are not yet added to the original game. Please consider downloading the wizard instead!
 
@@ -88,5 +90,17 @@ Please note that downloading the game from this repository is not recommended be
 
 ### Options (#4.2)
   - More Info Soon!
+
+# Miscellaneous
+
+## Cheats
+
+  - Go to the menu and type `cheats` [WARNING]
+
+
+# Develope
+
+## Code your own level
+  - Coming soon!
 
 # Thanks you for choosing our projects! :shipit:
