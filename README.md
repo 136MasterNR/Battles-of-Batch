@@ -11,6 +11,8 @@ Battles of Batch is currently only available on Windows, with a required command
 
 This project uses ANSI as a text formatter. We use ANSI to format the colors on the window and manage displayed text. It is required for almost anything to work properly.
 
+Please note that downloading the game from this repository is not recommended because it contains features which are yet not finished or not tested.
+
 # About
 ### Contact (#1.0)
   - Discord: [Discord]([discord.gg/Qst63njdBG](https://discord.com/invite/Qst63njdBG)) (for Community & Support)
