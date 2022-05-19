@@ -18,7 +18,7 @@ Battles of Batch is currently only available on Windows, with a required command
 
 This project uses ANSI as a text formatter. We use ANSI to format the colors on the window and manage displayed text. It is required for almost anything to work properly.
 
-Please note that downloading the game from the files in this repository is not recommended because it contains features which are yet not finished or not tested out. This repository also contains files that are not yet added to the original game. Please consider downloading the wizard or the releases instead!
+Please note that downloading the game from the source code is not recommended because it contains features which are yet not finished or not tested out. The source code also contains files that are not yet added to the original game. Please consider installing by the wizard or downloading a release instead!
 
 **Warning: Your antivirus might detect the wizard as a malware, but that's a false positive. I made the wizard with PowerShell and converted it to EXE using  [PS2EXE](https://github.com/MScholtes/PS2EXE) which is falsely detected as a malware due to vandalism on the software. If you are unable to whitelist the wizard, please consider using the manual download which was mentioned above.**
 
