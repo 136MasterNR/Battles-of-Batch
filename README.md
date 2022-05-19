@@ -22,10 +22,9 @@ This project uses ANSI as a text formatter. We use ANSI to format the colors on 
 
 ## How To Play
 
-### Game Controls (#2.0) 
-  - Key Words
+### Game Controls (#2.0)
   - Menu: "Play/Start = Level Selection", "Quests = Quests", "Shop = Workshop & Upgrades", "Settings/Options = Edit your Preferences" "Exit = Exit The Game"
-  - Map: "Play/Start" = Start Selected Level", "Forward = Move Forward/Next Level", "Prev = Move Backwards/Previous Level", "Exit/Back = Go Back"
+  - Map: "Play/Start = Start Selected Level", "Forward = Move Forward/Next Level", "Prev = Move Backwards/Previous Level", "Exit/Back = Go Back"
   - Battle: (Enter the Whole Words of an Action), "Exit/Quit/Back = Go Back"
 
 ### Shortcut Keys (#2.1)
