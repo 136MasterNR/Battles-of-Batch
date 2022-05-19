@@ -57,13 +57,13 @@ This project uses ANSI as a text formatter. We use ANSI to format the colors on 
 ## User Interfaces
 ### Shop (4.0)
   - Items: Items require in-game currency and specific character level. The level requirement is replaced by the symbol "↑", and currency by the symbol "$".
-  - Skills: Nore Info Soon!
+  - Skills: More Info Soon!
 
 ### Quests (4.1) <=>
   - More Info Soon!
 
 ### Options (4.2) <=>
- More Info Soon!
+  - More Info Soon!
 
 
 ## Map Levels Strategy
