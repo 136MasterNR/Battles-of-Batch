@@ -1,10 +1,12 @@
-# <p align="center"><img src="data/images/icon_256.ico" width="32" height="32"> Battles of Batch</p>
 <div align="center">
 
+# <img src="data/images/icon_256.ico" width="32" height="32"> Battles of Batch
+  
 <a href="">![](https://badgen.net/badge/icon/windows?icon=windows&label)</a>
 
+##### _Copyright (C) 2019~2022 HTSoft-Studios™_
+
 </div>
-##### _<p align="center">Copyright (C) 2019~2022 HTSoft-Studios™</p>_
 
 Battles of Batch is a game which runs on Window's MS-DOS terminal. It's an RPG text game, where you fight enemies in various battles. This project was started by 136MasterNR in 13th August 2021.
 
