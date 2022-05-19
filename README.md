@@ -1,17 +1,17 @@
-# <img src="data/images/icon_256.ico" width="30" height="30"> Battles of Batch
-_Copyright (C) 2019~2022 HTSoft-Studios™_
+# <p align="center"><img src="data/images/icon_256.ico" width="30" height="30"> Battles of Batch</p>
+##### _<p align="center">Copyright (C) 2019~2022 HTSoft-Studios™</p>_
 
 Battles of Batch is a game which runs on Window's MS-DOS terminal. It's an RPG text game, where you fight enemies in various battles. This project was started by 136MasterNR in 13th August 2021.
 
 ## Download/Installation Process, Requirements & Notes
-  - Download the wizard here: [BattlesOfBatch-Setup.exe](https://htssoft.tk/get-download/BattlesOfBatch-Setup.exe)
-  - Download manually here: [battlesofbatch-latest.zip](https://htssoft.tk/get-download/battlesofbatch-latest.zip)
+  - Download the wizard here: [BattlesOfBatch-Setup.exe](https://htssoft.tk/get-download/BattlesOfBatch-Setup.exe) [LATEST RELEASE]
+  - Download manually here: [battlesofbatch-latest.zip](https://htssoft.tk/get-download/battlesofbatch-latest.zip) [LATEST RELEASE]
 
 Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher.
 
-This project uses ANSI as a text formatter. We use ANSI to format the colors on the window and manage displayed text. It is required for almost anything to work properly.
+== This project uses ANSI as a text formatter. We use ANSI to format the colors on the window and manage displayed text. It is required for almost anything to work properly. ==
 
-Please note that downloading the game from this repository is not recommended because it contains features which are yet not finished or not tested.
+Please note that downloading the game from this repository is not recommended because it contains features which are yet not finished or not tested out. This repository also contains files that are not yet added to the original game. Please consider downloading the wizard instead!
 
 # About
 ### Contact (#1.0)
@@ -22,7 +22,7 @@ Please note that downloading the game from this repository is not recommended be
   - Read: [Copyright](copyright.txt)
   - Read: [License](license.txt)
 
-## How To Play
+# Game Details & How To Play
 
 ### Game Controls (#2.0)
   - Menu: "Play/Start = Level Selection", "Quests = Quests", "Shop = Workshop & Upgrades", "Settings/Options = Edit your Preferences" "Exit = Exit The Game"
@@ -54,6 +54,29 @@ Please note that downloading the game from this repository is not recommended be
 ### How it Works : Materials (#3.3)
   - Coming soon.
 
+## Levels & Story
+### Chapter 1
+  - 1: Coming soon!
+    - About: More Info Soon!
+    - Story: Coming Soon!
+  - 2: Find out!
+    - About: More Info Soon!
+    - Story: Coming Soon!
+  - 3: Find out!
+    - About: More Info Soon!
+    - Story: Coming Soon!
+  - 4: Find out!
+    - About: More Info Soon!
+    - Story: Coming Soon!
+  - 5: Find out!
+    - About: More Info Soon!
+    - Story: Coming Soon!
+  - 6: Find out!
+    - About: More Info Soon!
+    - Story: Coming Soon!
+  - 7: Find out!
+    - About: More Info Soon!
+    - Story: Coming Soon!
 
 ## User Interfaces
 ### Shop (#4.0)
@@ -65,15 +88,5 @@ Please note that downloading the game from this repository is not recommended be
 
 ### Options (#4.2)
   - More Info Soon!
-
-
-## Map Levels Strategy
-  - 1: Find out!
-  - 2: Find out!
-  - 3: Find out!
-  - 4: Find out!
-  - 5: Find out!
-  - 6: Find out!
-  - 7: Find out!
 
 # Thanks you for choosing our projects! :shipit:
