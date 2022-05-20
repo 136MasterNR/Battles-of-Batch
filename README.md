@@ -159,7 +159,7 @@ Please note that downloading the game from the source code is not recommended be
 
   - **Story** directed by
     - 136MasterNR
-    - johnypro150"
+    - johnypro150
 
   - Character Designs by
     - 136MasterNR
@@ -171,7 +171,7 @@ Please note that downloading the game from the source code is not recommended be
   - Music provided by 
     - [Unwind Station](https://www.youtube.com/channel/UCATu7pOE-X5L__hWParE5DQ)
     - [pedi me arxes](https://www.youtube.com/c/pedimearxes)
-  SFX provided by
+  - SFX provided by
     - 136MasterNR
 
   - Shoutout to our testers
