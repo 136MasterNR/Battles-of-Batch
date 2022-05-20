@@ -2,7 +2,7 @@
 
 # <img src="data/images/icon_256.ico" width="32" height="32"> Battles of Batch
   
-![](https://badgen.net/badge/icon/windows?icon=windows&label) ![](https://badgen.net/github/release/136MasterNR/Battles-of-Batch) ![](https://badgen.net/github/stars/136MasterNR/Battles-of-Batch)
+[![Foo](https://badgen.net/badge/icon/windows?icon=windows&label)](https://github.com/136MasterNR/Battles-of-Batch#-battles-of-batch) [![Foo](https://badgen.net/github/release/136MasterNR/Battles-of-Batch)](https://github.com/136MasterNR/Battles-of-Batch/releases) [![Foo](https://badgen.net/github/stars/136MasterNR/Battles-of-Batch)](https://github.com/136MasterNR/Battles-of-Batch/stargazers)
 
 ##### _Copyright (C) 2019~2022 HTSoft-Studios™_
 
