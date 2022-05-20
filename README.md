@@ -110,7 +110,7 @@ Please note that downloading the game from the source code is not recommended be
   - Go to the menu, and type `cmd`, then type `commands` to list all available dev cmds.
     - **clear**: Clears the console window.
     - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, and reverts some User Interfaces back to preDev versions.
-    - **import**: Import an ANSI text file. Use `.ans` as a file type. Use an arguement after the command, e.g. `import mysupertxt.ans`.
+    - **import**: Import an ANSI text file. Use `.ans` as a file type. Use an argument after the command, e.g. `import mysupertxt.ans`.
 
 # Thanks you for choosing our projects! :shipit:
 ### Tons more infromation will be added to this readme, some time™.
