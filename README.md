@@ -102,9 +102,12 @@ Please note that downloading the game from the source code is not recommended be
 ### Cheats
   - Go to the menu and type `cheats` (WARNING: IT WILL RESET YOUR SAVES, CREATE A BACKUP FIRST!)
 
-# Develope
+# For Developers
 ### Code your own level
   - Coming soon!
+
+### Use Commands for Devs
+  - Go to the menu, and type `cmd`, then type "commands" to list all available dev cmds.
 
 # Thanks you for choosing our projects! :shipit:
 ### Tons more infromation will be added to this readme, some time™.
