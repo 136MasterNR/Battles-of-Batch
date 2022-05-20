@@ -153,5 +153,29 @@ Please note that downloading the game from the source code is not recommended be
   - Q: **Why in Batch?**
     - A: **I started this project as a challenge for myself. Making a game in such a tricky and badly-made langauge might have been hell, but a great challenge.**
 
+# Credits
+  - **Programmed** by
+    - 136MasterNR
+
+  - **Story** directed by
+    - 136MasterNR
+    - johnypro150"
+
+  - Character Designs by
+    - 136MasterNR
+    - [asciiart.eu](https://www.asciiart.eu/)
+    - [patorjk.com](https://patorjk.com/)
+  - Layout Designs by
+    - 136MasterNR
+
+  - Music provided by 
+    - [Unwind Station](https://www.youtube.com/channel/UCATu7pOE-X5L__hWParE5DQ)
+    - [pedi me arxes](https://www.youtube.com/c/pedimearxes)
+  SFX provided by
+    - 136MasterNR
+
+[ TESTERS ]: "AgentANP(v0.235)", "2002Spiele(v0.231)", "ComradeTurtle(v0.222)", "BlackStorm(v0.212)", "JayKayHere3987
+(v0.169)"
+
 # Thanks you for choosing our projects! :shipit:
 ### Tons more infromation will be added to this readme, some time™.
