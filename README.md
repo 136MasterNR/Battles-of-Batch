@@ -87,31 +87,31 @@ Please note that downloading the game from the source code is not recommended be
 
 ## Levels & Story
 ### Chapter 1
-  - **Level 1**: Coming soon!
-    - About: More Info Soon!
+  - **Level 1**:
+    - Enemies: More Info Soon!
     - Story: Coming Soon!
-  - **Level 2**: Find out!
-    - About: More Info Soon!
+  - **Level 2**:
+    - Enemies: More Info Soon!
     - Story: Coming Soon!
-  - **Level 3**: Find out!
-    - About: More Info Soon!
+  - **Level 3**:
+    - Enemies: More Info Soon!
     - Story: Coming Soon!
-  - **Level 4**: Find out!
-    - About: More Info Soon!
+  - **Level 4**:
+    - Enemies: More Info Soon!
     - Story: Coming Soon!
-  - **Level 5**: Find out!
-    - About: More Info Soon!
+  - **Level 5**:
+    - Enemies: More Info Soon!
     - Story: Coming Soon!
-  - **Level 6**: Find out!
-    - About: More Info Soon!
+  - **Level 6**:
+    - Enemies: More Info Soon!
     - Story: Coming Soon!
-  - **Level 7**: Find out!
-    - About: More Info Soon!
+  - **Level 7**:
+    - Enemies: More Info Soon!
     - Story: Coming Soon!
 
 ## User Interfaces
 ### Shop (#4.0)
-  - **Items**: Items require in-game currency and specific character level. The level requirement is replaced by the symbol "↑", and currency by the symbol "$".
+  - **Items**: Items require in-game currency and specific character level. The level requirement is displayed as the symbol "↑", and currency as the symbol "$".
   - **Skills**: More Info Soon!
 
 ### Quests (#4.1)
@@ -119,20 +119,32 @@ Please note that downloading the game from the source code is not recommended be
 
 ### Options (#4.2)
   - More Info Soon!
+ 
+# Technical Features
+### Saves Manager
+  - Where your data are saved:
+    - All your data on our porjects are saved on a single local directory in your appdata; `%appdata%\HTS_DATA`. Battles of Batch's directory is named after its PHASE and VERSION. On `%appdata%\HTS_DATA`, you will find the game named as `BATTLESOFBATCH-%PHASE%-%VERSION%`. `%PHASE%` means the stage of the project, and `%VERSION%` the game version. E.g. `BATTLESOFBATCH-INDEV-0245`. Under that directory are the child directories `SAVES` and `SETTINGS`, plus some other `.dll` true/false files. On your first startup of the game, it automatically creates the player data saves under your game's appdata path directory.
+  - How the saving system works:
+    - The game automatically saves your progress every time your player data variables are modified. The program does not rewrite the whole save file, it only modifies lines on it. For example, if you complete a quest, it will only change the line where that quest is saved on, that also goes for total completed levels, items and more.
+  - Creating multiple saved profiles:
+    - Coming soon!
+
+### Auto Updater
+  - The updater starts and checks for updates automatically when you start the game. It pulls information from [get-update](https://github.com/136MasterNR/HTS-Studios/tree/main/get-update), compares your local game's version with the online version and then prompts to you whether to update or not before completely loading into the game. After you confirm to update, the updater will pull the whole game from [get-download](https://github.com/136MasterNR/HTS-Studios/tree/main/get-download) and will replace all your old game files with the new game files. This will not reset your saves, but if the next update requires you to reset your saves, you will be prompted for a second confirmation.
 
 # Miscellaneous
 ### Cheats
   - Go to the menu and type `cheats` (WARNING: IT WILL RESET YOUR SAVES, CREATE A BACKUP FIRST!)
 
 # For Developers
-### Code your own level
+### Code your own levels
   - Coming soon!
 
 ### Use Commands for Devs
   - Go to the menu, and type `cmd`, then type `commands` to list all available dev cmds.
     - **clear**: Clears the console window.
     - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, and reverts some User Interfaces back to preDev versions.
-    - **import**: Import an [ANSI](https://www.robvanderwoude.com/ansi.php) text file. Use `.ans` as a file type. Use an argument after the command, e.g. `import mysupertxt.ans`. Make sure to move your ansi text in the directory `.\data\cmds\`.
+    - **import**: Display an [ANSI](https://www.robvanderwoude.com/ansi.php) text file. Use `.ans` as a file type. Use an argument after the command, e.g. `import mysupertxt.ans`. Make sure to move your ansi text in the directory `.\data\cmds\`.
 
 # Thanks you for choosing our projects! :shipit:
 ### Tons more infromation will be added to this readme, some time™.
