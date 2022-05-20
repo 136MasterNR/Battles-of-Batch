@@ -149,5 +149,9 @@ Please note that downloading the game from the source code is not recommended be
     - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, and reverts some User Interfaces back to preDev versions.
     - **import**: Display an [ANSI](https://www.robvanderwoude.com/ansi.php) text file. Use `.ans` as a file type. Use an argument after the command, e.g. `import mysupertxt.ans`. Make sure to move your ansi text in the directory `.\data\cmds\`.
 
+# FAQ
+  - Q: **Why in Batch?**
+    - A: **I started this project as a challenge for myself. Making a game in such a tricky and badly-made langauge might have been hell, but a great challenge.
+
 # Thanks you for choosing our projects! :shipit:
 ### Tons more infromation will be added to this readme, some time™.
