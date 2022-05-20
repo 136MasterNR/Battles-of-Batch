@@ -34,14 +34,36 @@ Please note that downloading the game from the source code is not recommended be
 # Game Details & How To Play
 
 ### Game Controls (#2.0)
-  - **Menu**: "Play/Start = Level Selection", "Quests = Quests", "Shop = Workshop & Upgrades", "Settings/Options = Edit your Preferences" "Exit = Exit The Game"
-  - **Map**: "Play/Start = Start Selected Level", "Forward = Move Forward/Next Level", "Prev = Move Backwards/Previous Level", "Exit/Back = Go Back"
-  - **Battle**: (Enter the Whole Word of an Action), "Exit/Quit/Back = Go Back"
+  - **Menu**: 
+    - **Play**/**Start**: Level Selection
+    - **Quests**: Quests
+    - **Shop**: Items Shop & Skill Upgrades
+    - **Settings**/**Options**: Cahnge your Preferences
+    - **Exit**: Exit The Game
+  - **Map**: 
+    - **Play**/**Start**: Start Selected Level
+    - **Forward**: Move Forward/Next Level
+    - **Prev**: Move Backwards/Previous Level
+    - **Exit**/**Back**: Move to the previous UI (to the Menu)
+  - **Battle**: 
+    - *Enter the Whole Word of an Action, e.g. `attack` or `atk` to attack an enemy*
+    - **Exit/Quit/Back** = Quit to the previous UI (to the Map)
 
 ### Shortcut Keys (#2.1)
-  - **Menu**: "A/P" = Level Selection", "Q = Quests", "W = Workshop & Upgrades", "S = Settings/Options" "E = Exit The Game"
-  - **Map**: "A/P" = Start Selected Level", "F = Move Forward/Next Level", "D = Move Backwards/Previous Level", "Q = Go Back"
-  - **Battle**: (Press the First Letter of an Action), "Q = Go Back"
+  - **Menu**:
+    - ***A***/***P***: Level Selection
+    - ***Q***: Quests
+    - ***W***: Workshop & Upgrades
+    - ***S***: Settings/Options
+    - ***E***: Exit The Game
+  - **Map**: 
+    - **A**/**P**: Start Selected Level
+    - **F**: Move Forward/Next Level
+    - **D**: Move Backwards/Previous Level
+    - **Q**: Go Back
+  - **Battle**: 
+    - *Press the First Letter of an Action, e.g. `A` to attack.*
+    - **Q** = Quit to the previous UI (to the Map)
 
 
 ## Strategy Method
