@@ -16,7 +16,7 @@ Battles of Batch is a game which runs on Window's MS-DOS terminal. It's an RPG t
 
 Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher.
 
-This project uses ANSI as a text formatter. We use ANSI to format the colors on the window and manage displayed text. It is required for almost anything to work properly.
+This project uses [ANSI](https://www.robvanderwoude.com/ansi.php) as a text formatter. We use [ANSI](https://www.robvanderwoude.com/ansi.php) to format the colors on the window and manage displayed text. It is required for almost anything to work properly.
 
 Please note that downloading the game from the source code is not recommended because it contains features which are yet not finished or not tested out. The source code also contains files that are not yet added to the original game. Please consider installing by the wizard or downloading a release instead!
 
@@ -65,25 +65,25 @@ Please note that downloading the game from the source code is not recommended be
 
 ## Levels & Story
 ### Chapter 1
-  - 1: Coming soon!
+  - **Level 1**: Coming soon!
     - About: More Info Soon!
     - Story: Coming Soon!
-  - 2: Find out!
+  - **Level 2**: Find out!
     - About: More Info Soon!
     - Story: Coming Soon!
-  - 3: Find out!
+  - **Level 3**: Find out!
     - About: More Info Soon!
     - Story: Coming Soon!
-  - 4: Find out!
+  - **Level 4**: Find out!
     - About: More Info Soon!
     - Story: Coming Soon!
-  - 5: Find out!
+  - **Level 5**: Find out!
     - About: More Info Soon!
     - Story: Coming Soon!
-  - 6: Find out!
+  - **Level 6**: Find out!
     - About: More Info Soon!
     - Story: Coming Soon!
-  - 7: Find out!
+  - **Level 7**: Find out!
     - About: More Info Soon!
     - Story: Coming Soon!
 
@@ -110,7 +110,7 @@ Please note that downloading the game from the source code is not recommended be
   - Go to the menu, and type `cmd`, then type `commands` to list all available dev cmds.
     - **clear**: Clears the console window.
     - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, and reverts some User Interfaces back to preDev versions.
-    - **import**: Import an ANSI text file. Use `.ans` as a file type. Use an argument after the command, e.g. `import mysupertxt.ans`.
+    - **import**: Import an [ANSI](https://www.robvanderwoude.com/ansi.php) text file. Use `.ans` as a file type. Use an argument after the command, e.g. `import mysupertxt.ans`. Make sure to move your ansi text in the directory `.\data\cmds\`.
 
 # Thanks you for choosing our projects! :shipit:
 ### Tons more infromation will be added to this readme, some time™.
