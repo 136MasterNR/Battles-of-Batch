@@ -47,7 +47,7 @@ Please note that downloading the game from the source code is not recommended be
     - **Exit**/**Back**: Move to the previous UI (to the Menu)
   - **Battle**: 
     - *Enter the Whole Word of an Action, e.g. `attack` or `atk` to attack an enemy*
-    - **Exit/Quit/Back** = Quit to the previous UI (to the Map)
+    - **Exit/Quit/Back** = End current battle and move to the previous UI (to the Map)
 
 ### Shortcut Keys (#2.1)
   - **Menu**:
@@ -55,15 +55,15 @@ Please note that downloading the game from the source code is not recommended be
     - ***Q***: Quests
     - ***W***: Workshop & Upgrades
     - ***S***: Settings/Options
-    - ***E***: Exit The Game
+    - ***E***: Exit the game
   - **Map**: 
     - **A**/**P**: Start Selected Level
     - **F**: Move Forward/Next Level
     - **D**: Move Backwards/Previous Level
-    - **Q**: Go Back
+    - **Q**: Move to the previous UI (to the Menu)
   - **Battle**: 
-    - *Press the First Letter of an Action, e.g. `A` to attack.*
-    - **Q** = Quit to the previous UI (to the Map)
+    - *Press the First Letter of an Action, e.g. `A` to attack*
+    - **Q** = End current battle and move to the previous UI (to the Map)
 
 
 ## Strategy Method
@@ -120,7 +120,7 @@ Please note that downloading the game from the source code is not recommended be
 ### Options (#4.2)
   - More Info Soon!
  
-# Technical Features
+# Explaining Technical Features
 ### Saves Manager
   - Where your data are saved:
     - All your data on our porjects are saved on a single local directory in your appdata; `%appdata%\HTS_DATA`. Battles of Batch's directory is named after its PHASE and VERSION. On `%appdata%\HTS_DATA`, you will find the game named as `BATTLESOFBATCH-%PHASE%-%VERSION%`. `%PHASE%` means the stage of the project, and `%VERSION%` the game version. E.g. `BATTLESOFBATCH-INDEV-0245`. Under that directory are the child directories `SAVES` and `SETTINGS`, plus some other `.dll` true/false files. On your first startup of the game, it automatically creates the player data saves under your game's appdata path directory.
@@ -128,6 +128,9 @@ Please note that downloading the game from the source code is not recommended be
     - The game automatically saves your progress every time your player data variables are modified. The program does not rewrite the whole save file, it only modifies lines on it. For example, if you complete a quest, it will only change the line where that quest is saved on, that also goes for total completed levels, items and more.
   - Creating multiple saved profiles:
     - Coming soon!
+
+### The Battle
+  - More Info Soon!
 
 ### Auto Updater
   - The updater starts and checks for updates automatically when you start the game. It pulls information from [get-update](https://github.com/136MasterNR/HTS-Studios/tree/main/get-update), compares your local game's version with the online version and then prompts to you whether to update or not before completely loading into the game. After you confirm to update, the updater will pull the whole game from [get-download](https://github.com/136MasterNR/HTS-Studios/tree/main/get-download) and will replace all your old game files with the new game files. This will not reset your saves, but if the next update requires you to reset your saves, you will be prompted for a second confirmation.
@@ -138,7 +141,7 @@ Please note that downloading the game from the source code is not recommended be
 
 # For Developers
 ### Code your own levels
-  - Coming soon!
+  - Coming Soon!
 
 ### Use Commands for Devs
   - Go to the menu, and type `cmd`, then type `commands` to list all available dev cmds.
