@@ -24,40 +24,40 @@ Please note that downloading the game from the source code is not recommended be
 
 # About
 ### Contact (#1.0)
-  - Discord: [Discord]([discord.gg/Qst63njdBG](https://discord.com/invite/Qst63njdBG)) (for Community & Support)
-  - e-Mail: [htsdevteamofficial@gmail.com](mailto:htsdevteamofficial@gmail.com) (for Business Related)
-  - Website: [HTSoft](htssoft.tk) (for More Information)
+  - **Discord**: [Discord]([discord.gg/Qst63njdBG](https://discord.com/invite/Qst63njdBG)) (for Community & Support)
+  - **e-Mail**: [htsdevteamofficial@gmail.com](mailto:htsdevteamofficial@gmail.com) (for Business Related)
+  - **Website**: [HTSoft](htssoft.tk) (for More Information)
 ### Copyright (#1.1)
-  - Read: [Copyright](copyright.txt)
-  - Read: [License](license.txt)
+  - **Read**: [Copyright](copyright.txt)
+  - **Read**: [License](license.txt)
 
 # Game Details & How To Play
 
 ### Game Controls (#2.0)
-  - Menu: "Play/Start = Level Selection", "Quests = Quests", "Shop = Workshop & Upgrades", "Settings/Options = Edit your Preferences" "Exit = Exit The Game"
-  - Map: "Play/Start = Start Selected Level", "Forward = Move Forward/Next Level", "Prev = Move Backwards/Previous Level", "Exit/Back = Go Back"
-  - Battle: (Enter the Whole Word of an Action), "Exit/Quit/Back = Go Back"
+  - **Menu**: "Play/Start = Level Selection", "Quests = Quests", "Shop = Workshop & Upgrades", "Settings/Options = Edit your Preferences" "Exit = Exit The Game"
+  - **Map**: "Play/Start = Start Selected Level", "Forward = Move Forward/Next Level", "Prev = Move Backwards/Previous Level", "Exit/Back = Go Back"
+  - **Battle**: (Enter the Whole Word of an Action), "Exit/Quit/Back = Go Back"
 
 ### Shortcut Keys (#2.1)
-  - Menu: "A/P" = Level Selection", "Q = Quests", "W = Workshop & Upgrades", "S = Settings/Options" "E = Exit The Game"
-  - Map: "A/P" = Start Selected Level", "F = Move Forward/Next Level", "D = Move Backwards/Previous Level", "Q = Go Back"
-  - Battle: (Press the First Letter of an Action), "Q = Go Back"
+  - **Menu**: "A/P" = Level Selection", "Q = Quests", "W = Workshop & Upgrades", "S = Settings/Options" "E = Exit The Game"
+  - **Map**: "A/P" = Start Selected Level", "F = Move Forward/Next Level", "D = Move Backwards/Previous Level", "Q = Go Back"
+  - **Battle**: (Press the First Letter of an Action), "Q = Go Back"
 
 
 ## Strategy Method
 ### How it Works : Enemies (#3.0)
-  - Enemies spawn with a random amount of HP.
+  - Enemies spawn with a random amount of **HP.
   - Enemies deal a random amount of damage to the player.
   - Every enemy deals its own damage, so this means once one enemy is dead it will no longer deal damage, dealing less total damage to the player.
 
 ### How it Works : Skills (#3.1)
-  - Main Attack: More Info Soon!
-  - Crit Rate: More Info Soon!
-  - Max Health: More Info Soon!
+  - **Main Attack**: More Info Soon!
+  - **Crit Rate**: More Info Soon!
+  - **Max Health**: More Info Soon!
 
 ### How it Works : Items (#3.2)
-  - Bomb: Stuns enemies, skipping their next round/action. Bosses cannot be stunned by this attack type. Effects, such as poison on the player, will still function.
-  - Heal: Gives the player HP. This does not skip the next enemy round/action, and still take damage. Thus it's upgradable.
+  - **Bomb**: Stuns enemies, skipping their next round/action. Bosses cannot be stunned by this attack type. Effects, such as poison on the player, will still function.
+  - **Heal**: Gives the player HP. This does not skip the next enemy round/action, and still take damage. Thus it's upgradable.
   - More coming soon.
 
 ### How it Works : Materials (#3.3)
@@ -89,8 +89,8 @@ Please note that downloading the game from the source code is not recommended be
 
 ## User Interfaces
 ### Shop (#4.0)
-  - Items: Items require in-game currency and specific character level. The level requirement is replaced by the symbol "↑", and currency by the symbol "$".
-  - Skills: More Info Soon!
+  - **Items**: Items require in-game currency and specific character level. The level requirement is replaced by the symbol "↑", and currency by the symbol "$".
+  - **Skills**: More Info Soon!
 
 ### Quests (#4.1)
   - More Info Soon!
@@ -108,6 +108,9 @@ Please note that downloading the game from the source code is not recommended be
 
 ### Use Commands for Devs
   - Go to the menu, and type `cmd`, then type `commands` to list all available dev cmds.
+    - **clear**: Clears the console window.
+    - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, and reverts some User Interfaces back to preDev versions.
+    - **import**: Import an ANSI text file. Use `.ans` as a file type.
 
 # Thanks you for choosing our projects! :shipit:
 ### Tons more infromation will be added to this readme, some time™.
