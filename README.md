@@ -151,7 +151,7 @@ Please note that downloading the game from the source code is not recommended be
 
 # FAQ
   - Q: **Why in Batch?**
-    - A: **I started this project as a challenge for myself. Making a game in such a tricky and badly-made langauge might have been hell, but a great challenge.
+    - A: **I started this project as a challenge for myself. Making a game in such a tricky and badly-made langauge might have been hell, but a great challenge.**
 
 # Thanks you for choosing our projects! :shipit:
 ### Tons more infromation will be added to this readme, some time™.
