@@ -130,7 +130,7 @@ Please note that downloading the game from the source code is not recommended be
   - How the saving system works:
     - The game automatically saves your progress every time your player data variables are modified. The program does not rewrite the whole save file, it only modifies lines on it. For example, if you complete a quest, it will only change the line where that quest is saved on, that also goes for total completed levels, items and more.
   - Creating multiple saved profiles:
-    - Coming soon!
+    - Coming Soon!
 
 ### Audio Manager
   - More Info Soon!
