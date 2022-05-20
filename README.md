@@ -11,8 +11,8 @@
 Battles of Batch is a game which runs on Window's MS-DOS terminal. It's an RPG text game, where you fight enemies in various battles. This project was started by 136MasterNR in 13th August 2021.
 
 ## Download/Installation Process, Requirements & Notes
-  - Download the wizard here: [BattlesOfBatch-Setup.exe](https://htssoft.tk/get-download/BattlesOfBatch-Setup.exe) [LATEST RELEASE]
-  - Download manually here: [battlesofbatch-latest.zip](https://htssoft.tk/get-download/battlesofbatch-latest.zip) [LATEST RELEASE]
+  - **Download the wizard here**: [BattlesOfBatch-Setup.exe](https://htssoft.tk/get-download/BattlesOfBatch-Setup.exe) [LATEST RELEASE]
+  - **Download manually here**: [battlesofbatch-latest.zip](https://htssoft.tk/get-download/battlesofbatch-latest.zip) [LATEST RELEASE]
 
 Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher.
 
