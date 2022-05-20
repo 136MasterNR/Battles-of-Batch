@@ -107,7 +107,7 @@ Please note that downloading the game from the source code is not recommended be
   - Coming soon!
 
 ### Use Commands for Devs
-  - Go to the menu, and type `cmd`, then type "commands" to list all available dev cmds.
+  - Go to the menu, and type `cmd`, then type `commands` to list all available dev cmds.
 
 # Thanks you for choosing our projects! :shipit:
 ### Tons more infromation will be added to this readme, some time™.
