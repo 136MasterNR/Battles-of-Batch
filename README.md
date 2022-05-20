@@ -174,8 +174,12 @@ Please note that downloading the game from the source code is not recommended be
   SFX provided by
     - 136MasterNR
 
-[ TESTERS ]: "AgentANP(v0.235)", "2002Spiele(v0.231)", "ComradeTurtle(v0.222)", "BlackStorm(v0.212)", "JayKayHere3987
-(v0.169)"
+  - Shoutout to our testers
+    - AgentANP
+    - 2002Spiele
+    - ComradeTurtle
+    - BlackStorm
+    - JayKayHere3987
 
 # Thanks you for choosing our projects! :shipit:
 ### Tons more infromation will be added to this readme, some time™.
