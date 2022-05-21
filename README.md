@@ -68,8 +68,8 @@ Please note that downloading the game from the source code is not recommended be
 
 ## Strategy Method
 ### How it Works : Enemies (#3.0)
-  - Enemies spawn with a random amount of HP, depends on which level you have selected.
-  - Enemies deal a random amount of damage to the player.
+  - Enemies spawn with a random amount of HP, the amount increases depending on the level you have selected.
+  - Enemies deal a random amount of damage to the player, the amount increases depending on the level you have selected.
   - Every enemy deals its own damage, so this means once one enemy is dead it will no longer deal damage, dealing less total damage to the player.
 
 ### How it Works : Skills (#3.1)
@@ -86,7 +86,13 @@ Please note that downloading the game from the source code is not recommended be
   - Coming Soon!
 
 ## Levels & Story
-### Chapter 1
+
+<details><summary>
+
+### Chapter 1 (Click)
+
+</summary>
+
   - **Level 1**:
     - Enemies: More Info Soon!
     - Story: Coming Soon!
@@ -108,6 +114,38 @@ Please note that downloading the game from the source code is not recommended be
   - **Level 7**:
     - Enemies: More Info Soon!
     - Story: Coming Soon!
+
+</details>
+
+<details><summary>
+
+### Chapter 2 (Click)
+
+</summary>
+
+  - **Level 8**:
+    - Enemies: More Info Soon!
+    - Story: Coming Soon!
+  - **Level 9**:
+    - Enemies: More Info Soon!
+    - Story: Coming Soon!
+  - **Level 10**:
+    - Enemies: More Info Soon!
+    - Story: Coming Soon!
+  - **Level 11**:
+    - Enemies: More Info Soon!
+    - Story: Coming Soon!
+  - **Level 12**:
+    - Enemies: More Info Soon!
+    - Story: Coming Soon!
+  - **Level 13**:
+    - Enemies: More Info Soon!
+    - Story: Coming Soon!
+  - **Level 14**:
+    - Enemies: More Info Soon!
+    - Story: Coming Soon!
+
+</details>
 
 ## User Interfaces
 ### Shop (#4.0)
