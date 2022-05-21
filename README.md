@@ -57,18 +57,18 @@ Please note that downloading the game from the source code is not recommended be
     - ***S***: Settings/Options
     - ***E***: Exit the game
   - **Map**: 
-    - **A**/**P**: Start Selected Level
-    - **F**: Move Forward/Next Level
-    - **D**: Move Backwards/Previous Level
-    - **Q**: Move to the previous UI (to the Menu)
+    - ***A***/**P**: Start Selected Level
+    - ***F***: Move Forward/Next Level
+    - ***D***: Move Backwards/Previous Level
+    - ***Q***: Move to the previous UI (to the Menu)
   - **Battle**: 
     - *Press the First Letter of an Action, e.g. `A` to attack*
-    - **Q** = End current battle and move to the previous UI (to the Map)
+    - ***Q*** = End current battle and move to the previous UI (to the Map)
 
 
 ## Strategy Method
 ### How it Works : Enemies (#3.0)
-  - Enemies spawn with a random amount of **HP.
+  - Enemies spawn with a random amount of HP, depends on which level you have selected.
   - Enemies deal a random amount of damage to the player.
   - Every enemy deals its own damage, so this means once one enemy is dead it will no longer deal damage, dealing less total damage to the player.
 
@@ -83,7 +83,7 @@ Please note that downloading the game from the source code is not recommended be
   - More coming soon.
 
 ### How it Works : Materials (#3.3)
-  - Coming soon.
+  - Coming Soon!
 
 ## Levels & Story
 ### Chapter 1
@@ -121,7 +121,7 @@ Please note that downloading the game from the source code is not recommended be
   - More Info Soon!
  
 # Explaining Technical Features
-### The Battle
+### Gameplay Features
   - More Info Soon!
 
 ### Saves Manager
