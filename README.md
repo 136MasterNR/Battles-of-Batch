@@ -57,7 +57,7 @@ Please note that downloading the game from the source code is not recommended be
     - ***S***: Settings/Options
     - ***E***: Exit the game
   - **Map**: 
-    - ***A***/**P**: Start Selected Level
+    - ***A***/***P***: Start Selected Level
     - ***F***: Move Forward/Next Level
     - ***D***: Move Backwards/Previous Level
     - ***Q***: Move to the previous UI (to the Menu)
@@ -171,10 +171,13 @@ Please note that downloading the game from the source code is not recommended be
     - Coming Soon!
 
 ### Audio Manager
-  - More Info Soon!
+  - The audio is played by a Visual Basic script, which is managed by the Audio Manager, a batch file. The Audio Manager is always running in the background as a seperate task, unless you have turned sounds & music off. It detects whether the game is running every 1 second, and if it's not, it stops the audio tasks, and then itself. The way to detect whether the game is running is to try to access a file which is being used by the program contantly. On the start up of the program, the program sets a file as the logger, and that file cannot be accessed by other programs for as long the program which is using it is running.
 
 ### Auto Updater
   - The updater starts and checks for updates automatically when you start the game. It pulls information from [get-update](https://github.com/136MasterNR/HTS-Studios/tree/main/get-update), compares your local game's version with the online version and then prompts to you whether to update or not before completely loading into the game. After you confirm to update, the updater will pull the whole game from [get-download](https://github.com/136MasterNR/HTS-Studios/tree/main/get-download) and will replace all your old game files with the new game files. This will not reset your saves, but if the next update requires you to reset your saves, you will be prompted for a second confirmation.
+
+### Error Handler
+  - More Info Soon!
 
 # Miscellaneous
 ### Cheats
@@ -198,24 +201,24 @@ Please note that downloading the game from the source code is not recommended be
   - **Programmed** by
     - 136MasterNR
 
-  - **Story** directed by
+  - **Story directed** by
     - 136MasterNR
     - johnypro150
 
-  - Character Designs by
+  - **Character Designs** by
     - 136MasterNR
     - [asciiart.eu](https://www.asciiart.eu/)
     - [patorjk.com](https://patorjk.com/)
-  - Layout Designs by
+  - **Layout Designs** by
     - 136MasterNR
 
-  - Music provided by 
+  - **Music** provided by 
     - [Unwind Station](https://www.youtube.com/channel/UCATu7pOE-X5L__hWParE5DQ)
     - [pedi me arxes](https://www.youtube.com/c/pedimearxes)
-  - SFX provided by
+  - **SFX** provided by
     - 136MasterNR
 
-  - Shoutout to our testers
+  - **Shoutout** to our **Testers**:
     - AgentANP
     - 2002Spiele
     - ComradeTurtle
