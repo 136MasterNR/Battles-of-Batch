@@ -1,6 +1,6 @@
 ::Created by HTSoft Studios - Read the file "copyright.txt" for more info. (Do not distribute)
 ::(Use "NotePadPP" or anything other than "Notepad" to view better this file)
-:: Languages used: 98% Batch   2% VBScript
+:: Languages used:    98% Batch    2% VBScript
 ::_______ ______ ______ ______ ______ ______ ______ ______ ______ ______ ______ ______
 ::______//_____//_____//_____//_____//_____//_____//_____//_____//_____//_____//______ \
 ::     _    _   _______    _____      _____   _                 _   _                 | |
@@ -31,7 +31,11 @@ IF NOT "%WINVER:~0,3%" == "10." IF NOT "%WINVER:~0,3%" == "11." (
 	PAUSE>NUL
 	EXIT
 )
+:: Check if logs folder exist,
+IF NOT EXIST .\data\logs MD ".\data\logs"
+::  start the logger and check if accessible,
 2>>".\data\logs\errors.txt" ( SET "STARTED=1"&CALL :STARTUP-COMPLETE )
+::   if not accessible then exit, else below command will be skipped.
 @IF /I NOT DEFINED STARTED EXIT 1
 :STARTUP-COMPLETE
 IF NOT EXIST "%~n0%~x0" (
@@ -65,14 +69,16 @@ COLOR 0F
 ::VAR:-Variables
 SET "DM=%CD%"
 SET "DATA=%CD%\data"
+SET "DATA_TMP=%DATA%\temp"
 SET "DATA_IMAGES=%DATA%\images"
 SET "DATA_SCRIPTS=%DATA%\scripts"
 CALL "%DATA_SCRIPTS%\versions.cmd" || CALL :ERROR ERRLINE ID0001    0
+:: Detect Errors
 IF NOT DEFINED VERCODE CALL :ERROR ERRLINE ID0001A    0
 IF NOT DEFINED VERS CALL :ERROR ERRLINE ID0001B    0
 IF NOT DEFINED VERTYPE CALL :ERROR ERRLINE ID0001C    0
 IF NOT DEFINED VERCOD.AUDIO_MANAGER CALL :ERROR ERRLINE ID0001D    0
-SET "DATA_TMP=%DATA%\temp"
+IF NOT EXIST "%DATA_TMP%" MD "%DATA_TMP%"
 SET "HTS_DATA=%APPDATA%\HTS_DATA"
 SET "MAIN_GAME=%HTS_DATA%\BATTLESOFBATCH-%VERTYPE%-%VERCODE%"
 SET "DATA_SAVES=%MAIN_GAME%\SAVES"
@@ -190,12 +196,15 @@ SET "CMD.CLEARVAR=%SCRIPTS_GAME%\CLEARVAR.cmd"
 SET /A "SELECTED=0"
 SET "CHAPTER=1"
 SET "MAP.LOAD=%INTERFACE%\map"
+::VAR:-ASCII
+SET "ASCII=%DATA_SCRIPTS%\ascii.cmd"
 ::VAR:-ANSI Coloring
 SET "RGB=[38;2;"
 SET "RGB.COIN=%RGB%252;255;166m"
 SET "RGB.LVL=%RGB%128;200;255m"
 SET "RGB.TRUE=%RGB%163;255;177m"
 SET "RGB.FALSE=%RGB%255;89;89m"
+SET "RGB.CYAN=%RGB%128;210;255m"
 ::VAR:-Quests
 SET "QUEST.LOADER=%DATA_SCRIPTS%\quests.cmd"
 SET "QNAME.TOTAL_MONSTERS=Sereal Killer"
@@ -257,7 +266,7 @@ IF NOT EXIST "%DATA_SETTINGS%\settings.cmd" (
 		ECHO.SET SFX.VOLUME=90
 		ECHO.SET AUTOSAVE.VALUE=TRUE
 		ECHO.SET UPDATE.VALUE=TRUE
-		ECHO.SET SHORTCUTS.VALUE=FALSE
+		ECHO.SET SHORTCUTS.VALUE=TRUE
 		ECHO.GOTO :EOF
 	)>%SETTINGS.LOAD%
 )
@@ -377,7 +386,7 @@ ECHO.^|     \     ^|^|     /                              .--.----------.--.    
 ECHO.^|      [    ^|^|    ]                   .----------'   : [1;34mCOMMANDS[0m :   '----------.                                    ^|
 ECHO.^|      \    ^|^|    /             [1m,-,_[0m  ^|              '----------'              ^|                                    ^|
 ECHO.^|       [   ^|^|   ]              [1m^|  _T[0m ^| [s        -  [1;37mSelect a level to start.[0m    ^|                                    ^|
-IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[uPress %RGB%128;210;255mA[0m ) ELSE ECHO.[u%RGB%128;210;255m PLAY[0m
+IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[uPress %RGB.CYAN%A[0m ) ELSE ECHO.[u%RGB%128;210;255m PLAY[0m
 ECHO.^|        \__^|^|__/               [1m'-`^|^|[0m ^| - - - - - - - - - - - - - - - - - - -  ^|                          ,_,       ^|
 ECHO.^|           --                    :[1m^|^|[0m-^| [s        -  [1;37mView your quests.[0m           ^|                         (.,.)      ^|
 IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[uPress %RGB%138;167;255mQ[0m ) ELSE ECHO.[u%RGB%138;167;255mQUESTS[0m
@@ -545,14 +554,13 @@ ECHO.[0mPress any key to return...
 PAUSE>NUL
 GOTO S-MENU
 :MAP
-IF %SELECTED% LSS 1 SET SELECTED=1
-IF %SELECTED% GTR %PLAYER.MAP.LEVEL% SET SELECTED=%PLAYER.MAP.LEVEL%
-IF %SELECTED% GEQ 8 (SET CHAPTER=2) ELSE SET CHAPTER=1
+CALL "%MAP.LOAD%\limit.cmd"
 TITLE %TITLE%Map
 ECHO.[0m[0;0H.+-----------------------------------------------------------------------------------------------------------------+.
-ECHO.^|                                                 Map Chapter: %CHAPTER%                                                    ^|
-ECHO.^|                                  Map Details; Difficulty, Total Completed Maps                                    ^|
-ECHO.^|                                    Level Difficulty, Enemy Details etc.                                           ^|
+ECHO.^|                                                   Loading...                                                      ^|
+ECHO.^|                                                   Loading...                                                      ^|
+ECHO.^|                                                   Loading...                                                      ^|
+CALL "%MAP.LOAD%\details.cmd" %SELECTED% %CHAPTER%
 ECHO.'+-----------------------------------------------------------------------------------------------------------------+'
 IF %SELECTED% LEQ 7 (CALL "%MAP.LOAD%\c1.cmd") ELSE CALL "%MAP.LOAD%\c2.cmd"
 ECHO.^|     ^|`-._/\_.-`^|                                                                                 ^|`-._/\_.-`^|     ^|
@@ -587,7 +595,8 @@ IF "%SHORTCUTS.VALUE%"=="TRUE" (
 )
 SET "INPUT_PART=map"
 SETLOCAL ENABLEDELAYEDEXPANSION
-%INPUT% "PROMPT=|       \  ||  /               |                        [1m[s" "LENGTH=10"
+%INPUT% "PROMPT=|[45;0H|       \  ||  /               |                       [1m[s" "LENGTH=10"
+ECHO.[45;52H                       
 ENDLOCAL&SET UDERFINE=%UDERFINE%
 ENDLOCAL
 SET "INPUT_PART=nul"
@@ -610,11 +619,28 @@ SET "INPUT_PART=nul"
    IF /I "%UDERFINE%"=="RE" (MODE CON:COLS=%COLS% LINES=%LINES%&GOTO MAP)
 IF /I "%UDERFINE%"=="FORWARD" (
 	SET /A SELECTED=SELECTED+1
-	GOTO MAP
+	CALL "%MAP.LOAD%\limit.cmd"
+	IF %SELECTED% LEQ 7 (
+		IF %SELECTED%==7 (
+			GOTO MAP
+		)
+		CALL "%MAP.LOAD%\c1.cmd" NUMS
+	) ELSE (
+		CALL "%MAP.LOAD%\c2.cmd" NUMS
+	)
 )
 IF /I "%UDERFINE%"=="PREV" (
 	SET /A SELECTED=SELECTED-1
-	GOTO MAP
+	CALL "%MAP.LOAD%\limit.cmd"
+	IF %SELECTED% LEQ 8 (
+		IF %SELECTED%==8 (
+			GOTO MAP
+		)
+		CALL "%MAP.LOAD%\c1.cmd" NUMS
+	) ELSE (
+		CALL "%MAP.LOAD%\c2.cmd" NUMS
+	)
+	GOTO MAP-INPUT
 )
 IF /I "%UDERFINE:~0,8%"=="CHAPTER " (
 	SET "var="&FOR /F "DELIMS=0123456789" %%I IN ("%UDERFINE:~8%") do set VAR=%%I
@@ -624,7 +650,6 @@ IF /I "%UDERFINE:~0,8%"=="CHAPTER " (
 		GOTO MAP
 	)
 )
-ECHO.[1A^|       \  ^|^|  /               ^|                                  [1A
 GOTO MAP-INPUT
 :MAP-CHOICE
 SET /P "=[45;56H"<NUL
@@ -634,11 +659,28 @@ IF %ERRORLEVEL%==1 GOTO PRE_LOAD
 IF %ERRORLEVEL%==2 GOTO S-MENU
 IF %ERRORLEVEL%==4 (
 	SET /A SELECTED=SELECTED-1
-	GOTO MAP
+	CALL "%MAP.LOAD%\limit.cmd"
+	IF %SELECTED% LEQ 8 (
+		IF %SELECTED%==8 (
+			GOTO MAP
+		)
+		CALL "%MAP.LOAD%\c1.cmd" NUMS
+	) ELSE (
+		CALL "%MAP.LOAD%\c2.cmd" NUMS
+	)
+	GOTO MAP-INPUT
 )
 IF %ERRORLEVEL%==6 (
 	SET /A SELECTED=SELECTED+1
-	GOTO MAP
+	CALL "%MAP.LOAD%\limit.cmd"
+	IF %SELECTED% LEQ 7 (
+		IF %SELECTED%==7 (
+			GOTO MAP
+		)
+		CALL "%MAP.LOAD%\c1.cmd" NUMS
+	) ELSE (
+		CALL "%MAP.LOAD%\c2.cmd" NUMS
+	)
 )
 IF %ERRORLEVEL%==16 GOTO PRE_LOAD
 IF %ERRORLEVEL%==17 GOTO S-MENU
@@ -708,13 +750,31 @@ IF "%SHOP.TAB%"=="ITEMS" (
 	IF /I "%UDERFINE%"=="UP ATTACK" (
 		CALL "%SKILL.UPGRADE%" %LVL.REQ.ATK% %LVL.REQ.ATK% %SKILL.COST.ATK% 1 SKILL.ATK
 	)
+	IF /I "%UDERFINE%"=="UP MAINATTACK" (
+		CALL "%SKILL.UPGRADE%" %LVL.REQ.ATK% %LVL.REQ.ATK% %SKILL.COST.ATK% 1 SKILL.ATK
+	)
+	IF /I "%UDERFINE%"=="UP MAIN ATTAC" (
+		CALL "%SKILL.UPGRADE%" %LVL.REQ.ATK% %LVL.REQ.ATK% %SKILL.COST.ATK% 1 SKILL.ATK
+	)
+	IF /I "%UDERFINE%"=="UP MAIN ATK" (
+		CALL "%SKILL.UPGRADE%" %LVL.REQ.ATK% %LVL.REQ.ATK% %SKILL.COST.ATK% 1 SKILL.ATK
+	)
 	IF /I "%UDERFINE%"=="UP CRIT" (
 		CALL "%SKILL.UPGRADE%" %LVL.REQ.CRIT_RATE% %LVL.REQ.CRIT_RATE% %SKILL.COST.CRIT_RATE% 2 SKILL.CRIT_RATE
 	)
 	IF /I "%UDERFINE%"=="UP CRIT RATE" (
 		CALL "%SKILL.UPGRADE%" %LVL.REQ.CRIT_RATE% %LVL.REQ.CRIT_RATE% %SKILL.COST.CRIT_RATE% 2 SKILL.CRIT_RATE
 	)
+	IF /I "%UDERFINE%"=="UP CRITRATE" (
+		CALL "%SKILL.UPGRADE%" %LVL.REQ.CRIT_RATE% %LVL.REQ.CRIT_RATE% %SKILL.COST.CRIT_RATE% 2 SKILL.CRIT_RATE
+	)
 	IF /I "%UDERFINE%"=="UP HP" (
+		CALL "%SKILL.UPGRADE%" %LVL.REQ.HP% %LVL.REQ.HP% %SKILL.COST.HP% 3 SKILL.HP
+	)
+	IF /I "%UDERFINE%"=="UP MAX HEALTH" (
+		CALL "%SKILL.UPGRADE%" %LVL.REQ.HP% %LVL.REQ.HP% %SKILL.COST.HP% 3 SKILL.HP
+	)
+	IF /I "%UDERFINE%"=="UP MAXHEALTH" (
 		CALL "%SKILL.UPGRADE%" %LVL.REQ.HP% %LVL.REQ.HP% %SKILL.COST.HP% 3 SKILL.HP
 	)
 )
@@ -843,23 +903,18 @@ SET "INPUT_PART=nul"
      IF /I "%UDERFINE%"=="MENU" GOTO S-MENU
 	  IF /I "%UDERFINE%"=="RETURN" GOTO S-MENU
  IF /I "%UDERFINE%"=="REFRESH" (MODE CON:COLS=%COLS% LINES=%LINES%&GOTO SETTINGS)
- IF /I "%UDERFINE%"=="SOUND" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
-  IF /I "%UDERFINE%"=="SOUNDS" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
-   IF /I "%UDERFINE%"=="MUSIC" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
-    IF /I "%UDERFINE%"=="PLAY AUDIO" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
-	 IF /I "%UDERFINE%"=="AUDIO" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
-	  IF /I "%UDERFINE%"=="PLAY SOUNDS" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
-	   IF /I "%UDERFINE%"=="PLAY MUSIC" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
-	    IF /I "%UDERFINE%"=="TURN OFF MUSIC" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
-		 IF /I "%UDERFINE%"=="TURN ON MUSIC" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
-		  IF /I "%UDERFINE%"=="TURN OFF SOUNDS" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
-		   IF /I "%UDERFINE%"=="TURN ON SOUNDS" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
+ IF /I "%UDERFINE:~0,5%"=="SOUND" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
+  IF /I "%UDERFINE%"=="MUSIC" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
+   IF /I "%UDERFINE%"=="PLAY AUDIO" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
+	IF /I "%UDERFINE%"=="AUDIO" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
+	 IF /I "%UDERFINE%"=="PLAY SOUNDS" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
+	  IF /I "%UDERFINE%"=="PLAY MUSIC" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
+	   IF /I "%UDERFINE%"=="TURN OFF MUSIC" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
+		IF /I "%UDERFINE%"=="TURN ON MUSIC" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
+		 IF /I "%UDERFINE%"=="TURN OFF SOUNDS" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
+		  IF /I "%UDERFINE%"=="TURN ON SOUNDS" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
 		    IF /I "%UDERFINE%"=="TURN OFF AUDIO" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
 			 IF /I "%UDERFINE%"=="TURN ON MUSIC" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
-			  IF /I "%UDERFINE%"=="SOUNDS ON" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
-			   IF /I "%UDERFINE%"=="SOUNDS OFF" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
-			    IF /I "%UDERFINE%"=="AUDIO OFF" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
-				 IF /I "%UDERFINE%"=="AUDIO ON" CALL "%TOGGLE.SOUNDS%"&GOTO SETTINGS
  IF /I "%UDERFINE%"=="KEYS" CALL "%TOGGLE.SHORTCUTS%"&GOTO SETTINGS
   IF /I "%UDERFINE%"=="SHORTCUT KEYS" CALL "%TOGGLE.SHORTCUTS%"&GOTO SETTINGS
    IF /I "%UDERFINE%"=="SHORTCUTS" CALL "%TOGGLE.SHORTCUTS%"&GOTO SETTINGS
@@ -875,12 +930,12 @@ GOTO RESTART
 :DEVS-CHEATS
 (
 	ECHO.SET PLAYER.MONEY=999999999
-	ECHO.SET PLAYER.XP=150000
+	ECHO.SET PLAYER.XP=1500000
 	ECHO.SET PLAYER.LVL=69666
 	ECHO.SET PLAYER.MAP.LEVEL=1
 	ECHO.SET PLAYER.ITEM.HEAL=1000
 	ECHO.SET PLAYER.ITEM.BOMB=500
-	ECHO.SET PLAYER.XP.REQ=50
+	ECHO.SET PLAYER.XP.REQ=25
 	ECHO.SET COMPLETED.MAPS=0
 )>"%DATA_SAVES%\PLAYERDATA.cmd"
 GOTO MENU
@@ -1253,12 +1308,14 @@ GOTO BATTLE-CHOICE
 ECHO.EOF&PAUSE>NUL&GOTO :EOF
 :ERROR <resultVar> <uniqueID> [LineOffset]
 IF "%IGNORE_ERRORS%"=="TRUE" GOTO :EOF
-IF NOT DEFINED AUDIO.VALUE CALL :SETT_ERR
-IF NOT DEFINED VOLUME CALL :SETT_ERR
-IF NOT DEFINED SFX.VOLUME CALL :SETT_ERR
-IF NOT DEFINED AUTOSAVE.VALUE CALL :SETT_ERR
-IF NOT DEFINED UPDATE.VALUE CALL :SETT_ERR
-IF NOT DEFINED SHORTCUTS.VALUE CALL :SETT_ERR
+IF DEFINED VERCODE (
+	IF NOT DEFINED AUDIO.VALUE CALL :SETT_ERR
+	IF NOT DEFINED VOLUME CALL :SETT_ERR
+	IF NOT DEFINED SFX.VOLUME CALL :SETT_ERR
+	IF NOT DEFINED AUTOSAVE.VALUE CALL :SETT_ERR
+	IF NOT DEFINED UPDATE.VALUE CALL :SETT_ERR
+	IF NOT DEFINED SHORTCUTS.VALUE CALL :SETT_ERR
+)
 SET "ERR.CODE=%ERRORLEVEL%"
 CLS
 COLOR 0C
@@ -1325,7 +1382,7 @@ SET "Folder1=%CD%"
 SET "Folder2=%EXTRAC.LOC%"
 
 FOR /R "%Folder1%" %%x In (*.*) Do (
-
+	SET /A TOTALFOUNDFILES+=1
     SET "FullPath=%%x"
     SET "RelPath=!FullPath:%Folder1%=!"
 
@@ -1334,11 +1391,11 @@ FOR /R "%Folder1%" %%x In (*.*) Do (
        ECHO.Verified - %%x >>".\data\logs\verify-file-identity.log"
 	   SET /A DUP.CNT+=1
       )||(
-       ECHO.Corrupt - %%x >>".\data\logs\verify-file-identity.log"
+       ECHO.Corrupt  - %%x >>".\data\logs\verify-file-identity.log"
 	   SET /A DIF.CNT+=1
       )
     ) ELSE (
-      ECHO.New - %%x >>".\data\logs\verify-file-identity.log"
+      ECHO.New File - %%x >>".\data\logs\verify-file-identity.log"
 	  SET /A NEW.CNT+=1
     )
 )
@@ -1349,15 +1406,16 @@ FOR /R "%Folder2%" %%x IN (*.*) DO (
     SET "RelPath=!FullPath:%Folder2%=!"
 
     IF NOT EXIST "%Folder1%!RelPath!" (
-      ECHO.New - %%x >>".\data\logs\verify-file-identity.log"
-
+      ECHO.Missing - %Folder1%!RelPath! >>".\data\logs\verify-file-identity.log"
+	  SET MIS.CNT+=1
     )
 )
 RD /S /Q "%EXTRAC.LOC%"
 
 ECHO.Found %NEW.CNT% new files.
 ECHO.Found %DIF.CNT% corrupt files.
-ECHO.Found %DUP.CNT% correct files.
+ECHO.Found %MIS.CNT% missing files.
+ECHO.Found %DUP.CNT% verified files.
 START "" ".\data\logs\verify-file-identity.log"
 ECHO.
 ECHO.

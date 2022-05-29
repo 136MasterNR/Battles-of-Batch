@@ -1,6 +1,6 @@
 IF NOT DEFINED VERCODE EXIT
 ECHO.[0;0H.-------------------------------------------------------------------------------------------------------------------.
-ECHO.^| ^(!) BATTLE LVL.%SELECTED% - BEGINNER'S ADVENTURE ^(%VERTYPE% v%VERS:~1%^)                                                            ^|
+ECHO.^| ^(!) BATTLE LVL.%SELECTED% - BEGINNER'S ADVENTURE ^(%VERTYPE% v%VERS:~1%^)                                                           ^|
 ECHO.^|                                                                                                                   ^|
 SET /P "=|                                                                                     "<NUL
 IF %ENEMY.HP.NOW.1% EQU 0 (ECHO.[[0;37m[1;30mX-X-XX-X-X[0m]                  ^|

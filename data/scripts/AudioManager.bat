@@ -26,9 +26,10 @@ IF EXIST "%LOG_INFO%" IF EXIST "%LOG_INFO.OLD%" ( DEL /Q "%LOG_INFO.OLD%" ) ELSE
 IF EXIST "%DATA_SETTINGS%\settings.cmd" CALL "%SETTINGS.LOAD%"
 IF %AUDIO.VALUE%==FALSE GOTO END
 IF EXIST "%APPDATA%\HTS_DATA\BATTLESOFBATCH-%GVER%\SETTINGS\OFFSOUNDS.dll" EXIT
+TASKLIST /FI "IMAGENAME eq wscript.exe*" 2>NUL | FIND /I /N ":"
+SET ERRORLEVEL.CACHE=%ERRORLEVEL%
 MODE CON:COLS=58 LINES=6
-TASKLIST /FI "IMAGENAME eq wscript.exe*" >>"%LOG_WSCRIPT%" 2>NUL | FIND /I /N ":"
-IF /I "%ERRORLEVEL%"=="1" ( ECHO.[1;30mINFO: Detected audio! ) ELSE ( ECHO.[1;30mINFO: No audio. )
+IF /I "%ERRORLEVEL.CACHE%"=="1" ( ECHO.[1;30mINFO: Detected audio! ) ELSE ( ECHO.[1;30mINFO: No audio. )
 ECHO.[0m
 ECHO.[31m^(!!^)    DO NOT close or click inside this window!    ^(!!^)[0m
 ECHO.        [1;31mIf you accidentally did, press backspace.
