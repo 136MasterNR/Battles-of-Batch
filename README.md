@@ -85,6 +85,9 @@ Please note that downloading the game from the source code is not recommended be
 ### How it Works : Materials (#3.3)
   - Coming Soon!
 
+## Crafting System
+  - Coming Very Soon!
+
 ## Levels & Story
 
 <details><summary>
