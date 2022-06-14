@@ -1,4 +1,4 @@
-::Created by HTSoft Studios - Read the file "copyright.txt" for more info. (Do not distribute)
+::Created by HTSoft Studios - Read the "copyright.txt" file for more info. (Do not distribute)
 ::(Use "NotePadPP" or anything other than "Notepad" to view better this file)
 :: Languages used:    98% Batch    2% VBScript
 ::_______ ______ ______ ______ ______ ______ ______ ______ ______ ______ ______ ______
@@ -96,8 +96,9 @@ SET "SYS.LVL=%DATA_SCRIPTS%\playerdata\sys.lvl"
 SET "UPDATER=%DATA_SCRIPTS%\updater.cmd"
 SET "SAVE=%DATA_SCRIPTS%\save.cmd"
 SET "DEBUG.GAMELOADER=%DATA_SCRIPTS%\debug"
-SET "SHOP.TAB=ITEMS"
+SET "SHOP.TAB=1"
 SET "SCRIPTS_POP=%DATA_SCRIPTS%\pop"
+SET "CHOICE=CALL ^"%DATA_SCRIPTS%\choice.bat^""
 SET "INPUT_PART=nul"
 SET "SELF_INPUT="
 ::VAR:-Settings
@@ -136,6 +137,7 @@ SET SHOP.LVLREQ.BOMB=4
 SET SHOP.MAX.BOMB=250
 SET "SHOP.HEAL=%DATA_SCRIPTS%\shop\heal.cmd"
 SET "SHOP.BOMB=%DATA_SCRIPTS%\shop\bomb.cmd"
+SET "CRAFT.MNGR=%DATA_SCRIPTS%\craft.cmd"
 ::VAR:-Audio
 SET /A "VOLUME.BATTLE=100*VOLUME/100*50"
 SET /A "VOLUME.BATTLE=%VOLUME%-%VOLUME.BATTLE%/100"
@@ -176,6 +178,7 @@ SET "INT.TITLE_R=%INTERFACE%\title_r.cmd"
 SET "IG.CMDS=%INTERFACE%\ingame\commands.cmd"
 SET "UI.ITEMS=%INTERFACE%\shop\items.cmd"
 SET "UI.SKILLS=%INTERFACE%\shop\skills.cmd"
+SET "UI.CRAFT=%INTERFACE%\shop\craft.cmd"
 ::VAR:-Regit
 SET "REGIT_1=HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{22d6f312-b0f6-11d0-94ab-0080c74c7e95}"
 SET "REGIT_2=HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{6BF52A52-394A-11d3-B153-00C04F79FAA6}"
@@ -205,6 +208,7 @@ SET "RGB.LVL=%RGB%128;200;255m"
 SET "RGB.TRUE=%RGB%163;255;177m"
 SET "RGB.FALSE=%RGB%255;89;89m"
 SET "RGB.CYAN=%RGB%128;210;255m"
+SET "RGB.YELLOW=%RGB%255;252;176m"
 ::VAR:-Quests
 SET "QUEST.LOADER=%DATA_SCRIPTS%\quests.cmd"
 SET "QNAME.TOTAL_MONSTERS=Sereal Killer"
@@ -397,7 +401,7 @@ ECHO.^|                                     ^| - - - - - - - - - - - - - - - - -
 ECHO.^|                                     ^| [s        -  [1;37mChange your preferences.[0m    ^|                                    ^|
 IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[uPress %RGB%249;241;165mS[0m ) ELSE ECHO.[u%RGB%249;241;165mOPTIONS[0m
 ECHO.^|                                     '.      [s                                .'                                    ^|
-IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[u         Press:[0m ) ELSE ECHO.[u[1;30mMore: Credits,Cheats,CMD[0m
+IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[u       Press a Key[0m) ELSE ECHO.[u[1;30mMore: Credits,Cheats,CMD[0m
 ECHO.^|               [1m/\_[]_/\[0m               '--------------------------------------'                                     ^|
 ECHO.^|              [1m^|] _^|^|_ [^|[0m                                                                                           ^|
 ECHO.^|       ___     [1m\/ ^|^| \/[0m                             [1m.    '    .[0m                                                    ^|
@@ -442,11 +446,11 @@ SET "INPUT_PART=nul"
 	IF /I "%UDERFINE%"=="SHOP" GOTO SHOP
 	 IF /I "%UDERFINE%"=="BUY" GOTO SHOP
       IF /I "%UDERFINE%"=="SKILLS" (
-  	    SET "SHOP.TAB=SKILLS"
+  	    SET "SHOP.TAB=2"
   	    GOTO SHOP
       )
       IF /I "%UDERFINE%"=="ITEMS" (
-  	    SET "SHOP.TAB=ITEMS"
+  	    SET "SHOP.TAB=1"
 	    GOTO SHOP
       )
 	IF /I "%UDERFINE%"=="MAP" GOTO MAP
@@ -503,16 +507,19 @@ SET "INPUT_PART=nul"
 ECHO.[0m[1A^| [0;36mType[0m:                                                                                                            [1A
 GOTO MENU-INPUT
 :CHOICE-INPUTS
-SET /P "=[31;62H"<NUL
-CHOICE /N /C:ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 /M ""
+SET /P "=[31;61H "<NUL
+SETLOCAL ENABLEDELAYEDEXPANSION
+%CHOICE%
+ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
+ENDLOCAL
 IF EXIST LET.DEBUG ECHO.%ERRORLEVEL%   
-IF %ERRORLEVEL%==1 GOTO MAP
-IF %ERRORLEVEL%==5 EXIT 0
-IF %ERRORLEVEL%==16 GOTO MAP
-IF %ERRORLEVEL%==17 GOTO QUESTS
-IF %ERRORLEVEL%==19 GOTO SETTINGS
-IF %ERRORLEVEL%==23 GOTO SHOP
-IF %ERRORLEVEL%==18 ( 
+IF /I %CHOICE.INPUT%.==A. GOTO MAP
+IF /I %CHOICE.INPUT%.==E. @EXIT 0
+IF /I %CHOICE.INPUT%.==P. GOTO MAP
+IF /I %CHOICE.INPUT%.==Q. GOTO QUESTS
+IF /I %CHOICE.INPUT%.==S. GOTO SETTINGS
+IF /I %CHOICE.INPUT%.==W. GOTO SHOP
+IF /I %CHOICE.INPUT%.==R. ( 
 	MODE CON:COLS=%COLS% LINES=%LINES%
 	GOTO MENU
 )
@@ -565,28 +572,30 @@ ECHO.'+-------------------------------------------------------------------------
 IF %SELECTED% LEQ 7 (CALL "%MAP.LOAD%\c1.cmd") ELSE CALL "%MAP.LOAD%\c2.cmd"
 ECHO.^|     ^|`-._/\_.-`^|                                                                                 ^|`-._/\_.-`^|     ^|
 ECHO.^|     ^|    ^|^|    ^|                                                                                 ^|    ^|^|    ^|     ^|
-IF "%SHORTCUTS.VALUE%"=="TRUE" (
-	ECHO.[1A[43C[1;30mPress "[0mA[1;30m" or "[0mP[1;30m" to begin the level.[0m
-) ELSE (
+IF NOT "%SHORTCUTS.VALUE%"=="TRUE" (
 	ECHO.[1A[41C[1;30mType "[0mstart[1;30m" or "[0mplay[1;30m" to begin the level.[0m
 )
 ECHO.^|     ^|___o()o___^|                                                                                 ^|___o()o___^|     ^|
-IF "%SHORTCUTS.VALUE%"=="TRUE" (
-	ECHO.[1A[31C[1;30m Press "[0mV[1;30m" to jump 7 levels forward or "[0mC[1;30m" to go backwards.[0m
-) ELSE (
+IF NOT "%SHORTCUTS.VALUE%"=="TRUE" (
 	ECHO.[1A[31C[1;30mType "[0mchapter {number}[1;30m" to change chapter. E.g. "chapter 2"[0m
 )
 ECHO.^|     ^|__((^<^>))__^|                                                                                 ^|__((^<^>))__^|     ^|
-IF "%SHORTCUTS.VALUE%"=="TRUE" (
-	ECHO.[1A[34C[1;37mPress "F" to move to the next level, "D" for previous.[0m
-) ELSE (
+IF NOT "%SHORTCUTS.VALUE%"=="TRUE" (
 	ECHO.[1A[31C[1;37mType "forward" to go to the next level, "prev" for previous[0m
 )
-ECHO.^|     \   o\/o   /             .---------------------------------------------------------.         \   o\/o   /     ^|
-ECHO.^|      \   ^|^|   /              ^|                                                         ^|          \   ^|^|   /      ^|
-ECHO.^|       \  ^|^|  /               ^|                                                         ^|           \  ^|^|  /       ^|
-ECHO.^|        '.^|^|.'                ^|                                                         ^|            '.^|^|.'        ^|
-ECHO.^|          ''                  '---------------------------------------------------------'              ''          ^|
+IF "%SHORTCUTS.VALUE%"=="TRUE" (
+	ECHO.^|     \   o\/o   /                                                                                 \   o\/o   /     ^|
+	ECHO.^|      \   ^|^|   /                          [0mPress "%RGB.CYAN%A[0m" or "%RGB.CYAN%P[0m" to begin the level.[0m                     \   ^|^|   /      ^|
+	ECHO.^|       \  ^|^|  /               [0m Press "[1;37mV[0m" to jump 7 levels forward or "[1;37mC[0m" to go backwards.[0m           \  ^|^|  /       ^|
+	ECHO.^|        '.^|^|.'                   [0mPress "%RGB.YELLOW%F[0m" to move to the next level, "%RGB.YELLOW%D[0m" for previous.[0m              '.^|^|.'        ^|
+	ECHO.^|          ''                                                                                           ''          ^|
+) ELSE (
+	ECHO.^|     \   o\/o   /             .---------------------------------------------------------.         \   o\/o   /     ^|
+	ECHO.^|      \   ^|^|   /              ^|                                                         ^|          \   ^|^|   /      ^|
+	ECHO.^|       \  ^|^|  /               ^|                                                         ^|           \  ^|^|  /       ^|
+	ECHO.^|        '.^|^|.'                ^|                                                         ^|            '.^|^|.'        ^|
+	ECHO.^|          ''                  '---------------------------------------------------------'              ''          ^|
+)
 ECHO.'-._______________________________________________________________________________________________________________.-'[4A
 :MAP-INPUT
 SET UDERFINE=
@@ -650,14 +659,18 @@ IF /I "%UDERFINE:~0,8%"=="CHAPTER " (
 		GOTO MAP
 	)
 )
-GOTO MAP-INPUT
+GOTO MAP-INPUT 
 :MAP-CHOICE
-SET /P "=[45;56H"<NUL
-CHOICE /N /C:ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 /M "Press: "%SELF_INPUT%
+SET /P "=[44;44H"<NUL
+SETLOCAL ENABLEDELAYEDEXPANSION
+%CHOICE%
+ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
+ENDLOCAL
+IF %CHOICE.INPUT%.==. GOTO MAP
 IF DEFINED SELF_INPUT IF %PLAYER.ITEM.BOMB%==0 ( SET "ERRORLEVEL="&GOTO S-MENU ) ELSE SET ERRORLEVEL=16&SET SELECTED=6
-IF %ERRORLEVEL%==1 GOTO PRE_LOAD
-IF %ERRORLEVEL%==2 GOTO S-MENU
-IF %ERRORLEVEL%==4 (
+IF /I %CHOICE.INPUT%==A GOTO PRE_LOAD
+IF /I %CHOICE.INPUT%==B GOTO S-MENU
+IF /I %CHOICE.INPUT%==D (
 	SET /A SELECTED=SELECTED-1
 	CALL "%MAP.LOAD%\limit.cmd"
 	IF %SELECTED% LEQ 8 (
@@ -670,7 +683,7 @@ IF %ERRORLEVEL%==4 (
 	)
 	GOTO MAP-INPUT
 )
-IF %ERRORLEVEL%==6 (
+IF /I %CHOICE.INPUT%==F (
 	SET /A SELECTED=SELECTED+1
 	CALL "%MAP.LOAD%\limit.cmd"
 	IF %SELECTED% LEQ 7 (
@@ -682,36 +695,42 @@ IF %ERRORLEVEL%==6 (
 		CALL "%MAP.LOAD%\c2.cmd" NUMS
 	)
 )
-IF %ERRORLEVEL%==16 GOTO PRE_LOAD
-IF %ERRORLEVEL%==17 GOTO S-MENU
-IF %ERRORLEVEL%==18 ( 
+IF /I %CHOICE.INPUT%==P GOTO PRE_LOAD
+IF /I %CHOICE.INPUT%==Q GOTO S-MENU
+IF /I %CHOICE.INPUT%==R ( 
 	MODE CON:COLS=%COLS% LINES=%LINES%
 	GOTO MAP
 )
-IF %ERRORLEVEL% GEQ 27 IF %ERRORLEVEL% LEQ 34 (
+IF /I %CHOICE.INPUT% GEQ 1 IF %CHOICE.INPUT% LEQ 9 (
 	SET /A AF=7*CHAPTER-7
-	SET /A SELECTED=%ERRORLEVEL%-26+AF
+	SET /A SELECTED=%CHOICE.INPUT%+AF
 	GOTO MAP
 )
-IF %ERRORLEVEL%==22 (
+IF /I %CHOICE.INPUT%==V (
 	SET /A SELECTED=SELECTED+7
 	GOTO MAP
 )
-IF %ERRORLEVEL%==3 (
+IF /I %CHOICE.INPUT%==C (
 	SET /A SELECTED=SELECTED-7
 	GOTO MAP
 )
 GOTO MAP-CHOICE
 :SHOP
 CALL "%PLAYERDATA.LOAD%"
-IF "%SHOP.TAB%"=="ITEMS" CALL "%UI.ITEMS%"
-IF "%SHOP.TAB%"=="SKILLS" CALL "%UI.SKILLS%"
+IF "%SHOP.TAB%"=="1" CALL "%UI.ITEMS%"
+IF "%SHOP.TAB%"=="2" CALL "%UI.SKILLS%"
+IF "%SHOP.TAB%"=="3" CALL "%UI.CRAFT%"
 SET UDERFINE=
 :SHOP-RE
-IF "%SHOP.TAB%"=="ITEMS" SET "INPUT_PART=items"
-IF "%SHOP.TAB%"=="SKILLS" SET "INPUT_PART=skills"
-SETLOCAL ENABLEDELAYEDEXPANSION
-%INPUT% "PROMPT=[u[0m" "length=13"
+IF "%SHOP.TAB%"=="1" SET "INPUT_PART=items"
+IF "%SHOP.TAB%"=="2" SET "INPUT_PART=skills"
+IF "%SHOP.TAB%"=="3" (
+	SET "INPUT_PART=craft"
+	CALL :CRAFT-SHOP
+) ELSE (
+	SETLOCAL ENABLEDELAYEDEXPANSION
+	%INPUT% "PROMPT=[u[0m" "length=13"
+)
 ENDLOCAL&SET UDERFINE=%UDERFINE%
 ENDLOCAL
 SET "INPUT_PART=nul"
@@ -721,10 +740,15 @@ SET "INPUT_PART=nul"
     IF /I "%UDERFINE%"=="GO BACK" GOTO S-MENU
      IF /I "%UDERFINE%"=="MENU" GOTO S-MENU
 	  IF /I "%UDERFINE%"=="RETURN" GOTO S-MENU
-IF /I "%UDERFINE%"=="SWITCH" IF "%SHOP.TAB%"=="ITEMS" ( SET "SHOP.TAB=SKILLS" ) ELSE SET "SHOP.TAB=ITEMS"
-IF /I "%UDERFINE%"=="TAB" IF "%SHOP.TAB%"=="ITEMS" ( SET "SHOP.TAB=SKILLS" ) ELSE SET "SHOP.TAB=ITEMS"
-IF /I "%UDERFINE%"=="SKILLS"  SET "SHOP.TAB=SKILLS"
-IF /I "%UDERFINE%"=="ITEMS"  SET "SHOP.TAB=ITEMS"
+IF /I "%UDERFINE%"=="SWITCH" IF %SHOP.TAB% LEQ 2 (
+	SET /A SHOP.TAB+=1
+) ELSE (
+	SET SHOP.TAB=1
+)
+IF /I "%UDERFINE%"=="SKILLS"  SET "SHOP.TAB=2"
+IF /I "%UDERFINE%"=="SKILL"  SET "SHOP.TAB=2"
+IF /I "%UDERFINE%"=="ITEMS"  SET "SHOP.TAB=1"
+IF /I "%UDERFINE%"=="CRAFT"  SET "SHOP.TAB=3"
 IF "%SHOP.TAB%"=="ITEMS" (
 	IF /I "%UDERFINE:~0,4%"=="SELL" ECHO.Unknown Operation&PAUSE>NUL
 	IF /I "%UDERFINE:~0,4%"=="HEAL" (
@@ -779,6 +803,20 @@ IF "%SHOP.TAB%"=="ITEMS" (
 	)
 )
 GOTO SHOP
+:CRAFT-SHOP
+SETLOCAL ENABLEDELAYEDEXPANSION
+%CHOICE%
+ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
+ENDLOCAL
+ECHO.[1A[%CHOICE.INPUT%] = [Q]
+IF /I %CHOICE.INPUT%==Q GOTO MENU
+IF /I %CHOICE.INPUT%==R (
+	MODE CON:COLS=%COLS% LINES=%LINES%
+	GOTO SHOP
+)
+EXIT /B 0
+
+
 :QUESTS
 CALL "%QUEST.LOADER%" LOAD
 TITLE %TITLE%Quests
@@ -1079,7 +1117,6 @@ ECHO.^|                                                                         
 ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
-IF "%SHORTCUTS.VALUE%"=="TRUE" ECHO.[1A[36C %RGB%84;204;255mPress the first letter of an action to use it.[0m
 ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
@@ -1259,15 +1296,17 @@ IF /I "%UDERFINE%"=="NOTHING" (
 IF %ERRORLEVEL%==2 GOTO MENU
 GOTO BATTLE-INPUT
 :BATTLE-CHOICE
-SET /P "=[47;3H"<NUL
-CHOICE /T:1 /D:0 /N /C:ABNLRQH0 /M:"- Press: "%SELF_INPUT%
-IF DEFINED SELF_INPUT IF %PLAYER.ITEM.BOMB%==0 ( SET ERRORLEVEL=6 ) ELSE SET ERRORLEVEL=%SELF_INPUT:~1,1%
-IF %ERRORLEVEL%==5 (
+SET /P "=[1B[35C%RGB%84;204;255mPress the first letter of an action to use it[0m[45D"<NUL
+SETLOCAL ENABLEDELAYEDEXPANSION
+%CHOICE%
+ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
+ENDLOCAL
+IF %CHOICE.INPUT%.==. GOTO IN-BATTLE
+IF /I %CHOICE.INPUT%==R (
 	MODE CON:COLS=%COLS% LINES=%LINES%
 	GOTO IN-BATTLE
 )
-IF ERRORLEVEL 8 GOTO REFRESH-BATTLE
-IF %ERRORLEVEL%==1 (
+IF /I %CHOICE.INPUT%==A (
 	SET UDERFINE=ATK
 	CALL "%CMD.CLEARVAR%"
 	CALL "%ACT.ATTACK%" || CALL :ERROR ERRLINE ID01.inGameATK    -0
@@ -1275,35 +1314,36 @@ IF %ERRORLEVEL%==1 (
 	%ADD-CMD%
 	GOTO REFRESH-BATTLE
 )
-IF %ERRORLEVEL%==7 (
+IF /I %CHOICE.INPUT%==H (
 	CALL "%CMD.CLEARVAR%"
 	CALL "%ACT.HEAL%"
 	%ADD-CMD%
 	GOTO REFRESH-BATTLE
 )
-IF %ERRORLEVEL%==2 (
+IF /I %CHOICE.INPUT%==B (
 	CALL "%CMD.CLEARVAR%"
 	CALL "%ACT.BOMB%"
 	%ADD-CMD%
 	GOTO REFRESH-BATTLE
 )
-IF "%SEL.CHARACTER%"=="SIMPSONS" IF %ERRORLEVEL%==4 (
+IF "%SEL.CHARACTER%"=="SIMPSONS" IF /I %CHOICE.INPUT%==L (
 	CALL "%CMD.CLEARVAR%"
 	CALL "%ACT.SIMPSONS.LASER%" || CALL :ERROR ERRLINE ID01.inGameLASER    -0
 	%ADD-CMD%
 	GOTO REFRESH-BATTLE
 )
-IF %ERRORLEVEL%==3 (	
+IF /I %CHOICE.INPUT%==N (	
 	CALL "%CMD.CLEARVAR%"
 	CALL "%ACT.ENEMY_ATK%"
 	%ADD-CMD%
 	GOTO REFRESH-BATTLE
 )
-IF %ERRORLEVEL%==6 (
+IF /I %CHOICE.INPUT%==Q (
 	TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
 	CALL "%MENU.AUDIO%"
 	GOTO MAP
 )
+ECHO.[2A
 GOTO BATTLE-CHOICE
 ECHO.EOF&PAUSE>NUL&GOTO :EOF
 :ERROR <resultVar> <uniqueID> [LineOffset]
@@ -1359,6 +1399,7 @@ ECHO.Preparing file identity verification...
 SET /A NEW.CNT=0
 SET /A DIF.CNT=0
 SET /A DUP.CNT=0
+SET /A MIS.CNT=0
 SET "UPDATE.LOC=%DATA_TMP%\update.cmd"
 SET "UPDZIP.LOC=%tmp%\update.zip"
 SET "EXTRAC.LOC=%TMP%\bob"
@@ -1407,7 +1448,7 @@ FOR /R "%Folder2%" %%x IN (*.*) DO (
 
     IF NOT EXIST "%Folder1%!RelPath!" (
       ECHO.Missing - %Folder1%!RelPath! >>".\data\logs\verify-file-identity.log"
-	  SET MIS.CNT+=1
+	  SET /A MIS.CNT+=1
     )
 )
 RD /S /Q "%EXTRAC.LOC%"

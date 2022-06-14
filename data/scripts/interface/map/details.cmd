@@ -70,7 +70,7 @@ EXIT /B 0
 
 :C1
 SETLOCAL ENABLEDELAYEDEXPANSION
-ECHO.[3;24H[1m%RGB.CYAN%Chapter Difficulty[0m: [1mMedium     %RGB.CYAN%Next Map[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= !     %RGB.CYAN%Total Wins[0m: [1m%COMPLETED.MAPS%            [0m
+ECHO.[3;26H[1m%RGB.CYAN%Chapter Difficulty[0m: [1mMedium     %RGB.CYAN%Story[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= !     %RGB.CYAN%Total Wins[0m: [1m%COMPLETED.MAPS%             [0m
 ENDLOCAL
 EXIT /B 0
 

@@ -1,4 +1,4 @@
-REM : Speical thanks to Grub4K for providing us with this open source code.
+REM : Speical thanks to Grub4K for providing this open source code.
 REM : Find it here: https://gist.github.com/Grub4K/2d3f5875c488164b44454cbf37deae80
 REM : I WAS NOT GIVEN RIGHTS TO USE THIS CODE, CONTACT US IF YOU DON'T WANT US TO USE THIS CODE!
 

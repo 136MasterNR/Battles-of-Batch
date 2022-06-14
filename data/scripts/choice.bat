@@ -1,0 +1,9 @@
+SET "KEY="
+FOR /F "DELIMS=" %%A IN ('XCOPY /W "!COMSPEC!" "!COMSPEC!" 2^>NUL') DO (
+    IF NOT DEFINED KEY SET "KEY=%%A^!"
+)
+IF !KEY:~-1!==^^ (
+    SET "KEY=^"
+) ELSE SET "KEY=!KEY:~-2,1!"
+SET ERRORLEVEL=%KEY%
+EXIT /B
