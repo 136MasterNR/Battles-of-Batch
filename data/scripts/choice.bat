@@ -6,4 +6,5 @@ IF !KEY:~-1!==^^ (
     SET "KEY=^"
 ) ELSE SET "KEY=!KEY:~-2,1!"
 SET ERRORLEVEL=%KEY%
+ECHO.%KEY%>LOG.txt
 EXIT /B
