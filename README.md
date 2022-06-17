@@ -73,9 +73,9 @@ Please note that downloading the game from the source code is not recommended be
   - Every enemy deals its own damage, so this means once one enemy is dead it will no longer deal damage, dealing less total damage to the player.
 
 ### How it Works : Skills (#3.1)
-  - **Main Attack**: More Info Soon!
-  - **Crit Rate**: More Info Soon!
-  - **Max Health**: More Info Soon!
+  - **Main Attack**: Increases you base damage.
+  - **Crit Rate**: Increases the chance to throw a critical strike to an enemy.
+  - **Max Health**: Increases maximum HP by 100.
 
 ### How it Works : Items (#3.2)
   - **Bomb**: Stuns enemies, skipping their next round/action. Bosses cannot be stunned by this attack type. Effects, such as poison on the player, will still function.
