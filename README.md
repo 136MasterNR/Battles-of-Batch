@@ -55,7 +55,8 @@ Please note that downloading the game from the source code is not recommended be
     - ***Q***: Quests
     - ***W***: Workshop & Upgrades
     - ***S***: Settings/Options
-    - ***E***: Exit the game
+    - ***CTRL*** + ***E***: Force exit the game
+    - ***CTRL*** + ***R***: Restart the game
   - **Map**: 
     - ***A***/***P***: Start Selected Level
     - ***F***: Move Forward/Next Level
