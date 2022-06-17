@@ -41,7 +41,7 @@ ECHO.^|  :'                         ':                 :                        
 ECHO.^|  :.                         .:                 :                                          :                       ^|
 ECHO.^|   :                         :                  '------------------------------------------'                       ^|
 ECHO.^|  :' Use W A S D to navigate ':                                                                                    ^|
-ECHO.^|  '---------------------------'                                                                                    ^|
+ECHO.^|  '---------------------------'            [1;31mTHIS IS A PROTOTYPE, FEATURES ARE TEMPORALLY DISABLED[0m                   ^|
 ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
