@@ -55,7 +55,8 @@ Please note that downloading the game from the source code is not recommended be
     - ***Q***: Quests
     - ***W***: Workshop & Upgrades
     - ***S***: Settings/Options
-    - ***E***: Exit the game
+    - ***CTRL*** + ***E***: Force exit the game
+    - ***CTRL*** + ***R***: Restart the game
   - **Map**: 
     - ***A***/***P***: Start Selected Level
     - ***F***: Move Forward/Next Level
@@ -191,7 +192,7 @@ Please note that downloading the game from the source code is not recommended be
   - Coming Soon!
 
 ### Use Commands for Devs
-  - Go to the menu, and type `cmd`, then type `commands` to list all available dev cmds.
+  - Go to the menu, and type `cmd`, then type `commands` to list all available dev cmds. If shortcut keys enabled, hit CTRL + T.
     - **clear**: Clears the console window.
     - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, and reverts some User Interfaces back to preDev versions.
     - **import**: Display an [ANSI](https://www.robvanderwoude.com/ansi.php) text file. Use `.ans` as a file type. Use an argument after the command, e.g. `import mysupertxt.ans`. Make sure to move your ansi text in the directory `.\data\cmds\`.
