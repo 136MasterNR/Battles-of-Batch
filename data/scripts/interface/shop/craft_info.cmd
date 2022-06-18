@@ -1,0 +1,37 @@
+GOTO %1
+
+:list
+SET CRAFT.NAME.1=dustblade
+SET CRAFT.NAME.2=dustblade
+SET CRAFT.NAME.3=dustblade
+SET CRAFT.NAME.4=dustblade
+SET CRAFT.NAME.5=dustblade
+SET CRAFT.NAME.6=dustblade
+SET CRAFT.NAME.7=dustblade
+SET CRAFT.NAME.8=dustblade
+SET CRAFT.NAME.9=dustblade
+
+:dustblade
+SET CRAFT.NAME=Dustblade
+SET CRAFT.TYPE=Blade
+SET CRAFT.MAT.1=stained_dust
+SET CRAFT.MAT.1.AMOUNT=5
+SET CRAFT.MAT.2=
+SET CRAFT.MAT.2.AMOUNT=
+SET CRAFT.MAT.3=
+SET CRAFT.MAT.3.AMOUNT=
+
+
+EXIT /B 0
+
+:2
+
+
+:3
+
+
+:4
+
+
+:5
+
