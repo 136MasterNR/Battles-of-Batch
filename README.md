@@ -58,9 +58,9 @@ Please note that downloading the game from the source code is not recommended be
     - ***CTRL*** + ***E***: Force exit the game
     - ***CTRL*** + ***R***: Restart the game
   - **Map**: 
-    - ***W***/***P***: Start Selected Level
+    - ***A***/***P***: Start Selected Level
     - ***D***: Move Forward/Next Level
-    - ***A***: Move Backwards/Previous Level
+    - ***S***: Move Backwards/Previous Level
     - ***Q***: Move to the previous UI (Menu)
   - **Battle**: 
     - *Press the First Letter of an Action, e.g. `A` to attack*
