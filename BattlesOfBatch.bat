@@ -611,9 +611,9 @@ IF NOT "%SHORTCUTS.VALUE%"=="TRUE" (
 )
 IF "%SHORTCUTS.VALUE%"=="TRUE" (
 	ECHO.^|     \   o\/o   /                                                                                 \   o\/o   /     ^|
-	ECHO.^|      \   ^|^|   /                          [0mPress "%RGB.CYAN%A[0m" or "%RGB.CYAN%P[0m" to begin the level.[0m                     \   ^|^|   /      ^|
-	ECHO.^|       \  ^|^|  /               [0m Press "[1;37mV[0m" to jump 7 levels forward or "[1;37mC[0m" to go backwards.[0m           \  ^|^|  /       ^|
-	ECHO.^|        '.^|^|.'                   [0mPress "%RGB.YELLOW%F[0m" to move to the next level, "%RGB.YELLOW%D[0m" for previous.[0m              '.^|^|.'        ^|
+	ECHO.^|      \   ^|^|   /                          [0mPress "%RGB.CYAN%W[0m" or "%RGB.CYAN%P[0m" to begin the level.[0m                     \   ^|^|   /      ^|
+	ECHO.^|       \  ^|^|  /               [0m Press "[1;37mC[0m" to jump 7 levels forward or "[1;37mZ[0m" to go backwards.[0m           \  ^|^|  /       ^|
+	ECHO.^|        '.^|^|.'                   [0mPress "%RGB.YELLOW%D[0m" to move to the next level, "%RGB.YELLOW%A[0m" for previous.[0m              '.^|^|.'        ^|
 	ECHO.^|          ''                                                                                           ''          ^|
 ) ELSE (
 	ECHO.^|     \   o\/o   /             .---------------------------------------------------------.         \   o\/o   /     ^|
@@ -694,9 +694,9 @@ ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
 ENDLOCAL
 IF %CHOICE.INPUT%.==. GOTO MAP
 IF DEFINED SELF_INPUT IF %PLAYER.ITEM.BOMB%==0 ( SET "ERRORLEVEL="&GOTO S-MENU ) ELSE SET ERRORLEVEL=16&SET SELECTED=6
-IF /I %CHOICE.INPUT%==A GOTO PRE_LOAD
+IF /I %CHOICE.INPUT%==W GOTO PRE_LOAD
 IF /I %CHOICE.INPUT%==B GOTO S-MENU
-IF /I %CHOICE.INPUT%==D (
+IF /I %CHOICE.INPUT%==A (
 	SET /A SELECTED=SELECTED-1
 	CALL "%MAP.LOAD%\limit.cmd"
 	IF %SELECTED% LEQ 8 (
@@ -709,7 +709,7 @@ IF /I %CHOICE.INPUT%==D (
 	)
 	GOTO MAP-INPUT
 )
-IF /I %CHOICE.INPUT%==F (
+IF /I %CHOICE.INPUT%==D (
 	SET /A SELECTED=SELECTED+1
 	CALL "%MAP.LOAD%\limit.cmd"
 	IF %SELECTED% LEQ 7 (
@@ -732,11 +732,11 @@ IF /I %CHOICE.INPUT% GEQ 1 IF %CHOICE.INPUT% LEQ 9 (
 	SET /A SELECTED=%CHOICE.INPUT%+AF
 	GOTO MAP
 )
-IF /I %CHOICE.INPUT%==V (
+IF /I %CHOICE.INPUT%==C (
 	SET /A SELECTED=SELECTED+7
 	GOTO MAP
 )
-IF /I %CHOICE.INPUT%==C (
+IF /I %CHOICE.INPUT%==Z (
 	SET /A SELECTED=SELECTED-7
 	GOTO MAP
 )
