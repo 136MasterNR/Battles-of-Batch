@@ -50,7 +50,7 @@ Please note that downloading the game from the source code is not recommended be
     - **Exit/Quit/Back** = End current battle and move to the previous UI (to the Map)
 
 ### Shortcut Keys (#2.1)
-  - **Menu**:
+  - **Menu**: 
     - ***A***/***P***: Level Selection
     - ***Q***: Quests
     - ***W***: Workshop & Upgrades
@@ -58,10 +58,10 @@ Please note that downloading the game from the source code is not recommended be
     - ***CTRL*** + ***E***: Force exit the game
     - ***CTRL*** + ***R***: Restart the game
   - **Map**: 
-    - ***A***/***P***: Start Selected Level
-    - ***F***: Move Forward/Next Level
-    - ***D***: Move Backwards/Previous Level
-    - ***Q***: Move to the previous UI (to the Menu)
+    - ***W***/***P***: Start Selected Level
+    - ***D***: Move Forward/Next Level
+    - ***A***: Move Backwards/Previous Level
+    - ***Q***: Move to the previous UI (Menu)
   - **Battle**: 
     - *Press the First Letter of an Action, e.g. `A` to attack*
     - ***Q*** = End current battle and move to the previous UI (to the Map)
