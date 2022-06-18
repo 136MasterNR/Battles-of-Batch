@@ -86,8 +86,49 @@ Please note that downloading the game from the source code is not recommended be
 ### How it Works : Materials (#3.3)
   - Coming Soon!
 
-## Crafting System
-  - Coming Very Soon!
+## Crafting & Items System
+  - You can craft items by accessing the Shop, and switching to the Craft tab. Every item requires materials for it to be crafted, once you gather all required materials, you will be able to craft your item.
+  - Items serve a rich in-game usage. You can equip weapons and other items such bombs or healing pots through your inventory. Weapons usually give you a big boost when it's about fighting enemies, they can give you extra damage and bonus effects.
+  
+<details><summary>
+
+### List of all Items (Click)
+
+</summary>
+
+      Weapon Items
+        Dustblade (Lvl 1 Lame Blade) {Base Damage: 10}
+        Cold Twill (Lvl 2 Basic Pistol) {Base Damage: 15}
+        Comradehammer (Lvl 15 Super-Fi Heavy Hammer) {Base Damage: 45} [Bonus Effects: 10% Chance to deal a total amount of 150% damage)
+        Stylefi (Lvl 16 Super Neon Pistol) {Base Damage: 60} [Bonus Effects: Extra 2% Crit Rate]
+        Flora Thrower (Lvl 20 Light Blue Toxicthrower) {Base Damage: 75} [Bonus Effects: 10% Chance to Poison a single enemy, lasts for a total of 2 rounds]
+        Trident of Gura (lvl 26 Blue Trident) {Base Damage: 80} [Bonus Effects: 25% Chance to stun a single enemy, skipping their next round]
+        Infernal Blade (Lvl 30 Fire Blade) (Base Damage: 85) [Bonus Effects: 80% Chance to set on fire an enemy, dealing 10% of your base damage on every round]
+        Ornate Cobalt (Lvl 40 Plasma Shooter) {Main Damage: 200} [Bonus Effects: Shares an extra amount of 5% of your base damage to all enemies]
+        Brainleader (Lvl 50 One-Shot Gun) {Base Damage: 5} [Bonus Effects: An extra amount of 495 damage is dealt to ALL enemies on every single round] [Side Effects: -99% HP]
+
+      Artifact Items
+        Healing Potion (Lvl 1 Healing Item) {Effects: Heals you by 15% when used, and again 5% when the next round finishes}
+        Oracle Shield (Lvl 4 Buff Item) {Effects: Take 30% less damage for 4 rounds, 20% chance to stun all enemies, skipping their next round}
+        Cup of Misery (Lvl 8 Buff Item) {Effects: Extra 10% base damage for 4 rounds}
+        Totem of Salute (Lvl 10 Buff Item) {Effects: If you lose all your HP on the next round, your HP will be increased by 100%}
+        Barrel Bomb (Lvl 14 Explosive Item) {Effects: Deals 60% of your base damage to all enemies}
+
+      Armour Items
+        Boots of the Aether (Lvl 45) {Effects: Increases HP by 20%, automatically heals you by 20% every 3 rounds, if HP already maxed then max HP increases by 20%}
+
+      Material Items
+        Stained Dust (Lvl 1 Material)
+        Reactive Powder (Lvl 8 Material)
+        Light Resin (Lvl 12 Material)
+        Double Marble (Lvl 18 Material)
+        Prism Dust (Lvl 18 Material)
+        Exalted Nickel (Lvl 24 Material)
+        Eternal Ethereal (Lvl 40 Material)
+
+</details>
+
+<br/>
 
 ## Levels & Story
 
