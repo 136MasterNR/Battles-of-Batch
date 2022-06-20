@@ -38,7 +38,7 @@ Please note that downloading the game from the source code is not recommended be
     - **Play**/**Start**: Level Selection
     - **Quests**: Quests
     - **Shop**: Items Shop & Skill Upgrades
-    - **Settings**/**Options**: Cahnge your Preferences
+    - **Settings**/**Options**: Change your Preferences
     - **Exit**: Exit The Game
   - **Map**: 
     - **Play**/**Start**: Start Selected Level
