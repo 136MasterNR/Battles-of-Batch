@@ -57,6 +57,7 @@ Please note that downloading the game from the source code is not recommended be
     - ***S***: Settings/Options
     - ***CTRL*** + ***E***: Force exit the game
     - ***CTRL*** + ***R***: Restart the game
+    - ***CTRL*** + ***SHIFT*** + ***6***: Reset all your player data.
   - **Map**: 
     - ***A***/***P***: Start Selected Level
     - ***D***: Move Forward/Next Level
