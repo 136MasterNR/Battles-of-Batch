@@ -40,6 +40,8 @@ Please note that downloading the game from the source code is not recommended be
     - **Shop**: Items Shop & Skill Upgrades
     - **Settings**/**Options**: Change your Preferences
     - **Exit**: Exit The Game
+    - **Reset**: Reset your player data.
+    - **HTS**: LGBTQIA+
   - **Map**: 
     - **Play**/**Start**: Start Selected Level
     - **Forward**: Move Forward/Next Level
@@ -58,6 +60,7 @@ Please note that downloading the game from the source code is not recommended be
     - ***CTRL*** + ***E***: Force exit the game
     - ***CTRL*** + ***R***: Restart the game
     - ***CTRL*** + ***SHIFT*** + ***6***: Reset all your player data.
+    - ***CTRL*** + ***SHIFT*** + ***-***: LGBTQIA+
   - **Map**: 
     - ***A***/***P***: Start Selected Level
     - ***D***: Move Forward/Next Level
