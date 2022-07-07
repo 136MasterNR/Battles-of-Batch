@@ -59,7 +59,7 @@ Please note that downloading the game from the source code is not recommended be
     - ***S***: Settings/Options
     - ***CTRL*** + ***E***: Force exit the game
     - ***CTRL*** + ***R***: Restart the game
-    - ***CTRL*** + ***SHIFT*** + ***6***: Reset all your player data.
+    - ***CTRL*** + ***SHIFT*** + ***6***: Reset all your player data.=
     - ***CTRL*** + ***SHIFT*** + ***-***: LGBTQIA+
   - **Map**: 
     - ***A***/***P***: Start Selected Level
@@ -68,6 +68,7 @@ Please note that downloading the game from the source code is not recommended be
     - ***Q***: Move to the previous UI (Menu)
   - **Battle**: 
     - *Press the First Letter of an Action, e.g. `A` to attack*
+    - ***E***: Cast special skill
     - ***Q*** = End current battle and move to the previous UI (to the Map)
 
 
