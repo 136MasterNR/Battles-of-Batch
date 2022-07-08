@@ -1,34 +1,11 @@
 IF NOT DEFINED VERCODE EXIT
 ::CONFIG
-SET "REWARD.MONEY=110,+90"
+SET "REWARD.MONEY=90,+110"
 SET "REWARD.XP=145,+330"
-SET "ENEMY.ATK.AMOUNT.1=7,+5"
-SET "ENEMY.ATK.AMOUNT.2=7,+5"
-SET "ENEMY.ATK.AMOUNT.3=7,+5"
-SET "ENEMY.HP.AMOUNT.1=70,+335"
-SET "ENEMY.HP.AMOUNT.2=70,+335"
-SET "ENEMY.HP.AMOUNT.3=70,+335"
-SET "EN.1.LINE.1=  \\\  ///   "
-SET "EN.1.LINE.2=  ((O)(O))   "
-SET "EN.1.LINE.3=   ^| \ ^|^|    "
-SET "EN.1.LINE.4=   ^|^|\\^|^|    "
-SET "EN.1.LINE.5=   ^|^| \ ^|    "
-SET "EN.1.LINE.6=   ^|^|  ^|^|    "
-SET "EN.1.LINE.7=  (_/  \_)   "
-SET "EN.2.LINE.1=  \\\  ///   "
-SET "EN.2.LINE.2=  ((O)(O))   "
-SET "EN.2.LINE.3=   ^| \ ^|^|    "
-SET "EN.2.LINE.4=   ^|^|\\^|^|    "
-SET "EN.2.LINE.5=   ^|^| \ ^|    "
-SET "EN.2.LINE.6=   ^|^|  ^|^|    "
-SET "EN.2.LINE.7=  (_/  \_)   "
-SET "EN.3.LINE.1=  \\\  ///   "
-SET "EN.3.LINE.2=  ((O)(O))   "
-SET "EN.3.LINE.3=   ^| \ ^|^|    "
-SET "EN.3.LINE.4=   ^|^|\\^|^|    "
-SET "EN.3.LINE.5=   ^|^| \ ^|    "
-SET "EN.3.LINE.6=   ^|^|  ^|^|    "
-SET "EN.3.LINE.7=  (_/  \_)   "
+SET "EN.MAX=3"
+CALL "%ENEMY%" N 1 1
+CALL "%ENEMY%" N 2 1
+CALL "%ENEMY%" N 3 1
 SET LOC.EN.1=[5;87H
 SET LOC.EN.2=[14;92H
 SET LOC.EN.3=[23;86H
@@ -38,5 +15,4 @@ SET MOV.EN.3=[85C
 SET LOC.HP.1=[4;87H
 SET LOC.HP.2=[13;92H
 SET LOC.HP.3=[22;86H
-SET LOC.HP.P=[10;4H
 GOTO :EOF

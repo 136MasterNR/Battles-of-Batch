@@ -4,25 +4,25 @@ CALL :C%2
 CALL :%1
 EXIT /B 0
 :1
-ECHO.[1C%RGB.LVL%                 Difficulty[0m: [1mEasy    %RGB.TRUE%Recommended Lvl[0m: [1m1    %RGB.FALSE%Enemies[0m: [1mYara(L:1)[0m, [1mYara(L:1)[0m, [1mYara(L:1)                [0m
+ECHO.[1C%RGB.LVL%                 Difficulty[0m: [1mEasy    %RGB.TRUE%Recommended Lvl[0m: [1m1    %RGB.FALSE%Enemies[0m: [1mYara(L:1)[0m, [1mYara(L:1)[0m, [1mYara(L:2)                [0m
 EXIT /B 0
 :2
-ECHO.[1C                       Difficulty: ?    %RGB.TRUE%Recommended Lvl[0m: [1m4[0m    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C%RGB.LVL%               Difficulty[0m: [1mEasy     %RGB.TRUE%Recommended Lvl[0m: [1m3    %RGB.FALSE%Enemies[0m: [1mJumpo(L:1)[0m, [1mJumpo(L:1)[0m, [1mYara(L:3)               [0m
 EXIT /B 0
 :3
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C%RGB.LVL%               Difficulty[0m: [1mEasy     %RGB.TRUE%Recommended Lvl[0m: [1m5    %RGB.FALSE%Enemies[0m: [1mNimbo(L:1)[0m, [1mNimbo(L:1)[0m, [1mNimbo(L:1)              [0m
 EXIT /B 0
 :4
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C%RGB.LVL%              Difficulty[0m: [1mEasy     %RGB.TRUE%Recommended Lvl[0m: [1m6    %RGB.FALSE%Enemies[0m: [1mFrench(L:1)[0m, [1mFrench(L:1)[0m, [1mNimbo(L:2)             [0m
 EXIT /B 0
 :5
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C%RGB.LVL%               Difficulty[0m: [1mEasy     %RGB.TRUE%Recommended Lvl[0m: [1m8    %RGB.FALSE%Enemies[0m: [1mFrench(L:2)[0m, [1mSnek(L:1)[0m, [1mSnek(L:1)               [0m
 EXIT /B 0
 :6
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C%RGB.LVL%                Difficulty[0m: [1mEasy     %RGB.TRUE%Recommended Lvl[0m: [1m10    %RGB.FALSE%Enemies[0m: [1mYara(L:5)[0m, [1mNine(L:1)[0m, [1mNine(L:1)               [0m
 EXIT /B 0
 :7
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C%RGB.LVL%                Difficulty[0m: [1mEasy     %RGB.TRUE%Recommended Lvl[0m: [1m13   %RGB.FALSE%Enemies[0m: [1mJumpo(L:4)[0m, [1mLose(L:1)[0m, [1mJumpo(L:4)              [0m
 EXIT /B 0
 :8
 ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
