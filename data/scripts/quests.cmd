@@ -75,7 +75,7 @@ SET TESTQPERC=%Q.PERC:~0,-3%
 IF NOT DEFINED TESTQPERC SET Q.PERC=0000
 
 ECHO.  .----------------------------------------------------.  
-ECHO.--' [1;37mQuest #3[0m: [s                                         '--
+ECHO.--' [1;37mQuest #4[0m: [s                                         '--
 ECHO.[u"%QNAME.TLVLS%"
 ECHO.    %RGB%255;247;94mObjective[0m: [s                                           
 ECHO.[u%QDESC.TLVLS%
