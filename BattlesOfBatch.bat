@@ -989,7 +989,7 @@ ECHO. ╞══════════════════════╬�
 ECHO. │    %RGB%187;203;250mShortcut Keys[0m     ║              ║    %RGB%194;255;255mPress one key to navigate instead of typing. Use "keys" to toggle.     │ [88D[s
 IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[u%RGB%163;255;177m√ %SHORTCUTS.VALUE%[0m ) ELSE ( ECHO.[u%RGB%255;89;89mΧ %SHORTCUTS.VALUE%[0m )
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │      %RGB%187;203;250mShow Intro[0m      ║              ║    %RGB%194;255;255mPress one key to navigate instead of typing. Use "keys" to toggle.     │ [88D[s
+ECHO. │      %RGB%187;203;250mShow Intro[0m      ║              ║    %RGB%194;255;255mDon't show the HTS intro on startup. Use "intro" to toggle.            │ [88D[s
 IF "%SHOW.INTRO%"=="TRUE" ( ECHO.[u%RGB%163;255;177m√ %SHOW.INTRO%[0m ) ELSE ( ECHO.[u%RGB%255;89;89mΧ %SHOW.INTRO%[0m )
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
 ECHO. │                      ║              ║                                                                           │ 
