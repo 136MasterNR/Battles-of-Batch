@@ -404,6 +404,7 @@ SET SCSCRIPT="%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs"
 	ECHO oLink.Save
 ) > %SCSCRIPT%
 CSCRIPT /nologo %SCSCRIPT% || CALL :ERROR ERRLINE ID0003    -0
+CSCRIPT /nologo %SCSCRIPT% || CALL :ERROR ERRLINE ID0003    -0
 DEL %SCSCRIPT%
 :SYSLOAD
 ::System: Input 
@@ -419,7 +420,7 @@ FOR /F %%A IN ('"PROMPT $H$E&FOR %%B IN (1) DO REM"') DO SET "BS=%%A"
 IF NOT DEFINED AUDIO.VALUE CALL :SETT_ERR
 IF NOT DEFINED VOLUME CALL :SETT_ERR
 IF %AUDIO.VALUE%==TRUE ( TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL&START /MIN "" "%AudioManager%" || CALL :ERROR ERRLINE ID0004    -0 )
-ECHO.[u Finalizing ... 
+ECHO.[u Finalizing ...           
 :RESTART
 MODE CON:COLS=%COLS% LINES=%LINES%
 TITLE %TITLE%HTS
@@ -989,7 +990,7 @@ ECHO. ╞══════════════════════╬�
 ECHO. │    %RGB%187;203;250mShortcut Keys[0m     ║              ║    %RGB%194;255;255mPress one key to navigate instead of typing. Use "keys" to toggle.     │ [88D[s
 IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[u%RGB%163;255;177m√ %SHORTCUTS.VALUE%[0m ) ELSE ( ECHO.[u%RGB%255;89;89mΧ %SHORTCUTS.VALUE%[0m )
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │      %RGB%187;203;250mShow Intro[0m      ║              ║    %RGB%194;255;255mDon't show the HTS intro on startup. Use "intro" to toggle.            │ [88D[s
+ECHO. │      %RGB%187;203;250mShow Intro[0m      ║              ║    %RGB%194;255;255mWhether to show the HTS intro on startup. Use "intro" to toggle.       │ [88D[s
 IF "%SHOW.INTRO%"=="TRUE" ( ECHO.[u%RGB%163;255;177m√ %SHOW.INTRO%[0m ) ELSE ( ECHO.[u%RGB%255;89;89mΧ %SHOW.INTRO%[0m )
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
 ECHO. │                      ║              ║                                                                           │ 
