@@ -79,7 +79,7 @@ Please note that downloading the game from the source code is not recommended be
   - Every enemy deals its own damage, so this means once one enemy is dead it will no longer deal damage, dealing less total damage to the player.
 
 ### How it Works : Skills (#3.1)
-  - **Main Attack**: Increases you base damage.
+  - **Main Attack**: Increases your base damage.
   - **Crit Rate**: Increases the chance to throw a critical strike to an enemy.
   - **Max Health**: Increases maximum HP by 100.
 
@@ -88,10 +88,7 @@ Please note that downloading the game from the source code is not recommended be
   - **Heal**: Gives the player HP. This does not skip the next enemy round/action, and still take damage. Thus it's upgradable.
   - More coming soon.
 
-### How it Works : Materials (#3.3)
-  - Coming Soon!
-
-## Crafting & Items System
+### How it Works : Crafting Items [FUTURE UPDATE]
   - You can craft items by accessing the Shop, and switching to the Craft tab. Every item requires materials for it to be crafted, once you gather all required materials, you will be able to craft your item.
   - Items serve a rich in-game usage. You can equip weapons and other items such bombs or healing pots through your inventory. Weapons usually give you a big boost when it's about fighting enemies, they can give you extra damage and bonus effects.
   
