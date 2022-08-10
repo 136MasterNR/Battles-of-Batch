@@ -57,6 +57,7 @@ Please note that downloading the game from the source code is not recommended be
     - ***Q***: Quests
     - ***W***: Workshop & Upgrades
     - ***S***: Settings/Options
+    - ***C***: Credits
     - ***CTRL*** + ***E***: Force exit the game
     - ***CTRL*** + ***R***: Restart the game
     - ***CTRL*** + ***SHIFT*** + ***6***: Reset all your player data.=
@@ -72,7 +73,7 @@ Please note that downloading the game from the source code is not recommended be
     - ***Q*** = End current battle and move to the previous UI (to the Map)
 
 
-## Strategy Method
+# Strategy Methods
 ### How it Works : Enemies (#3.0)
   - Enemies spawn with a random amount of HP, the amount increases depending on the level you have selected.
   - Enemies deal a random amount of damage to the player, the amount increases depending on the level you have selected.
@@ -132,7 +133,7 @@ Please note that downloading the game from the source code is not recommended be
 
 <br/>
 
-## Levels & Story
+# Levels & Story
 
 <details><summary>
 
@@ -194,7 +195,7 @@ Please note that downloading the game from the source code is not recommended be
 
 </details>
 
-## User Interfaces
+# User Interfaces
 ### Shop (#4.0)
   - **Items**: Items require in-game currency and specific character level. The level requirement is displayed as the symbol "↑", and currency as the symbol "$".
   - **Skills**: More Info Soon!
