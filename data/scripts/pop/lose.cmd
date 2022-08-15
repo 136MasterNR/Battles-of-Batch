@@ -31,3 +31,4 @@ CLS
 ECHO.You died! You lost $%PLAYER.MONEY.LOSE%...
 ECHO.Press any key to return to the Menu.
 PAUSE>NUL
+EXIT /B 0

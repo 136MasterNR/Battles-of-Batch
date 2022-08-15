@@ -12,4 +12,4 @@ SET "Replacement=SET %2=%NEWVALUE%"
 ))>"%file%.new"
 MOVE "%file%.new" "%file%">NUL
 CALL "%DATA_SAVES%\PLAYERDATA.cmd"
-GOTO :EOF
+EXIT /B 0

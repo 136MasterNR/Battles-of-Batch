@@ -1,3 +1,5 @@
+::This is a testing file, it is not used anywhere in the game.
+
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET Y=%2
 SET X=%3

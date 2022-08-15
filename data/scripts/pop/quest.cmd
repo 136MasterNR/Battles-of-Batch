@@ -14,4 +14,4 @@ ECHO.[1B[46C^|                        ^|
 ECHO.[46C[1;37m'.__________[4m[sOK[0m[1;37m__________.'
 SET /P "=[u"<NUL 
 PAUSE>NUL
-GOTO :EOF
+EXIT /B 0

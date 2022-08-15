@@ -10,4 +10,4 @@ SET "Replacement=SET PLAYER.XP=%PLAYER.XP%"
     ENDLOCAL
 ))>"%file%.new"
 MOVE "%file%.new" "%file%">NUL
-GOTO :EOF
+EXIT /B 0

@@ -1,4 +1,5 @@
 IF NOT DEFINED DATA_TMP EXIT
+TITLE %TITLE%HTS
 SET "TIMEOUT_METHOD=HELP>NUL"
 ::__/\\\________/\\\__/\\\\\\\\\\\\\\\_____/\\\\\\\\\\\___        
 :: _\/\\\_______\/\\\_\///////\\\/////____/\\\/////////\\\_       
@@ -699,4 +700,4 @@ CSCRIPT "%WAIT%" 55 >NUL
 ECHO.[u[8Df STUDIOS[s
 CSCRIPT "%WAIT%" 55 >NUL
 ECHO.[u[8Dt STUDIOS[s
-GOTO :EOF
+EXIT /B 0

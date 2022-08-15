@@ -15,11 +15,11 @@ CURL -S "https://htssoft.tk/get-update/battlesofbatch.bat" --SSL-NO-REVOKE >"./d
 	) ELSE ( ECHO.UPDATER: Failed to check for updates because the information was not recognized. )
 	SET OUTOFDATE=UNRE
 	IF EXIST "%UPDATE.LOC%" DEL /Q "%UPDATE.LOC%"
-	GOTO :EOF
+	EXIT /B 0
 )
 IF %UPDATE.VER%==%VERCODE% (
 	IF EXIST "%UPDATE.LOC%" DEL /Q "%UPDATE.LOC%"
-	GOTO :EOF
+	EXIT /B 0
 )
 IF EXIST "updatenow.info" GOTO INSTANT_UPDATE
 :REPEAT
@@ -53,9 +53,9 @@ IF ERRORLEVEL 25 (
 	EXIT
 )
 IF ERRORLEVEL 15 GOTO REPEAT
-IF ERRORLEVEL 14 GOTO :EOF
+IF ERRORLEVEL 14 EXIT /B 0
 IF ERRORLEVEL 0 GOTO REPEAT
-GOTO :EOF
+EXIT /B 0
 :UNZIPFILE <ExtractTo> <ZipLocation>
 SET VBS="%TMP%\_.VBS"
 IF EXIST "%VBS%" DEL /F /Q "%VBS%"
@@ -87,14 +87,14 @@ CURL -S "%UPDATE.URL%" --SSL-NO-REVOKE >"%UPDZIP.LOC%"
 ECHO. Replacing new files ...
 SETLOCAL
 CALL :UNZIPFILE "%EXTRAC.LOC%" "%UPDZIP.LOC%"
-GOTO :EOF
+EXIT /B 0
 :MANUAL
 CLS
 @SETLOCAL ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION
 @ECHO OFF
 SET STATE=OFFLINE
 FOR /f "tokens=5,6,7" %%a IN ('PING -n 1 1.0.0.1') do (
-	IF "x%%b"=="xunreachable." ECHO.No internet connection.&PAUSE>NUL&GOTO :EOF
+	IF "x%%b"=="xunreachable." ECHO.No internet connection.&PAUSE>NUL&EXIT /B 0
     IF "x%%a"=="xReceived" IF "x%%c"=="x1," (ECHO.YOU: ONLINE) ELSE ECHO.Something went wrong.
 )
 SET STATE=OFFLINE
@@ -109,4 +109,4 @@ FOR /f "tokens=5,6,7" %%a IN ('PING -n 1 htssoft.tk') do (
 ECHO.SERVICE: !STATE!
 ENDLOCAL
 PAUSE>NUL
-GOTO :EOF
+EXIT /B 0

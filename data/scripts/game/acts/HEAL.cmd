@@ -3,7 +3,7 @@ IF %PLAYER.ITEM.HEAL% LSS 1 (
 	ECHO.[47;3H%RGB%255;18;18mYou don't have enough items![0m
 	PAUSE>NUL
 	ECHO.[47;3H                            
-	GOTO :EOF
+	EXIT /B 0
 )
 SET "file=%DATA_SAVES%\PLAYERDATA.cmd"
 SET /A Line#ToSearch=5
@@ -24,4 +24,4 @@ IF %PLAYER.HP.NOW% GTR %PLAYER.HP.FULL% (
 	SET PLAYER.HEAL.AMOUNT=0
 )
 CALL "%ACT.ENEMY_ATK%"
-GOTO :EOF
+EXIT /B 0

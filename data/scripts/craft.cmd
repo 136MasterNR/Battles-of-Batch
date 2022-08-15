@@ -3,8 +3,4 @@ IF DEFINED INPUT CALL :%1
 EXIT /B 0
 
 :VAR-ITEMS
-
-
-
-
 EXIT /B 0

@@ -56,4 +56,4 @@ SET "Replacement=SET Q.TOTAL_MONSTERS=%Q.TOTAL_MONSTERS%"
     ENDLOCAL
 ))>"%file%.new"
 MOVE "%file%.new" "%file%">NUL
-GOTO :EOF
+EXIT /B 0

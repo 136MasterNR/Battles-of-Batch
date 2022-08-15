@@ -1,7 +1,7 @@
 IF NOT DEFINED VERCODE EXIT
 TITLE %TITLE%Items Shop
 IF TRUE==TRUE (
-ECHO.[0;0H[0m.---------------------------------------------.-------.-------.-------.---------------------------------------------.
+ECHO.[?25l[0;0H[0m.---------------------------------------------.-------.-------.-------.---------------------------------------------.
 ECHO.^|                                             ^| Craft ^| [4m[1mItems[0m ^| Skill ^|                                             ^|
 ECHO.^|                                             '-------'-------'-------'                                             ^|
 ECHO.^|                                                      .-----.                                                      ^|
@@ -56,4 +56,4 @@ ECHO.[32A[3C%RGB%255;255;255mBomb[0m : %C_MONELOCKED%100[0m : %C_LVLLOCKED%â
 IF %PLAYER.LVL% GEQ %SHOP.LVLREQ.HEAL% (SET C_LVLLOCKED=%RGB%50;204;33m&SET C_LVLLOCKED.NUM=%RGB%128;200;255m) ELSE (SET C_LVLLOCKED=%RGB%255;46;46m&SET C_LVLLOCKED.NUM=[4m%RGB%255;46;46m)
 IF %PLAYER.MONEY% GEQ %SHOP.PRICE.HEAL% (SET C_MONELOCKED=%RGB%70;232;110m$) ELSE (SET C_MONELOCKED=%RGB%255;46;46m$[4m)
 ECHO.[1A[82C%RGB%255;255;255mHeal[0m : %C_MONELOCKED%10[0m : %C_LVLLOCKED%â†‘%C_LVLLOCKED.NUM%%SHOP.LVLREQ.HEAL%[0m         [%RGB%143;186;194m%PLAYER.ITEM.HEAL%[0m/%RGB%143;186;194m%SHOP.MAX.HEAL%[0m]
-GOTO :EOF
+EXIT /B 0

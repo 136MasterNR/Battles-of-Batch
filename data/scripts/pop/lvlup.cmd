@@ -10,4 +10,4 @@ ECHO.[49C'._______[4m[sOK[0m[1;37m_______.'
 SET /P "=[u"<NUL
 PAUSE>NUL
 SET OLD.PLAYER.LVL=%PLAYER.LVL%
-GOTO :EOF
+EXIT /B 0

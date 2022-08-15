@@ -1,4 +1,4 @@
-ECHO.[2;44H%RGB.COIN%Map Chapter[0m: [1m%CHAPTER%     %RGB.COIN%Battle[0m: [1m%SELECTED%                                             [0m
+ECHO.[2;44H%RGB.COIN%Map Chapter[0m: [1m%CHAPTER%     %RGB.COIN%Battle[0m: [1m%SELECTED%                                            [0m
 ECHO.
 CALL :C%2
 CALL :%1
@@ -16,13 +16,13 @@ EXIT /B 0
 ECHO.[1C%RGB.LVL%              Difficulty[0m: [1mEasy     %RGB.TRUE%Recommended Lvl[0m: [1m6    %RGB.FALSE%Enemies[0m: [1mFrench(L:1)[0m, [1mFrench(L:1)[0m, [1mNimbo(L:2)             [0m
 EXIT /B 0
 :5
-ECHO.[1C%RGB.LVL%               Difficulty[0m: [1mEasy     %RGB.TRUE%Recommended Lvl[0m: [1m8    %RGB.FALSE%Enemies[0m: [1mFrench(L:2)[0m, [1mSnek(L:1)[0m, [1mSnek(L:1)               [0m
+ECHO.[1C%RGB.LVL%                Difficulty[0m: [1mEasy     %RGB.TRUE%Recommended Lvl[0m: [1m8    %RGB.FALSE%Enemies[0m: [1mFrench(L:2)[0m, [1mSnek(L:1)[0m, [1mSnek(L:1)              [0m
 EXIT /B 0
 :6
 ECHO.[1C%RGB.LVL%                Difficulty[0m: [1mEasy     %RGB.TRUE%Recommended Lvl[0m: [1m10    %RGB.FALSE%Enemies[0m: [1mYara(L:5)[0m, [1mNine(L:1)[0m, [1mNine(L:1)               [0m
 EXIT /B 0
 :7
-ECHO.[1C%RGB.LVL%                Difficulty[0m: [1mEasy     %RGB.TRUE%Recommended Lvl[0m: [1m13   %RGB.FALSE%Enemies[0m: [1mJumpo(L:4)[0m, [1mLose(L:1)[0m, [1mJumpo(L:4)              [0m
+ECHO.[1C%RGB.LVL%               Difficulty[0m: [1mMedium     %RGB.TRUE%Recommended Lvl[0m: [1m13   %RGB.FALSE%Enemies[0m: [1mJumpo(L:4)[0m, [1mLose(L:1)[0m, [1mJumpo(L:4)             [0m
 EXIT /B 0
 :8
 ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
@@ -70,7 +70,7 @@ EXIT /B 0
 
 :C1
 SETLOCAL ENABLEDELAYEDEXPANSION
-ECHO.[3;26H[1m%RGB.CYAN%Chapter Difficulty[0m: [1mMedium     %RGB.CYAN%Story[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= !     %RGB.CYAN%Total Wins[0m: [1m%COMPLETED.MAPS%             [0m
+ECHO.[3;20H        [1m%RGB.CYAN%Chapter Difficulty[0m: [1mEasy     %RGB.CYAN%Story[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= !     %RGB.CYAN%Total Wins[0m: [1m%COMPLETED.MAPS%             [0m
 ENDLOCAL
 EXIT /B 0
 

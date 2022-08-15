@@ -86,4 +86,4 @@ ECHO..--------------------------------------------------------------------------
 IF %ENEMY.HP.NOW.T% LEQ 0 GOTO WIN
 IF %PLAYER.HP.NOW% LEQ 0 GOTO LOSE
 SET "ADD-CMD=CLS&GOTO IN-BATTLE"
-GOTO :EOF
+EXIT /B 0

@@ -1,7 +1,7 @@
 IF NOT DEFINED VERCODE EXIT
 CALL %PLAYERSKILLS.LOAD%
 TITLE %TITLE%Upgrades Shop
-ECHO.[0;0H[0m.---------------------------------------------.-------.-------.-------.---------------------------------------------.
+ECHO.[?25h[0;0H[0m.---------------------------------------------.-------.-------.-------.---------------------------------------------.
 ECHO.^|                                             ^| Craft ^| Items ^| [4m[1mSkill[0m ^|                                             ^|
 ECHO.^|                                             '-------'-------'-------'                                             ^|
 ECHO.^|                                                      .-----.                                                      ^|
@@ -76,4 +76,4 @@ IF %PLAYER.LVL% GEQ %LVL.REQ.HP% (SET C_LVLLOCKED=%RGB%50;204;33m&SET C_LVLLOCKE
 IF %PLAYER.MONEY% GEQ %SKILL.COST.HP% (SET C_MONELOCKED=%RGB%70;232;110m$) ELSE (SET C_MONELOCKED=%RGB%255;46;46m$[4m)
 ECHO.[23;6H%RGB%250;255;184mMax Health[0m   ==   [1m▸%RGB%143;186;194m%SKILL.HP%[0m[23;50H[1mEffects[0m: HP %RGB%138;255;220m+%STAT.NUM.HP%
 IF %LVL.REQ.HP%==MAX (ECHO.[23;90H%RGB%128;200;255mMaximum Level[0m) ELSE ECHO.[23;92H%C_MONELOCKED%%SKILL.COST.HP%[0m : %C_LVLLOCKED%↑%C_LVLLOCKED.NUM%%LVL.REQ.HP%[0m[22;86H%RGB%255;220;180mUpgrade Requirements:[24;89H%RGB%138;146;255mNext Level[0m: [1m▴%RGB%66;142;255m%NEXT.LVL.HP%
-GOTO :EOF
+EXIT /B 0

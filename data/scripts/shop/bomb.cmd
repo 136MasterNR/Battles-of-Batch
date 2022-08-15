@@ -7,22 +7,22 @@ SET /A ITEM.HOLD.MORE.BOMB=MAX.ITEMS-PLAYER.ITEM.BOMB
 IF NOT %PLAYER.LVL% GEQ %SHOP.LVLREQ.BOMB% (
 	ECHO.[1A[48C%RGB%255;0;0mThis item is locked!
 	PAUSE>NUL
-	GOTO :EOF
+	EXIT /B 0
 )
 IF %SHOP.BOMB.AMOUNT% GTR 100 (
 	ECHO.[2B[40C%RGB%255;0;0mYou can only buy 100 items at a time!
 	PAUSE>NUL
-	GOTO :EOF
+	EXIT /B 0
 )
 IF %ITEM.BOMB.COUNT.T% GTR %MAX.ITEMS% (
 	ECHO.[2B[18C%RGB%255;0;0mYou currently have %PLAYER.ITEM.BOMB%/%MAX.ITEMS% of this item! You can't buy any more than %ITEM.HOLD.MORE.BOMB% at this time!
 	PAUSE>NUL
-	GOTO :EOF
+	EXIT /B 0
 )
 IF %PLAYER.MONEY% LSS %ITEM.BOMB.COST% (
 	ECHO.[1A[44C%RGB%255;0;0mYou don't have enough money!
 	PAUSE>NUL
-	GOTO :EOF
+	EXIT /B 0
 )
 SET "file=%DATA_SAVES%\PLAYERDATA.cmd"
 SET /A Line#ToSearch=6
@@ -47,4 +47,4 @@ SET "Replacement=SET PLAYER.MONEY=%PLAYER.MONEY%"
     ENDLOCAL
 ))>"%file%.new"
 MOVE "%file%.new" "%file%">NUL
-GOTO :EOF 
+EXIT /B 0 

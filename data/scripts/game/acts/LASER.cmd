@@ -214,4 +214,4 @@ REM FRAME: D:19
 ECHO.[u                                                            '.-
 CSCRIPT "%WAIT%" %S.TIME% >NUL
 ECHO.[u                                                                [0m[47;2H[s
-GOTO :EOF
+EXIT /B 0

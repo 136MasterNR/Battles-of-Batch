@@ -2,17 +2,17 @@ IF NOT DEFINED VERCODE EXIT
 IF %1==MAX (
 	ECHO.[1A[44C%RGB%255;0;0mThis skill is already at max!
 	PAUSE>NUL
-	GOTO :EOF
+	EXIT /B 0
 )
 IF NOT %PLAYER.LVL% GEQ %2 (
 	ECHO.[1A[44C%RGB%255;0;0mThis skill upgrade is locked!
 	PAUSE>NUL
-	GOTO :EOF
+	EXIT /B 0
 )
 IF %PLAYER.MONEY% LSS %3 (
 	ECHO.[1A[44C%RGB%255;0;0mYou don't have enough money!
 	PAUSE>NUL
-	GOTO :EOF
+	EXIT /B 0
 )
 SET "file=%DATA_SAVES%\SKILLS.cmd"
 SET /A Line#ToSearch=%4
@@ -38,4 +38,4 @@ SET "Replacement=SET PLAYER.MONEY=%PLAYER.MONEY%"
     ENDLOCAL
 ))>"%file%.new"
 MOVE "%file%.new" "%file%">NUL
-GOTO :EOF
+EXIT /B 0

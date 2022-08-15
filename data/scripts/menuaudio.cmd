@@ -34,4 +34,4 @@ IF %AUDIO.VALUE%==TRUE (
 		)
 	)
 )
-GOTO :EOF
+EXIT /B 0
