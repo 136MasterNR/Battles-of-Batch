@@ -1,5 +1,5 @@
-IF NOT EXIST "%PLAYERDATA.ITEMS%" ECHO.>"%PLAYERDATA.ITEMS%"
-GOTO %1 %2 %3
+@IF NOT EXIST "%PLAYERDATA.ITEMS%" ECHO.>"%PLAYERDATA.ITEMS%"
+@GOTO %1 %2 %3
 
 :REGISTER
 SET TMP.NAME=
@@ -195,3 +195,29 @@ EXIT /B 0
 :FINAL-COUNT
 SET FINAL.COUNT=%COUNT%
 EXIT /B 0
+
+:ADD
+ECHO.%1ed %3 lvl:%4 in %2
+SET "ARG=%2"
+SET "ARG0=%3"
+SET "ARG1=%4"
+@IF NOT DEFINED ARG (
+	@ECHO.[38;5;196mError[0m: Missing arguement.
+	EXIT /B 1
+)
+@IF NOT DEFINED ARG0 (
+	@ECHO.[38;5;196mError[0m: Missing arguement.
+	EXIT /B 1
+)
+@IF NOT DEFINED ARG1 (
+	@ECHO.[38;5;196mError[0m: Missing arguement.
+	EXIT /B 1
+)
+
+@IF /I "%ARG%"=="WEAPONS" (
+	@ECHO.%3$%4$0>>"%PLAYERDATA.WEAPONS%"
+)
+@IF /I "%ARG%"=="ITEMS" (
+	@ECHO.%3!%4>>"%PLAYERDATA.ITEMS%"
+) ELSE @ECHO.[38;5;196mInvalid arguement[0m: The requested destination is invalid.
+@EXIT /B 0
