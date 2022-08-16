@@ -142,6 +142,9 @@ Please note that downloading the game from the source code is not recommended be
 
 </summary>
 
+  - **Prologue**:
+    - Enemies: More Info Soon!
+    - Story: Coming Soon!
   - **Level 1**:
     - Enemies: More Info Soon!
     - Story: Coming Soon!
@@ -198,14 +201,15 @@ Please note that downloading the game from the source code is not recommended be
 
 # User Interfaces
 ### Shop (#4.0)
-  - **Items**: Items require in-game currency and specific character level. The level requirement is displayed as the symbol "↑", and currency as the symbol "$".
-  - **Skills**: More Info Soon!
+  - **Items**: Items require in-game currency and specific character level. The level requirement is displayed as the symbol "↑", and currency as the symbol "$". The UI is categorized in 3 categories, first is Weapons and other sources that deal damage, second is Crafting Materials which are used for crafting items or weapons, and third is Potions and Other, which are used as support items.
+  - **Skills**: Upgrading skills is very important. It gives you an amount of permant benefits in the game. To upgrade a skill, you must meet the requirements, such as currency, which is represented as the symbol "$" and level, which is represented as the symbol "↑". The UI has a total of 5 upgradable skills. The first one is Base Attack which makes you deal more damage to enemies, second is Crit Rate which gives you more chance to make a critical strike, third is Max HP which gives you more total HP when in battle.
+  - **Craft**: More Info Soon!
 
 ### Quests (#4.1)
-  - More Info Soon!
+  - Quests are important for quickly progressing through the game, once a quest is done, you get rewarded with lots of XP and Coins.
 
 ### Options (#4.2)
-  - More Info Soon!
+  - The options UI lets you customize your preferences. By typing the name of an option, you can toggle it off/on or set a specific value to it.
  
 # Explaining Technical Features
 ### Gameplay Features
@@ -236,11 +240,18 @@ Please note that downloading the game from the source code is not recommended be
 ### Code your own levels
   - Coming Soon!
 
+### Create your own enemies
+  - Coming Soon!
+
+### Create your own items
+  - Coming Soon!
+
 ### Use Commands for Devs
   - Go to the menu, and type `cmd`, then type `commands` to list all available dev cmds. If shortcut keys enabled, hit CTRL + T.
     - **clear**: Clears the console window.
     - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, and reverts some User Interfaces back to preDev versions.
     - **import**: Display an [ANSI](https://www.robvanderwoude.com/ansi.php) text file. Use `.ans` as a file type. Use an argument after the command, e.g. `import mysupertxt.ans`. Make sure to move your ansi text in the directory `.\data\cmds\`.
+    - **help**: See more information and all the commands.
 
 # FAQ
   - Q: **Why in Batch?**
