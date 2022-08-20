@@ -2,7 +2,7 @@
 
 # <img src="data/images/icon_256.ico" width="32" height="32"> Battles of Batch
   
-[![Foo](https://badgen.net/badge/icon/windows?icon=windows&label)](https://github.com/136MasterNR/Battles-of-Batch#-battles-of-batch) [![Foo](https://badgen.net/github/release/136MasterNR/Battles-of-Batch)](https://github.com/136MasterNR/Battles-of-Batch/releases) [![Foo](https://badgen.net/github/stars/136MasterNR/Battles-of-Batch)](https://github.com/136MasterNR/Battles-of-Batch/stargazers)
+[![](https://badgen.net/badge/icon/windows?icon=windows&label)](https://github.com/136MasterNR/Battles-of-Batch#-battles-of-batch) [![](https://badgen.net/github/release/136MasterNR/Battles-of-Batch)](https://github.com/136MasterNR/Battles-of-Batch/releases) [![](https://badgen.net/github/stars/136MasterNR/Battles-of-Batch)](https://github.com/136MasterNR/Battles-of-Batch/stargazers)
 
 ##### _Copyright (C) 2019~2022 HTSoft-Studios™_
 
@@ -57,8 +57,9 @@ Please note that downloading the game from the source code is not recommended be
     - ***Q***: Quests
     - ***W***: Workshop & Upgrades
     - ***S***: Settings/Options
+    - ***E***: Character & Inventory
     - ***C***: Credits
-    - ***CTRL*** + ***E***: Force exit the game
+    - ***CTRL*** + ***Q***: Exit in safe-mode
     - ***CTRL*** + ***R***: Restart the game
     - ***CTRL*** + ***SHIFT*** + ***6***: Reset all your player data
     - ***CTRL*** + ***SHIFT*** + ***-***: LGBTQIA+
