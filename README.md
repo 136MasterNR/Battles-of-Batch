@@ -202,7 +202,7 @@ Please note that downloading the game from the source code is not recommended be
 
 # User Interfaces
 ### Menu (#4.0)
-  - The menu is decorated with various ascii art, and the title at the top. In the middle, you can view your general stats such as your Level, your Money and your Next Battle. Below you can see the commands which let you navigate to other user interfaces. When shortcut keys enabled, press to A to navigate to the Map interface, Q (which stands for Quests) to the Quests interface, W (which stands for Workshop) to the Workshop interface, E (which stands for Equipment) to the Character & Equipment interface, S (which stands for Settings) to the Settigns interface.
+  - The menu is decorated with various ascii art, and the title at the top. In the middle, you can view your general stats such as your Level, your Money and your Next Battle. Below you can see the commands which let you navigate to other user interfaces. When shortcut keys enabled, press to A to navigate to the [Map](https://github.com/136MasterNR/Battles-of-Batch#map-41) interface, Q (which stands for Quests) to the [Quests](https://github.com/136MasterNR/Battles-of-Batch#quests-44) interface, W (which stands for Workshop) to the [Workshop](https://github.com/136MasterNR/Battles-of-Batch#shop-43) interface, E (which stands for Equipment) to the [Character & Equipment](https://github.com/136MasterNR/Battles-of-Batch#character--equipment-46) interface, S (which stands for Settings) to the [Settigns](https://github.com/136MasterNR/Battles-of-Batch#settings-45) interface.
 ![](https://user-images.githubusercontent.com/62593379/186289521-0bae6d42-d268-4c54-af6b-3a53cd08e624.png)
 
 ### Map (#4.1)
@@ -210,6 +210,9 @@ Please note that downloading the game from the source code is not recommended be
 ![](https://user-images.githubusercontent.com/62593379/186290360-ee5d9e6b-fa02-4cc3-9aeb-a0e19e20e8ba.png)
 
 ### Battle (#4.2)
+  - More Info Soon!
+
+### Character & Equipment (#4.6)
   - More Info Soon!
 
 ### Shop (#4.3)
@@ -226,9 +229,6 @@ Please note that downloading the game from the source code is not recommended be
 ### Settings (#4.5)
   - The settings UI lets you customize your preferences. By typing the name of an option, you can toggle it off/on or set a specific value to it.
 ![](https://user-images.githubusercontent.com/62593379/186287701-8390e429-9cd4-4f8f-b0b2-ce0afedb0ed1.png)
-
-### Character & Equipment (#4.6)
-  - More Info Soon!
 
 # Explaining Technical Features
 ### Gameplay Features
