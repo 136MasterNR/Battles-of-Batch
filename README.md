@@ -212,21 +212,21 @@ Please note that downloading the game from the source code is not recommended be
 ### Battle (#4.2)
   - More Info Soon!
 
-### Character & Equipment (#4.6)
+### Character & Equipment (#4.3)
   - More Info Soon!
 
-### Shop (#4.3)
+### Shop (#4.4)
   - **Items**: Items require in-game currency and specific character level. The level requirement is displayed as the symbol "↑", and currency as the symbol "$". The UI is categorized in 3 categories, first is Weapons and other sources that deal damage, second is Crafting Materials which are used for crafting items or weapons, and third is Potions and Other, which are used as support items.
 ![](https://user-images.githubusercontent.com/62593379/186287154-0b28429b-e357-4258-bbb7-f24c622a8fc5.png)
   - **Skills**: Upgrading skills is very important. It gives you an amount of permant benefits in the game. To upgrade a skill, you must meet the requirements, such as currency, which is represented as the symbol "$" and level, which is represented as the symbol "↑". The UI has a total of 5 upgradable skills. The first one is Base Attack which makes you deal more damage to enemies, second is Crit Rate which gives you more chance to make a critical strike, third is Max HP which gives you more total HP when in battle.
 ![](https://user-images.githubusercontent.com/62593379/186286664-2f4f36ea-2d10-4df5-bdda-5594943cb49a.png)
   - **Craft**: More Info Soon!
 
-### Quests (#4.4)
+### Quests (#4.5)
   - Quests are important for quickly progressing through the game, once a quest is done, you get rewarded with lots of XP and Coins.
 ![](https://user-images.githubusercontent.com/62593379/186288456-bdf6044c-984f-4e17-8f73-6dfb8e7a74d6.png)
 
-### Settings (#4.5)
+### Settings (#4.6)
   - The settings UI lets you customize your preferences. By typing the name of an option, you can toggle it off/on or set a specific value to it.
 ![](https://user-images.githubusercontent.com/62593379/186287701-8390e429-9cd4-4f8f-b0b2-ce0afedb0ed1.png)
 
