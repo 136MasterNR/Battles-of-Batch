@@ -1,5 +1,9 @@
-ECHO.[2;44H%RGB.COIN%Map Chapter[0m: [1m%CHAPTER%     %RGB.COIN%Battle[0m: [1m%SELECTED%                                            [0m
-ECHO.
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET "STR=%RGB.COIN%Chapter[0m: [1m%CHAPTER%     %RGB.COIN%Battle[0m: [1m!MAP.NAME.%SELECTED%:_= ! %RGB.DGRAY%#%SELECTED%[0m"
+CALL "%CENTER%" 160
+SET "UI.MENU.XP=%STR%"
+ECHO.[2;20H%STR%[E
+ENDLOCAL
 CALL :C%2
 CALL :%1
 EXIT /B 0
@@ -70,7 +74,7 @@ EXIT /B 0
 
 :C1
 SETLOCAL ENABLEDELAYEDEXPANSION
-ECHO.[3;20H        [1m%RGB.CYAN%Chapter Difficulty[0m: [1mEasy     %RGB.CYAN%Story[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= !     %RGB.CYAN%Total Wins[0m: [1m%COMPLETED.MAPS%             [0m
+ECHO.[3;20H    [1m%RGB.CYAN%Chapter Difficulty[0m: [1mEasy     %RGB.CYAN%Next Story[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= ! %RGB.DGRAY%#%PLAYER.MAP.LEVEL%[0m     %RGB.CYAN%Total Wins[0m: [1m%COMPLETED.MAPS%          [0m
 ENDLOCAL
 EXIT /B 0
 

@@ -11,4 +11,5 @@
 	@EXIT /B 1
 )
 @CALL "%P%" %ARGS%
-@ECHO ON&&EXIT /B 0
+@ECHO ON
+@EXIT /B 0
