@@ -73,7 +73,6 @@ IF NOT EXIST "%~n0%~x0" (
 :RESTART
 COLOR 0F
 ::VAR:-Variables
-SET "DM=%CD%"
 SET "DATA=%CD%\data"
 SET "DATA_TMP=%DATA%\temp"
 SET "DATA_IMAGES=%DATA%\images"
@@ -716,13 +715,14 @@ ECHO.[u79%%
 CALL "%ITEMS.LOADER%" MATERIALS
 ECHO.[u91%%
 CALL "%CHARACTER%" MAIN
+ECHO.[u98%%
 SET /A STAT.NUM.HP=%SKILL.HP%*100
 SET /A STAT.NUM.ATK=%SKILL.ATK%*50
 SET /A STAT.NUM.CRIT_RATE=%SKILL.CRIT_RATE%*5
 IF A==A (
-ECHO.[?25l[H[0m.-------------------------------------------------------------------------------------------------------------------.
-ECHO.^|                                                                                                                   ^|
-ECHO.^|    .-----------------.                      .-----------------------.                    .----------------------. ^|
+ECHO.[?25l[H[0m.--.----------------------------------------------------------------------------------------------------------------.
+ECHO.^|Q :                                                                                                                ^|
+ECHO.^|--' .-----------------.                      .-----------------------.                    .----------------------. ^|
 ECHO.^|    : Press Z to view :                   .--: Character ^& Equipment :--.                 : Press X to customize : ^|
 ECHO.^|    : your history .--'                .--'  '-----------------------'  '--.              '----. your appearance : ^|
 ECHO.^|    '-------------' .-----: Name :-----:                                   :----: Health :----. '----------------' ^|
@@ -741,7 +741,7 @@ ECHO.^|                       .----: Exp :----:--------.                 .------
 ECHO.^|                       : •             :         '---------------'         : ▲ [s            :                       ^|[u0[u[52D%PLAYER.XP%
 ECHO.^|                       '---------------'                                   '---------------'                       ^|
 ECHO.^|                                                                                                                   ^|
-ECHO.^|          Press [4mS[24m to equip an Item                                               Press [4mD[24m to equip a Weapon         ^|
+ECHO.^|          Press [4mA[24m to equip an Item                                               Press [4mD[24m to equip a Weapon         ^|
 ECHO.^|      .--------.-----------.--------.     .--------.-----------.--------.     .--------.-----------.--------.      ^|
 ECHO.^|      : .-'-.- :   Items   : -.-'-. :     : -/\/\- : Materials : -/\/\- :     : -^|---- :  Weapons  : ----^|- :      ^|
 ECHO.^|      '--------'-----------'--------'     '--------'-----------'--------'     '--------'-----------'--------'      ^|
@@ -786,14 +786,14 @@ IF %MAT.REG_CNT%==0 (ECHO.[u    No materials owned) ELSE FOR /L %%A IN (1,1,%MA
 IF %WEAPONS.REG_CNT% GTR 14 (SET TMP.ITEM.REG_CNT=14) ELSE SET TMP.ITEM.REG_CNT=%WEAPONS.REG_CNT%
 SET /A MORE_HIDDEN=%WEAPONS.REG_CNT%-14
 IF %MORE_HIDDEN% EQU 1 (SET MORE_HIDDEN=  ... ^(%MORE_HIDDEN% Hidden Item^) ...) ELSE IF %MORE_HIDDEN% LEQ 9 (SET MORE_HIDDEN= ... ^(%MORE_HIDDEN% Hidden Item/s^) ...) ELSE (SET MORE_HIDDEN=  ... ^(Hidden Items^) ...)
-IF DEFINED WIELDING.WEAPON (ECHO.[u1: !WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ![2B) ELSE (ECHO.[u[36C    No equipped weapons[2B)
+IF DEFINED WIELDING.WEAPON (ECHO.[u[36C1: !WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ![2B) ELSE (ECHO.[u[36C    No equipped weapons[2B)
 SET UI.POS=[81C
 IF %WEAPONS.REG_CNT%==0 (ECHO.%UI.POS%     No weapons owned) ELSE FOR /L %%A IN (1,1,%TMP.ITEM.REG_CNT%) DO (
 	CALL :WEAPON-GET-INFO !WEAPONS.REG_NAME.%%A! %%A
 )
 IF %WEAPONS.REG_CNT% GTR 14 ECHO.%UI.POS%%MORE_HIDDEN%
 ENDLOCAL
-ECHO.[H[?25h
+SET /P "=[?25h[2;2H"<NUL
 :CHARACTER-RE
 SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
@@ -801,7 +801,7 @@ ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
 ENDLOCAL
 IF %CHOICE.INPUT%.==. GOTO CHARACTER-RE
 IF /I %CHOICE.INPUT%.==R. GOTO CHARACTER
-IF /I %CHOICE.INPUT%.==S. IF %ITEM.REG_CNT%==0 (ECHO.[2C%RGB.FALSE%UI.ERR: ITEMS LIST IS EMPTY   [1A) ELSE GOTO INV-CHOOSE_ITEM-RE
+IF /I %CHOICE.INPUT%.==A. IF %ITEM.REG_CNT%==0 (ECHO.[2C%RGB.FALSE%UI.ERR: ITEMS LIST IS EMPTY   [1A) ELSE GOTO INV-CHOOSE_ITEM-RE
 IF /I %CHOICE.INPUT%.==D. IF %WEAPONS.REG_CNT%==0 (ECHO.[2C%RGB.FALSE%UI.ERR: WEAPONS LIST IS EMPTY   [1A) ELSE GOTO INV-CHOOSE_WEAPON-RE
 IF /I %CHOICE.INPUT%==Q (
 	GOTO S-MENU
@@ -848,8 +848,8 @@ IF NOT DEFINED ITEM.EQ_CNT ( ECHO.EMPTY ) ELSE FOR /L %%A IN (1,1,%ITEM.EQ_CNT%)
 ECHO.[0m[1m[1BGuide For Items Section:                                            Guide For Weapons Section:
 ECHO.[0m Press W or S to navigate between items/slots.                       Press E to change your Weapon equipment.
 ECHO. Press A to confirm the item you want to add.                        Press A to confirm the chosen weapon.
-ECHO. Press Q after selecting an item to reselect an item.                Press Q to return to the item equipment.
-ECHO. Press CTRL X to clear your equipped items.                          Press Q again to exit.[s%RGB.COIN%
+ECHO. Press Q after selecting an item to reselect an item.                Press Q to return to the character ui.  
+ECHO. Press CTRL X to clear your equipped items.                                                [s%RGB.COIN%
 ENDLOCAL&SET WEAPON.IS=%WEAPON.IS%&SET ITEMS.IS=%ITEMS.IS%
 :INV-CHOOSE_ITEM
 TITLE %TITLE%Inventory [%INV_CHOICE%^|%INV_CHOICE_SLOT%]
@@ -957,7 +957,7 @@ CALL "%ITEMS.LOADER%" WEAPONS
 CLS
 ::ECHO.[?25l[0m[HFYI: This user interface is a [1;31mprototype[0m. Any minor visual bugs that were found will not be fixed in the near future.
 TITLE %TITLE%Inventory [%W_INV_CHOICE%]
-ECHO.[?25l[2J[0m[H{Prototype}[E
+ECHO.[?25l[2J[0m[H{Prototype} Press Q to return[E
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET UI.POS=[3C
 IF NOT DEFINED WEAPONS.REG_CNT (
@@ -975,9 +975,9 @@ ENDLOCAL
 ECHO.[0m[1m[1BGuide For Items Section:                                            Guide For Weapons Section:
 ECHO.[0m Press W or S to navigate between items/slots.                       Press E to change your Weapon equipment.
 ECHO. Press A to confirm the item you want to add.                        Press A to confirm the chosen weapon.
-ECHO. Press Q after selecting an item to reselect an item.                Press Q to return to the item equipment.
-ECHO. Press CTRL X to clear your equipped items.                          Press Q again to exit.[s%RGB.COIN%
-:INV-CHOOSE_WEAPON-RE
+ECHO. Press Q after selecting an item to reselect an item.                Press Q to return to the character ui.  
+ECHO. Press CTRL X to clear your equipped items.                                                [s%RGB.COIN%
+:INV-CHOOSE_WEAPON-PRE
 SET /A W_INV_CHOICE.UI=%W_INV_CHOICE%+2
 SET /P "=[%W_INV_CHOICE.UI%;2H>[1C"<NUL
 SETLOCAL ENABLEDELAYEDEXPANSION
@@ -998,7 +998,7 @@ IF /I %CHOICE.INPUT%==S IF NOT %W_INV_CHOICE% GEQ %WEAPONS.REG_CNT% (
 IF /I %CHOICE.INPUT%== (
 	SET REL.W=TRUE
 	CALL "%ITEMS.LOADER%" UNEQUIP_W %W_INV_CHOICE%
-	GOTO INVENTORY
+	GOTO INV-CHOOSE_WEAPON
 )
 IF /I %CHOICE.INPUT%==E (
 	ECHO.[2D 
@@ -1015,7 +1015,7 @@ IF /I %CHOICE.INPUT%==R (
 IF /I %CHOICE.INPUT%==A (	
 	SET REL.W=TRUE
 	CALL "%ITEMS.LOADER%" EQUIP_W %W_INV_CHOICE%
-	GOTO INVENTORY
+	GOTO INV-CHOOSE_WEAPON
 ) ELSE GOTO INV-CHOOSE_WEAPON-RE
 :WEAPON-DISPLAY-INFO
 ::SET TMP.W_NAME=%1
