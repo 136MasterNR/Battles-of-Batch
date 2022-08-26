@@ -94,7 +94,26 @@ Please note that downloading the game from the source code is not recommended be
 ### How it Works : Crafting Items [FUTURE UPDATE]
   - You can craft items by accessing the Shop, and switching to the Craft tab. Every item requires materials for it to be crafted, once you gather all required materials, you will be able to craft your item.
   - Items serve a rich in-game usage. You can equip weapons and other items such bombs or healing pots through your inventory. Weapons usually give you a big boost when it's about fighting enemies, they can give you extra damage and bonus effects.
-  
+
+## Enemy Details
+### How Enemies Were Designed
+  - The enemies' design come from the latin characters, and other references. These enemies are unable to hold any weapons, thus they could only upgrade their defense, that's why they have way too much Health Points. Enemies that come with something sharp on them, can deal a very larger amount of damage compared to other enemies. These enemies have also learnt multiple skills, some of them can really be dangerous.
+### Easy Level
+  - **Yara**: It is the first enemy which a beginner will encouter in the game. It's one of the weakest enemies, and there is nothing special about them.
+  - **Jumpo**: It can be found after the second level. Its design comes from a Sea-Horse. It's very known for how strong it is, cuz of its very sharp but small tail.
+  - **Nimbo**: This enemy is known for its defense power. It's very hard to kill, and can be very annoying.
+### Medium Level
+  - **Weavy**: More Info Soon!
+  - **Boi**: More Info Soon!
+  - **Zorm**: More Info Soon!
+  - **French**: This enemy is the stronger version of Jump. Because of how hard and heavy it is, it deals a very large amount of damage, and has a pretty good defense.
+  - **Twu**: More Info Soon!
+  - **Nein**: More Info Soon!
+  - **Uno**: More Info Soon!
+  - **Snek**: More Info Soon!
+### Hard Level
+  - More Coming Soon!
+
 <details><summary>
 
 ### List of all Items (Click)
