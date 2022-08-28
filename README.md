@@ -8,7 +8,7 @@
 
 </div>
 
-Battles of Batch is a game which runs on Window's MS-DOS terminal. It's an RPG text game, where you fight enemies in various battles. This project was started by 136MasterNR in 13th August 2021.
+Battles of Batch is a game which runs on Window's MS-DOS terminal. It's an RPG text game, where you fight enemies in various battles. This project was first developed by 136MasterNR in 13th August 2021.
 
 ## Download/Installation Process, Requirements & Notes
   - **Download the wizard here**: [BattlesOfBatch-Setup.exe](https://htssoft.tk/get-download/BattlesOfBatch-Setup.exe) [LATEST RELEASE]
@@ -58,7 +58,10 @@ Please note that downloading the game from the source code is not recommended be
     - ***W***: Workshop & Upgrades
     - ***S***: Settings/Options
     - ***E***: Character & Inventory
-    - ***C***: Credits
+    - ***Z***: Craft and forge Items
+    - ***X***: View the items Workshop
+    - ***C***: View and upgrade your Skills
+    - ***V***: Credits
     - ***CTRL*** + ***Q***: Exit in safe-mode
     - ***CTRL*** + ***R***: Restart the game
     - ***CTRL*** + ***SHIFT*** + ***6***: Reset all your player data
@@ -73,7 +76,6 @@ Please note that downloading the game from the source code is not recommended be
     - *Press the First Letter of an Action, e.g. `A` to attack*
     - ***E***: Cast special skill
     - ***Q*** = End current battle and move to the previous UI (to the Map)
-
 
 ## Strategy Methods
 ### How it Works : Enemies (#3.0)
