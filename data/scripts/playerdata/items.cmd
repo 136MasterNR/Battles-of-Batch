@@ -315,6 +315,6 @@ SET "ARG1=%4"
 	EXIT /B 0
 )
 @IF /I "%ARG%"=="ITEMS" (
-	@ECHO.%3!%4>>"%PLAYERDATA.ITEMS%"
+	@ECHO.%3$%4>>"%PLAYERDATA.ITEMS%"
 ) ELSE @ECHO.[38;5;196mInvalid arguement[0m: The requested destination is invalid.
 @EXIT /B 0

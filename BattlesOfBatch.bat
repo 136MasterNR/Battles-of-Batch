@@ -394,13 +394,13 @@ ECHO.[u Loading ... (PlayerData)
 )
 
 IF NOT EXIST "%PLAYERDATA.ITEMS%" (
-	ECHO.>"%PLAYERDATA.ITEMS%"
+	COPY NUL "%PLAYERDATA.ITEMS%" >NUL
 )
 IF NOT EXIST "%PLAYERDATA.WEAPONS%" (
-	ECHO.>"%PLAYERDATA.WEAPONS%"
+	COPY NUL "%PLAYERDATA.WEAPONS%" >NUL
 )
 IF NOT EXIST "%PLAYERDATA.MATERIALS%" (
-	ECHO.>"%PLAYERDATA.MATERIALS%"
+	COPY NUL "%PLAYERDATA.MATERIALS%" >NUL
 )
 IF NOT EXIST "%PLAYERDATA.EQ%" (
 	ECHO.EMPTY>"%PLAYERDATA.EQ%"
@@ -678,8 +678,10 @@ ECHO.[ ASCII-ART ]
 ECHO.Character Designs by "136MasterNR", "asciiart.eu", "patorjk.com"
 ECHO.Layout Designs by "136MasterNR"
 ECHO.
-ECHO.[ MEDIA ]
-ECHO.Music by "Unwind Station", "pedi me arxes"
+ECHO.[ SOUNDS ]
+ECHO.Menu Soundtrack by "Alexander Nakarada"
+ECHO.Boss Soundtrack by "pedi me arxes"
+ECHO.Other Soundtracks by "Unwind Station"
 ECHO.SFX by "136MasterNR"
 ECHO.
 ECHO.[ TESTERS ]: "AgentANP(v0.235)", "2002Spiele(v0.231)", "ComradeTurtle(v0.222)", "BlackStorm(v0.212)", "JayKayHere3987(v0.169)"
@@ -703,7 +705,7 @@ ECHO.[45C^|     [1mPlease Wait ...[0m     ^|
 ECHO.[45C'-------------------------'
 SET ITEMS.IS=
 SET WEAPON.IS=
-ECHO.[u 2%%
+ECHO.[u 0%%
 CALL "%ITEMS.LOADER%" REGISTER
 ECHO.[u19%%
 CALL "%ITEMS.LOADER%" LIST
@@ -1032,15 +1034,12 @@ ECHO.%UI.POS%%TMP.NAME:_= % - (↑!WEAPONS.REG_LVL.%2!)
 EXIT /B 0
 
 :MAP
-CALL "%MAP.LOAD%\limit.cmd"
 TITLE %TITLE%Map
 ECHO.[?25l[0m[H.+-----------------------------------------------------------------------------------------------------------------+.
 ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-CALL "%MAP.LOAD%\details.cmd" %SELECTED% %CHAPTER%
-ECHO.'+-----------------------------------------------------------------------------------------------------------------+'
-IF %SELECTED% LEQ 7 (CALL "%MAP.LOAD%\c1.cmd") ELSE CALL "%MAP.LOAD%\c2.cmd"
+ECHO.^|                                                                                                                   ^|[s
+ECHO.'+-----------------------------------------------------------------------------------------------------------------+'[33B
 ECHO.^|     ^|`-._/\_.-`^|                                                                                 ^|`-._/\_.-`^|     ^|
 ECHO.^|     ^|    ^|^|    ^|                                                                                 ^|    ^|^|    ^|     ^|
 IF NOT "%SHORTCUTS.VALUE%"=="TRUE" (
@@ -1067,7 +1066,12 @@ IF "%SHORTCUTS.VALUE%"=="TRUE" (
 	ECHO.^|        '.^|^|.'                ^|                                                         ^|            '.^|^|.'        ^|
 	ECHO.^|          ''                  '---------------------------------------------------------'              ''          ^|
 )
-ECHO.'-._______________________________________________________________________________________________________________.-'[4A
+ECHO.'-._______________________________________________________________________________________________________________.-'[4A[u
+:MAP-RE
+CALL "%MAP.LOAD%\limit.cmd"
+CALL "%MAP.LOAD%\details.cmd" %SELECTED% %CHAPTER%
+ECHO.
+IF %SELECTED% LEQ 7 (CALL "%MAP.LOAD%\c1.cmd") ELSE CALL "%MAP.LOAD%\c2.cmd"
 :MAP-INPUT
 SET UDERFINE=
 IF "%SHORTCUTS.VALUE%"=="TRUE" (
@@ -1146,7 +1150,7 @@ IF /I %CHOICE.INPUT%==S (
 	CALL "%MAP.LOAD%\limit.cmd"
 	IF %SELECTED% LEQ 8 (
 		IF %SELECTED%==8 (
-			GOTO MAP
+			GOTO MAP-RE
 		)
 		CALL "%MAP.LOAD%\c1.cmd" NUMS
 	) ELSE (
@@ -1159,7 +1163,7 @@ IF /I %CHOICE.INPUT%==D (
 	CALL "%MAP.LOAD%\limit.cmd"
 	IF %SELECTED% LEQ 7 (
 		IF %SELECTED%==7 (
-			GOTO MAP
+			GOTO MAP-RE
 		)
 		CALL "%MAP.LOAD%\c1.cmd" NUMS
 	) ELSE (
@@ -1473,12 +1477,13 @@ PAUSE>NUL
 GOTO S-MENU
 :PRE_LOAD
 IF NOT EXIST "%LOAD.LEVEL_%%SELECTED%\setup.cmd" GOTO MAP
-ECHO.[2J[21;42H҉ Preparing Your Amazing Battle...[H
+ECHO.[2J[21;42H҉ Preparing Your Amazing Battle...[19D[1B[s
+ECHO.[u 0%%
 TITLE %TITLE%Loading Battle ...
 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL 2>NUL
 SET "ERRORLEVEL="
 SET "ERRORLVL="
-IF NOT EXIST "%DATA_SETTINGS%\OFFSOUNDS.dll" ( SET "ERRORLEVEL="&TASKLIST /FI "IMAGENAME eq wscript.exe.battle" 2>NUL|FIND /I /N "wscript.exe">NUL&SET "ERRORLVL=%ERRORLEVEL%" & TASKKILL /F /IM wscript.exe.battle>NUL ) ELSE ( SET ERRORLVL=NUL & TASKKILL /F /IM wscript.exe.battle>NUL )
+TASKLIST /FI "IMAGENAME eq wscript.exe.battle" 2>NUL|FIND /I /N "wscript.exe">NUL&SET "ERRORLVL=%ERRORLEVEL%" & TASKKILL /F /IM wscript.exe.battle>NUL
 SET "TARGETAUDIO=%AUD.BATTLE.NORMAL%"
 IF %SELECTED%==7 SET "TARGETAUDIO=%AUD.BATTLE.BOSS%"
 IF %AUDIO.VALUE%==TRUE (
@@ -1513,20 +1518,27 @@ IF %AUDIO.VALUE%==TRUE (
 		)
 	)
 )
+ECHO.[u13%%
 FOR /L %%I IN (1,1,7) DO (
 	SET "EN.3.LINE.%%I="
 	SET "EN.2.LINE.%%I="
 	SET "EN.1.LINE.%%I="
 )
 SET LOAD.ERR=
+ECHO.[u20%%
 CALL "%PLAYERSKILLS.LOAD%"
+ECHO.[u37%%
 CALL "%LOAD.LEVEL_%%SELECTED%\setup.cmd"
+ECHO.[u49%%
 CALL "%CMD.CLEARVAR%"
+ECHO.[u62%%
 CALL "%SCRIPTS_GAME%\loader.cmd"
+ECHO.[u74%%
 IF DEFINED LOAD.ERR GOTO MENU
 SETLOCAL ENABLEDELAYEDEXPANSION
 TITLE %TITLE%!MAP.NAME.%SELECTED%:_= ! (Battle #%SELECTED%)
 ENDLOCAL
+ECHO.[u93%%
 :IN-BATTLE
 IF EXIST LET.DEBUG (
 	CALL "%DEBUG.GAMELOADER%\1"

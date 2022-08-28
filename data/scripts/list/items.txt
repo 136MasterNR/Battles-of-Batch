@@ -1,5 +1,9 @@
-Dustblade$Short_Blade$6$No_bonus_effects.$_$_$Unknown$_$_$_$
-Cold_Twill$Short_Bow$15$No_bonus_effects.$_$_$Unknown$_$_$_$
+Dustblade$Short_Blade$6$No_bonus_effects$_$_$Unknown$_$_$_$
+Cold_Twill$Short_Bow$15$No_bonus_effects$_$_$Unknown$_$_$_$
 Comradehammer$Big_Hammer$45$10%%%%_Chance_to_deal_a_total_amount_of$150%%%%_damage$_$Unknown$_$_$_$
-Stylefi$Long_Bow$6$No_bonus_effects.$_$_$Unknown$_$_$_$
-Doggirl$Love$999$The_mighty_powerful_doggirl_power.$_$_$Unknown$_$_$_$
+Stylefi$Long_Bow$60$Extra 2%%%% Crit Rate$_$_$Unknown$_$_$_$
+Flora_Thrower$75$10%%%% Chance to Poison a single enemy,.$dealing 10%%%% of your base damage on$every round$_$Unknown$_$_$_$
+Trident_of_Gawra$80$25%%%% Chance to stun a single enemy,$skipping their next round$_$_$Unknown$_$_$_$
+Infernal_Blade$85$80%%%% Chance to set on fire an enemy,$dealing 20%%%% of your base damage on$every round$_$Unknown$_$_$_$
+Ornate_Cobalt$200$Shares an extra amount of 15%%%% of your$base damage to all enemies$_$_$Unknown$_$_$_$
+Brainleader$5$An extra amount of 495 damage is dealt$to ALL enemies on every single round$_$Debuff: -99%%%% HP$Unknown$_$_$_$

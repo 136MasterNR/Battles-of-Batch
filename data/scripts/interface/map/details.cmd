@@ -29,46 +29,46 @@ EXIT /B 0
 ECHO.[1C%RGB.LVL%               Difficulty[0m: [1mMedium     %RGB.TRUE%Recommended Lvl[0m: [1m13   %RGB.FALSE%Enemies[0m: [1mJumpo(L:4)[0m, [1mLose(L:1)[0m, [1mJumpo(L:4)             [0m
 EXIT /B 0
 :8
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), ?(L:?), ?(L:?)                      
 EXIT /B 0
 :9
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), ?(L:?), ?(L:?)                      
 EXIT /B 0
 :10
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), ?(L:?), ?(L:?)                      
 EXIT /B 0
 :11
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), ?(L:?), ?(L:?)                      
 EXIT /B 0
 :12
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), ?(L:?), ?(L:?)                      
 EXIT /B 0
 :13
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), ?(L:?), ?(L:?)                      
 EXIT /B 0
 :14
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), ?(L:?), ?(L:?)                      
 EXIT /B 0
 :15
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), ?(L:?), ?(L:?)                      
 EXIT /B 0
 :16
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), ?(L:?), ?(L:?)                      
 EXIT /B 0
 :17
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), ?(L:?), ?(L:?)                      
 EXIT /B 0
 :18
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                       
+ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), ?(L:?), ?(L:?)                     
 EXIT /B 0
 :19
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), ?(L:?), ?(L:?)                      
 EXIT /B 0
 :20
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), ?(L:?), ?(L:?)                      
 EXIT /B 0
 :21
-ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), (L:?), (L:?)                        
+ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), ?(L:?), ?(L:?)                      
 EXIT /B 0
 
 
