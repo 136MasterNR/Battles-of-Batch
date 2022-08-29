@@ -102,13 +102,13 @@ Please note that downloading the game from the source code is not recommended be
   - The enemies' design come from the latin characters, and other references. These enemies are unable to hold any weapons, thus they could only upgrade their defense, that's why they have way too much Health Points. Enemies that come with something sharp on them, can deal a very larger amount of damage compared to other enemies. These enemies have also learnt multiple skills, some of them can really be dangerous.
 ### Easy Level
   - **Yara**: It is the first enemy which a beginner will encouter in the game. It's one of the weakest enemies, and there is nothing special about them.
-  - **Jumpo**: It can be found after the second level. Its design comes from a Sea-Horse. It's very known for how strong it is, cuz of its very sharp but small tail.
+  - **Jumpo**: It can be found on the second level. Its design comes from a Sea-Horse. It's very known for how strong it is, because of its very sharp but small tail.
   - **Nimbo**: This enemy is known for its defense power. It's very hard to kill, and can be very annoying.
 ### Medium Level
   - **Weavy**: More Info Soon!
   - **Boi**: More Info Soon!
   - **Zorm**: More Info Soon!
-  - **French**: This enemy is the stronger version of Jump. Because of how hard and heavy it is, it deals a very large amount of damage, and has a pretty good defense.
+  - **French**: This enemy is the stronger version of Jumpo. Because of how hard and heavy it is, it deals a very large amount of damage, and has a decent amount of defense.
   - **Twu**: More Info Soon!
   - **Nein**: More Info Soon!
   - **Uno**: More Info Soon!
