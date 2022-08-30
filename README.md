@@ -91,7 +91,7 @@ Please note that downloading the game from the source code is not recommended be
 ### How it Works : Items (#3.2)
   - **Bomb**: Stuns enemies, skipping their next round/action. Bosses cannot be stunned by this attack type. Effects, such as poison on the player, will still function.
   - **Heal**: Gives the player HP. This does not skip the next enemy round/action, and still take damage. Thus it's upgradable.
-  - More coming soon.
+  - More Coming Soon!
 
 ### How it Works : Crafting Items [FUTURE UPDATE]
   - You can craft items by accessing the Shop, and switching to the Craft tab. Every item requires materials for it to be crafted, once you gather all required materials, you will be able to craft your item.
@@ -313,6 +313,7 @@ Please note that downloading the game from the source code is not recommended be
     - 136MasterNR
 
   - **Music** provided by 
+    - [Alexander Nakarada] Menu Soundtrack
     - [Unwind Station](https://www.youtube.com/channel/UCATu7pOE-X5L__hWParE5DQ)
     - [pedi me arxes](https://www.youtube.com/c/pedimearxes)
   - **SFX** provided by
