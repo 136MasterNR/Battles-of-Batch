@@ -305,26 +305,32 @@ Please note that downloading the game from the source code is not recommended be
     - 136MasterNR
     - johnypro150
 
+### Ascii Art
   - **Character Designs** by
-    - 136MasterNR
     - [asciiart.eu](https://www.asciiart.eu/)
     - [patorjk.com](https://patorjk.com/)
+    - 136MasterNR
+
   - **Layout Designs** by
     - 136MasterNR
 
+### Sounds
   - **Music** provided by 
-    - [Alexander Nakarada] Menu Soundtrack
-    - [Unwind Station](https://www.youtube.com/channel/UCATu7pOE-X5L__hWParE5DQ)
-    - [pedi me arxes](https://www.youtube.com/c/pedimearxes)
+    - [pedi me arxes](https://www.youtube.com/c/pedimearxes) provided [Dangerous Plains](https://www.youtube.com/watch?v=rF9K51_3p10)
+    - [Alexander Nakarada](https://www.serpentsoundstudios.com) provided [Village Ambiance](https://www.youtube.com/watch?v=VKKSQ4UHLRE) and [Winter Night](https://www.free-stock-music.com/alexander-nakarada-winter-night.html)
+
   - **SFX** provided by
     - 136MasterNR
 
+### Special Thanks
+
   - **Shoutout** to our **Testers**:
+    - ThePurgeKing
     - AgentANP
     - 2002Spiele
-    - ComradeTurtle
+    - [ComradeTurtle](https://github.com/ComradeTurtle)
     - BlackStorm
     - JayKayHere3987
 
-# Thanks you for choosing our projects! :shipit:
-### Tons more infromation will be added to this readme, some time™.
+# Thank you for choosing our projects! :shipit:
+### A lot more information about this project will be added in this read me every now and then.
