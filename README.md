@@ -14,11 +14,11 @@ Battles of Batch is a game which runs on Window's MS-DOS terminal. It's an RPG t
   - **Download the wizard here**: [BattlesOfBatch-Setup.exe](https://htssoft.tk/get-download/BattlesOfBatch-Setup.exe) [LATEST RELEASE]
   - **Download manually here**: [battlesofbatch-latest.zip](https://htssoft.tk/get-download/battlesofbatch-latest.zip) [LATEST RELEASE]
 
-Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher.
+Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher. It is not recommended to use the new Windows Terminal.
 
 This project uses [ANSI](https://www.robvanderwoude.com/ansi.php) as a text formatter. We use [ANSI](https://www.robvanderwoude.com/ansi.php) to format the colors on the window and manage displayed text. It is required for almost anything to work properly.
 
-Please note that downloading the game from the source code is not recommended because it contains features which are yet not finished or not tested out. The source code also contains files that are not yet added to the original game. Please consider installing by the wizard or downloading a release instead!
+Please note that downloading the game from the source code is not recommended because it contains features which are not yet finished or tested out. The source code also contains files that are not added to the original game. Please consider downloading by using the wizard or a release instead!
 
 **Warning: Your antivirus might detect the wizard as a malware, but that's a false positive. I coded the wizard in PowerShell and converted it to EXE using  [PS2EXE](https://github.com/MScholtes/PS2EXE) which is falsely detected as a malware due to vandalism on the software. If you are unable to whitelist the wizard, please consider using the manual download which was mentioned above, or a release in this repository. You can also find the source code of it in the [installer](/installer) folder.**
 
@@ -34,6 +34,7 @@ Please note that downloading the game from the source code is not recommended be
 # Game Details & How To Play
 
 ### Game Controls (#2.0)
+Press ***CTRL*** + ***H*** on any User Interface to get more information about it.
   - **Menu**: 
     - **Play**/**Start**: Level Selection
     - **Quests**: Quests
