@@ -21,7 +21,7 @@ SET "Replacement=SET PLAYER.LVL=%PLAYER.LVL%"
     ENDLOCAL
 ))>"%file%.new"
 MOVE "%file%.new" "%file%">NUL
-SET /a Line#ToSearch=7
+SET /a Line#ToSearch=5
 SET "Replacement=SET PLAYER.XP.REQ=%PLAYER.XP.REQ%"
 (FOR /f "tokens=1*delims=:" %%a IN ('findstr /n "^" "%file%"') DO (
     SET "Line=%%b"

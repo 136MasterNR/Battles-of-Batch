@@ -6,7 +6,7 @@ ECHO.[0;0H[18B[46C   [1;37m.-%RGB%255;248;186m Quest Achieved [1;37m-.
 ECHO.[46C[1;37m.---'                '---.
 ECHO.[46C[1;37m^|                        ^|[%3C[25D%RGB%179;233;255m%Q.POPUP.NAME%[1;37m
 ECHO.[46C[1;37m^|                        ^|
-ECHO.[46C[1;37m^|  Rewards:   Porgress:  ^|
+ECHO.[46C[1;37m^|  Rewards:   Progress:  ^|
 ECHO.[46C[1;37m^|                        ^|[23D%RGB%179;233;255m %RGB.COIN%$:[4m%4[0m[1;37m
 ECHO.[46C[1;37m^|                        ^|[23D%RGB%179;233;255m%RGB.LVL%XP:[4m%5[0m[1;37m
 ECHO.[2A[60C%RGB.TRUE%%1/%2[0m

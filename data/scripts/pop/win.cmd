@@ -59,7 +59,7 @@ SET "Replacement=SET PLAYER.MAP.LEVEL=%PLAYER.MAP.LEVEL%"
 ))>"%file%.new"
 MOVE "%file%.new" "%file%">NUL
 :SKIP-SAVE
-SET /A Line#ToSearch=8
+SET /A Line#ToSearch=6
 SET /A COMPLETED.MAPS=COMPLETED.MAPS+1
 SET "Replacement=SET COMPLETED.MAPS=%COMPLETED.MAPS%"
 (FOR /F "tokens=1*delims=:" %%a IN ('findstr /n "^" "%file%"') DO (
