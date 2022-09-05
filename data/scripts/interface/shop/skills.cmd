@@ -46,7 +46,7 @@ ECHO.^|                                  .'                                     
 ECHO.^|                                  ^|             ^> [s[1;30m  Type Here   [0m^<               ^|                                  ^|
 ECHO.^|                                  ^|                                             ^|                                  ^|
 ECHO.^|                                  '.-------------------------------------------.'                                  ^|
-ECHO.^|                                       Type "%RGB%10;230;235mswitch[0m" to switch between tabs.                                       ^|
+ECHO.^|                            Type "%RGB%10;230;235mswitch[0m" or the %RGB%10;230;235mname[0m of the tab to switch between tabs.                           ^|
 ECHO.^|                                                                                                                   ^|
 ECHO.'-------------------------------------------------------------------------------------------------------------------'[1A
 SET /A NEXT.LVL.ATK=%SKILL.ATK%+1
