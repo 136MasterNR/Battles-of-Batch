@@ -73,6 +73,7 @@ IF NOT EXIST "%~n0%~x0" (
 :RESTART
 COLOR 0F
 ::VAR:-Variables
+SET "DM=%CD%"
 SET "DATA=%CD%\data"
 SET "DATA_TMP=%DATA%\temp"
 SET "DATA_IMAGES=%DATA%\images"
@@ -106,12 +107,11 @@ SET "ITEMS.LOADER=%DATA_SCRIPTS%\playerdata\items.cmd"
 SET "ENEMY=%DATA_SCRIPTS%\game\enemy.cmd"
 SET "EVENT=%DATA_SCRIPTS%\game\event.cmd"
 SET "DEBUG.GAMELOADER=%DATA_SCRIPTS%\debug"
-SET "SHOP.TAB=1"
+SET "SHOP.TAB=2"
 SET "SCRIPTS_POP=%DATA_SCRIPTS%\pop"
 SET "DEV_ERR=%SCRIPTS_POP%\deverr.cmd"
 SET "CHOICE=CALL ^"%DATA_SCRIPTS%\choice.bat^""
 SET "INPUT_PART=nul"
-SET SELF_INPUT=
 ::VAR:-Settings
 SET "SETTINGS.LOAD=%DATA_SETTINGS%\settings.cmd"
 SET "SETTING=%DATA_SCRIPTS%\settings.cmd"
@@ -129,8 +129,6 @@ SET PLAYER.XP=0
 SET PLAYER.XP.REQ=45
 SET PLAYER.LVL=0
 SET PLAYER.MAP.LEVEL=1
-SET PLAYER.ITEM.BOMB=0
-SET PLAYER.ITEM.HEAL=0
 SET PLAYER.ITEM.UNKNOWN=
 SET PLAYER.MONEY=0
 SET CRIT.RATE=4
@@ -146,7 +144,7 @@ SET SHOP.MAX.BOMB=250
 SET "SHOP.HEAL=%DATA_SCRIPTS%\shop\heal.cmd"
 SET "SHOP.BOMB=%DATA_SCRIPTS%\shop\bomb.cmd"
 ::VAR:-Skills
-SET "SKILL.UPGRADE=%DATA_SCRIPTS%\shop\upgrade.cmd"
+SET "SKILL.UPGRADE=%DATA_SCRIPTS%\playerdata\upgrade.cmd"
 SET SKILL.ATK.MAXLVL=2
 SET SKILL.ATK.COST=460
 SET SKILL.CRIT_RATE.MAXLVL=4
@@ -384,8 +382,6 @@ ECHO.[u Loading ... (PlayerData)
 		ECHO.SET PLAYER.XP=0
 		ECHO.SET PLAYER.LVL=0
 		ECHO.SET PLAYER.MAP.LEVEL=1
-		ECHO.SET PLAYER.ITEM.HEAL=0
-		ECHO.SET PLAYER.ITEM.BOMB=0
 		ECHO.SET PLAYER.XP.REQ=%PLAYER.XP.REQ%
 		ECHO.SET COMPLETED.MAPS=0
 		ECHO.GOTO :EOF
@@ -402,6 +398,7 @@ IF NOT EXIST "%PLAYERDATA.WEAPONS%" (
 IF NOT EXIST "%PLAYERDATA.MATERIALS%" (
 	COPY NUL "%PLAYERDATA.MATERIALS%" >NUL
 )
+IF EXIST "%PLAYERDATA.EQ%" FOR /F %%I IN ("%PLAYERDATA.EQ%") DO IF %%~ZI==0 DEL "%PLAYERDATA.EQ%"
 IF NOT EXIST "%PLAYERDATA.EQ%" (
 	ECHO.EMPTY>"%PLAYERDATA.EQ%"
 	ECHO.EMPTY>>"%PLAYERDATA.EQ%"
@@ -629,7 +626,20 @@ IF /I %CHOICE.INPUT%.==P. GOTO MAP
 IF /I %CHOICE.INPUT%.==Q. GOTO QUESTS
 IF /I %CHOICE.INPUT%.==S. GOTO SETTINGS
 IF /I %CHOICE.INPUT%.==W. GOTO SHOP
-IF /I %CHOICE.INPUT%.==C. GOTO CREDITS
+IF /I %CHOICE.INPUT%.==X. (
+	SET "SHOP.TAB=1"
+	GOTO SHOP
+)
+IF /I %CHOICE.INPUT%.==C. (
+	SET "SHOP.TAB=2"
+	GOTO SHOP
+)
+IF /I %CHOICE.INPUT%.==Z. (
+	SET "SHOP.TAB=3"
+	GOTO SHOP
+)
+IF /I %CHOICE.INPUT%.==V. GOTO CREDITS
+IF /I %CHOICE.INPUT%.==. START "" "https://github.com/136MasterNR/Battles-of-Batch#menu-40"
 IF /I %CHOICE.INPUT%.==I. GOTO INVENTORY
 IF /I %CHOICE.INPUT%.==R. (MODE CON:COLS=%COLS% LINES=%LINES%&GOTO MENU)
 IF /I %CHOICE.INPUT%.==. (
@@ -638,10 +648,14 @@ IF /I %CHOICE.INPUT%.==. (
 )
 IF /I %CHOICE.INPUT%.==. GOTO TERMINAL
 IF /I %CHOICE.INPUT%.==. (
-	
+	IF %AUDIO.VALUE%==TRUE TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
 	EXIT 0
 )
 IF /I %CHOICE.INPUT%.==. GOTO RESET
+IF /I %CHOICE.INPUT%.==. (
+	CALL "%UPDATER%" MANUAL
+	GOTO MENU
+)
 IF /I %CHOICE.INPUT%.==. (
 	IF DEFINED RAINBOWMODE ( SET "RAINBOWMODE=" ) ELSE SET "RAINBOWMODE=TRUE"
 	GOTO REFRESH-MENU
@@ -672,7 +686,7 @@ ECHO.[ PROGRAMMING ]
 ECHO.Everything by "136MasterNR"
 ECHO.
 ECHO.[ STORY ]
-ECHO.Directed by "136MasterNR", "johnypro150"
+ECHO.Directed by "136MasterNR" ^& "johnypro150"
 ECHO.
 ECHO.[ ASCII-ART ]
 ECHO.Character Designs by "136MasterNR", "asciiart.eu", "patorjk.com"
@@ -680,16 +694,20 @@ ECHO.Layout Designs by "136MasterNR"
 ECHO.
 ECHO.[ SOUNDS ]
 ECHO.Menu Soundtrack by "Alexander Nakarada"
-ECHO.Boss Soundtrack by "pedi me arxes"
+ECHO.Boss Soundtrack by "pedi me arxes" (Made For This Project)
 ECHO.Other Soundtracks by "Unwind Station"
-ECHO.SFX by "136MasterNR"
 ECHO.
-ECHO.[ TESTERS ]: "AgentANP(v0.235)", "2002Spiele(v0.231)", "ComradeTurtle(v0.222)", "BlackStorm(v0.212)", "JayKayHere3987(v0.169)"
+ECHO.[ SFX ]
+ECHO.Swing Sound Effects by "SOUND and IMAGE FX"
+ECHO.Other Sound Effects by "epicstockmedia.com"
+ECHO.
+ECHO.[ TESTERS ]: "The Purge King (Latest)", "AgentANP (Latest)", "ComradeTurtle", "JayKayHere3987",
+ECHO.             "2002Spiele (Latest)", "BlackStorm (Latest)"
 ECHO.
 ECHO.
 ECHO.%RGB.TRUE%DISCLAIMER: Any unauthorized Assets used for this project are not claimed by us, and are used with no copyright
 ECHO.            statements from the authors. You can find the true author's watermarks ^& names below:[0m
-ECHO.[1msnd[ASCII:MAN-W-AXE], Donovan Bake[ASCII:DIAMOND], Nobody[ASCII:SHIELD], Donovan Bake/dwb[ASCII:BIRD], jgs[ASCII:BAT][0m
+ECHO.[1msnd[ASCII:MAN^&AXE], Donovan Bake[ASCII:DIAMOND], Nobody[ASCII:BANNER], Donovan Bake/dwb[ASCII:BIRD], jgs[ASCII:BAT][0m
 ECHO.
 ECHO.[0mPress any key to return...[?47l
 PAUSE>NUL
@@ -698,32 +716,33 @@ GOTO S-MENU
 TITLE %TITLE%Character ^& Equipment
 COLOR 08
 ECHO.[?25l[1;37m[20H[49C
-ECHO.[45C.---------{ INFO }--------.
+ECHO.[45C.-------------------------.
 ECHO.[45C^|   [1mReading Player Data[0m   ^|
-ECHO.[45C^|           [s              ^|
+ECHO.[45C^|          [s               ^|
 ECHO.[45C^|     [1mPlease Wait ...[0m     ^|
 ECHO.[45C'-------------------------'
 SET ITEMS.IS=
 SET WEAPON.IS=
-ECHO.[u 0%%
-CALL "%ITEMS.LOADER%" REGISTER
-ECHO.[u19%%
+ECHO.[u  0%%
+::CALL "%ITEMS.LOADER%" REGISTER
+ECHO.[u 19%%
 CALL "%ITEMS.LOADER%" LIST
-ECHO.[u46%%
+ECHO.[u 46%%
 CALL "%ITEMS.LOADER%" LIST_EQ
-ECHO.[u63%%
+ECHO.[u 63%%
 CALL "%ITEMS.LOADER%" WEAPONS
-ECHO.[u79%%
+ECHO.[u 79%%
 CALL "%ITEMS.LOADER%" MATERIALS
-ECHO.[u91%%
+ECHO.[u 91%%
 CALL "%CHARACTER%" MAIN
-ECHO.[u98%%
+ECHO.[u 98%%
 SET /A STAT.NUM.HP=%SKILL.HP%*100
-SET /A STAT.NUM.ATK=%SKILL.ATK%*50
+SET /A STAT.NUM.ATK=(%SKILL.ATK%*50)+EQUIP.BONUS_ATK
 SET /A STAT.NUM.CRIT_RATE=%SKILL.CRIT_RATE%*5
+ECHO.[u100%%
 IF A==A (
 ECHO.[?25l[H[0m.--.----------------------------------------------------------------------------------------------------------------.
-ECHO.^|Q :                                                                                                                ^|
+ECHO.^|Q ^|                                                                                                                ^|
 ECHO.^|--' .-----------------.                      .-----------------------.                    .----------------------. ^|
 ECHO.^|    : Press Z to view :                   .--: Character ^& Equipment :--.                 : Press X to customize : ^|
 ECHO.^|    : your history .--'                .--'  '-----------------------'  '--.              '----. your appearance : ^|
@@ -766,7 +785,7 @@ ECHO.^|      :                             :     :                             :
 ECHO.^|      :                             :     :                             :     :                             :      ^|
 ECHO.^|      :                             :     :                             :     :                             :      ^|
 ECHO.^|      :                             :     :                             :     :                             :      ^|
-ECHO.^|      :  Press [4mW[24m to view all Items  :     :                             :     : Press [4mE[24m to view all Weapons :      ^|
+ECHO.^|      :  Press [4mA[24m to view all Items  :     :                             :     : Press [4mD[24m to view all Weapons :      ^|
 ECHO.^|      '-----------------------------'     '-----------------------------'     '-----------------------------'      ^|
 ECHO.^|                                                                                                                   ^|
 ECHO.'-------------------------------------------------------------------------------------------------------------------'[22A
@@ -788,7 +807,7 @@ IF %MAT.REG_CNT%==0 (ECHO.[u    No materials owned) ELSE FOR /L %%A IN (1,1,%MA
 IF %WEAPONS.REG_CNT% GTR 14 (SET TMP.ITEM.REG_CNT=14) ELSE SET TMP.ITEM.REG_CNT=%WEAPONS.REG_CNT%
 SET /A MORE_HIDDEN=%WEAPONS.REG_CNT%-14
 IF %MORE_HIDDEN% EQU 1 (SET MORE_HIDDEN=  ... ^(%MORE_HIDDEN% Hidden Item^) ...) ELSE IF %MORE_HIDDEN% LEQ 9 (SET MORE_HIDDEN= ... ^(%MORE_HIDDEN% Hidden Item/s^) ...) ELSE (SET MORE_HIDDEN=  ... ^(Hidden Items^) ...)
-IF DEFINED WIELDING.WEAPON (ECHO.[u[36C1: !WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ![2B) ELSE (ECHO.[u[36C    No equipped weapons[2B)
+IF DEFINED WIELDING.WEAPON (ECHO.[u[36C1: !WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ! ^(+%EQUIP.BONUS_ATK% ATK^)[2B) ELSE (ECHO.[u[36C    No equipped weapons[2B)
 SET UI.POS=[81C
 IF %WEAPONS.REG_CNT%==0 (ECHO.%UI.POS%     No weapons owned) ELSE FOR /L %%A IN (1,1,%TMP.ITEM.REG_CNT%) DO (
 	CALL :WEAPON-GET-INFO !WEAPONS.REG_NAME.%%A! %%A
@@ -800,11 +819,13 @@ SET /P "=[?25h[2;2H"<NUL
 SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
 ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
-ENDLOCAL
 IF %CHOICE.INPUT%.==. GOTO CHARACTER-RE
 IF /I %CHOICE.INPUT%.==R. GOTO CHARACTER
-IF /I %CHOICE.INPUT%.==A. IF %ITEM.REG_CNT%==0 (ECHO.[2C%RGB.FALSE%UI.ERR: ITEMS LIST IS EMPTY   [1A) ELSE GOTO INV-CHOOSE_ITEM-RE
-IF /I %CHOICE.INPUT%.==D. IF %WEAPONS.REG_CNT%==0 (ECHO.[2C%RGB.FALSE%UI.ERR: WEAPONS LIST IS EMPTY   [1A) ELSE GOTO INV-CHOOSE_WEAPON-RE
+IF /I %CHOICE.INPUT%.==Z. SET /P "=[4C%RGB.FALSE%UI_ERR: CHAR_CUST UNAVAILABLE   [2G"<NUL
+IF /I %CHOICE.INPUT%.==X. SET /P "=[4C%RGB.FALSE%UI_ERR: CHAR_HIST UNAVAILABLE   [2G"<NUL
+IF /I %CHOICE.INPUT%.==A. IF %ITEM.REG_CNT%==0 (SET /P "=[4C%RGB.FALSE%UI_ERR: ITEMS LIST IS EMPTY   [2G"<NUL) ELSE GOTO INV-CHOOSE_ITEM-RE
+IF /I %CHOICE.INPUT%.==D. IF %WEAPONS.REG_CNT%==0 (SET /P "=[4C%RGB.FALSE%UI_ERR: WEAPONS LIST IS EMPTY   [2G"<NUL) ELSE GOTO INV-CHOOSE_WEAPON-RE
+IF /I %CHOICE.INPUT%.==. START "" "https://github.com/136MasterNR/Battles-of-Batch#character--equipment-43"
 IF /I %CHOICE.INPUT%==Q (
 	GOTO S-MENU
 )
@@ -862,7 +883,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
 ENDLOCAL
 IF %CHOICE.INPUT%.==. GOTO INVENTORY
-IF DEFINED SELF_INPUT IF %PLAYER.ITEM.BOMB%==0 ( SET "ERRORLEVEL="&GOTO S-MENU ) ELSE SET ERRORLEVEL=16&SET SELECTED=6
 IF /I %CHOICE.INPUT%==W IF NOT %INV_CHOICE% LEQ 1 (
 	ECHO.[%INV_CHOICE.UI%;2H [1A
 	SET /A INV_CHOICE-=1
@@ -904,7 +924,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
 ENDLOCAL
 IF %CHOICE.INPUT%.==. GOTO INVENTORY
-IF DEFINED SELF_INPUT IF %PLAYER.ITEM.BOMB%==0 ( SET "ERRORLEVEL="&GOTO S-MENU ) ELSE SET ERRORLEVEL=16&SET SELECTED=6
 IF /I %CHOICE.INPUT%==W IF NOT %INV_CHOICE_SLOT.POS% LEQ %INV_CHOICE_SLOT.UI% (
 	ECHO.[%INV_CHOICE_SLOT.POS%;2H [1A
 	SET /A INV_CHOICE_SLOT-=1
@@ -986,7 +1005,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
 ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
 IF %CHOICE.INPUT%.==. GOTO INVENTORY
-IF DEFINED SELF_INPUT IF %PLAYER.ITEM.BOMB%==0 ( SET "ERRORLEVEL="&GOTO S-MENU ) ELSE SET ERRORLEVEL=16&SET SELECTED=6
 IF /I %CHOICE.INPUT%==W IF NOT %W_INV_CHOICE% LEQ 1 (
 	ECHO.[%W_INV_CHOICE.UI%;2H [1A
 	SET /A W_INV_CHOICE-=1
@@ -1141,8 +1159,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
 ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
 ENDLOCAL
-IF %CHOICE.INPUT%.==. GOTO MAP
-IF DEFINED SELF_INPUT IF %PLAYER.ITEM.BOMB%==0 ( SET "ERRORLEVEL="&GOTO S-MENU ) ELSE SET ERRORLEVEL=16&SET SELECTED=6
+IF %CHOICE.INPUT%.==. GOTO PRE_LOAD
 IF /I %CHOICE.INPUT%==A GOTO PRE_LOAD
 IF /I %CHOICE.INPUT%==B GOTO S-MENU
 IF /I %CHOICE.INPUT%==S (
@@ -1170,7 +1187,6 @@ IF /I %CHOICE.INPUT%==D (
 		CALL "%MAP.LOAD%\c2.cmd" NUMS
 	)
 )
-IF /I %CHOICE.INPUT%==P GOTO PRE_LOAD
 IF /I %CHOICE.INPUT%==Q GOTO S-MENU
 IF /I %CHOICE.INPUT%==R ( 
 	MODE CON:COLS=%COLS% LINES=%LINES%
@@ -1189,20 +1205,18 @@ IF /I %CHOICE.INPUT%==Z (
 	SET /A SELECTED=SELECTED-7
 	GOTO MAP
 )
+IF /I %CHOICE.INPUT%.==. START "" "https://github.com/136MasterNR/Battles-of-Batch#map-41"
 GOTO MAP-CHOICE
 :SHOP
 CALL "%PLAYERDATA.LOAD%"
 IF "%SHOP.TAB%"=="1" CALL "%UI.ITEMS%"
 IF "%SHOP.TAB%"=="2" CALL "%UI.SKILLS%"
-IF "%SHOP.TAB%"=="3" CALL "%UI.CRAFT%"
 SET UDERFINE=
 :SHOP-RE
 IF "%SHOP.TAB%"=="1" SET "INPUT_PART=items"
 IF "%SHOP.TAB%"=="2" SET "INPUT_PART=skills"
 IF "%SHOP.TAB%"=="3" (
-	SET "INPUT_PART=craft"
-	SET /P "=[6;13H"<NUL
-	CALL :CRAFT-SHOP
+	GOTO CRAFT-SHOP
 ) ELSE (
 	SETLOCAL ENABLEDELAYEDEXPANSION
 	%INPUT% "PROMPT=[u[0m[?25h" "length=13"
@@ -1231,22 +1245,17 @@ IF /I "%UDERFINE%"=="ITEMS" SET "SHOP.TAB=1"
 IF /I "%UDERFINE%"=="ITEM" SET "SHOP.TAB=1"
 IF /I "%UDERFINE%"=="CRAFT" SET "SHOP.TAB=3"
 IF "%SHOP.TAB%"=="1" (
-	IF /I "%UDERFINE:~0,4%"=="SELL" ECHO.Unknown Operation&PAUSE>NUL
 	IF /I "%UDERFINE:~0,4%"=="HEAL" (
-		SET SHOP.HEAL.AMOUNT=%UDERFINE:~5%
-		CALL "%SHOP.HEAL%"
+		CALL "%ITEMS.LOADER%" SHOP-ADD Heal 1 250 %ITEM.REG_LVL.Heal% %SHOP.PRICE.HEAL%
 	)
 	IF /I "%UDERFINE:~0,8%"=="BUY HEAL" (
-		SET SHOP.HEAL.AMOUNT=%UDERFINE:~9%
-		CALL "%SHOP.HEAL%"
+		CALL "%ITEMS.LOADER%" SHOP-ADD Heal 1 250 %ITEM.REG_LVL.Heal% %SHOP.PRICE.HEAL%
 	)
 	IF /I "%UDERFINE:~0,4%"=="BOMB" (
-		SET SHOP.BOMB.AMOUNT=%UDERFINE:~5%
-		CALL "%SHOP.BOMB%"
+		CALL "%ITEMS.LOADER%" SHOP-ADD Bomb 1 250 %ITEM.REG_LVL.Bomb% %SHOP.PRICE.BOMB%
 	)
 	IF /I "%UDERFINE:~0,8%"=="BUY BOMB" (
-		SET SHOP.BOMB.AMOUNT=%UDERFINE:~9%
-		CALL "%SHOP.BOMB%"
+		CALL "%ITEMS.LOADER%" SHOP-ADD Bomb 1 250 %ITEM.REG_LVL.Bomb% %SHOP.PRICE.BOMB%
 	)
 ) ELSE (
 	IF /I "%UDERFINE%"=="UP ATK" (
@@ -1285,23 +1294,167 @@ IF "%SHOP.TAB%"=="1" (
 )
 GOTO SHOP
 :CRAFT-SHOP
+COLOR 08
+ECHO.[?25l[1;37m[20H[49C
+ECHO.[45C.-------------------------.
+ECHO.[45C^|   [1mReading Player Data[0m   ^|
+ECHO.[45C^|     [1mPlease Wait ...[0m     ^|
+ECHO.[45C'-------------------------'
+SET "INPUT_PART=craft"
+IF NOT DEFINED VERCODE EXIT
+TITLE %TITLE%Craft Shop
+CALL "%ITEMS.LOADER%" MATERIALS
+CALL "%ITEMS.LOADER%" WEAPONS
+>NUL FINDSTR /C:"Dustblade" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.1_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Dustblade%^)    ") || (SET "CRAFT.1_FOUND=   ^(Not Owned^)   ")
+>NUL FINDSTR /C:"Cold_Twill" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.2_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Cold_Twill%^)    ") || (SET "CRAFT.2_FOUND=   ^(Not Owned^)   ")
+>NUL FINDSTR /C:"Comradehammer" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.3_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Comradehammer%^)    ") || (SET "CRAFT.3_FOUND=   ^(Not Owned^)   ")
+>NUL FINDSTR /C:"Stylefi" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.4_FOUND=     ^(Owned ↑%WEAPONS.REG_LVL.Stylefi%^)    ") || (SET "CRAFT.4_FOUND=   ^(Not Owned^)   ")
+>NUL FINDSTR /C:"Flora_Thrower" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.5_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Flora_Thrower%^)    ") || (SET "CRAFT.5_FOUND=   ^(Not Owned^)   ")
+>NUL FINDSTR /C:"Trident_of_Gawra" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.6_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Trident_of_Gawra%^)    ") || (SET "CRAFT.6_FOUND=   ^(Not Owned^)   ")
+>NUL FINDSTR /C:"Infernal_Blade" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.7_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Infernal_Blade%^)    ") || (SET "CRAFT.7_FOUND=   ^(Not Owned^)   ")
+>NUL FINDSTR /C:"Ornate_Cobalt" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.8_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Ornate_Cobalt%^)    ") || (SET "CRAFT.8_FOUND=   ^(Not Owned^)   ")
+>NUL FINDSTR /C:"Brainleader" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.9_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Brainleader%^)    ") || (SET "CRAFT.9_FOUND=   ^(Not Owned^)   ")
+ECHO.[?25l[H[0m.---------------------------------------------.-------.-------.-------.---------------------------------------------.
+ECHO.^|                                           Q ^| [4m[1mCraft[0m ^| Items ^| Skill ^| E                                           ^|
+ECHO.^|                                             '-------'-------'-------'                                             ^|
+ECHO.[42H^|                                                                                                                   ^|
+ECHO.^|                                                                                                                   ^|
+ECHO.^|                                                                                                                   ^|
+ECHO.^|                                                                                                                   ^|
+ECHO.^|                                                                                                                   ^|
+ECHO.^|                                                                                                                   ^|
+ECHO.'-------------------------------------------------------------------------------------------------------------------'[1A
+:CRAFT-SHOP-RE
+IF %CRAFT.SEL%==0 (SET CRAFT.UI_ITEM=Dustblade) ELSE IF %CRAFT.SEL%==1 (SET CRAFT.UI_ITEM=Cold_Twill) ELSE IF %CRAFT.SEL%==2 (SET CRAFT.UI_ITEM=Comradehammer
+) ELSE IF %CRAFT.SEL%==3 (SET CRAFT.UI_ITEM=Stylefi) ELSE IF %CRAFT.SEL%==4 (SET CRAFT.UI_ITEM=Flora_Thrower) ELSE IF %CRAFT.SEL%==5 (SET CRAFT.UI_ITEM=Trident_of_Gawra
+) ELSE IF %CRAFT.SEL%==6 (SET CRAFT.UI_ITEM=Infernal_Blade) ELSE IF %CRAFT.SEL%==7 (SET CRAFT.UI_ITEM=Ornate_Cobalt
+) ELSE IF %CRAFT.SEL%==8 (SET CRAFT.UI_ITEM=Brainleader)
 SETLOCAL ENABLEDELAYEDEXPANSION
+SET "STR=> [4m[s%CRAFT.UI_ITEM%[24m <"
+CALL "%CENTER%" 30
+ENDLOCAL&&SET "CRAFT.UI.CENTER=%STR%"
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET "STR=!I.%CRAFT.UI_ITEM%.TYPE:_= !"
+CALL "%CENTER%" 12
+ENDLOCAL&&SET "CRAFT.UI.TYPE=%STR%"
+ENDLOCAL
+FOR /F "TOKENS=1,2,3,4,5,6 DELIMS=?" %%A IN ('CALL ECHO.%%I.%CRAFT.UI_ITEM%.MAT%%') DO (	
+	SET MAT.1.NAME=%%A
+	SET MAT.1.X=%%B
+	SET MAT.2.NAME=%%C
+	SET MAT.2.X=%%D
+	SET MAT.3.NAME=%%E
+	SET MAT.3.X=%%F
+	>NUL FINDSTR /C:"%%A" "%PLAYERDATA.MATERIALS%" && (
+		FOR /F "DELIMS=:" %%N IN ('FINDSTR /I /N %%A "%PLAYERDATA.MATERIALS%"') DO (SET MAT.1.OWNED=%%N) ) || (SET MAT.1.OWNED=0)
+	>NUL FINDSTR /C:"%%C" "%PLAYERDATA.MATERIALS%" && (
+		FOR /F "DELIMS=:" %%N IN ('FINDSTR /I /N %%C "%PLAYERDATA.MATERIALS%"') DO (SET MAT.2.OWNED=%%N) ) || (SET MAT.2.OWNED=0)
+	>NUL FINDSTR /C:"%%E" "%PLAYERDATA.MATERIALS%" && (
+		FOR /F "DELIMS=:" %%N IN ('FINDSTR /I /N %%E "%PLAYERDATA.MATERIALS%"') DO (SET MAT.3.OWNED=%%N) ) || (SET MAT.3.OWNED=0)
+	)
+)
+IF NOT %MAT.1.OWNED%==0 CALL SET "MAT.1.OWNED=%%MAT.REG_X.%MAT.1.OWNED%%%"
+IF NOT %MAT.2.OWNED%==0 CALL SET "MAT.2.OWNED=%%MAT.REG_X.%MAT.2.OWNED%%%"
+IF NOT %MAT.3.OWNED%==0 CALL SET "MAT.3.OWNED=%%MAT.REG_X.%MAT.3.OWNED%%%"
+IF %MAT.1.OWNED% GEQ %MAT.1.X% (SET CRAFT.UI.1.OWNED=%MAT.1.OWNED% %RGB.TRUE%√[0m) ELSE (SET CRAFT.UI.1.OWNED=%MAT.1.OWNED% %RGB.FALSE%X[0m)
+IF %MAT.2.OWNED% GEQ %MAT.2.X% (SET CRAFT.UI.2.OWNED=%MAT.2.OWNED% %RGB.TRUE%√[0m) ELSE (SET CRAFT.UI.2.OWNED=%MAT.2.OWNED% %RGB.FALSE%X[0m)
+IF %MAT.3.OWNED% GEQ %MAT.3.X% (SET CRAFT.UI.3.OWNED=%MAT.3.OWNED% %RGB.TRUE%√[0m) ELSE (SET CRAFT.UI.3.OWNED=%MAT.3.OWNED% %RGB.FALSE%X[0m)
+SET /A SEL.Y=(3*%CRAFT.SEL%)+8
+IF %CRAFT.NAV% EQU 0 (
+	ECHO.[4H^|                                                                                                                   ^|
+	ECHO.^|        .-------------------------.                                                                                ^|
+	ECHO.^|       /  [1;30m?  ← %RGB%255;204;153mCRAFT WEAPONS[1;30m →  ?[0m  \                   .-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+.                  ^|
+	ECHO.^|      :'- - - - - - - - - - - - - -':               .-'                                          '-.               ^|
+	ECHO.^|      :.                           .:               :------------: %RGB%153;153;255mMATERIALS REQUIRED[0m :------------:               ^|
+	ECHO.^|       :         Dustblade         :                ^|                                              ^|               ^|
+	ECHO.^|      :'     [s                      ':               ^|                                              ^|               ^|[u%CRAFT.1_FOUND%
+	ECHO.^|      :.                           .:               ^|                                              ^|               ^|
+	ECHO.^|       :        Cold Twill         :                ^|                                              ^|               ^|
+	ECHO.^|      :'     [s                      ':               ^|                                              ^|               ^|[u%CRAFT.2_FOUND%
+	ECHO.^|      :.                           .:               ^|                                              ^|               ^|
+	ECHO.^|       :       Comradehammer       :                ^|                                              ^|               ^|
+	ECHO.^|      :'     [s                      ':               ^|                                              ^|               ^|[u%CRAFT.3_FOUND%
+	ECHO.^|      :.                           .:               ^|                                              ^|               ^|
+	ECHO.^|       :          Stylefi          :                :------------: %RGB%204;255;204mWEAPON INFORMATION[0m :------------:               ^|
+	ECHO.^|      :'     [s                      ':               :                                              :               ^|[u%CRAFT.4_FOUND%
+	ECHO.^|      :.                           .:               '-.                                          .-'               ^|
+	ECHO.^|       :       Flora Thrower       :                  : - %RGB%255;255;204mWeapon Type[0m -          - %RGB%255;102;102mBase Damage[0m - :                 ^|
+	ECHO.^|      :'     [s                      ':                 :                                          :                 ^|[u%CRAFT.5_FOUND%
+	ECHO.^|      :.                           .:                 :                                          :                 ^|
+	ECHO.^|       :      Trident of Gawra     :                  :             - %RGB%204;255;255mBONUS EFFECT[0m -             :                 ^|
+	ECHO.^|      :'     [s                      ':                 :                                          :                 ^|[u%CRAFT.6_FOUND%
+	ECHO.^|      :.                           .:                 :                                          :                 ^|
+	ECHO.^|       :      Infernal Blade       :                  :                                          :                 ^|
+	ECHO.^|      :'     [s                      ':                 :              %RGB.FALSE%^(^!^) WARNING ^(^!^)[0m             :                 ^|[u%CRAFT.7_FOUND%
+	ECHO.^|      :.                           .:                 :      %RGB.FALSE%BONUS EFFECTS WILL NOT FUNCTION[0m     :                 ^|
+	ECHO.^|       :       Ornate Cobalt       :                  :                                          :                 ^|
+	ECHO.^|      :'     [s                      ':                 :             - %RGB%229;204;255mITEM HISTORY[0m -             :                 ^|[u%CRAFT.8_FOUND%
+	ECHO.^|      :.                           .:                 :                                          :                 ^|
+	ECHO.^|       :        Brainleader        :                  :                                          :                 ^|
+	ECHO.^|      :'     [s                      ':                 :                                          :                 ^|[u%CRAFT.9_FOUND%
+	ECHO.^|      :.                           .:                 :                                          :                 ^|
+	ECHO.^|       :                           :                  :                                          :                 ^|
+	ECHO.^|      :'- - - - - - - - - - - - - -':                 :-----------.------------------.-----------:                 ^|
+	ECHO.^|      :.                           .:                 : -+-+-+-+- ^| Press [1;4mA[0m to craft ^| -+-+-+-+- :                 ^|
+	ECHO.^|       :  Use W A S D to navigate  :                  '-----------'------------------'-----------'                 ^|
+	ECHO.^|      :'                           ':                                                                              ^|
+	ECHO.^|      '-----------------------------'                                                                              ^|
+) ELSE ECHO.[1mCRAFT ITEMS[0m
+SETLOCAL ENABLEDELAYEDEXPANSION
+IF NOT %MAT.1.X%==0 ECHO.[9;56H^> %RGB%204;229;255m%MAT.1.NAME:_= %[0m[10;58H%RGB%255;100;100mReq[0m: [1m%MAT.1.X%[0m / %RGB%204;240;229mOwned[0m: [1m%CRAFT.UI.1.OWNED%[0m
+IF NOT %MAT.2.X%==0 ECHO.[12;56H^> %RGB%204;229;255m%MAT.2.NAME:_= %[0m[13;58H%RGB%255;100;100mReq[0m: [1m%MAT.2.X%[0m / %RGB%204;240;229mOwned[0m: [1m%CRAFT.UI.2.OWNED%[0m
+IF NOT %MAT.3.X%==0 ECHO.[15;56H^> %RGB%204;229;255m%MAT.3.NAME:_= %[0m[16;58H%RGB%255;100;100mReq[0m: [1m%MAT.3.X%[0m / %RGB%204;240;229mOwned[0m: [1m%CRAFT.UI.3.OWNED%[0m
+ECHO.[1m[22;59H%CRAFT.UI.TYPE%[22;87H  !I.%CRAFT.UI_ITEM%.DMG!  [25;58H!I.%CRAFT.UI_ITEM%.DESC_1:_= ![26;58H!I.%CRAFT.UI_ITEM%.DESC_2:_= ![27;58H!I.%CRAFT.UI_ITEM%.DESC_3:_= ![32;58H!I.%CRAFT.UI_ITEM%.HIST_1:_= ![33;58H!I.%CRAFT.UI_ITEM%.HIST_2:_= ![34;58H!I.%CRAFT.UI_ITEM%.HIST_3:_= ![35;58H!I.%CRAFT.UI_ITEM%.HIST_4:_= ![0m
+IF %CRAFT.SEL%==3 (ECHO.[%SEL.Y%;37H '---------------'. [1B[20D                  '[1B[19D                    [1B[19D-----------------
+) ELSE IF %CRAFT.SEL%==4 (ECHO.[%SEL.Y%;37H '---------------'  [1B[20D                    [1B[20D                    [1B[19D------------------.
+) ELSE IF %CRAFT.SEL% GTR 4 (ECHO.[%SEL.Y%;37H '-----------------'[1B[20D                    [1B[20D                    [1B[19D------------------.
+) ELSE (ECHO.[%SEL.Y%;37H '---------------'[1B[18D                  [1B[18D                  [1B[17D----------------.)
+SET /P "=[3A[13C[1m%CRAFT.UI.CENTER:_= %[u"<NUL
 %CHOICE%
 ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
-ENDLOCAL
-IF %CHOICE.INPUT%.==. GOTO 
+IF %CHOICE.INPUT%.==. GOTO CRAFT-SHOP-RE
 IF /I %CHOICE.INPUT%==E SET /A SHOP.TAB=1&&GOTO SHOP
 IF /I %CHOICE.INPUT%==Q GOTO MENU
-IF /I %CHOICE.INPUT%==W IF %CRAFT.SEL% GEQ 1 SET /A CRAFT.SEL-=1&CALL "%UI.CRAFT%"
-IF /I %CHOICE.INPUT%==S IF %CRAFT.SEL% LEQ 8 SET /A CRAFT.SEL+=1&CALL "%UI.CRAFT%"
-IF /I %CHOICE.INPUT%==D IF %CRAFT.NAV% LEQ 0 SET /A CRAFT.NAV+=1&CALL "%UI.CRAFT%"
-IF /I %CHOICE.INPUT%==A IF %CRAFT.NAV% GEQ 1 SET /A CRAFT.NAV-=1&CALL "%UI.CRAFT%"
+IF /I %CHOICE.INPUT%==W IF %CRAFT.SEL% GEQ 1 SET /A CRAFT.SEL-=1&GOTO CRAFT-SHOP-RE
+IF /I %CHOICE.INPUT%==S IF %CRAFT.SEL% LEQ 7 SET /A CRAFT.SEL+=1&GOTO CRAFT-SHOP-RE
+::IF /I %CHOICE.INPUT%==D IF %CRAFT.NAV% LEQ 0 SET /A CRAFT.NAV+=1&GOTO CRAFT-SHOP-RE
+::IF /I %CHOICE.INPUT%==A IF %CRAFT.NAV% GEQ 1 SET /A CRAFT.NAV-=1&GOTO CRAFT-SHOP-RE
 IF /I %CHOICE.INPUT%==R (
 	MODE CON:COLS=%COLS% LINES=%LINES%
 	GOTO SHOP
 )
+IF /I %CHOICE.INPUT%==A (
+	SETLOCAL ENABLEDELAYEDEXPANSION
+	IF %MAT.1.OWNED% GEQ %MAT.1.X% IF %MAT.2.OWNED% GEQ %MAT.2.X% IF %MAT.3.OWNED% GEQ %MAT.3.X% IF !WEAPONS.REG_LVL.%CRAFT.UI_ITEM%! LSS 60 (
+		IF NOT %MAT.1.X%==0 CALL "%ITEMS.LOADER%" CRAFT_REM %MAT.1.NAME% %MAT.1.X%
+		IF NOT %MAT.2.X%==0 CALL "%ITEMS.LOADER%" CRAFT_REM %MAT.2.NAME% %MAT.2.X%
+		IF NOT %MAT.3.X%==0 CALL "%ITEMS.LOADER%" CRAFT_REM %MAT.3.NAME% %MAT.3.X%
+		CALL "%ITEMS.LOADER%" REPLACE-MAT %CRAFT.UI_ITEM% 1 WEAPONS
+		IF ERRORLEVEL 60 ECHO.%CRAFT.UI_ITEM%$1$0>>"%PLAYERDATA.WEAPONS%"
+		ENDLOCAL
+		
+		ECHO.[?25l[1;37m[36H
+		ECHO.[63C.--------------------------.
+		ECHO.[62C ^|   [1m%RGB.TRUE%Successfuly crafted![0m   ^| 
+		ECHO.[63C'------------[1mOK[0m------------'
+		PAUSE>NUL
+		GOTO CRAFT-SHOP
+	)
+	ENDLOCAL
+	ECHO.[?25l[1;37m[36H
+	ECHO.[63C.--------------------------.
+	ECHO.[62C ^|  [1m%RGB.FALSE%You cannot craft this![0m  ^| 
+	ECHO.[63C'------------[1mOK[0m------------'
+	PAUSE>NUL
+)
+IF /I %CHOICE.INPUT%.==. START "" "https://github.com/136MasterNR/Battles-of-Batch#shop-44"
+GOTO CRAFT-SHOP-RE
+:CRAFT-UI-CENTER
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET "STR=%1"
+CALL "%CENTER%" 26
+ENDLOCAL&SET "CRAFT.UI.CENTER.%1=%STR%"
 EXIT /B 0
-
 
 :QUESTS
 CALL "%QUEST.LOADER%" LOAD
@@ -1464,8 +1617,6 @@ GOTO RESTART
 	ECHO.SET PLAYER.XP=1500000
 	ECHO.SET PLAYER.LVL=69666
 	ECHO.SET PLAYER.MAP.LEVEL=1
-	ECHO.SET PLAYER.ITEM.HEAL=1000
-	ECHO.SET PLAYER.ITEM.BOMB=500
 	ECHO.SET PLAYER.XP.REQ=25
 	ECHO.SET COMPLETED.MAPS=0
 )>"%DATA_SAVES%\PLAYERDATA.cmd"
@@ -1478,12 +1629,12 @@ GOTO S-MENU
 :PRE_LOAD
 IF NOT EXIST "%LOAD.LEVEL_%%SELECTED%\setup.cmd" GOTO MAP
 ECHO.[2J[21;42H҉ Preparing Your Amazing Battle...[19D[1B[s
-ECHO.[u 0%%
+ECHO.[u  0%%
 TITLE %TITLE%Loading Battle ...
-TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL 2>NUL
+IF %AUDIO.VALUE%==TRUE TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL 2>NUL
 SET "ERRORLEVEL="
 SET "ERRORLVL="
-TASKLIST /FI "IMAGENAME eq wscript.exe.battle" 2>NUL|FIND /I /N "wscript.exe">NUL&SET "ERRORLVL=%ERRORLEVEL%" & TASKKILL /F /IM wscript.exe.battle>NUL
+IF %AUDIO.VALUE%==TRUE TASKLIST /FI "IMAGENAME eq wscript.exe.battle" 2>NUL|FIND /I /N "wscript.exe">NUL&SET "ERRORLVL=%ERRORLEVEL%" & TASKKILL /F /IM wscript.exe.battle>NUL
 SET "TARGETAUDIO=%AUD.BATTLE.NORMAL%"
 IF %SELECTED%==7 SET "TARGETAUDIO=%AUD.BATTLE.BOSS%"
 IF %AUDIO.VALUE%==TRUE (
@@ -1518,35 +1669,41 @@ IF %AUDIO.VALUE%==TRUE (
 		)
 	)
 )
-ECHO.[u13%%
+ECHO.[u 13%%
 FOR /L %%I IN (1,1,7) DO (
 	SET "EN.3.LINE.%%I="
 	SET "EN.2.LINE.%%I="
 	SET "EN.1.LINE.%%I="
 )
 SET LOAD.ERR=
-ECHO.[u20%%
+ECHO.[u 18%%
 CALL "%PLAYERSKILLS.LOAD%"
-ECHO.[u37%%
+ECHO.[u 22%%
+CALL "%ITEMS.LOADER%" LIST
+ECHO.[u 27%%
+CALL "%ITEMS.LOADER%" LIST_EQ
+ECHO.[u 34%%
+CALL "%ITEMS.LOADER%" WEAPONS
+ECHO.[u 38%%
 CALL "%LOAD.LEVEL_%%SELECTED%\setup.cmd"
-ECHO.[u49%%
+ECHO.[u 52%%
 CALL "%CMD.CLEARVAR%"
-ECHO.[u62%%
+ECHO.[u 62%%
 CALL "%SCRIPTS_GAME%\loader.cmd"
-ECHO.[u74%%
+ECHO.[u 96%%
 IF DEFINED LOAD.ERR GOTO MENU
 SETLOCAL ENABLEDELAYEDEXPANSION
 TITLE %TITLE%!MAP.NAME.%SELECTED%:_= ! (Battle #%SELECTED%)
 ENDLOCAL
-ECHO.[u93%%
+ECHO.[u100%%
 :IN-BATTLE
 IF EXIST LET.DEBUG (
 	CALL "%DEBUG.GAMELOADER%\1"
 	GOTO BATTLE-INPUT
 )
-ECHO.[?25l[H.-------------------------------------------------------------------------------------------------------------------.
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
+ECHO.[?25l[H.--.----------------------------------------------------------------------------------------------------------------.
+ECHO.^|Q ^|                                                                                                                ^|
+ECHO.^|--'                                                                                                                ^|
 ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
@@ -1772,9 +1929,9 @@ IF !ENEMY.HP.NOW.%INPUTATK%! EQU 0 (
 	IF NOT %ENEMY.HP.NOW.1%==0 SET INPUTATK=1
 )
 ENDLOCAL&&SET INPUTATK=%INPUTATK%
-CALL :BATTLE-DISPLAY_CHOICE
 :BATTLE-SEL_CHOICE
 SET /P "=[u%RGB.COIN%Use W or S to navigate between enemies, press A to select the chosen enemy.[0m[75D"<NUL
+CALL :BATTLE-DISPLAY_CHOICE
 SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
 ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
@@ -1796,6 +1953,7 @@ IF /I %CHOICE.INPUT%==W (
 	CALL :BATTLE-W_CHOICE
 	CALL :BATTLE-DISPLAY_CHOICE
 )
+IF /I %CHOICE.INPUT%== START "" "https://github.com/136MasterNR/Battles-of-Batch#battle-42"
 IF /I %CHOICE.INPUT%==A (GOTO BATTLE-ACT_CHOICE) ELSE GOTO BATTLE-SEL_CHOICE
 :BATTLE-S_CHOICE
 SETLOCAL ENABLEDELAYEDEXPANSION
@@ -1874,6 +2032,7 @@ IF /I %CHOICE.INPUT%==N (
 	%ADD-CMD%
 	GOTO REFRESH-BATTLE
 )
+IF /I %CHOICE.INPUT%.==. START "" "https://github.com/136MasterNR/Battles-of-Batch#battle-42"
 IF /I %CHOICE.INPUT%==Q (
 	GOTO BATTLE-SEL_CHOICE
 )
@@ -1889,7 +2048,7 @@ IF DEFINED VERCODE (
 	IF NOT DEFINED AUTOSAVE.VALUE CALL :SETT_ERR
 	IF NOT DEFINED UPDATE.VALUE CALL :SETT_ERR
 	IF NOT DEFINED SHORTCUTS.VALUE CALL :SETT_ERR
-	IF NOT DEFINED SKIP.HTS CALL :SETT_ERR
+	IF NOT DEFINED SHOW.INTRO CALL :SETT_ERR
 )
 SET "ERR.CODE=%ERRORLEVEL%"
 CLS

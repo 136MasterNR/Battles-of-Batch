@@ -92,9 +92,10 @@ EXIT /B 0
 CLS
 @SETLOCAL ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION
 @ECHO OFF
+ECHO.{ CONNECTION }
 SET STATE=OFFLINE
 FOR /f "tokens=5,6,7" %%a IN ('PING -n 1 1.0.0.1') do (
-	IF "x%%b"=="xunreachable." ECHO.No internet connection.&PAUSE>NUL&EXIT /B 0
+	IF "x%%b"=="xunreachable." CLS&ECHO.No internet connection.&PAUSE>NUL&EXIT /B 0
     IF "x%%a"=="xReceived" IF "x%%c"=="x1," (ECHO.YOU: ONLINE) ELSE ECHO.Something went wrong.
 )
 SET STATE=OFFLINE
@@ -107,6 +108,12 @@ FOR /f "tokens=5,6,7" %%a IN ('PING -n 1 htssoft.tk') do (
     IF NOT "x%%b"=="xunreachable." IF "x%%a"=="xReceived" IF "x%%c"=="x1," SET STATE=ACTIVE
 )
 ECHO.SERVICE: !STATE!
+ECHO.
+ECHO.{ INSTALLED }
+ECHO.GAME: %VERS%, %VERTYPE% ^(%VERCODE%^)
+ECHO.AUDIO MANAGER: %VERCOD.AUDIO_MANAGER%
 ENDLOCAL
+ECHO.
+ECHO.Press any key to return...
 PAUSE>NUL
 EXIT /B 0
