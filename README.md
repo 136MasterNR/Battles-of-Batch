@@ -34,7 +34,7 @@ Please note that downloading the game from the source code is not recommended be
 # Game Details & How To Play
 
 ### Game Controls (#2.0)
-Press ***CTRL*** + ***H*** on any User Interface to get more information about it.
+
   - **Menu**: 
     - **Play**/**Start**: Level Selection
     - **Quests**: Quests
@@ -53,6 +53,7 @@ Press ***CTRL*** + ***H*** on any User Interface to get more information about i
     - **Exit/Quit/Back** = End current battle and move to the previous UI (to the Map)
 
 ### Shortcut Keys (#2.1)
+Press ***CTRL*** + ***W*** on some User Interfaces to get more information about it.
   - **Menu**: 
     - ***A***/***P***: Level Selection
     - ***Q***: Quests
@@ -68,7 +69,7 @@ Press ***CTRL*** + ***H*** on any User Interface to get more information about i
     - ***CTRL*** + ***SHIFT*** + ***6***: Reset all your player data
     - ***CTRL*** + ***SHIFT*** + ***-***: LGBTQIA+
   - **Map**: 
-    - ***A***/***P***: Start Selected Level
+    - ***A***/***Enter***: Start Selected Level
     - ***D***: Move Forward/Next Level
     - ***S***: Move Backwards/Previous Level
     - ***Q***: Move to the previous UI (Menu)
