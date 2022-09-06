@@ -68,6 +68,12 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
     - ***CTRL*** + ***R***: Restart the game
     - ***CTRL*** + ***SHIFT*** + ***6***: Reset all your player data
     - ***CTRL*** + ***SHIFT*** + ***-***: LGBTQIA+
+  - **Character**
+    - ***A***: Equip items.
+    - ***D***: Equip weapons.
+    - ***X***: Customize your character's appearance.
+    - ***Z***: View your character's history.
+    - ***Q***: Return to the menu.
   - **Map**: 
     - ***A***/***Enter***: Start Selected Level
     - ***D***: Move Forward/Next Level
@@ -77,7 +83,7 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
   - **Battle**: 
     - *Press the First Letter of an Action, e.g. `A` to attack*
     - ***E***: Cast special skill
-    - ***Q*** = End current battle and move to the previous UI (to the Map)
+    - ***Q***: End current battle and move to the previous UI (to the Map)
 
 ## Strategy Methods
 ### How it Works : Enemies (#3.0)
@@ -236,7 +242,8 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
   - More Info Soon!
 
 ### Character & Equipment (#4.3)
-  - More Info Soon!
+  - The Character & Equipment interface lets you view your character's statistics, customize your character, view your character's history (based in the story) and allows you to equip or unequip items. At the top center you can view you character and at the right and left you can view the statistics of your character such as, your username, your money, your level, your experience, your total health points, your strength, your chance to strike critical hit and your defense. Below you can view your Items + Equiped Items, your Materials and your Weapons + Equipped Weapons. More statistics are shown when you move to the equipment UI.
+![image](https://user-images.githubusercontent.com/62593379/188514583-d3b5afcc-e39c-4ec7-b9e8-082b79e2fe69.png)
 
 ### Shop (#4.4)
   - **Items**: Items require in-game currency and specific character level. The level requirement is displayed as the symbol "↑", and currency as the symbol "$". The UI is categorized in 3 categories, first is Weapons and other sources that deal damage, second is Crafting Materials which are used for crafting items or weapons, and third is Potions and Other, which are used as support items.
