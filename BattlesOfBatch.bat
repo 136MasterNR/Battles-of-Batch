@@ -744,22 +744,22 @@ IF A==A (
 ECHO.[?25l[H[0m.--.----------------------------------------------------------------------------------------------------------------.
 ECHO.^|Q ^|                                                                                                                ^|
 ECHO.^|--' .-----------------.                      .-----------------------.                    .----------------------. ^|
-ECHO.^|    : Press Z to view :                   .--: Character ^& Equipment :--.                 : Press X to customize : ^|
+ECHO.^|    : Press Z to view :                   .--: %RGB%158;177;255mCharacter[0m ^& %RGB%133;255;196mEquipment[0m :--.                 : Press X to customize : ^|
 ECHO.^|    : your history .--'                .--'  '-----------------------'  '--.              '----. your appearance : ^|
-ECHO.^|    '-------------' .-----: Name :-----:                                   :----: Health :----. '----------------' ^|
-ECHO.^|                    : ^>                :        %C.FRAME_0%       : + [s               :                    ^|[u%STAT.NUM.HP%[u[55DWanderer
+ECHO.^|    '-------------' .-----: %RGB%252;255;179mName[0m :-----:                                   :----: %RGB.TRUE%Health[0m :----. '----------------' ^|
+ECHO.^|                    : %RGB%253;255;209m^>[0m                :        %C.FRAME_0%       : %RGB%191;255;186m+[0m [s               :                    ^|[u%STAT.NUM.HP%[u[55DWanderer
 ECHO.^|                    '------------------:        %C.FRAME_1%       :------------------'                    ^|
 ECHO.^|                                       :        %C.FRAME_2%       :                                       ^|
-ECHO.^|                     .----: Money :----:        %C.FRAME_3%       :--: Strength :---.                     ^|
-ECHO.^|                     : $               :        %C.FRAME_4%       : ╀ [s              :                     ^|[u%STAT.NUM.ATK%[u[54D%PLAYER.MONEY.INTF%
+ECHO.^|                     .----: %RGB%122;255;126mMoney[0m :----:        %C.FRAME_3%       :--: %RGB.FALSE%Strength[0m :---.                     ^|
+ECHO.^|                     : %RGB%179;255;181m$[0m               :        %C.FRAME_4%       : %RGB%245;105;105m╀[0m [s              :                     ^|[u%STAT.NUM.ATK%[u[54D%PLAYER.MONEY.INTF%
 ECHO.^|                     '-----------------:        %C.FRAME_5%       :-----------------'                     ^|
 ECHO.^|                                       :        %C.FRAME_6%       :                                       ^|
-ECHO.^|                     .----: Level :----:        %C.FRAME_7%       :--: Crit Rate :--.                     ^|
-ECHO.^|                     : ↑               :        %C.FRAME_8%       : ֍ [s              :                     ^|[u%STAT.NUM.CRIT_RATE%%%[u[54D%PLAYER.LVL%
+ECHO.^|                     .----: %RGB.LVL%Level[0m :----:        %C.FRAME_7%       :--: %RGB%255;201;125mCrit Rate[0m :--.                     ^|
+ECHO.^|                     : %RGB%194;228;255m↑[0m               :        %C.FRAME_8%       : %RGB%255;209;143m֍[0m [s              :                     ^|[u%STAT.NUM.CRIT_RATE%%%[u[54D%PLAYER.LVL%
 ECHO.^|                     '-----------------:        %C.FRAME_9%       :-----------------'                     ^|
 ECHO.^|                                       :                                   :                                       ^|
-ECHO.^|                       .----: Exp :----:--------.                 .--------:--: Defense :--.                       ^|
-ECHO.^|                       : •             :         '---------------'         : ▲ [s            :                       ^|[u0[u[52D%PLAYER.XP%
+ECHO.^|                       .----: %RGB%176;255;247mExp[0m :----:--------.                 .--------:--: %RGB%161;250;255mDefense[0m :--.                       ^|
+ECHO.^|                       : %RGB%199;255;249m•[0m             :         '---------------'         : %RGB%201;252;255m▲[0m [s            :                       ^|[u0[u[52D%PLAYER.XP%
 ECHO.^|                       '---------------'                                   '---------------'                       ^|
 ECHO.^|                                                                                                                   ^|
 ECHO.^|          Press [4mA[24m to equip an Item                                               Press [4mD[24m to equip a Weapon         ^|
@@ -1312,7 +1312,7 @@ CALL "%ITEMS.LOADER%" WEAPONS
 >NUL FINDSTR /C:"Dustblade" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.1_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Dustblade%^)    ") || (SET "CRAFT.1_FOUND=   ^(Not Owned^)   ")
 >NUL FINDSTR /C:"Cold_Twill" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.2_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Cold_Twill%^)    ") || (SET "CRAFT.2_FOUND=   ^(Not Owned^)   ")
 >NUL FINDSTR /C:"Comradehammer" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.3_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Comradehammer%^)    ") || (SET "CRAFT.3_FOUND=   ^(Not Owned^)   ")
->NUL FINDSTR /C:"Stylefi" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.4_FOUND=     ^(Owned ↑%WEAPONS.REG_LVL.Stylefi%^)    ") || (SET "CRAFT.4_FOUND=   ^(Not Owned^)   ")
+>NUL FINDSTR /C:"Stylefi" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.4_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Stylefi%^)    ") || (SET "CRAFT.4_FOUND=   ^(Not Owned^)   ")
 >NUL FINDSTR /C:"Flora_Thrower" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.5_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Flora_Thrower%^)    ") || (SET "CRAFT.5_FOUND=   ^(Not Owned^)   ")
 >NUL FINDSTR /C:"Trident_of_Gawra" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.6_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Trident_of_Gawra%^)    ") || (SET "CRAFT.6_FOUND=   ^(Not Owned^)   ")
 >NUL FINDSTR /C:"Infernal_Blade" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.7_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Infernal_Blade%^)    ") || (SET "CRAFT.7_FOUND=   ^(Not Owned^)   ")
