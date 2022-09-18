@@ -8,13 +8,15 @@
 
 </div>
 
-Battles of Batch is a game which runs on Window's MS-DOS terminal. It's an RPG text game, where you fight enemies in various battles. This project was first developed by 136MasterNR in 13th August 2021.
+Battles of Batch is a game which runs on Window's MS-DOS terminal. It's an RPG text game, where you fight enemies in various battles.
+This project was first developed by 136MasterNR in 13th August 2021.
 
 ## Download/Installation Process, Requirements & Notes
   - **Download the wizard here**: [BattlesOfBatch-Setup.exe](https://htssoft.tk/get-download/BattlesOfBatch-Setup.exe) [LATEST RELEASE]
   - **Download manually here**: [battlesofbatch-latest.zip](https://htssoft.tk/get-download/battlesofbatch-latest.zip) [LATEST RELEASE]
 
-Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher. It is not recommended to use the new Windows Terminal.
+Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher.<br/>
+**It is not recommended to launch in Windows Terminal.**
 
 This project uses [ANSI](https://www.robvanderwoude.com/ansi.php) as a text formatter. We use [ANSI](https://www.robvanderwoude.com/ansi.php) to format the colors on the window and manage displayed text. It is required for almost anything to work properly.
 
@@ -66,7 +68,7 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
     - ***V***: Credits
     - ***CTRL*** + ***Q***: Exit in safe-mode
     - ***CTRL*** + ***R***: Restart the game
-    - ***CTRL*** + ***SHIFT*** + ***6***: Reset all your player data
+    - ***CTRL*** + ***SHIFT*** + ***6***: Reset your player data
     - ***CTRL*** + ***SHIFT*** + ***-***: LGBTQIA+
   - **Character**
     - ***A***: Equip items.
@@ -101,13 +103,67 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
   - **Heal**: Gives the player HP. This does not skip the next enemy round/action, and still take damage. Thus it's upgradable.
   - More Coming Soon!
 
-### How it Works : Crafting Items [FUTURE UPDATE]
+<details><summary>
+
+### List of all Items (Click)
+
+</summary>
+
+```
+Note
+  Some stuff in here are not yet released.
+
+About [Not Released]
+	Items, such as weapons and armour, are used in-game to boost stats, such as extra attack damage or critical strikes etc., they can also give special buffs or any debuffs.
+	Artifact items can be used to buff the player, debuff enemies or deal damage.
+	Items are upgradable, every item can be upgraded 15 times. Once an item is upgraded, its level will be increased by one. Every upgrade will increase the
+	item's stats by 115%. To upgrade an item witha level of 15 or higher, you must own at least one material of Mythril. The materials required to upgrade an
+	item increases as the level of the item is increased.
+
+Weapon Items [Releasing]
+	Dustblade (Lvl 1 Lame Blade) {Base Damage: 8}
+	Cold Twill (Lvl 2 Short Bow) {Base Damage: 20}
+	Comrade Saluter (Lvl 15 Kusarigama) {Base Damage: 45} [Bonus Effects: 10% Chance to deal a total amount of 150% damage)
+	Stylefi (Lvl 16 Long Bow) {Base Damage: 60} [Bonus Effects: Extra 5% Crit Rate]
+	Flora Thrower (Lvl 20 Light Blue Toxicthrower) {Base Damage: 75} [Bonus Effects: 10% Chance to Poison a single enemy, lasts for a total of 2 rounds]
+	Trident of Gawra (lvl 26 Blue Trident) {Base Damage: 80} [Bonus Effects: 30% Chance to stun the targeted enemy, skipping their next round]
+	Infernal Blade (Lvl 30 Fire Blade) (Base Damage: 85) [Bonus Effects: 80% Chance to set on fire the targeted enemy, dealing 20% of your base damage on every round]
+	Ornate Cobalt (Lvl 40 Plasma Shooter) {Main Damage: 200} [Bonus Effects: Shares an extra amount of 15% of your base damage to all enemies]
+	Brainleader (Lvl 60 One-Shot Gun) {Base Damage: 5} [Bonus Effects: An extra amount of 495 damage is dealt to ALL enemies on every single round] [Debuff: -99% HP]
+
+Artifact Items [Releasing]
+	Healing Potion (Lvl 1 Healing Item) {Effects: Heals you by 15% when used, and again 5% when the next round finishes}
+	Oracle Shield (Lvl 4 Buff Item) {Effects: Take 30% less damage for 4 rounds, 20% chance to stun all enemies, skipping their next round}
+	Cup of Misery (Lvl 8 Buff Item) {Effects: Extra 10% base damage for 4 rounds}
+	Totem of Salute (Lvl 10 Buff Item) {Effects: If you lose all your HP on the next round, your HP will be increased by 100%}
+	Barrel Bomb (Lvl 14 Explosive Item) {Effects: Deals 60% of your base damage to all enemies}
+
+Armour Items [Not Released]
+	Boots of the Aether (Lvl 45) {Effects: Increases HP by 20%, automatically heals you by 20% every 3 rounds, if HP already maxed then max HP increases by 20%}
+
+Material Items [Released]
+	Stained Dust (Lvl 1 Material)
+	Black Wood (Lvl 4 Material)
+	Reactive Powder (Lvl 6 Material)
+	Francium (Lvl 8 Material)
+	Light Resin (Lvl 12 Material)
+	Double Marble (Lvl 18 Material)
+	Prism Dust (Lvl 18 Material)
+	Exalted Nickel (Lvl 24 Material)
+	Mythril (Lvl 30 Material) {Used to upgrade items over level 15}
+	Palladium (Lvl 44 Material)
+	Eternal Ethereal (Lvl 57 Material)
+  ```
+
+</details>
+
+### How it Works : Crafting Items
   - You can craft items by accessing the Shop, and switching to the Craft tab. Every item requires materials for it to be crafted, once you gather all required materials, you will be able to craft your item.
   - Items serve a rich in-game usage. You can equip weapons and other items such bombs or healing pots through your inventory. Weapons usually give you a big boost when it's about fighting enemies, they can give you extra damage and bonus effects.
 
 ## Enemy Details
 ### How Enemies Were Designed
-  - The enemies' design come from the latin characters, and other references. These enemies are unable to hold any weapons, thus they could only upgrade their defense, that's why they have way too much Health Points. Enemies that come with something sharp on them, can deal a very larger amount of damage compared to other enemies. These enemies have also learnt multiple skills, some of them can really be dangerous.
+  - The enemies' design comes from the latin characters, and other references. These enemies are unable to hold any weapons, thus they could only upgrade their defense, that's why they have way too much HP. Enemies that come with something sharp on them, can deal a much larger amount of damage compared to other enemies. Some other enemies have learnt multiple skill attacks, they can really be dangerous.
 ### Easy Level
   - **Yara**: It is the first enemy which a beginner will encouter in the game. It's one of the weakest enemies, and there is nothing special about them.
   - **Jumpo**: It can be found on the second level. Its design comes from a Sea-Horse. It's very known for how strong it is, because of its very sharp but small tail.
@@ -124,46 +180,6 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
 ### Hard Level
   - More Coming Soon!
 
-<details><summary>
-
-### List of all Items (Click)
-
-</summary>
-
-      Weapon Items
-        Dustblade (Lvl 1 Lame Blade) {Base Damage: 10}
-        Cold Twill (Lvl 2 Basic Pistol) {Base Damage: 15}
-        Comradehammer (Lvl 15 Super-Fi Heavy Hammer) {Base Damage: 45} [Bonus Effects: 10% Chance to deal a total amount of 150% damage)
-        Stylefi (Lvl 16 Super Neon Pistol) {Base Damage: 60} [Bonus Effects: Extra 2% Crit Rate]
-        Flora Thrower (Lvl 20 Light Blue Toxicthrower) {Base Damage: 75} [Bonus Effects: 10% Chance to Poison a single enemy, lasts for a total of 2 rounds]
-        Trident of Gura (lvl 26 Blue Trident) {Base Damage: 80} [Bonus Effects: 25% Chance to stun a single enemy, skipping their next round]
-        Infernal Blade (Lvl 30 Fire Blade) (Base Damage: 85) [Bonus Effects: 80% Chance to set on fire an enemy, dealing 10% of your base damage on every round]
-        Ornate Cobalt (Lvl 40 Plasma Shooter) {Main Damage: 200} [Bonus Effects: Shares an extra amount of 5% of your base damage to all enemies]
-        Brainleader (Lvl 50 One-Shot Gun) {Base Damage: 5} [Bonus Effects: An extra amount of 495 damage is dealt to ALL enemies on every single round] [Side Effects: -99% HP]
-
-      Artifact Items
-        Healing Potion (Lvl 1 Healing Item) {Effects: Heals you by 15% when used, and again 5% when the next round finishes}
-        Oracle Shield (Lvl 4 Buff Item) {Effects: Take 30% less damage for 4 rounds, 20% chance to stun all enemies, skipping their next round}
-        Cup of Misery (Lvl 8 Buff Item) {Effects: Extra 10% base damage for 4 rounds}
-        Totem of Salute (Lvl 10 Buff Item) {Effects: If you lose all your HP on the next round, your HP will be increased by 100%}
-        Barrel Bomb (Lvl 14 Explosive Item) {Effects: Deals 60% of your base damage to all enemies}
-
-      Armour Items
-        Boots of the Aether (Lvl 45) {Effects: Increases HP by 20%, automatically heals you by 20% every 3 rounds, if HP already maxed then max HP increases by 20%}
-
-      Material Items
-        Stained Dust (Lvl 1 Material)
-        Reactive Powder (Lvl 8 Material)
-        Light Resin (Lvl 12 Material)
-        Double Marble (Lvl 18 Material)
-        Prism Dust (Lvl 18 Material)
-        Exalted Nickel (Lvl 24 Material)
-        Eternal Ethereal (Lvl 40 Material)
-
-</details>
-
-<br/>
-
 # Levels & Story
 
 <details><summary>
@@ -173,29 +189,29 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
 </summary>
 
   - **Prologue**:
-    - Enemies: More Info Soon!
-    - Story: Coming Soon!
+    - Enemies: [Yara](https://github.com/136MasterNR/Battles-of-Batch#easy-level), [Yara](https://github.com/136MasterNR/Battles-of-Batch#easy-level), [Yara](https://github.com/136MasterNR/Battles-of-Batch#easy-level)
+    - Story: More Info Soon!
   - **Level 1**:
     - Enemies: More Info Soon!
-    - Story: Coming Soon!
+    - Story: More Info Soon!
   - **Level 2**:
     - Enemies: More Info Soon!
-    - Story: Coming Soon!
+    - Story: More Info Soon!
   - **Level 3**:
     - Enemies: More Info Soon!
-    - Story: Coming Soon!
+    - Story: More Info Soon!
   - **Level 4**:
     - Enemies: More Info Soon!
-    - Story: Coming Soon!
+    - Story: More Info Soon!
   - **Level 5**:
     - Enemies: More Info Soon!
-    - Story: Coming Soon!
+    - Story: More Info Soon!
   - **Level 6**:
     - Enemies: More Info Soon!
-    - Story: Coming Soon!
+    - Story: More Info Soon!
   - **Level 7**:
     - Enemies: More Info Soon!
-    - Story: Coming Soon!
+    - Story: More Info Soon!
 
 </details>
 
@@ -229,13 +245,43 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
 
 </details>
 
+<details><summary>
+
+### Chapter 3 (Click)
+
+</summary>
+
+  - **Level 15**:
+    - Enemies: More Info Soon!
+    - Story: Coming Soon!
+  - **Level 16**:
+    - Enemies: More Info Soon!
+    - Story: Coming Soon!
+  - **Level 17**:
+    - Enemies: More Info Soon!
+    - Story: Coming Soon!
+  - **Level 18**:
+    - Enemies: More Info Soon!
+    - Story: Coming Soon!
+  - **Level 19**:
+    - Enemies: More Info Soon!
+    - Story: Coming Soon!
+  - **Level 20**:
+    - Enemies: More Info Soon!
+    - Story: Coming Soon!
+  - **Level 21**:
+    - Enemies: More Info Soon!
+    - Story: Coming Soon!
+
+</details>
+
 # User Interfaces
 ### Menu (#4.0)
   - The menu is decorated with various ascii art, and the title at the top. In the middle, you can view your general stats such as your Level, your Money and your Next Battle. Below you can see the commands which let you navigate to other user interfaces. When shortcut keys enabled, press to A to navigate to the [Map](https://github.com/136MasterNR/Battles-of-Batch#map-41) interface, Q (which stands for Quests) to the [Quests](https://github.com/136MasterNR/Battles-of-Batch#quests-45) interface, W (which stands for Workshop) to the [Workshop](https://github.com/136MasterNR/Battles-of-Batch#shop-44) interface, E (which stands for Equipment) to the [Character & Equipment](https://github.com/136MasterNR/Battles-of-Batch#character--equipment-43) interface, S (which stands for Settings) to the [Settigns](https://github.com/136MasterNR/Battles-of-Batch#settings-46) interface.
 ![](https://user-images.githubusercontent.com/62593379/186289521-0bae6d42-d268-4c54-af6b-3a53cd08e624.png)
 
 ### Map (#4.1)
-  - The Map interface lets you see all the available levels, and navigate through available chapters. At the top, you can view information about the current level & chapter, such as the Battle's title (Story Title), the next Battle, yout Total Wins and more information about the selected level, such as the general difficulty, the recommended level and the enemies that will appear in battle.
+  - The Map interface lets you see all the available levels, and navigate through available chapters. At the top, you can view information about the current level & chapter, such as the Battle's title (Story Title), the next Battle, your Total Wins and more information about the selected level, such as the general difficulty, the recommended level and the enemies that will appear in battle.
 ![](https://user-images.githubusercontent.com/62593379/186290360-ee5d9e6b-fa02-4cc3-9aeb-a0e19e20e8ba.png)
 
 ### Battle (#4.2)
@@ -261,12 +307,9 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
 ![](https://user-images.githubusercontent.com/62593379/186287701-8390e429-9cd4-4f8f-b0b2-ce0afedb0ed1.png)
 
 # Explaining Technical Features
-### Gameplay Features
-  - More Info Soon!
-
 ### Saves Manager
   - Where your data are stored:
-    - All your data of our porjects are saved on a single local directory in your appdata; `%appdata%\HTS_DATA`. Battles of Batch's directory is named after its PHASE and VERSION. On `%appdata%\HTS_DATA`, you will find the game named as `BATTLESOFBATCH-%PHASE%-%VERSION%`. `%PHASE%` means the stage of the project, and `%VERSION%` the game version. E.g. `BATTLESOFBATCH-INDEV-0245`. Under that directory are the child directories `SAVES` and `SETTINGS`, plus some other `.dll` true/false files. On your first startup of the game, it automatically creates the player data saves under your game's appdata path directory.
+    - All your data of our porjects are saved in a single local directory in your appdata; `%appdata%\HTS_DATA`. Battles of Batch's directory is named after its PHASE and VERSION. On `%appdata%\HTS_DATA`, you will find the game named as `BATTLESOFBATCH-%PHASE%-%VERSION%`. `%PHASE%` means the stage of the project, and `%VERSION%` the game version. E.g. `BATTLESOFBATCH-INDEV-0245`. Under that directory are the child directories `SAVES` and `SETTINGS`, plus some other `.dll` true/false files. On your first startup of the game, it automatically creates the player data saves under your game's appdata path directory.
   - How the saving system works:
     - The game automatically saves your progress every time your player data variables are modified. The program does not rewrite the whole save file, it only modifies lines on it. For example, if you complete a quest, it will only change the line where that quest is saved on, that also goes for total completed levels and more.
   - How your inventory is managed:
@@ -287,7 +330,7 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
 
 # Miscellaneous
 ### Cheats
-  - Go to the menu and type `cheats` (WARNING: IT WILL RESET YOUR SAVES, CREATE A BACKUP FIRST!)
+  - Go to the menu and type `cheats` [For versions lower than v0.300]
 
 # For Developers
 ### Code your own levels
@@ -304,7 +347,7 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
     - **clear**: Clears the console window.
     - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, and reverts some User Interfaces back to preDev versions.
     - **import**: Display an [ANSI](https://www.robvanderwoude.com/ansi.php) text file. Use `.ans` as a file type. Use an argument after the command, e.g. `import mysupertxt.ans`. Make sure to move your ansi text in the directory `.\data\cmds\`.
-    - **help**: See more information and all the commands.
+    - **help**: See more information and all commands.
 
 # FAQ
   - Q: **Why in Batch?**
@@ -346,4 +389,4 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
     - JayKayHere3987
 
 # Thank you for choosing our projects! :shipit:
-### A lot more information about this project will be added in this read me every now and then.
+### Mmore information about this project will be added in this read me every now and then.
