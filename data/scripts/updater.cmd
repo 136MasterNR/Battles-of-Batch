@@ -6,7 +6,7 @@ CHCP 65001>NUL
 SET "UPDATE.LOC=%DATA_TMP%\update.cmd"
 SET "UPDZIP.LOC=%tmp%\update.zip"
 SET "EXTRAC.LOC=%CD%"
-CURL -S "https://htssoft.tk/get-update/battlesofbatch.bat" --SSL-NO-REVOKE >"./data/temp/update.cmd"
+CURL -S "https://136masternr.github.io/HTS-Studios/get-update/battlesofbatch.bat" --SSL-NO-REVOKE >"./data/temp/update.cmd"
 >NUL FIND /I "SET UPDATE.VER=" ".\data\temp\update.cmd" && (
 	CALL "%UPDATE.LOC%"
 	DEL /Q "%UPDATE.LOC%"
