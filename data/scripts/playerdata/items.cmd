@@ -374,7 +374,7 @@ IF %PLAYER.LVL% GEQ %5 (
 		PAUSE>NUL
 	)
 ) ELSE (
-	ECHO.[u[3D%RGB.FALSE%Your level is too low![0m
+	ECHO.[u[3D%RGB.FALSE%Your player level is too low![0m
 	PAUSE>NUL
 )
 EXIT /B 0

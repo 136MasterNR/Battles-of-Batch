@@ -1,8 +1,8 @@
 ::Created by HTSoft Studios () - Read the "copyright.txt" file for more info. (Do not distribute)
 ::(Use "NotePadPP" or anything other than "Notepad" to view better this file)
-:: Languages used:    98.7% Batch    1.3% VBScript
+:: Languages used:    99.2% Batch    0.8% VBScript
 ::_______ ______ ______ ______ ______ ______ ______ ______ ______ ______ ______ ______
-::______//_____//_____//_____//_____//_____//_____//_____//_____//_____//_____//______ \
+::______//_____//_____//_____//_____//_____//_____//_____//_____//_____//_____//______\\
 ::     _    _   _______    _____      _____   _                 _   _                 | |
 ::    | |  | | |__   __|  / ____|    / ____| | |               | | (_)                | |
 ::    | |__| |    | |    | (___     | (___   | |_   _   _    __| |  _    ___    ___   | |
@@ -10,7 +10,7 @@
 ::    | |  | |    | |     ____) |    ____) | | |_  | |_| | | (_| | | | | (_) | \__ \  | |
 ::    |_|  |_|    |_|    |_____/    |_____/   \__|  \__,_|  \__,_| |_|  \___/  |___/  | |
 ::_______ ______ ______ ______ ______ ______ ______ ______ ______ ______ ______ ______| |
-::______//_____//_____//_____//_____//_____//_____//_____//_____//_____//_____//______ /
+::______//_____//_____//_____//_____//_____//_____//_____//_____//_____//_____//______//
 ::
 ::                                                           !!!! WARNING !!!!                                                         ::
 :: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ::
@@ -21,10 +21,11 @@
 ::     UNLESS YOU ARE A TESTER AND THE OFFICIAL HTSOFT-STUDIOS DEVELOPERS TOLD YOU TO DO SO (!)                                        ::
 ::                                                                                                                                     ::
 :: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ::
+::                                                                                                                                     ::
 :LAUNCHER
-@CHCP 65001 >NUL
-@TITLE Battles of Batch
 @PUSHD "%~dp0"
+@TITLE Battles of Batch
+@CHCP 65001 >NUL
 @PROMPT !^>
 @VERIFY OFF
 @ECHO OFF
@@ -45,12 +46,12 @@ IF NOT EXIST ".\data\logs" MD ".\data\logs"
 :STARTUP-COMPLETE
 IF NOT EXIST "%~n0%~x0" (
 	CLS
-	ECHO.ERROR Denied Directory.
+	ECHO.ERR : Inaccessible Directory.
 	ECHO.
-	ECHO.Make sure the following:
-	ECHO.1. The program isn't running in a zip file or any winrar format.
-	ECHO.2. The program has permissions to add files on the current directory.
-	ECHO.3. Don't launch it directly from a search bar or a run-in.
+	ECHO.Try the following:
+	ECHO.1. Don't run the batch file within a zip file or any winrar format.
+	ECHO.2. Make sure that the batch file has permissions to Read/Write in this directory.
+	ECHO.3. Don't launch the batch file directly from a search bar or a run-in.
 	ECHO.4. If you are using a shortcut, make sure you added the correct directory.
 	ECHO.5. Do not run with administrator/elevated permissions.
 	ECHO.
@@ -59,12 +60,12 @@ IF NOT EXIST "%~n0%~x0" (
 	EXIT /B
 ) ELSE IF NOT EXIST "%CD%" (
 	CLS
-	ECHO.ERROR Abnormal Directory.
+	ECHO.ERR : Unreachable Directory.
 	ECHO.
 	ECHO.Try the following:
-	ECHO.1. Move the game, the whole folder, to a different location.
+	ECHO.1. Move the game ^(the whole folder^) to a different location.
 	ECHO.2. Make sure the directory's URL name includes ONLY latin characters.
-	ECHO.3. Do not move it to shared folders, like Onedrive.
+	ECHO.3. Do not move it to shared folders or onedrive.
 	ECHO.
 	ECHO.If none of the above helped, contact us.
 	PAUSE>NUL&EXIT
@@ -261,7 +262,12 @@ SET "QDESC.TLVLS=[1;37mWin [4m%QMAX.TLVLS%[0m[1;37m battles."
 MODE CON:COLS=%COLS% LINES=%LINES%
 ECHO.[?25l[s Loading ...
 IF NOT EXIST "%HTS_DATA%" MD "%HTS_DATA%"
-IF NOT EXIST "%HTS_DATA%" SET HTS_DIR_ERR=TRUE
+IF NOT EXIST "%HTS_DATA%" (
+	ECHO.Failed to create directory "HTS_DATA" on "%APPDATA%".
+	ECHO.Quitting ...
+	PAUSE>NUL
+	EXIT /B 1
+)
 IF NOT EXIST "%MAIN_GAME%" MD "%MAIN_GAME%"
 IF NOT EXIST "%DATA_SAVES%" MD "%DATA_SAVES%"
 IF NOT EXIST "%DATA_SETTINGS%" MD "%DATA_SETTINGS%"
@@ -418,6 +424,7 @@ CALL "%ITEMS.LOADER%" LIST
 CALL "%ITEMS.LOADER%" LIST_EQ
 CALL "%ITEMS.LOADER%" WEAPONS
 SET /A "SELECTED=%PLAYER.MAP.LEVEL%"
+IF %SELECTED% GTR 13 SET SELECTED=1
 CALL "%DATA_SCRIPTS%\mapnames.cmd"
 ::Audio Manager
 IF NOT DEFINED AUDIO.VALUE CALL :SETT_ERR
@@ -709,6 +716,14 @@ ECHO.[45C'-------------------------'
 SET ITEMS.IS=
 SET WEAPON.IS=
 ECHO.[u  0%%
+::Default enemy locations
+SET LOC.W1=87
+SET LOC.W2=92
+SET LOC.W3=86
+SET LOC.H1=4
+SET LOC.H2=13
+SET LOC.H3=22
+ECHO.[u  2%%
 ::CALL "%ITEMS.LOADER%" REGISTER
 ECHO.[u 19%%
 CALL "%ITEMS.LOADER%" LIST
@@ -1414,27 +1429,43 @@ IF /I %CHOICE.INPUT%==R (
 )
 IF /I %CHOICE.INPUT%==A (
 	SETLOCAL ENABLEDELAYEDEXPANSION
-	IF %MAT.1.OWNED% GEQ %MAT.1.X% IF %MAT.2.OWNED% GEQ %MAT.2.X% IF %MAT.3.OWNED% GEQ %MAT.3.X% IF !WEAPONS.REG_LVL.%CRAFT.UI_ITEM%! LSS 60 (
-		IF NOT %MAT.1.X%==0 CALL "%ITEMS.LOADER%" CRAFT_REM %MAT.1.NAME% %MAT.1.X%
-		IF NOT %MAT.2.X%==0 CALL "%ITEMS.LOADER%" CRAFT_REM %MAT.2.NAME% %MAT.2.X%
-		IF NOT %MAT.3.X%==0 CALL "%ITEMS.LOADER%" CRAFT_REM %MAT.3.NAME% %MAT.3.X%
-		CALL "%ITEMS.LOADER%" REPLACE-MAT %CRAFT.UI_ITEM% 1 WEAPONS
-		IF ERRORLEVEL 60 ECHO.%CRAFT.UI_ITEM%$1$0>>"%PLAYERDATA.WEAPONS%"
+	IF !WEAPONS.REG_LVL.%CRAFT.UI_ITEM%! GEQ 60 (
 		ENDLOCAL
-		
 		ECHO.[?25l[1;37m[36H
 		ECHO.[63C.--------------------------.
-		ECHO.[62C ^|   [1m%RGB.TRUE%Successfuly crafted![0m   ^| 
+		ECHO.[62C ^|  [1m%RGB.FALSE%Upgrade is maxed out! [0m  ^| 
 		ECHO.[63C'------------[1mOK[0m------------'
 		PAUSE>NUL
-		GOTO CRAFT-SHOP
+	) ELSE (
+		IF %MAT.1.OWNED% GEQ %MAT.1.X% IF %MAT.2.OWNED% GEQ %MAT.2.X% IF %MAT.3.OWNED% GEQ %MAT.3.X% (
+			IF NOT %MAT.1.X%==0 CALL "%ITEMS.LOADER%" CRAFT_REM %MAT.1.NAME% %MAT.1.X%
+			IF NOT %MAT.2.X%==0 CALL "%ITEMS.LOADER%" CRAFT_REM %MAT.2.NAME% %MAT.2.X%
+			IF NOT %MAT.3.X%==0 CALL "%ITEMS.LOADER%" CRAFT_REM %MAT.3.NAME% %MAT.3.X%
+			CALL "%ITEMS.LOADER%" REPLACE-MAT %CRAFT.UI_ITEM% 1 WEAPONS
+			IF ERRORLEVEL 60 ECHO.%CRAFT.UI_ITEM%$1$0>>"%PLAYERDATA.WEAPONS%"
+			ENDLOCAL
+			
+			IF %MAT.1.OWNED% GTR 1 (
+				ECHO.[?25l[1;37m[36H
+				ECHO.[63C.--------------------------.
+				ECHO.[62C ^|  [1m%RGB%65;253;254mSuccessfuly upgraded![0m   ^| 
+				ECHO.[63C'------------[1mOK[0m------------'
+			) ELSE (
+				ECHO.[?25l[1;37m[36H
+				ECHO.[63C.--------------------------.
+				ECHO.[62C ^|   [1m%RGB.TRUE%Successfuly crafted![0m   ^| 
+				ECHO.[63C'------------[1mOK[0m------------'
+			)
+			PAUSE>NUL
+			GOTO CRAFT-SHOP
+		)
+		ENDLOCAL
+		ECHO.[?25l[1;37m[36H
+		ECHO.[63C.--------------------------.
+		ECHO.[62C ^|  [1m%RGB.FALSE%You cannot craft this![0m  ^| 
+		ECHO.[63C'------------[1mOK[0m------------'
+		PAUSE>NUL
 	)
-	ENDLOCAL
-	ECHO.[?25l[1;37m[36H
-	ECHO.[63C.--------------------------.
-	ECHO.[62C ^|  [1m%RGB.FALSE%You cannot craft this![0m  ^| 
-	ECHO.[63C'------------[1mOK[0m------------'
-	PAUSE>NUL
 )
 IF /I %CHOICE.INPUT%.==. START "" "https://github.com/136MasterNR/Battles-of-Batch#shop-44"
 GOTO CRAFT-SHOP-RE
@@ -1607,7 +1638,7 @@ PAUSE>NUL
 GOTO S-MENU
 :PRE_LOAD
 IF NOT EXIST "%LOAD.LEVEL_%%SELECTED%\setup.cmd" GOTO MAP
-ECHO.[2J[21;42H҉ Preparing Your Amazing Battle...[19D[1B[s
+ECHO.[2J[21;42H҉  Preparing Your Amazing Battle[17D[1B[s
 ECHO.[u  0%%
 TITLE %TITLE%Loading Battle ...
 IF %AUDIO.VALUE%==TRUE TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL 2>NUL
@@ -1649,11 +1680,6 @@ IF %AUDIO.VALUE%==TRUE (
 	)
 )
 ECHO.[u 13%%
-FOR /L %%I IN (1,1,7) DO (
-	SET "EN.3.LINE.%%I="
-	SET "EN.2.LINE.%%I="
-	SET "EN.1.LINE.%%I="
-)
 SET LOAD.ERR=
 ECHO.[u 18%%
 CALL "%PLAYERSKILLS.LOAD%"
@@ -1664,13 +1690,13 @@ CALL "%ITEMS.LOADER%" LIST_EQ
 ECHO.[u 34%%
 CALL "%ITEMS.LOADER%" WEAPONS
 ECHO.[u 38%%
-CALL "%LOAD.LEVEL_%%SELECTED%\setup.cmd"
-ECHO.[u 52%%
 CALL "%CMD.CLEARVAR%"
+ECHO.[u 41%%
+CALL "%LOAD.LEVEL_%%SELECTED%\setup.cmd"
+IF DEFINED LOAD.ERR GOTO MENU
 ECHO.[u 62%%
 CALL "%SCRIPTS_GAME%\loader.cmd"
 ECHO.[u 96%%
-IF DEFINED LOAD.ERR GOTO MENU
 SETLOCAL ENABLEDELAYEDEXPANSION
 TITLE %TITLE%!MAP.NAME.%SELECTED%:_= ! (Battle #%SELECTED%)
 ENDLOCAL
@@ -1680,7 +1706,7 @@ IF EXIST LET.DEBUG (
 	CALL "%DEBUG.GAMELOADER%\1"
 	GOTO BATTLE-INPUT
 )
-ECHO.[?25l[H.--.----------------------------------------------------------------------------------------------------------------.
+(ECHO.[?25l[H.--.----------------------------------------------------------------------------------------------------------------.
 ECHO.^|Q ^|                                                                                                                ^|
 ECHO.^|--'                                                                                                                ^|
 ECHO.^|                                                                                                                   ^|
@@ -1695,12 +1721,12 @@ ECHO.^|    //_\\_                                                               
 ECHO.^|  ."\\    ".                                                                                                       ^|
 ECHO.^| /          \                                                                                                      ^|
 ECHO.^| ^|           \_                                                                                                    ^|
-ECHO.^| ^|       ,--.-.)                                                                                                   ^|
+ECHO.^| ^|       ,--.-.^)                                                                                                   ^|
 ECHO.^|  \     /  o \o\                                                                                                   ^|
 ECHO.^|  /\/\  \    /_/                                                                                                   ^|
-ECHO.^|   (_.   `--'__)                                                                                                   ^|
+ECHO.^|   (_.   `--'__^)                                                                                                   ^|
 ECHO.^|    ^|     .-'  \                                                                                                   ^|
-ECHO.^|    ^|  .-'.     )                                                                                                  ^|
+ECHO.^|    ^|  .-'.     ^)                                                                                                  ^|
 ECHO.^|    ^| (  _/--.-'                                                                                                   ^|
 ECHO.^|    ^|  `.___.'                                                                                                     ^|
 ECHO.^|    ^|                                                                                                              ^|
@@ -1727,80 +1753,17 @@ ECHO.^|                                                                         
 ECHO.^|                                                                                                                   ^|
 ECHO.'-------------------------------------------------------------------------------------------------------------------'
 ECHO. [s
-ECHO..-------------------------------------------------------------------------------------------------------------------.[2A
+ECHO..-------------------------------------------------------------------------------------------------------------------.[2A)
 :REFRESH-BATTLE
 SET /A A+=1
-::ENEMIES HP BAR
-SET /A ENEMY.HP.NOW.T=ENEMY.HP.NOW.1 + ENEMY.HP.NOW.2 + ENEMY.HP.NOW.3
-IF NOT "%ENEMY.HP.AMOUNT.1%"=="0,+0" IF %ENEMY.HP.NOW.1% EQU 0 (ECHO.%LOC.HP.1%[[1;30mX-X-XX-X-X[0m]
-) ELSE IF %ENEMY.HP.NOW.1% LEQ %ENEMY.HOLO.HP.1.10% (ECHO.%LOC.HP.1%[%RGB%143;33;33m^|[1;30m---------[0m]
-) ELSE IF %ENEMY.HP.NOW.1% LEQ %ENEMY.HOLO.HP.1.20% (ECHO.%LOC.HP.1%[%RGB%143;33;33m^|%RGB%150;32;32m^|[1;30m--------[0m]
-) ELSE IF %ENEMY.HP.NOW.1% LEQ %ENEMY.HOLO.HP.1.30% (ECHO.%LOC.HP.1%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|[1;30m-------[0m]
-) ELSE IF %ENEMY.HP.NOW.1% LEQ %ENEMY.HOLO.HP.1.40% (ECHO.%LOC.HP.1%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|[1;30m------[0m]
-) ELSE IF %ENEMY.HP.NOW.1% LEQ %ENEMY.HOLO.HP.1.50% (ECHO.%LOC.HP.1%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|[1;30m-----[0m]
-) ELSE IF %ENEMY.HP.NOW.1% LEQ %ENEMY.HOLO.HP.1.60% (ECHO.%LOC.HP.1%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|%RGB%196;37;37m^|[1;30m----[0m]
-) ELSE IF %ENEMY.HP.NOW.1% LEQ %ENEMY.HOLO.HP.1.70% (ECHO.%LOC.HP.1%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|%RGB%196;37;37m^|%RGB%212;40;40m^|[1;30m---[0m]
-) ELSE IF %ENEMY.HP.NOW.1% LEQ %ENEMY.HOLO.HP.1.80% (ECHO.%LOC.HP.1%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|%RGB%196;37;37m^|%RGB%212;40;40m^|%RGB%235;45;45m^|[1;30m--[0m]
-) ELSE IF %ENEMY.HP.NOW.1% LEQ %ENEMY.HOLO.HP.1.90% (ECHO.%LOC.HP.1%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|%RGB%196;37;37m^|%RGB%212;40;40m^|%RGB%235;45;45m^|%RGB%255;48;48m^|[1;30m-[0m]
-) ELSE ECHO.%LOC.HP.1%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|%RGB%196;37;37m^|%RGB%212;40;40m^|%RGB%235;45;45m^|%RGB%255;48;48m^|%RGB%255;56;56m^|[0m]
-IF NOT "%ENEMY.HP.AMOUNT.1%"=="0,+0" ECHO.%LOC.EN.1%%EN.1.LINE.1%
-IF NOT "%ENEMY.HP.AMOUNT.1%"=="0,+0" ECHO.%MOV.EN.1%%EN.1.LINE.2%%FADE%
-IF NOT "%ENEMY.HP.AMOUNT.1%"=="0,+0" ECHO.%MOV.EN.1%%EN.1.LINE.3%
-IF NOT "%ENEMY.HP.AMOUNT.1%"=="0,+0" ECHO.%MOV.EN.1%%EN.1.LINE.4%%FADE%
-IF NOT "%ENEMY.HP.AMOUNT.1%"=="0,+0" ECHO.%MOV.EN.1%%EN.1.LINE.5%
-IF NOT "%ENEMY.HP.AMOUNT.1%"=="0,+0" ECHO.%MOV.EN.1%%EN.1.LINE.6%%FADE%
-IF NOT "%ENEMY.HP.AMOUNT.1%"=="0,+0" ECHO.%MOV.EN.1%%EN.1.LINE.7%
-IF DEFINED EN.1.LINE.1 IF NOT "%ENEMY.HP.AMOUNT.2%"=="0,+0" IF %ENEMY.HP.NOW.2% EQU 0 (ECHO.%LOC.HP.2%[[1;30mX-X-XX-X-X[0m]
-) ELSE IF %ENEMY.HP.NOW.2% LEQ %ENEMY.HOLO.HP.2.10% (ECHO.%LOC.HP.2%[%RGB%143;33;33m^|[1;30m---------[0m]
-) ELSE IF %ENEMY.HP.NOW.2% LEQ %ENEMY.HOLO.HP.2.20% (ECHO.%LOC.HP.2%[%RGB%143;33;33m^|%RGB%150;32;32m^|[1;30m--------[0m]
-) ELSE IF %ENEMY.HP.NOW.2% LEQ %ENEMY.HOLO.HP.2.30% (ECHO.%LOC.HP.2%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|[1;30m-------[0m]
-) ELSE IF %ENEMY.HP.NOW.2% LEQ %ENEMY.HOLO.HP.2.40% (ECHO.%LOC.HP.2%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|[1;30m------[0m]
-) ELSE IF %ENEMY.HP.NOW.2% LEQ %ENEMY.HOLO.HP.2.50% (ECHO.%LOC.HP.2%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|[1;30m-----[0m]
-) ELSE IF %ENEMY.HP.NOW.2% LEQ %ENEMY.HOLO.HP.2.60% (ECHO.%LOC.HP.2%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|%RGB%196;37;37m^|[1;30m----[0m]
-) ELSE IF %ENEMY.HP.NOW.2% LEQ %ENEMY.HOLO.HP.2.70% (ECHO.%LOC.HP.2%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|%RGB%196;37;37m^|%RGB%212;40;40m^|[1;30m---[0m]
-) ELSE IF %ENEMY.HP.NOW.2% LEQ %ENEMY.HOLO.HP.2.80% (ECHO.%LOC.HP.2%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|%RGB%196;37;37m^|%RGB%212;40;40m^|%RGB%235;45;45m^|[1;30m--[0m]
-) ELSE IF %ENEMY.HP.NOW.2% LEQ %ENEMY.HOLO.HP.2.90% (ECHO.%LOC.HP.2%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|%RGB%196;37;37m^|%RGB%212;40;40m^|%RGB%235;45;45m^|%RGB%255;48;48m^|[1;30m-[0m]
-) ELSE ECHO.%LOC.HP.2%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|%RGB%196;37;37m^|%RGB%212;40;40m^|%RGB%235;45;45m^|%RGB%255;48;48m^|%RGB%255;56;56m^|[0m]
-IF NOT "%ENEMY.HP.AMOUNT.2%"=="0,+0" ECHO.%LOC.EN.2%%EN.2.LINE.1%
-IF NOT "%ENEMY.HP.AMOUNT.2%"=="0,+0" ECHO.%MOV.EN.2%%EN.2.LINE.2%%FADE%
-IF NOT "%ENEMY.HP.AMOUNT.2%"=="0,+0" ECHO.%MOV.EN.2%%EN.2.LINE.3%
-IF NOT "%ENEMY.HP.AMOUNT.2%"=="0,+0" ECHO.%MOV.EN.2%%EN.2.LINE.4%%FADE%
-IF NOT "%ENEMY.HP.AMOUNT.2%"=="0,+0" ECHO.%MOV.EN.2%%EN.2.LINE.5%
-IF NOT "%ENEMY.HP.AMOUNT.2%"=="0,+0" ECHO.%MOV.EN.2%%EN.2.LINE.6%%FADE%
-IF NOT "%ENEMY.HP.AMOUNT.2%"=="0,+0" ECHO.%MOV.EN.2%%EN.2.LINE.7%
-IF DEFINED EN.2.LINE.1 IF NOT "%ENEMY.HP.AMOUNT.3%"=="0,+0" IF %ENEMY.HP.NOW.3% EQU 0 (ECHO.%LOC.HP.3%[[1;30mX-X-XX-X-X[0m]
-) ELSE IF %ENEMY.HP.NOW.3% LEQ %ENEMY.HOLO.HP.3.10% (ECHO.%LOC.HP.3%[%RGB%143;33;33m^|[1;30m---------[0m]
-) ELSE IF %ENEMY.HP.NOW.3% LEQ %ENEMY.HOLO.HP.3.20% (ECHO.%LOC.HP.3%[%RGB%143;33;33m^|%RGB%150;32;32m^|[1;30m--------[0m]
-) ELSE IF %ENEMY.HP.NOW.3% LEQ %ENEMY.HOLO.HP.3.30% (ECHO.%LOC.HP.3%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|[1;30m-------[0m]
-) ELSE IF %ENEMY.HP.NOW.3% LEQ %ENEMY.HOLO.HP.3.40% (ECHO.%LOC.HP.3%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|[1;30m------[0m]
-) ELSE IF %ENEMY.HP.NOW.3% LEQ %ENEMY.HOLO.HP.3.50% (ECHO.%LOC.HP.3%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|[1;30m-----[0m]
-) ELSE IF %ENEMY.HP.NOW.3% LEQ %ENEMY.HOLO.HP.3.60% (ECHO.%LOC.HP.3%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|%RGB%196;37;37m^|[1;30m----[0m]
-) ELSE IF %ENEMY.HP.NOW.3% LEQ %ENEMY.HOLO.HP.3.70% (ECHO.%LOC.HP.3%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|%RGB%196;37;37m^|%RGB%212;40;40m^|[1;30m---[0m]
-) ELSE IF %ENEMY.HP.NOW.3% LEQ %ENEMY.HOLO.HP.3.80% (ECHO.%LOC.HP.3%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|%RGB%196;37;37m^|%RGB%212;40;40m^|%RGB%235;45;45m^|[1;30m--[0m]
-) ELSE IF %ENEMY.HP.NOW.3% LEQ %ENEMY.HOLO.HP.3.90% (ECHO.%LOC.HP.3%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|%RGB%196;37;37m^|%RGB%212;40;40m^|%RGB%235;45;45m^|%RGB%255;48;48m^|[1;30m-[0m]
-) ELSE ECHO.%LOC.HP.3%[%RGB%143;33;33m^|%RGB%150;32;32m^|%RGB%161;32;32m^|%RGB%176;33;33m^|%RGB%186;35;35m^|%RGB%196;37;37m^|%RGB%212;40;40m^|%RGB%235;45;45m^|%RGB%255;48;48m^|%RGB%255;56;56m^|[0m]
-IF NOT "%ENEMY.HP.AMOUNT.3%"=="0,+0" ECHO.%LOC.EN.3%%EN.3.LINE.1%
-IF NOT "%ENEMY.HP.AMOUNT.3%"=="0,+0" ECHO.%MOV.EN.3%%EN.3.LINE.2%%FADE%
-IF NOT "%ENEMY.HP.AMOUNT.3%"=="0,+0" ECHO.%MOV.EN.3%%EN.3.LINE.3%
-IF NOT "%ENEMY.HP.AMOUNT.3%"=="0,+0" ECHO.%MOV.EN.3%%EN.3.LINE.4%%FADE%
-IF NOT "%ENEMY.HP.AMOUNT.3%"=="0,+0" ECHO.%MOV.EN.3%%EN.3.LINE.5%
-IF NOT "%ENEMY.HP.AMOUNT.3%"=="0,+0" ECHO.%MOV.EN.3%%EN.3.LINE.6%%FADE%
-IF NOT "%ENEMY.HP.AMOUNT.3%"=="0,+0" ECHO.%MOV.EN.3%%EN.3.LINE.7%
-
-::PLAYER HP BAR
-IF DEFINED EN.3.LINE.1 IF %PLAYER.HP.NOW% EQU 0 (ECHO.%LOC.HP.P%[[0;37m[1;30mX-X-XX-X-X[0m]
-) ELSE IF %PLAYER.HP.NOW% LEQ %PLAYER.HOLO.HP.10% (ECHO.%LOC.HP.P%[%RGB%2;97;0m^|[1;30m---------[0m]
-) ELSE IF %PLAYER.HP.NOW% LEQ %PLAYER.HOLO.HP.20% (ECHO.%LOC.HP.P%[%RGB%2;97;0m^|%RGB%4;105;0m^|[1;30m--------[0m]
-) ELSE IF %PLAYER.HP.NOW% LEQ %PLAYER.HOLO.HP.30% (ECHO.%LOC.HP.P%[%RGB%2;97;0m^|%RGB%4;105;0m^|%RGB%6;115;0m^|[1;30m-------[0m]
-) ELSE IF %PLAYER.HP.NOW% LEQ %PLAYER.HOLO.HP.40% (ECHO.%LOC.HP.P%[%RGB%2;97;0m^|%RGB%4;105;0m^|%RGB%6;115;0m^|%RGB%8;135;0m^|[1;30m------[0m]
-) ELSE IF %PLAYER.HP.NOW% LEQ %PLAYER.HOLO.HP.50% (ECHO.%LOC.HP.P%[%RGB%2;97;0m^|%RGB%4;105;0m^|%RGB%6;115;0m^|%RGB%8;135;0m^|%RGB%10;152;0m^|[1;30m-----[0m]
-) ELSE IF %PLAYER.HP.NOW% LEQ %PLAYER.HOLO.HP.60% (ECHO.%LOC.HP.P%[%RGB%2;97;0m^|%RGB%4;105;0m^|%RGB%6;115;0m^|%RGB%8;135;0m^|%RGB%10;152;0m^|%RGB%12;169;0m^|[1;30m----[0m]
-) ELSE IF %PLAYER.HP.NOW% LEQ %PLAYER.HOLO.HP.70% (ECHO.%LOC.HP.P%[%RGB%2;97;0m^|%RGB%4;105;0m^|%RGB%6;115;0m^|%RGB%8;135;0m^|%RGB%10;152;0m^|%RGB%12;169;0m^|%RGB%14;187;0m^|[1;30m---[0m]
-) ELSE IF %PLAYER.HP.NOW% LEQ %PLAYER.HOLO.HP.80% (ECHO.%LOC.HP.P%[%RGB%2;97;0m^|%RGB%4;105;0m^|%RGB%6;115;0m^|%RGB%8;135;0m^|%RGB%10;152;0m^|%RGB%12;169;0m^|%RGB%14;187;0m^|%RGB%16;204;0m^|[1;30m--[0m]
-) ELSE IF %PLAYER.HP.NOW% LEQ %PLAYER.HOLO.HP.90% (ECHO.%LOC.HP.P%[%RGB%2;97;0m^|%RGB%4;105;0m^|%RGB%6;115;0m^|%RGB%8;135;0m^|%RGB%10;152;0m^|%RGB%12;169;0m^|%RGB%14;187;0m^|%RGB%16;204;0m^|%RGB%18;239;0m^|[1;30m-[0m]
-) ELSE ECHO.%LOC.HP.P%[%RGB%2;97;0m^|%RGB%4;105;0m^|%RGB%6;115;0m^|%RGB%8;135;0m^|%RGB%10;152;0m^|%RGB%12;169;0m^|%RGB%14;187;0m^|%RGB%16;204;0m^|%RGB%18;239;0m^|%RGB%20;255;0m^|[0m]
+SET ENEMY.HP.NOW.T=
+FOR /L %%I IN (1,1,%EN.MAX%) DO (
+	SET /A ENEMY.HP.NOW.T+=ENEMY.HP.NOW.%%I
+)
+CALL "%SCRIPTS_GAME%\hpbar_now.cmd"
 IF NOT EXIST LET.DEBUG CALL "%IG.CMDS%"
 ECHO.[45;3H^|                                                                                                                 ^|[45;3HYour HP: %PLAYER.HP.NOW%/%PLAYER.HP.FULL% ^(+%PLAYER.HEAL.AMOUNT% -%ENEMY.ATTACK.AMOUNT%^)[45;40HYou dealt %PLAYER.ATTACK.AMOUNT% DMG to %PLAYER.ATTACK.ENEMY% - CRIT: %ATK.CRIT%[45;90HEnemy Total HP: %ENEMY.HP.NOW.T%/%ENEMY.HP.FULL.T%
+:REFRESH-FADE
 IF %ENEMY.HP.NOW.T% LEQ 0 (
 	IF %CNT.FADEOUT%==14 (
 		CALL "%SCRIPTS_POP%\win.cmd"
@@ -1808,6 +1771,8 @@ IF %ENEMY.HP.NOW.T% LEQ 0 (
 		CALL "%MENU.AUDIO%"
 		GOTO MAP
 	)
+	HELP>NUL
+	HELP>NUL
 	IF %CNT.FADEOUT%==0 (
 		SET "FADE=[14D="
 	) ELSE IF %CNT.FADEOUT%==1 (
@@ -1838,7 +1803,8 @@ IF %ENEMY.HP.NOW.T% LEQ 0 (
 		SET "FADE=[14D=============="
 	)
 	SET /A CNT.FADEOUT+=1
-	GOTO REFRESH-BATTLE
+	CALL "%SCRIPTS_GAME%\enemy_display.cmd"
+	GOTO REFRESH-FADE
 )
 IF %PLAYER.HP.NOW% LEQ 0 (
 	CALL "%SCRIPTS_POP%\lose.cmd"
@@ -1904,13 +1870,7 @@ IF %ERRORLEVEL%==2 GOTO MENU
 GOTO BATTLE-INPUT
 :BATTLE-CHOICE
 SET /P "=[1B[21C[s"<NUL
-SETLOCAL ENABLEDELAYEDEXPANSION
-IF !ENEMY.HP.NOW.%INPUTATK%! EQU 0 (
-	IF NOT %ENEMY.HP.NOW.3%==0 SET INPUTATK=3
-	IF NOT %ENEMY.HP.NOW.2%==0 SET INPUTATK=2
-	IF NOT %ENEMY.HP.NOW.1%==0 SET INPUTATK=1
-)
-ENDLOCAL&&SET INPUTATK=%INPUTATK%
+CALL "%SCRIPTS_GAME%\rand_enemy.cmd"
 :BATTLE-SEL_CHOICE
 SET /P "=[u%RGB.COIN%Use W or S to navigate between enemies, press A to select the chosen enemy.[0m[75D"<NUL
 CALL :BATTLE-DISPLAY_CHOICE
@@ -1939,18 +1899,26 @@ IF /I %CHOICE.INPUT%== START "" "https://github.com/136MasterNR/Battles-of-Batc
 IF /I %CHOICE.INPUT%==A (GOTO BATTLE-ACT_CHOICE) ELSE GOTO BATTLE-SEL_CHOICE
 :BATTLE-S_CHOICE
 SETLOCAL ENABLEDELAYEDEXPANSION
-SET /A INPUTATK+=1
-IF NOT %EN.MAX%==2 IF !ENEMY.HP.NOW.2! EQU 0 IF %INPUTATK% EQU 2 SET INPUTATK=%EN.MAX%
-IF !ENEMY.HP.NOW.%INPUTATK%! EQU 0 IF !ENEMY.HP.NOW.1! GTR 0 (SET INPUTATK=1) ELSE IF !ENEMY.HP.NOW.2! GTR 0 (SET INPUTATK=2) ELSE IF !ENEMY.HP.NOW.3! GTR 0 (SET INPUTATK=3)
-::IF NOT !ENEMY.HP.NOW.4!.==. IF NOT !ENEMY.HP.NOW.4!.==0. SET INPUTATK=4
+IF %INPUTATK% GTR %EN.MAX% (SET INPUTATK=1) ELSE SET /A INPUTATK+=1
+:BATTLE-S_CHOICE-RE
+IF !ENEMY.HP.NOW.%INPUTATK%! EQU 0 IF %INPUTATK% GTR %EN.MAX% (SET INPUTATK=1) ELSE (
+	SET /A INPUTATK+=1
+	GOTO BATTLE-S_CHOICE-RE
+)
+IF !ENEMY.HP.NOW.%INPUTATK%! EQU 0 GOTO :BATTLE-S_CHOICE-RE
 ENDLOCAL&&SET INPUTATK=%INPUTATK%
 EXIT /B 0
 :BATTLE-W_CHOICE
 SETLOCAL ENABLEDELAYEDEXPANSION
-SET /A INPUTATK-=1
-IF %INPUTATK% EQU 0 IF !ENEMY.HP.NOW.%EN.MAX%! EQU 0 SET INPUTATK=2
-IF !ENEMY.HP.NOW.2! EQU 0 IF %INPUTATK% EQU 2 SET INPUTATK=1
-IF !ENEMY.HP.NOW.%INPUTATK%! EQU 0 IF !ENEMY.HP.NOW.%EN.MAX%! GTR 0 (SET INPUTATK=%EN.MAX%) ELSE IF !ENEMY.HP.NOW.1! GTR 0 (SET INPUTATK=1) ELSE IF !ENEMY.HP.NOW.2! GTR 0 (SET INPUTATK=2) ELSE IF !ENEMY.HP.NOW.3! GTR 0 (SET INPUTATK=3)
+IF %INPUTATK% LSS 1 (SET INPUTATK=%EN.MAX%) ELSE SET /A INPUTATK-=1
+:BATTLE-W_CHOICE-RE
+IF !ENEMY.HP.NOW.%INPUTATK%! EQU 0 IF %INPUTATK% LSS 1 (
+	SET INPUTATK=%EN.MAX%
+) ELSE (
+	SET /A INPUTATK-=1
+	GOTO BATTLE-W_CHOICE-RE
+)
+IF !ENEMY.HP.NOW.%INPUTATK%! EQU 0 GOTO :BATTLE-W_CHOICE-RE
 ENDLOCAL&&SET INPUTATK=%INPUTATK%
 EXIT /B 0
 :BATTLE-DISPLAY_CHOICE

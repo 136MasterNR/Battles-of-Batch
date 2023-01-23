@@ -1,5 +1,5 @@
-Copyright (C) 2019~2022 HTSoft-Studios™ - Battles Of Batch (Tester's Release)
-Battles Of Batch is distributed under GNU GPLv3, including the use of this product in the following purposes and in
+Copyright (C) 2019~2022, Raf - Battles Of Batch (Tester's Release)
+Battles of Batch is distributed under GNU GPLv3, including the use of this product in the following purposes and in
 the following manner:
 
 - You may NOT resell, charge for, sub-license, rent, lease, loan or distrubute the Product without our prior written

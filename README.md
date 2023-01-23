@@ -4,7 +4,7 @@
   
 [![](https://badgen.net/badge/icon/windows?icon=windows&label)](https://github.com/136MasterNR/Battles-of-Batch#-battles-of-batch) [![](https://badgen.net/github/release/136MasterNR/Battles-of-Batch)](https://github.com/136MasterNR/Battles-of-Batch/releases) [![](https://badgen.net/github/stars/136MasterNR/Battles-of-Batch)](https://github.com/136MasterNR/Battles-of-Batch/stargazers)
 
-##### _Copyright (C) 2019~2022 HTSoft-Studios™_
+##### _Copyright (C) 2019~2022, Raf_
 
 </div>
 
@@ -367,7 +367,7 @@ Material Items [Released]
     - [patorjk.com](https://patorjk.com/)
     - 136MasterNR
 
-  - **Layout Designs** by
+  - **User Interfaces** by
     - 136MasterNR
 
 ### Sounds

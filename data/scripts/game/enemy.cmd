@@ -3,8 +3,8 @@ IF "%1."=="." CALL "%DEV_ERR%" Undefined "ENEMY.TYPE" argument:Empty.&&SET LOAD.
 IF "%2."=="." CALL "%DEV_ERR%" Undefined "ENEMY.POSITION" argument:Empty.&&SET LOAD.ERR=TRUE&&EXIT /B 1
 IF "%3."=="." CALL "%DEV_ERR%" Undefined "ENEMY.LEVEL" argument:Empty.&&SET LOAD.ERR=TRUE&&EXIT /B 1
 IF %3 EQU 0 CALL "%DEV_ERR%" Out of range for "ENEMY.LEVEL" argument:Value can't be zero.&&SET LOAD.ERR=TRUE&&EXIT /B 1
-IF %2 EQU 0 CALL "%DEV_ERR%" Out of range for "ENEMY.POSITION" argument:Value can't be zero.&&SET LOAD.ERR=TRUE&&EXIT /B 1
-IF %2 GTR 3 CALL "%DEV_ERR%" Out of range for "ENEMY.POSITION" argument:Value must be 1, 2 or 3.&&SET LOAD.ERR=TRUE&&EXIT /B 1
+IF %2 EQU 0 CALL "%DEV_ERR%" Out of range for "ENEMY.SELECTOR" argument:Value can't be zero.&&SET LOAD.ERR=TRUE&&EXIT /B 1
+IF %2 GTR 6 CALL "%DEV_ERR%" Out of range for "ENEMY.SELECTOR" argument:Value must be lower than 6.&&SET LOAD.ERR=TRUE&&EXIT /B 1
 CALL :%1 %1 %2 %3
 EXIT /B 0
 
@@ -17,7 +17,7 @@ SET /A TEMP.EN_HP_RAND=5*%3
 SET "ENEMY.HP.AMOUNT.%2=%TEMP.EN_HP_RAND%,+%TEMP.EN_HP%"
 SET "ENEMY.LVL.%2=%3"
 SET "EN.%2.LINE.1=  wWw  wWw   "
-SET "EN.%2.LINE.2=  ^(O^)  ^(O^)   "
+SET "EN.%2.LINE.2=  (O)  (O)   "
 SET "EN.%2.LINE.3=  ( \  / )   "
 SET "EN.%2.LINE.4=   \ \/ /    "
 SET "EN.%2.LINE.5=    \o /     "
@@ -34,11 +34,11 @@ SET /A TEMP.EN_HP_RAND=7*%3
 SET "ENEMY.HP.AMOUNT.%2=%TEMP.EN_HP_RAND%,+%TEMP.EN_HP%"
 SET "ENEMY.LVL.%2=%3"
 SET "EN.%2.LINE.1=       _     "
-SET "EN.%2.LINE.2=     _^|^|\    "
+SET "EN.%2.LINE.2=     _||\    "
 SET "EN.%2.LINE.3=    (_'\     "
-SET "EN.%2.LINE.4=     (  ^|    "
-SET "EN.%2.LINE.5=      \ ^|    "
-SET "EN.%2.LINE.6=   (\__)^|    "
+SET "EN.%2.LINE.4=     (  |    "
+SET "EN.%2.LINE.5=      \ |    "
+SET "EN.%2.LINE.6=   (\__)|    "
 SET "EN.%2.LINE.7=    `--.)    "
 EXIT /B 0
 
@@ -51,11 +51,11 @@ SET /A TEMP.EN_HP_RAND=25*%3
 SET "ENEMY.HP.AMOUNT.%2=%TEMP.EN_HP_RAND%,+%TEMP.EN_HP%"
 SET "ENEMY.LVL.%2=%3"
 SET "EN.%2.LINE.1=  \\\  ///   "
-SET "EN.%2.LINE.2=  ^(^(O^)^(O^)^)   "
-SET "EN.%2.LINE.3=   ^| \ ^|^|    "
-SET "EN.%2.LINE.4=   ^|^|\\^|^|    "
-SET "EN.%2.LINE.5=   ^|^| \ ^|    "
-SET "EN.%2.LINE.6=   ^|^|  ^|^|    "
+SET "EN.%2.LINE.2=  ((O)(O))   "
+SET "EN.%2.LINE.3=   | \ ||    "
+SET "EN.%2.LINE.4=   ||\\||    "
+SET "EN.%2.LINE.5=   || \ |    "
+SET "EN.%2.LINE.6=   ||  ||    "
 SET "EN.%2.LINE.7=  (_/  \_)   "
 EXIT /B 0
 
@@ -68,7 +68,7 @@ SET /A TEMP.EN_HP_RAND=11*%3
 SET "ENEMY.HP.AMOUNT.%2=%TEMP.EN_HP_RAND%,+%TEMP.EN_HP%"
 SET "ENEMY.LVL.%2=%3"
 SET "EN.%2.LINE.1=    wWw      "
-SET "EN.%2.LINE.2=    ^(O^)_     "
+SET "EN.%2.LINE.2=    (O)_     "
 SET "EN.%2.LINE.3=    / __)    "
 SET "EN.%2.LINE.4=   / (       "
 SET "EN.%2.LINE.5=  (  _)      "
@@ -87,9 +87,9 @@ SET "ENEMY.LVL.%2=%3"
 SET "EN.%2.LINE.1=    oo_      "
 SET "EN.%2.LINE.2=   /  _)-^<   "
 SET "EN.%2.LINE.3=   \__ `.    "
-SET "EN.%2.LINE.4=      `. ^|   "
-SET "EN.%2.LINE.5=      _^| ^|   "
-SET "EN.%2.LINE.6=   ,-'   ^|   "
+SET "EN.%2.LINE.4=      `. |   "
+SET "EN.%2.LINE.5=      _| |   "
+SET "EN.%2.LINE.6=   ,-'   |   "
 SET "EN.%2.LINE.7=  (_..--'    "
 EXIT /B 0
 
@@ -102,10 +102,10 @@ SET /A TEMP.EN_HP_RAND=28*%3
 SET "ENEMY.HP.AMOUNT.%2=%TEMP.EN_HP_RAND%,+%TEMP.EN_HP%"
 SET "ENEMY.LVL.%2=%3"
 SET "EN.%2.LINE.1=    ,--.     "
-SET "EN.%2.LINE.2=   ^(O^)^(O^)    "
-SET "EN.%2.LINE.3=   ^|(__)^|    "
-SET "EN.%2.LINE.4=   ^|  __/    "
-SET "EN.%2.LINE.5=   ^| /^|\     "
+SET "EN.%2.LINE.2=   (O)(O)    "
+SET "EN.%2.LINE.3=   |(__)|    "
+SET "EN.%2.LINE.4=   |  __/    "
+SET "EN.%2.LINE.5=   | /|\     "
 SET "EN.%2.LINE.6=   \ `-.     "
 SET "EN.%2.LINE.7=    `--'     "
 EXIT /B 0
@@ -119,10 +119,10 @@ SET /A TEMP.EN_HP_RAND=250*%3
 SET "ENEMY.HP.AMOUNT.%2=%TEMP.EN_HP_RAND%,+%TEMP.EN_HP%"
 SET "ENEMY.LVL.%2=%3"
 SET "EN.%2.LINE.1=    W  W     "
-SET "EN.%2.LINE.2=   ^(O^)^(O^)    "
-SET "EN.%2.LINE.3=     ^|^|      "
-SET "EN.%2.LINE.4=     ^| \     "
-SET "EN.%2.LINE.5=     ^|  `.   "
+SET "EN.%2.LINE.2=   (O)(O)    "
+SET "EN.%2.LINE.3=     ||      "
+SET "EN.%2.LINE.4=     | \     "
+SET "EN.%2.LINE.5=     |  `.   "
 SET "EN.%2.LINE.6=    (.-.__)  "
 SET "EN.%2.LINE.7=     `-'     "
 EXIT /B 0

@@ -104,7 +104,7 @@ FOR /f "tokens=5,6,7" %%a IN ('PING -n 1 www.github.com') do (
 )
 ECHO.HOST: !STATE!
 SET STATE=OFFLINE
-FOR /f "tokens=5,6,7" %%a IN ('PING -n 1 htssoft.tk') do (
+FOR /f "tokens=5,6,7" %%a IN ('PING -n 1 136masternr.github.io') do (
     IF NOT "x%%b"=="xunreachable." IF "x%%a"=="xReceived" IF "x%%c"=="x1," SET STATE=ACTIVE
 )
 ECHO.SERVICE: !STATE!

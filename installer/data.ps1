@@ -13,7 +13,7 @@ Add-Type -AssemblyName System.Drawing
 $iconPath = $env:TEMP + "\icon32hts.ico"
 $TestIco = Test-Path -Path $iconPath
 if($TestIco -like '*False*') {
-    Invoke-WebRequest -Uri "https://htssoft.tk/images/icon32.ico" -OutFile $iconPath
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/136MasterNR/HTS-Studios/main/images/icon32.ico" -OutFile $iconPath
 }
 
 [string]$DirLocation = Get-Location
@@ -156,7 +156,7 @@ Function InstallProcess {
     $ProgressBar.Value = 30
     Start-Sleep(1)
     try {
-        Invoke-WebRequest -Uri "https://htssoft.tk/get-download/battlesofbatch-latest.zip" -OutFile $DirZip
+        Invoke-WebRequest -Uri "https://github.com/136MasterNR/HTS-Studios/raw/main/get-download/battlesofbatch-latest.zip" -OutFile $DirZip
         Get-Job | Wait-Job
         Expand-Archive $DirZip -DestinationPath $DirFolder
         Get-Job | Wait-Job
