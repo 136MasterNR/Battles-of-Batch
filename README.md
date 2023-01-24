@@ -4,31 +4,26 @@
   
 [![](https://badgen.net/badge/icon/windows?icon=windows&label)](https://github.com/136MasterNR/Battles-of-Batch#-battles-of-batch) [![](https://badgen.net/github/release/136MasterNR/Battles-of-Batch)](https://github.com/136MasterNR/Battles-of-Batch/releases) [![](https://badgen.net/github/stars/136MasterNR/Battles-of-Batch)](https://github.com/136MasterNR/Battles-of-Batch/stargazers)
 
-##### _Copyright (C) 2019~2022, Raf_
+##### _Copyright (C) 2023, 136MasterNR_
 
 </div>
 
-Battles of Batch is a game which runs on Window's MS-DOS terminal. It's an RPG text game, where you fight enemies in various battles.
-This project was first developed by 136MasterNR in 13th August 2021.
+Battles of Batch is a game which runs on Window's DOS terminal version 10. It's an RPG text game, where you fight enemies in various battles.
+##### The project was initiated by 136MasterNR on August 13, 2021.
 
 ## Download/Installation Process, Requirements & Notes
-  - **Download the wizard here**: [BattlesOfBatch-Setup.exe](https://htssoft.tk/get-download/BattlesOfBatch-Setup.exe) [LATEST RELEASE]
-  - **Download manually here**: [battlesofbatch-latest.zip](https://htssoft.tk/get-download/battlesofbatch-latest.zip) [LATEST RELEASE]
+  - **Download manually here**: [battlesofbatch-latest.zip](https://raw.githubusercontent.com/136MasterNR/HTS-Studios/main/get-download/battlesofbatch-latest.zip) [LATEST RELEASE]
 
 Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher.<br/>
 **It is not recommended to launch in Windows Terminal.**
 
 This project uses [ANSI](https://www.robvanderwoude.com/ansi.php) as a text formatter. We use [ANSI](https://www.robvanderwoude.com/ansi.php) to format the colors on the window and manage displayed text. It is required for almost anything to work properly.
 
-Please note that downloading the game from the source code is not recommended because it contains features which are not yet finished or tested out. The source code also contains files that are not added to the original game. Please consider downloading by using the wizard or a release instead!
-
-**Warning: Your antivirus might detect the wizard as a malware, but that's a false positive. I coded the wizard in PowerShell and converted it to EXE using  [PS2EXE](https://github.com/MScholtes/PS2EXE) which is falsely detected as a malware due to vandalism on the software. If you are unable to whitelist the wizard, please consider using the manual download which was mentioned above, or a release in this repository. You can also find the source code of it in the [installer](/installer) folder.**
+Please note that downloading the game from the source code is not recommended because it contains features which are not yet finished or tested out. The source code also contains files that are not added to the original game, which can make it unstable. Please consider downloading by using a release instead!
 
 # About
 ### Contact (#1.0)
-  - **Discord**: [Discord]([discord.gg/Qst63njdBG](https://discord.com/invite/Qst63njdBG)) (for Community & Support)
-  - **e-Mail**: [htsdevteamofficial@gmail.com](mailto:htsdevteamofficial@gmail.com) (for Business Related)
-  - **Website**: [HTSoft](htssoft.tk) (for More Information)
+  - **Social Media**: [Reddit](https://www.reddit.com/r/BattlesOfBatch/) (for Community & Support)
 ### Copyright (#1.1)
   - **Read**: [Copyright](copyright.txt)
   - **Read**: [License](license.txt)

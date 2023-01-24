@@ -1,4 +1,4 @@
-Copyright (C) 2019~2022, Raf - Battles Of Batch (Tester's Release)
+Copyright (C) 2023, 136MasterNR - Battles Of Batch (Tester's Release)
 Battles of Batch is distributed under GNU GPLv3, including the use of this product in the following purposes and in
 the following manner:
 
