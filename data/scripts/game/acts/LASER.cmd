@@ -2,28 +2,28 @@ IF NOT DEFINED VERCODE EXIT
 SET W.TIME=0
 SET S.TIME=12
 REM FRAME: 1
-ECHO.[32A^| ^|       ,--.-.)    
-ECHO.^|  \     /  o \o\     
-ECHO.^|  /\/\  \    /_/     
-ECHO.^|   (_.   `--'__)     
-ECHO.^|    ^|     .-'  \    
-ECHO.^|    ^|  .-'._._. )   
-ECHO.^|    ^| (  -'--. '    
-ECHO.^|    ^|  `.___.'      
+ECHO.[H[17B^|  ^|       ,--.-.)    
+ECHO.^|   \     /  o \o\     
+ECHO.^|   /\/\  \    /_/     
+ECHO.^|    (_.   `--'__)     
+ECHO.^|     ^|     .-'  \    
+ECHO.^|     ^|  .-'._._. )   
+ECHO.^|     ^| (  -'--. '    
+ECHO.^|     ^|  `.___.'      
 CSCRIPT "%WAIT%" 60 >NUL
 
 REM FRAME: 2
-ECHO.[8A^| ^|       ,--.-.)    
-ECHO.^|  \     /  o \o\     
-ECHO.^|  /\/\  \ ' '/_/     
-ECHO.^|   (_.   `--'__)     
-ECHO.^|    ^|     .-'  \    
-ECHO.^|    ^|  .-'.-.-.-'   
-ECHO.^|    ^| (  ,_._._     
-ECHO.^|    ^|  `.___.'      
+ECHO.[8A^|  ^|       ,--.-.)    
+ECHO.^|   \     /  o \o\     
+ECHO.^|   /\/\  \ ' '/_/     
+ECHO.^|    (_.   `--'__)     
+ECHO.^|     ^|     .-'  \    
+ECHO.^|     ^|  .-'.-.-.-'   
+ECHO.^|     ^| (  ,_._._     
+ECHO.^|     ^|  `.___.'      
 
 REM SFX: 1
-IF NOT EXIST "%DATA_SETTINGS%\OFFSOUNDS.dll" (
+IF "%AUDIO.VALUE%"=="TRUE" (
 	SETLOCAL ENABLEDELAYEDEXPANSION
 	FOR /F "DELIMS=:" %%A IN ('TASKLIST /FI "WINDOWTITLE eq wscript.exe%TARGETAEXT%"') DO IF NOT %%A==INFO TASKKILL /F /FI "WINDOWTITLE eq wscript.exe%TARGETAEXT%" /T>NUL
 	SET "TARGETAEXT=.sfx"
@@ -32,7 +32,7 @@ IF NOT EXIST "%DATA_SETTINGS%\OFFSOUNDS.dll" (
 		ECHO Set Sound = CreateObject^("WMPlayer.OCX.7"^)
 		ECHO Sound.URL = "!TARGETAUDIO!"
 		ECHO Sound.Controls.play
-		ECHO Sound.settings.volume = %VOLUME%
+		ECHO Sound.settings.volume = %SFX.VOLUME%
 		ECHO Sound.settings.setMode "loop", False
 		ECHO Sound.Controls.play
 		ECHO While Sound.playState ^<^> 1
@@ -44,26 +44,26 @@ IF NOT EXIST "%DATA_SETTINGS%\OFFSOUNDS.dll" (
 )
 
 REM FRAME: 3
-ECHO.[8A^| ^|       ,--.-.)    
-ECHO.^|  \     /  o \o\     
-ECHO.^|  /\/\  \ ' '/_/     
-ECHO.^|   (_.   `--'__)     
-ECHO.^|    ^|     .-'  \    
-ECHO.^|    ^|  .-'"-.-.-`   
-ECHO.^|    ^| ( ,.__._._    
-ECHO.^|    ^|  `.____.'     
+ECHO.[8A^|  ^|       ,--.-.)    
+ECHO.^|   \     /  o \o\     
+ECHO.^|   /\/\  \ ' '/_/     
+ECHO.^|    (_.   `--'__)     
+ECHO.^|     ^|     .-'  \    
+ECHO.^|     ^|  .-'"-.-.-`   
+ECHO.^|     ^| ( ,.__._._    
+ECHO.^|     ^|  `.____.'     
 CSCRIPT "%WAIT%" 60 >NUL
 
 REM FRAME: 4
-ECHO.[8A^| ^|       ,--.-.)    
-ECHO.^|  \     /  0 \0\     
-ECHO.^|  /\/\  \ ' '/_/     
-ECHO.^|   (_.   `--'__)     
-ECHO.^|    ^|     .-'  \_ 
-ECHO.^|    ^|  .-'"-.-.-,'     
-ECHO.^|    ^| (  [s          
-ECHO.^|    ^| .`.__._._,    
-ECHO.^|    ^|  '-.__.-'     
+ECHO.[8A^|  ^|       ,--.-.)    
+ECHO.^|   \     /  0 \0\     
+ECHO.^|   /\/\  \ ' '/_/     
+ECHO.^|    (_.   `--'__)     
+ECHO.^|     ^|     .-'  \_ 
+ECHO.^|     ^|  .-'"-.-.-,'     
+ECHO.^|     ^| (  [s          
+ECHO.^|     ^| .`.__._._,    
+ECHO.^|     ^|  '-.__.-'     
 CSCRIPT "%WAIT%" 60 >NUL
 
 REM FRAME: L:1
@@ -147,48 +147,48 @@ CSCRIPT "%WAIT%" %W.TIME% >NUL
 REM FRAME: D:8
 ECHO.[u   -    .    ' -       -=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-
 CSCRIPT "%WAIT%" %W.TIME% >NUL
-ECHO.[0m[7A^| ^|       ,--.-.)    
-ECHO.^|  \     /  o \o\     
-ECHO.^|  /\/\  \ ' '/_/     
-ECHO.^|   (_.   `--'__)     
-ECHO.^|    ^|     .-'  \    
-ECHO.^|    ^|  .-'"-.-.-`   
-ECHO.^|    ^| ( ,.__._._  [1;31m.      '        - -=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-[0m
-ECHO.^|    ^|  `.____.'     
-ECHO.^|    ^|               
+ECHO.[0m[7A^|  ^|       ,--.-.)    
+ECHO.^|   \     /  o \o\     
+ECHO.^|   /\/\  \ ' '/_/     
+ECHO.^|    (_.   `--'__)     
+ECHO.^|     ^|     .-'  \    
+ECHO.^|     ^|  .-'"-.-.-`   
+ECHO.^|     ^| ( ,.__._._  [1;31m.      '        - -=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-[0m
+ECHO.^|     ^|  `.____.'     
+ECHO.^|     ^|               
 CSCRIPT "%WAIT%" %W.TIME% >NUL
 REM FRAME: D:9
-ECHO.[9A^| ^|       ,--.-.)    
-ECHO.^|  \     /  o \o\     
-ECHO.^|  /\/\  \ ' '/_/     
-ECHO.^|   (_.   `--'__)     
-ECHO.^|    ^|     .-'  \    
-ECHO.^|    ^|  .-'.-.-.-'   
-ECHO.^|    ^| (  ,_._._              [1;31m,  '  .  -=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-[0m
-ECHO.^|    ^|  `.___.'      
-ECHO.^|    ^|               
+ECHO.[9A^|  ^|       ,--.-.)    
+ECHO.^|   \     /  o \o\     
+ECHO.^|   /\/\  \ ' '/_/     
+ECHO.^|    (_.   `--'__)     
+ECHO.^|     ^|     .-'  \    
+ECHO.^|     ^|  .-'.-.-.-'   
+ECHO.^|     ^| (  ,_._._              [1;31m,  '  .  -=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-[0m
+ECHO.^|     ^|  `.___.'      
+ECHO.^|     ^|               
 CSCRIPT "%WAIT%" %W.TIME% >NUL
 REM FRAME: D:10
-ECHO.[9A^| ^|       ,--.-.)    
-ECHO.^|  \     /  o \o\     
-ECHO.^|  /\/\  \    /_/     
-ECHO.^|   (_.   `--'__)     
-ECHO.^|    ^|     .-'  \    
-ECHO.^|    ^|  .-'._._. )   
-ECHO.^|    ^| (  -'--. '                [1;31m.     '  -=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=[0m
-ECHO.^|    ^|  `.___.'      
-ECHO.^|    ^|               
+ECHO.[9A^|  ^|       ,--.-.)    
+ECHO.^|   \     /  o \o\     
+ECHO.^|   /\/\  \    /_/     
+ECHO.^|    (_.   `--'__)     
+ECHO.^|     ^|     .-'  \    
+ECHO.^|     ^|  .-'._._. )   
+ECHO.^|     ^| (  -'--. '                [1;31m.     '  -=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=[0m
+ECHO.^|     ^|  `.___.'      
+ECHO.^|     ^|               
 CSCRIPT "%WAIT%" %W.TIME% >NUL
 REM FRAME: D:11
-ECHO.[0m[9A^| ^|       ,--.-.)    
-ECHO.^|  \     /  o \o\     
-ECHO.^|  /\/\  \    /_/     
-ECHO.^|   (_.   `--'__)     
-ECHO.^|    ^|     .-'  \    
-ECHO.^|    ^|  .-'.     )   
-ECHO.^|    ^| (  _/--.-'[s                    [1;31m,    .  -=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-[0m
-ECHO.^|    ^|  `.___.'      
-ECHO.^|    ^|               
+ECHO.[0m[9A^|  ^|       ,--.-.)    
+ECHO.^|   \     /  o \o\     
+ECHO.^|   /\/\  \    /_/     
+ECHO.^|    (_.   `--'__)     
+ECHO.^|     ^|     .-'  \    
+ECHO.^|     ^|  .-'.     )   
+ECHO.^|     ^| (  _/--.-'[s                    [1;31m,    .  -=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-^|=^|-[0m
+ECHO.^|     ^|  `.___.'      
+ECHO.^|     ^|                
 CSCRIPT "%WAIT%" %S.TIME% >NUL
 REM FRAME: D:12
 CSCRIPT "%WAIT%" %S.TIME% >NUL

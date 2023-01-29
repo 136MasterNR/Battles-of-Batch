@@ -1,2 +1,0 @@
-## This installer is not normally included with the main game, it serves no purpose in it.
-**Warning: Your antivirus might detect the wizard as a malware, but that's a false positive. I coded the wizard in PowerShell and converted it to EXE using  [PS2EXE](https://github.com/MScholtes/PS2EXE) which is falsely detected as a malware due to vandalism on the software. If you are unable to whitelist the wizard, please consider using the manual download mentioned in the main read me file, or a release.**

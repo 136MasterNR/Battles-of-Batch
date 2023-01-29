@@ -1,7 +1,7 @@
 IF NOT DEFINED VERCODE EXIT
 
-::REWARDS
-SET "REWARD.MONEY=35,+20"
+::REWARDS - End, +Start : In this example, it will randomize in the range of 38 to 60(<- 38+22)
+SET "REWARD.MONEY=22,+38"
 SET "REWARD.XP=12,+45"
 
 ::ENEMIES - Set a value between 1 - 6
@@ -21,11 +21,11 @@ SET LOC.W1=87
 SET LOC.W2=92
 SET LOC.W3=86
 
-SET LOC.H1=4
-SET LOC.H2=13
-SET LOC.H3=22
+SET LOC.H1=8
+SET LOC.H2=17
+SET LOC.H3=26
 
-::LOOT TABLE
+::LOOT TABLE - Find the list of items inside scripts\list\items.txt
 SET LOOT_ONCE=FALSE
 
 SET LOOT.1=Stained_Dust
