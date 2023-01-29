@@ -23,6 +23,7 @@ EXIT /B 0
 IF "%DENIED_AUDIO%"=="TRUE" (
 	CLS
 	ECHO.X=Msgbox^("Audio is unsupported on your device. Your device does not meet the audio requirements.",0+48,"Audio is unsupported."^)> "%DATA_TMP%\TMP_BOX.vbs"
+	ECHO.Read the popup.
 	START /wait "" "%DATA_TMP%\TMP_BOX.vbs"
 	DEL /Q "%DATA_TMP%\TMP_BOX.vbs"
 	GOTO SETTINGS
@@ -48,9 +49,9 @@ EXIT /B 0
 
 :VOLUME
 IF NOT DEFINED VERCODE EXIT
-SET NEW.VALUE=%UDERFINE:~7%
+SET "NEW.VALUE=%UDERFINE:~7%"
 IF NOT DEFINED NEW.VALUE (
-	ECHO.[1A[2C[1;31mPlease type a number after the volume command.
+	ECHO.[1A[2C[1;31mPlease enter a number after the volume command.
 	TIMEOUT /T 5 >NUL
 	GOTO SETTINGS
 )
@@ -63,13 +64,18 @@ IF DEFINED DEFINEVOLUME (
 	GOTO SETTINGS
 )
 ENDLOCAL
-IF %NEW.VALUE% GTR 100 (
-	ECHO.[1A[2C[1;31mNumber is too large! Please enter a number around 1 and 100.
+IF %NEW.VALUE:~0,1% EQU 0 IF NOT %NEW.VALUE:~1,1%[==[ (
+	ECHO.[1A[2C[1;31mPlease enter a valid number after the volume command.
 	TIMEOUT /T 5 >NUL
 	GOTO SETTINGS
 )
-IF %NEW.VALUE% LEQ 0 (
-	ECHO.[1A[2C[1;31mNumber is too short! Please enter a number around 1 and 100.
+IF %NEW.VALUE% GTR 100 (
+	ECHO.[1A[2C[1;31mNumber is too large! Please enter a number in range of 0 and 100.
+	TIMEOUT /T 5 >NUL
+	GOTO SETTINGS
+)
+IF %NEW.VALUE% LSS 0 (
+	ECHO.[1A[2C[1;31mNumber is too short! Please enter a number in range of 0 and 100.
 	TIMEOUT /T 5 >NUL
 	GOTO SETTINGS
 )
@@ -85,8 +91,8 @@ SET "Replacement=SET VOLUME=%NEW.VALUE%"
 ))>"%FILE%.new"
 MOVE "%FILE%.new" "%FILE%">NUL
 CALL %SETTINGS.LOAD%
-IF %AUDIO.VALUE%==TRUE IF EXIST "%TARGETAUDIO%" (
-	TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
+IF %AUDIO.VALUE%==TRUE TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
+IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 IF EXIST "%TARGETAUDIO%" (
 	(
 		ECHO Set Sound = CreateObject^("WMPlayer.OCX.7"^)
 		ECHO Sound.URL = "%TARGETAUDIO%"

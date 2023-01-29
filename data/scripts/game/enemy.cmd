@@ -4,7 +4,7 @@ IF "%2."=="." CALL "%DEV_ERR%" Undefined "ENEMY.POSITION" argument:Empty.&&SET L
 IF "%3."=="." CALL "%DEV_ERR%" Undefined "ENEMY.LEVEL" argument:Empty.&&SET LOAD.ERR=TRUE&&EXIT /B 1
 IF %3 EQU 0 CALL "%DEV_ERR%" Out of range for "ENEMY.LEVEL" argument:Value can't be zero.&&SET LOAD.ERR=TRUE&&EXIT /B 1
 IF %2 EQU 0 CALL "%DEV_ERR%" Out of range for "ENEMY.SELECTOR" argument:Value can't be zero.&&SET LOAD.ERR=TRUE&&EXIT /B 1
-IF %2 GTR 6 CALL "%DEV_ERR%" Out of range for "ENEMY.SELECTOR" argument:Value must be lower than 6.&&SET LOAD.ERR=TRUE&&EXIT /B 1
+IF %2 GTR 8 CALL "%DEV_ERR%" Out of range for "ENEMY.SELECTOR" argument:Value must be lower than 6.&&SET LOAD.ERR=TRUE&&EXIT /B 1
 CALL :%1 %1 %2 %3
 EXIT /B 0
 
@@ -85,7 +85,7 @@ SET /A TEMP.EN_HP_RAND=13*%3
 SET "ENEMY.HP.AMOUNT.%2=%TEMP.EN_HP_RAND%,+%TEMP.EN_HP%"
 SET "ENEMY.LVL.%2=%3"
 SET "EN.%2.LINE.1=    oo_      "
-SET "EN.%2.LINE.2=   /  _)-^<   "
+SET "EN.%2.LINE.2=   /  _)-<   "
 SET "EN.%2.LINE.3=   \__ `.    "
 SET "EN.%2.LINE.4=      `. |   "
 SET "EN.%2.LINE.5=      _| |   "

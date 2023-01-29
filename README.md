@@ -8,18 +8,19 @@
 
 </div>
 
-Battles of Batch is a game which runs on Window's DOS terminal version 10. It's an RPG text game, where you fight enemies in various battles.
+Battles of Batch is a RPG text game built for the Windows MS-DOS terminal version 10. Wanderers fight in various battles against a variety of enemies as they progress through the game. They can complete quests, acquire new items and weapons, and experience the game's story.
 ##### The project was initiated by 136MasterNR on August 13, 2021.
 
 ## Download/Installation Process, Requirements & Notes
   - **Download manually here**: [battlesofbatch-latest.zip](https://raw.githubusercontent.com/136MasterNR/HTS-Studios/main/get-download/battlesofbatch-latest.zip) [LATEST RELEASE]
 
 Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher.<br/>
-**It is not recommended to launch in Windows Terminal.**
 
-This project uses [ANSI](https://www.robvanderwoude.com/ansi.php) as a text formatter. We use [ANSI](https://www.robvanderwoude.com/ansi.php) to format the colors on the window and manage displayed text. It is required for almost anything to work properly.
+**It is not recommended to launch in the new Windows Terminal as it changes a lot of text display features. This was made specifically for Command Line!**
 
-Please note that downloading the game from the source code is not recommended because it contains features which are not yet finished or tested out. The source code also contains files that are not added to the original game, which can make it unstable. Please consider downloading by using a release instead!
+This project uses [ANSI](https://www.robvanderwoude.com/ansi.php) as a text formatter. It's used to manage displayed text and colors on the console. It's required for almost any display-related feature to work as intended.
+
+Please note that downloading the game from the source code is not recommended because it contains features which are not yet finished or tested out. Additionally, github changes the file formats which will most likely cause the scripts to break in many ways, to the point that it can be dangerous. Please consider downloading by using a release instead!
 
 # About
 ### Contact (#1.0)
@@ -31,7 +32,7 @@ Please note that downloading the game from the source code is not recommended be
 # Game Details & How To Play
 
 ### Game Controls (#2.0)
-
+###### *(TYPING CONTROLS WILL BECOME UNSUPPORTED ANY TIME SOON)*
   - **Menu**: 
     - **Play**/**Start**: Level Selection
     - **Quests**: Quests
@@ -52,18 +53,18 @@ Please note that downloading the game from the source code is not recommended be
 ### Shortcut Keys (#2.1)
 Press ***CTRL*** + ***W*** on some User Interfaces to get more information about it.
   - **Menu**: 
-    - ***A***/***P***: Level Selection
-    - ***Q***: Quests
-    - ***W***: Workshop & Upgrades
-    - ***S***: Settings/Options
-    - ***E***: Character & Inventory
-    - ***Z***: Craft and forge Items
-    - ***X***: View the items Workshop
-    - ***C***: View and upgrade your Skills
-    - ***V***: Credits
-    - ***CTRL*** + ***Q***: Exit in safe-mode
-    - ***CTRL*** + ***R***: Restart the game
-    - ***CTRL*** + ***SHIFT*** + ***6***: Reset your player data
+    - ***A***/***P***: Level Selection.
+    - ***Q***: View your Quests.
+    - ***W***: Workshop & Upgrades.
+    - ***S***: Change your Options and general Preferences.
+    - ***E***: Check out your Character & Inventory.
+    - ***Z***: To Craft or Upgrade Items.
+    - ***X***: Buy items from the in-game Workshop.
+    - ***C***: View and upgrade your Skills.
+    - ***V***: View the [Credits](https://github.com/136MasterNR/Battles-of-Batch#credits).
+    - ***CTRL*** + ***Q***: Exit in safe-mode.
+    - ***CTRL*** + ***R***: Restart the game.
+    - ***CTRL*** + ***SHIFT*** + ***6***: Reset your player data.
     - ***CTRL*** + ***SHIFT*** + ***-***: LGBTQIA+
   - **Character**
     - ***A***: Equip items.
@@ -72,15 +73,15 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
     - ***Z***: View your character's history.
     - ***Q***: Return to the menu.
   - **Map**: 
-    - ***A***/***Enter***: Start Selected Level
-    - ***D***: Move Forward/Next Level
-    - ***S***: Move Backwards/Previous Level
-    - ***Q***: Move to the previous UI (Menu)
-    - Press any **number** to instantly move to a level
+    - ***A***/***Enter***: Start Selected Level.
+    - ***D***: Move Forward/Next Level.
+    - ***S***: Move Backwards/Previous Level.
+    - ***Q***: Move to the previous UI (Menu).
+    - Press any **number** to immediately move to a level.
   - **Battle**: 
-    - *Press the First Letter of an Action, e.g. `A` to attack*
-    - ***E***: Cast special skill
-    - ***Q***: End current battle and move to the previous UI (to the Map)
+    - *Press the First Letter of an Action, e.g. `A` to attack.*
+    - ***E***: Cast special skill.
+    - ***Q***: End current battle and move to the previous UI (to the Map).
 
 ## Strategy Methods
 ### How it Works : Enemies (#3.0)
@@ -158,10 +159,15 @@ Material Items [Released]
 
 ## Enemy Details
 ### How Enemies Were Designed
-  - The enemies' design comes from the latin characters, and other references. These enemies are unable to hold any weapons, thus they could only upgrade their defense, that's why they have way too much HP. Enemies that come with something sharp on them, can deal a much larger amount of damage compared to other enemies. Some other enemies have learnt multiple skill attacks, they can really be dangerous.
+  - The design of the enemies were inspired by the Latin characters and other references. These enemies are unable to wield any weapons, thus they could only upgrade their defense. That's the reason they have way too much HP. Enemies that seem to have something sharp on them can deal a much larger amount of damage compared to other enemies.
+  
+  - Additionally, some other enemeis have learnt other combat skills that aren't based on damage but instead on other combat mechanic elements, this fact can make them extremely dangerous when fought unexpectedly.
+
+  - Many enemies can be extremely difficult to fight, but they have their weaknesses too. For example, if their main weapon is too short there's much more chance for them to miss a hit (Not yet an implemented feature).
+
 ### Easy Level
-  - **Yara**: It is the first enemy which a beginner will encouter in the game. It's one of the weakest enemies, and there is nothing special about them.
-  - **Jumpo**: It can be found on the second level. Its design comes from a Sea-Horse. It's very known for how strong it is, because of its very sharp but small tail.
+  - **Yara**: It's the first enemy that a beginner will encouter during their first battle. It's one of the weakest enemies, and there is nothing special about them.
+  - **Jumpo**: It can be found on the second level. Its design gets inspiration from a Sea-Horse. It's very known for how strong it is, because of its very sharp, strong but small tail.
   - **Nimbo**: This enemy is known for its defense power. It's very hard to kill, and can be very annoying.
 ### Medium Level
   - **Weavy**: More Info Soon!
@@ -272,24 +278,24 @@ Material Items [Released]
 
 # User Interfaces
 ### Menu (#4.0)
-  - The menu is decorated with various ascii art, and the title at the top. In the middle, you can view your general stats such as your Level, your Money and your Next Battle. Below you can see the commands which let you navigate to other user interfaces. When shortcut keys enabled, press to A to navigate to the [Map](https://github.com/136MasterNR/Battles-of-Batch#map-41) interface, Q (which stands for Quests) to the [Quests](https://github.com/136MasterNR/Battles-of-Batch#quests-45) interface, W (which stands for Workshop) to the [Workshop](https://github.com/136MasterNR/Battles-of-Batch#shop-44) interface, E (which stands for Equipment) to the [Character & Equipment](https://github.com/136MasterNR/Battles-of-Batch#character--equipment-43) interface, S (which stands for Settings) to the [Settigns](https://github.com/136MasterNR/Battles-of-Batch#settings-46) interface.
+  - The menu is decorated with various ASCII art, and the title at the top. In the middle, you can view your general stats such as your Level, your Money and your Next Battle. Below you can see the commands which let you navigate to other user interfaces. When shortcut keys enabled, press to A to navigate to the [Map](https://github.com/136MasterNR/Battles-of-Batch#map-41) interface, Q (which stands for Quests) to the [Quests](https://github.com/136MasterNR/Battles-of-Batch#quests-45) interface, W (which stands for Workshop) to the [Workshop](https://github.com/136MasterNR/Battles-of-Batch#shop-44) interface, E (which stands for Equipment) to the [Character & Equipment](https://github.com/136MasterNR/Battles-of-Batch#character--equipment-43) interface, S (which stands for Settings) to the [Settigns](https://github.com/136MasterNR/Battles-of-Batch#settings-46) interface.
 ![](https://user-images.githubusercontent.com/62593379/186289521-0bae6d42-d268-4c54-af6b-3a53cd08e624.png)
 
 ### Map (#4.1)
-  - The Map interface lets you see all the available levels, and navigate through available chapters. At the top, you can view information about the current level & chapter, such as the Battle's title (Story Title), the next Battle, your Total Wins and more information about the selected level, such as the general difficulty, the recommended level and the enemies that will appear in battle.
+  - The Map interface allows you see all the available levels, and navigate through available chapters. At the top, you can view information about the current level & chapter, such as the Battle's title (Story Title), the next Battle, your Total Wins and more information about the selected level, such as the general difficulty, the recommended level and the enemies that will appear in battle.
 ![](https://user-images.githubusercontent.com/62593379/186290360-ee5d9e6b-fa02-4cc3-9aeb-a0e19e20e8ba.png)
 
 ### Battle (#4.2)
   - More Info Soon!
 
 ### Character & Equipment (#4.3)
-  - The Character & Equipment interface lets you view your character's statistics, customize your character, view your character's history (based in the story) and allows you to equip or unequip items. At the top center you can view you character and at the right and left you can view the statistics of your character such as, your username, your money, your level, your experience, your total health points, your strength, your chance to strike critical hit and your defense. Below you can view your Items + Equiped Items, your Materials and your Weapons + Equipped Weapons. More statistics are shown when you move to the equipment UI.
+  - The Character & Equipment interface allows you view your character's statistics, customize your character, view your character's history (based in the story) and lets you to equip or unequip items and weapons. At the top center you can view you character and at the right and left you can view the statistics of your character such as, your username, your money, your level, your experience, your total health points, your strength, your chance to strike critical hit and your defense. Below you can view your Items + Equiped Items, your Materials and your Weapons + Equipped Weapons. More statistics are shown when you move to the equipment UI.
 ![image](https://user-images.githubusercontent.com/62593379/188514583-d3b5afcc-e39c-4ec7-b9e8-082b79e2fe69.png)
 
 ### Shop (#4.4)
   - **Items**: Items require in-game currency and specific character level. The level requirement is displayed as the symbol "↑", and currency as the symbol "$". The UI is categorized in 3 categories, first is Weapons and other sources that deal damage, second is Crafting Materials which are used for crafting items or weapons, and third is Potions and Other, which are used as support items.
 ![](https://user-images.githubusercontent.com/62593379/186287154-0b28429b-e357-4258-bbb7-f24c622a8fc5.png)
-  - **Skills**: Upgrading skills is very important. It gives you an amount of permant benefits in the game. To upgrade a skill, you must meet the requirements, such as currency, which is represented as the symbol "$" and level, which is represented as the symbol "↑". The UI has a total of 5 upgradable skills. The first one is Base Attack which makes you deal more damage to enemies, second is Crit Rate which gives you more chance to make a critical strike, third is Max HP which gives you more total HP when in battle.
+  - **Skills**: Upgrading skills is very important. It gives you an amount of permanent benefits in the game. To upgrade a skill, you first have to meet the requirements such as an amount of in-game currency, which is represented as the symbol "$", and a specific level, which is represented as the symbol "↑". The UI has a total of 5 upgradable skills. The first one is Base Attack which makes you deal more damage to enemies, second is Crit Rate which gives you more chance to make a critical strike, third is Max HP which gives you more total HP when in battle.
 ![](https://user-images.githubusercontent.com/62593379/186286664-2f4f36ea-2d10-4df5-bdda-5594943cb49a.png)
   - **Craft**: More Info Soon!
 
@@ -298,34 +304,30 @@ Material Items [Released]
 ![](https://user-images.githubusercontent.com/62593379/186288456-bdf6044c-984f-4e17-8f73-6dfb8e7a74d6.png)
 
 ### Settings (#4.6)
-  - The settings UI lets you customize your preferences. By typing the name of an option, you can toggle it off/on or set a specific value to it.
+  - The settings UI lets you customize your preferences. By typing the name of an option, you can toggle it to true or false, or you can set a specific value to it.
 ![](https://user-images.githubusercontent.com/62593379/186287701-8390e429-9cd4-4f8f-b0b2-ce0afedb0ed1.png)
 
 # Explaining Technical Features
 ### Saves Manager
-  - Where your data are stored:
-    - All your data of our porjects are saved in a single local directory in your appdata; `%appdata%\HTS_DATA`. Battles of Batch's directory is named after its PHASE and VERSION. On `%appdata%\HTS_DATA`, you will find the game named as `BATTLESOFBATCH-%PHASE%-%VERSION%`. `%PHASE%` means the stage of the project, and `%VERSION%` the game version. E.g. `BATTLESOFBATCH-INDEV-0245`. Under that directory are the child directories `SAVES` and `SETTINGS`, plus some other `.dll` true/false files. On your first startup of the game, it automatically creates the player data saves under your game's appdata path directory.
+  - How your game data are stored:
+    - All your game data are saved in a single local directory in your appdata; `%appdata%\HTS_DATA`. Battles of Batch's directory is named after its PHASE and VERSION. On `%appdata%\HTS_DATA`, you will find the game named as `BATTLESOFBATCH-%PHASE%-%VERSION%`. `%PHASE%` means the stage of the project, and `%VERSION%` the game version. E.g. `BATTLESOFBATCH-INDEV-0245`. Under that directory are the child directories `SAVES` and `SETTINGS`, plus some other `.dll` true/false files. On your first start-up of the game, it automatically creates the player data saves under your game's appdata path directory.
   - How the saving system works:
-    - The game automatically saves your progress every time your player data variables are modified. The program does not rewrite the whole save file, it only modifies lines on it. For example, if you complete a quest, it will only change the line where that quest is saved on, that also goes for total completed levels and more.
+    - The game automatically saves your progress every time your player data variables are modified. The script used for this process does not rewrite the whole save file, it only modifies lines on it. For example, if you complete a quest, it will only change the line where that quest is saved on, that also goes for total completed levels and the rest.
   - How your inventory is managed:
-    - Your in-game inventory is a complete different process than the ones mentioned above. There are no variables in your inventory save files, this fact makes this saves manager one of the most difficult things coded in this game. Your inventory is managed by a script called `items.cmd` located in `.\data\scripts\playerdata`, and it manages files in `SAVES\inv\`, files such materials, regular items, and weapons. Your inventory save data is completely dynamic, this means, the first time you enter the game you will have empty files laying in your inventory's save data. To store an item in your player data, it must include its name and its level (or amount). When an item's amount reaches a value 0, it no longer stays in your player data, instead the items script uses its name to search for the line position and then completely wipe that line leaving all the other items present except that one. When an item with the same name of an existing item tries to save in, it just stacks up and increases the amount value instead of saving the same item twice. When the game requests the manager to take data from the save files, there's a very complex way of doing this; first, the script has to seperate every single line into temporary multiple variables, then take that line in another process and seperate every part of it into usable multiple variables. Simple, right? Not at all.
+    - Your in-game inventory is a complete different process than the ones mentioned above. There are no variables in your inventory save files, this fact makes this saves manager one of the most difficult things coded in this game. Your inventory is managed by a script called `items.cmd` located in `.\data\scripts\playerdata`, and it manages files in `SAVES\inv\`, files such materials, regular items, and weapons. Your inventory save data is completely dynamic, this means that data written in it can easily be modified by other scripts and leaving it empty won't affect it at all. To store an item in your player data, it must include its name and its level (or amount). When an item's amount reaches a value of 0, it no longer stays in your player data, instead the items script uses its name to search for the line position and then completely wipe out that line leaving all the other items present. When an item with the same name of an existing item tries to save in, it just stacks up and increases the amount value instead of saving the same item twice. When the game requests the manager to take data from the save files, there's a very complex way of doing this; first, the script seperates every single line into temporary variables, then take that line in another process and seperate every part of it into other usable variables. I hope that sounds simple.
   - Multiple profiles:
     - Coming Soon!
   - Saves encryption:
     - Coming Soon!
 
 ### Audio Manager
-  - The audio is played by a Visual Basic script, which is managed by the Audio Manager, a batch file. The Audio Manager is always running in the background as a seperate task, unless you have turned sounds & music off. It detects whether the game is running every 1 second, and if it's not, it stops the audio tasks, and then itself. The way to detect whether the game is running is to try to access a file which is being used by the game contantly. On the start up of the game, the game sets a file as the logger, and that file cannot be accessed by other programs for as long the program which is using it (the game) is running.
+  - The audio is played by a Visual Basic script, which is managed by the Audio Manager, a batch file. The Audio Manager is always running in the background as a seperate task as long audio is turned on. It detects whether the game is running every single second, and if it's not, it stops the audio tasks, and then itself. The way to detect whether the game is running is to try to access a file which is being used by the game contantly. On the start up of the game, the game sets a file as the logger, and that file cannot be accessed by other programs for as long the program which is using it (the game) is running.
 
 ### Auto Updater
-  - The updater starts and checks for updates automatically when you start the game. It pulls information from [get-update](https://github.com/136MasterNR/HTS-Studios/tree/main/get-update), compares your local game's version with the online version and then prompts to you whether to update or not before completely loading into the game. After you confirm to update, the updater will pull the whole game from [get-download](https://github.com/136MasterNR/HTS-Studios/tree/main/get-download) and will replace all your old game files with the new game files. This will not reset your saves, but if the next update requires you to reset your saves, you will be prompted for a second confirmation.
+  - When you start the game, the updater will launch at some point in the startup and check for an update. It pulls information from [get-update](https://github.com/136MasterNR/HTS-Studios/tree/main/get-update), compares your local game's version with the online version and then prompts you to whether you wish to update or not before completely loading into the game. After you confirm to update, the updater will pull the whole game from [get-download](https://github.com/136MasterNR/HTS-Studios/tree/main/get-download) and will replace all your old game files with the new game files. This will not reset your saves, but if the next update requires you to reset your saves, you will be prompted for a second confirmation.
 
 ### Error Handler
   - More Info Soon!
-
-# Miscellaneous
-### Cheats
-  - Go to the menu and type `cheats` [For versions lower than v0.300]
 
 # For Developers
 ### Code your own levels
@@ -383,5 +385,4 @@ Material Items [Released]
     - BlackStorm
     - JayKayHere3987
 
-# Thank you for choosing our projects! :shipit:
-### Mmore information about this project will be added in this read me every now and then.
+### More information on this project will be added in this read me every now and then :shipit:

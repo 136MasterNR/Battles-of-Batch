@@ -1,16 +1,16 @@
-::Created by HTSoft Studios () - Read the "copyright.txt" file for more info. (Do not distribute)
+::Created by 136MasterNR - Read the "copyright.txt" file for more info.
 ::(Use "NotePadPP" or anything other than "Notepad" to view better this file)
-:: Languages used:    99.2% Batch    0.8% VBScript
-::_______ ______ ______ ______ ______ ______ ______ ______ ______ ______ ______ ______
-::______//_____//_____//_____//_____//_____//_____//_____//_____//_____//_____//______\\
-::     _    _   _______    _____      _____   _                 _   _                 | |
-::    | |  | | |__   __|  / ____|    / ____| | |               | | (_)                | |
-::    | |__| |    | |    | (___     | (___   | |_   _   _    __| |  _    ___    ___   | |
-::    |  __  |    | |     \___ \     \___ \  | __| | | | |  / _` | | |  / _ \  / __|  | |
-::    | |  | |    | |     ____) |    ____) | | |_  | |_| | | (_| | | | | (_) | \__ \  | |
-::    |_|  |_|    |_|    |_____/    |_____/   \__|  \__,_|  \__,_| |_|  \___/  |___/  | |
-::_______ ______ ______ ______ ______ ______ ______ ______ ______ ______ ______ ______| |
-::______//_____//_____//_____//_____//_____//_____//_____//_____//_____//_____//______//
+:: Languages used:    99.4% Batch    0.6% VBScript
+::______ ______ ______ ______ ______ ______ ______ ______ ______
+::_____//_____//_____//_____//_____//_____//_____//_____//______\\
+::    _____        __           _____ _             _ _         | |
+::   |  __ \      / _|         / ____| |           | |_)        | |
+::   | |__) |__ _| |_ _   _   | (___ | |_ _   _  __| |_  ___    | |
+::   |  _  // _` |  _| | | |   \___ \| __| | | |/ _` | |/ _ \   | |
+::   | | \ \ (_| | | | |_| |   ____) | |_| |_| | (_| | | (_) |  | |
+::   |_|  \_\__,_|_|  \__,_|  |_____/ \__|\__,_|\__,_|_|\___/   | |
+::______ ______ ______ ______ ______ ______ ______ ______ ______| |
+::_____//_____//_____//_____//_____//_____//_____//_____//______//
 ::
 ::                                                           !!!! WARNING !!!!                                                         ::
 :: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ::
@@ -42,8 +42,12 @@ IF NOT EXIST ".\data\logs" MD ".\data\logs"
 ::  start the logger and check if accessible,
 2>>".\data\logs\errors.txt" ( SET "STARTED=1"&CALL :STARTUP-COMPLETE )
 ::   if not accessible then exit, else below command will be skipped.
-@IF /I NOT DEFINED STARTED EXIT 1
+IF DEFINED RUNNING (
+	CALL :ERROR ERRLINE IDUNKNOWN    0
+	EXIT 1
+) ELSE @IF /I NOT DEFINED STARTED EXIT 1
 :STARTUP-COMPLETE
+SET RUNNING=TRUE
 IF NOT EXIST "%~n0%~x0" (
 	CLS
 	ECHO.ERR : Inaccessible Directory.
@@ -213,7 +217,7 @@ SET REGID_C2=
 ::VAR:-Battle Loader
 SET "SCRIPTS_GAME=%DATA_SCRIPTS%\game"
 SET "LOAD.LEVEL_=%DATA%\levels\lvl"
-SET "LOC.HP.P=[10;4H"
+SET "LOC.HP.P=[11;4H"
 ::VAR:-Action
 SET "SCRIPTS_ACT=%SCRIPTS_GAME%\acts"
 SET "ACT.ATTACK=%SCRIPTS_ACT%\ATTACK.cmd"
@@ -232,11 +236,12 @@ SET "RGB.COIN=%RGB%252;255;166m"
 SET "RGB.LVL=%RGB%128;200;255m"
 SET "RGB.TRUE=%RGB%163;255;177m"
 SET "RGB.FALSE=%RGB%255;89;89m"
-SET "RGB.CYAN=%RGB%128;210;255m"
+SET "RGB.CYAN=%RGB%133;222;255m"
 SET "RGB.YELLOW=%RGB%255;252;176m"
+SET "RGB.ORANGE=%RGB%255;176;79m"
+SET "RGB.RED=%RGB%255;61;51m"
 SET "RGB.GREEN=%RGB%102;255;0m"
 SET "RGB.DGRAY=%RGB%169;169;169m"
-SET "RGB.RED=%RGB%255;61;51m"
 ::VAR:-Quests
 SET "QUEST.LOADER=%DATA_SCRIPTS%\quests.cmd"
 SET "QNAME.TOTAL_MONSTERS=Sereal Killer"
@@ -366,7 +371,7 @@ IF ERRORLEVEL 1 SET REGID_C2=TRUE
 
 IF DEFINED REGID_C1 (
 	IF DEFINED REGID_C2 (
-		IF %AUDIO.VALUE%==TRUE CALL "%TOGGLE.SOUNDS%"
+		IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 CALL "%TOGGLE.SOUNDS%"
 		SET DENIED_AUDIO=TRUE
 		CALL "%SETTINGS.LOAD%"
 	)
@@ -430,7 +435,6 @@ CALL "%DATA_SCRIPTS%\mapnames.cmd"
 IF NOT DEFINED AUDIO.VALUE CALL :SETT_ERR
 IF NOT DEFINED VOLUME CALL :SETT_ERR
 IF %AUDIO.VALUE%==TRUE ( TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL&START /MIN "" "%AudioManager%" || CALL :ERROR ERRLINE ID0004    -0 )
-:RESTART
 MODE CON:COLS=%COLS% LINES=%LINES%
 ECHO. Loading ... (Display)
 ::PAUSE>NUL
@@ -635,12 +639,12 @@ IF /I %CHOICE.INPUT%.==. START "" "https://github.com/136MasterNR/Battles-of-Ba
 IF /I %CHOICE.INPUT%.==I. GOTO INVENTORY
 IF /I %CHOICE.INPUT%.==R. (MODE CON:COLS=%COLS% LINES=%LINES%&GOTO MENU)
 IF /I %CHOICE.INPUT%.==. (
-	IF %AUDIO.VALUE%==TRUE TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
-	GOTO LAUNCHER
+	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
+	GOTO RESTART
 )
 IF /I %CHOICE.INPUT%.==. GOTO TERMINAL
 IF /I %CHOICE.INPUT%.==. (
-	IF %AUDIO.VALUE%==TRUE TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
+	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
 	EXIT 0
 )
 IF /I %CHOICE.INPUT%.==. GOTO RESET
@@ -869,12 +873,12 @@ IF NOT DEFINED ITEM.EQ_CNT ( ECHO.EMPTY ) ELSE FOR /L %%A IN (1,1,%ITEM.EQ_CNT%)
 		CALL :INVENTORY-EQUIPPED %%A !ITEM.EQ_NAME.%%A!
 	)
 )
+ENDLOCAL&SET WEAPON.IS=%WEAPON.IS%&SET ITEMS.IS=%ITEMS.IS%
 ECHO.[0m[1m[1BGuide For Items Section:                                            Guide For Weapons Section:
 ECHO.[0m Press W or S to navigate between items/slots.                       Press E to change your Weapon equipment.
 ECHO. Press A to confirm the item you want to add.                        Press A to confirm the chosen weapon.
 ECHO. Press Q after selecting an item to reselect an item.                Press Q to return to the character ui.  
 ECHO. Press CTRL X to clear your equipped items.                                                [s%RGB.COIN%
-ENDLOCAL&SET WEAPON.IS=%WEAPON.IS%&SET ITEMS.IS=%ITEMS.IS%
 :INV-CHOOSE_ITEM
 TITLE %TITLE%Inventory [%INV_CHOICE%^|%INV_CHOICE_SLOT%]
 SET /A INV_CHOICE.UI=%INV_CHOICE%+2
@@ -1311,7 +1315,7 @@ CALL "%ITEMS.LOADER%" MATERIALS
 CALL "%ITEMS.LOADER%" WEAPONS
 >NUL FINDSTR /C:"Dustblade" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.1_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Dustblade%^)    ") || (SET "CRAFT.1_FOUND=   ^(Not Owned^)   ")
 >NUL FINDSTR /C:"Cold_Twill" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.2_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Cold_Twill%^)    ") || (SET "CRAFT.2_FOUND=   ^(Not Owned^)   ")
->NUL FINDSTR /C:"Comradehammer" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.3_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Comradehammer%^)    ") || (SET "CRAFT.3_FOUND=   ^(Not Owned^)   ")
+>NUL FINDSTR /C:"Comrade_Hammer" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.3_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Comrade_Hammer%^)    ") || (SET "CRAFT.3_FOUND=   ^(Not Owned^)   ")
 >NUL FINDSTR /C:"Stylefi" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.4_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Stylefi%^)    ") || (SET "CRAFT.4_FOUND=   ^(Not Owned^)   ")
 >NUL FINDSTR /C:"Flora_Thrower" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.5_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Flora_Thrower%^)    ") || (SET "CRAFT.5_FOUND=   ^(Not Owned^)   ")
 >NUL FINDSTR /C:"Trident_of_Gawra" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.6_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Trident_of_Gawra%^)    ") || (SET "CRAFT.6_FOUND=   ^(Not Owned^)   ")
@@ -1329,7 +1333,7 @@ ECHO.^|                                                                         
 ECHO.^|                                                                                                                   ^|
 ECHO.'-------------------------------------------------------------------------------------------------------------------'[1A
 :CRAFT-SHOP-RE
-IF %CRAFT.SEL%==0 (SET CRAFT.UI_ITEM=Dustblade) ELSE IF %CRAFT.SEL%==1 (SET CRAFT.UI_ITEM=Cold_Twill) ELSE IF %CRAFT.SEL%==2 (SET CRAFT.UI_ITEM=Comradehammer
+IF %CRAFT.SEL%==0 (SET CRAFT.UI_ITEM=Dustblade) ELSE IF %CRAFT.SEL%==1 (SET CRAFT.UI_ITEM=Cold_Twill) ELSE IF %CRAFT.SEL%==2 (SET CRAFT.UI_ITEM=Comrade_Hammer
 ) ELSE IF %CRAFT.SEL%==3 (SET CRAFT.UI_ITEM=Stylefi) ELSE IF %CRAFT.SEL%==4 (SET CRAFT.UI_ITEM=Flora_Thrower) ELSE IF %CRAFT.SEL%==5 (SET CRAFT.UI_ITEM=Trident_of_Gawra
 ) ELSE IF %CRAFT.SEL%==6 (SET CRAFT.UI_ITEM=Infernal_Blade) ELSE IF %CRAFT.SEL%==7 (SET CRAFT.UI_ITEM=Ornate_Cobalt
 ) ELSE IF %CRAFT.SEL%==8 (SET CRAFT.UI_ITEM=Brainleader)
@@ -1376,7 +1380,7 @@ IF %CRAFT.NAV% EQU 0 (
 	ECHO.^|       :        Cold Twill         :                ^|                                              ^|               ^|
 	ECHO.^|      :'     [s                      ':               ^|                                              ^|               ^|[u%CRAFT.2_FOUND%
 	ECHO.^|      :.                           .:               ^|                                              ^|               ^|
-	ECHO.^|       :       Comradehammer       :                ^|                                              ^|               ^|
+	ECHO.^|       :      Comrade Hammer       :                ^|                                              ^|               ^|
 	ECHO.^|      :'     [s                      ':               ^|                                              ^|               ^|[u%CRAFT.3_FOUND%
 	ECHO.^|      :.                           .:               ^|                                              ^|               ^|
 	ECHO.^|       :          Stylefi          :                :------------: %RGB%204;255;204mWEAPON INFORMATION[0m :------------:               ^|
@@ -1447,9 +1451,9 @@ IF /I %CHOICE.INPUT%==A (
 			IF !WEAPONS.REG_LVL.%CRAFT.UI_ITEM%! GEQ 1 (
 				ENDLOCAL
 				ECHO.[?25l[1;37m[36H
-				ECHO.[67C.----------------------.
-				ECHO.[66C ^|    [1m%RGB%65;253;254mItem upgraded![0m    ^| 
-				ECHO.[67C'----------[1mOK[0m----------'
+				ECHO.[65C.----------------------.
+				ECHO.[64C ^|    [1m%RGB%65;253;254mItem upgraded![0m    ^| 
+				ECHO.[65C'----------[1mOK[0m----------'
 			) ELSE (
 				ENDLOCAL
 				ECHO.[?25l[1;37m[36H
@@ -1642,42 +1646,39 @@ IF NOT EXIST "%LOAD.LEVEL_%%SELECTED%\setup.cmd" GOTO MAP
 ECHO.[2J[21;42H҉  Preparing Your Amazing Battle[17D[1B[s
 ECHO.[u  0%%
 TITLE %TITLE%Loading Battle ...
-IF %AUDIO.VALUE%==TRUE TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL 2>NUL
+IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL 2>NUL
 SET "ERRORLEVEL="
 SET "ERRORLVL="
-IF %AUDIO.VALUE%==TRUE TASKLIST /FI "IMAGENAME eq wscript.exe.battle" 2>NUL|FIND /I /N "wscript.exe">NUL&SET "ERRORLVL=%ERRORLEVEL%" & TASKKILL /F /IM wscript.exe.battle>NUL
-SET "TARGETAUDIO=%AUD.BATTLE.NORMAL%"
-IF %SELECTED%==7 SET "TARGETAUDIO=%AUD.BATTLE.BOSS%"
-IF %AUDIO.VALUE%==TRUE (
-	IF EXIST "%TARGETAUDIO%" (
-		IF /I "%ERRORLVL%"=="0" (
-			TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL
-			(
-				ECHO Set Sound = CreateObject^("WMPlayer.OCX.7"^)
-				ECHO Sound.URL = "%TARGETAUDIO%"
-				ECHO Sound.Controls.play
-				ECHO Sound.settings.volume = %VOLUME%
-				ECHO Sound.settings.setMode "loop", True
-				ECHO Sound.Controls.play
-				ECHO While Sound.playState ^<^> 1
-				ECHO      WScript.Sleep 100
-				ECHO Wend
-			) > "%DATA_TMP_A%"
-			START /min "wscript.exe.battle" cmd /c START /min /wait "" "%DATA_TMP_A%"^&DEL /Q "%DATA_TMP_A%"^&EXIT
-		) ELSE IF /I "%ERRORLVL%"=="1" (
-			(
-				ECHO Set Sound = CreateObject^("WMPlayer.OCX.7"^)
-				ECHO Sound.URL = "%TARGETAUDIO%"
-				ECHO Sound.Controls.play
-				ECHO Sound.settings.volume = %VOLUME%
-				ECHO Sound.settings.setMode "loop", True
-				ECHO Sound.Controls.play
-				ECHO While Sound.playState ^<^> 1
-				ECHO      WScript.Sleep 100
-				ECHO Wend
-			) > "%DATA_TMP_A%%\TMP_AUDIO.vbs"
-			START /min "wscript.exe.battle" cmd /c START /min /wait "" "%DATA_TMP_A%"^&DEL /Q "%DATA_TMP_A%"^&EXIT
-		)
+IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKLIST /FI "IMAGENAME eq wscript.exe.battle" 2>NUL|FIND /I /N "wscript.exe">NUL&SET "ERRORLVL=%ERRORLEVEL%" & TASKKILL /F /IM wscript.exe.battle>NUL
+IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 IF %SELECTED%==7 (SET "TARGETAUDIO=%AUD.BATTLE.BOSS%") ELSE SET "TARGETAUDIO=%AUD.BATTLE.NORMAL%"
+IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
+	IF /I "%ERRORLVL%"=="0" (
+		TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL
+		(
+			ECHO Set Sound = CreateObject^("WMPlayer.OCX.7"^)
+			ECHO Sound.URL = "%TARGETAUDIO%"
+			ECHO Sound.Controls.play
+			ECHO Sound.settings.volume = %VOLUME%
+			ECHO Sound.settings.setMode "loop", True
+			ECHO Sound.Controls.play
+			ECHO While Sound.playState ^<^> 1
+			ECHO      WScript.Sleep 100
+			ECHO Wend
+		) > "%DATA_TMP_A%"
+		START /min "wscript.exe.battle" cmd /c START /min /wait "" "%DATA_TMP_A%"^&DEL /Q "%DATA_TMP_A%"^&EXIT
+	) ELSE IF /I "%ERRORLVL%"=="1" (
+		(
+			ECHO Set Sound = CreateObject^("WMPlayer.OCX.7"^)
+			ECHO Sound.URL = "%TARGETAUDIO%"
+			ECHO Sound.Controls.play
+			ECHO Sound.settings.volume = %VOLUME%
+			ECHO Sound.settings.setMode "loop", True
+			ECHO Sound.Controls.play
+			ECHO While Sound.playState ^<^> 1
+			ECHO      WScript.Sleep 100
+			ECHO Wend
+		) > "%DATA_TMP_A%%\TMP_AUDIO.vbs"
+		START /min "wscript.exe.battle" cmd /c START /min /wait "" "%DATA_TMP_A%"^&DEL /Q "%DATA_TMP_A%"^&EXIT
 	)
 )
 ECHO.[u 13%%
@@ -1702,59 +1703,76 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 TITLE %TITLE%!MAP.NAME.%SELECTED%:_= ! (Battle #%SELECTED%)
 ENDLOCAL
 ECHO.[u100%%
-:IN-BATTLE
 IF EXIST LET.DEBUG (
 	CALL "%DEBUG.GAMELOADER%\1"
 	GOTO BATTLE-INPUT
 )
-(ECHO.[?25l[H.--.----------------------------------------------------------------------------------------------------------------.
-ECHO.^|Q ^|                                                                                                                ^|
-ECHO.^|--'                                                                                                                ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|     ___                                                                                                           ^|
-ECHO.^|    //_\\_                                                                                                         ^|
-ECHO.^|  ."\\    ".                                                                                                       ^|
-ECHO.^| /          \                                                                                                      ^|
-ECHO.^| ^|           \_                                                                                                    ^|
-ECHO.^| ^|       ,--.-.^)                                                                                                   ^|
-ECHO.^|  \     /  o \o\                                                                                                   ^|
-ECHO.^|  /\/\  \    /_/                                                                                                   ^|
-ECHO.^|   (_.   `--'__^)                                                                                                   ^|
-ECHO.^|    ^|     .-'  \                                                                                                   ^|
-ECHO.^|    ^|  .-'.     ^)                                                                                                  ^|
-ECHO.^|    ^| (  _/--.-'                                                                                                   ^|
-ECHO.^|    ^|  `.___.'                                                                                                     ^|
-ECHO.^|    ^|                                                                                                              ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.'-------------------------------------------------------------------------------------------------------------------'
-ECHO. [s
-ECHO..-------------------------------------------------------------------------------------------------------------------.[2A)
+CLS
+:IN-BATTLE
+(
+ECHO.[?25l[H.--.----------------------------------------------------------------------------------------------------------------.
+ECHO.^|Q ^|[113C^|
+ECHO.^|--'[113C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.^|[115C^|
+ECHO.'-------------------------------------------------------------------------------------------------------------------'[2A
+ECHO.[13;3H     ___             
+ECHO.[2C    //_\\_          
+ECHO.[2C  ."\\    ".        
+ECHO.[2C /          \       
+ECHO.[2C ^|           \_     
+ECHO.[2C ^|       ,--.-.^)    
+ECHO.[2C  \     /  o \o\    
+ECHO.[2C  /\/\  \    /_/    
+ECHO.[2C   (_.   `--'__^)    
+ECHO.[2C    ^|     .-'  \    
+ECHO.[2C    ^|  .-'.     ^)   
+ECHO.[2C    ^| (  _/--.-'    
+ECHO.[2C    ^|  `.___.'      
+ECHO.[2C    ^|               )
+
 :REFRESH-BATTLE
 SET /A A+=1
 SET ENEMY.HP.NOW.T=
@@ -1762,13 +1780,13 @@ FOR /L %%I IN (1,1,%EN.MAX%) DO (
 	SET /A ENEMY.HP.NOW.T+=ENEMY.HP.NOW.%%I
 )
 CALL "%SCRIPTS_GAME%\hpbar_now.cmd"
-IF NOT EXIST LET.DEBUG CALL "%IG.CMDS%"
-ECHO.[45;3H^|                                                                                                                 ^|[45;3HYour HP: %PLAYER.HP.NOW%/%PLAYER.HP.FULL% ^(+%PLAYER.HEAL.AMOUNT% -%ENEMY.ATTACK.AMOUNT%^)[45;40HYou dealt %PLAYER.ATTACK.AMOUNT% DMG to %PLAYER.ATTACK.ENEMY% - CRIT: %ATK.CRIT%[45;90HEnemy Total HP: %ENEMY.HP.NOW.T%/%ENEMY.HP.FULL.T%
+::IF NOT EXIST LET.DEBUG CALL "%IG.CMDS%"
+ECHO.[47;3H^|                                                                                                                 ^|[47;3HYour HP: %PLAYER.HP.NOW%/%PLAYER.HP.FULL% ^(+%PLAYER.HEAL.AMOUNT% -%ENEMY.ATTACK.AMOUNT%^)[47;40HYou dealt %PLAYER.ATTACK.AMOUNT% DMG to %PLAYER.ATTACK.ENEMY% - CRIT: %ATK.CRIT%[47;90HEnemy Total HP: %ENEMY.HP.NOW.T%/%ENEMY.HP.FULL.T%
 :REFRESH-FADE
 IF %ENEMY.HP.NOW.T% LEQ 0 (
 	IF %CNT.FADEOUT%==14 (
 		CALL "%SCRIPTS_POP%\win.cmd"
-		TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
+		IF "%AUDIO.VALUE%"=="TRUE" IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
 		CALL "%MENU.AUDIO%"
 		GOTO MAP
 	)
@@ -1809,84 +1827,57 @@ IF %ENEMY.HP.NOW.T% LEQ 0 (
 )
 IF %PLAYER.HP.NOW% LEQ 0 (
 	CALL "%SCRIPTS_POP%\lose.cmd"
-	TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
+	IF "%AUDIO.VALUE%"=="TRUE" IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
 	CALL "%MENU.AUDIO%"
 	GOTO MAP
 )
-:BATTLE-INPUT
 SET UDERFINE=
 IF "%SHORTCUTS.VALUE%"=="TRUE" (
 	GOTO :BATTLE-CHOICE
 )
-SET /P UDERFINE=[u- Choose A Move: 
-ECHO.[u- Choose A Move:                                                                                                    [?25h
- IF NOT DEFINED UDERFINE GOTO BATTLE-INPUT
- IF /I "%UDERFINE%"=="BACK" (
-	TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
-	CALL "%MENU.AUDIO%"
-	GOTO MAP
- )
-  IF /I "%UDERFINE%"=="EXIT" GOTO MENU
-   IF /I "%UDERFINE%"=="MENU" GOTO MENU
-    IF /I "%UDERFINE%"=="QUIT" GOTO MENU
-     IF /I "%UDERFINE%"=="LEAVE" GOTO MENU
-      IF /I "%UDERFINE%"=="GIVE UP" GOTO MENU
-	   IF /I "%UDERFINE%"=="GO BACK" GOTO MENU
-        IF /I "%UDERFINE%"=="QUIT BATTLE" GOTO MENU
-	     IF /I "%UDERFINE%"=="LEAVE BATTLE" GOTO MENU
-	      IF /I "%UDERFINE%"=="GO TO THE MENU" GOTO MENU
-IF /I "%UDERFINE:~0,2%"=="RE" (MODE CON:COLS=%COLS% LINES=%LINES%&GOTO IN-BATTLE)
-IF /I "%UDERFINE:~0,6%"=="ATTACK" SET UDERFINE=ATK%UDERFINE:~6%
-IF /I "%UDERFINE:~0,3%"=="ATK" (
-	CALL "%CMD.CLEARVAR%"
-	CALL "%ACT.ATTACK%" || CALL :ERROR ERRLINE ID01.inGame_ATK    -0
-	CALL "%ACT.ENEMY_ATK%"
-	%ADD-CMD%
-)
-IF /I "%UDERFINE%"=="HEAL" (
-	CALL "%CMD.CLEARVAR%"
-	CALL "%ACT.HEAL%"
-	%ADD-CMD%
-)
-IF /I "%UDERFINE%"=="BOMB" (
-	CALL "%CMD.CLEARVAR%"
-	CALL "%ACT.BOMB%"
-	%ADD-CMD%
-)
-IF "%SEL.CHARACTER%"=="SIMPSONS" IF /I "%UDERFINE%"=="LASER" (
-	CALL "%CMD.CLEARVAR%"
-	CALL "%ACT.SIMPSONS.LASER%" || CALL :ERROR ERRLINE ID01.inGame_LASER    -0
-	%ADD-CMD%
-)
-IF /I "%UDERFINE%"=="ACT" (
-	CALL "%DATA_SCRIPTS%\game\ACT.cmd"
-)
-IF /I "%UDERFINE%"=="NOTHING" (	
-	CALL "%CMD.CLEARVAR%"
-	CALL "%ACT.ENEMY_ATK%"
-	%ADD-CMD%
-)
-GOTO REFRESH-BATTLE
-IF %ERRORLEVEL%==2 GOTO MENU
-GOTO BATTLE-INPUT
 :BATTLE-CHOICE
-SET /P "=[1B[21C[s"<NUL
+IF %SELECTED% EQU 1 (
+	ECHO.[2;45H[s:---------: HELP - ^? :---------:
+	ECHO.[u[1B: %RGB.COIN%Select an enemy to attack:[0m   :
+	ECHO.[u[2B: Navigate using %RGB.CYAN%W[0m and %RGB.CYAN%S[0m, then[0m :
+	ECHO.[u[3B: press %RGB.CYAN%A[0m to make your action![0m :
+	ECHO.[u[4B:------------------------------:
+)
+
+IF "%INV.SEL_NAME%"=="EMPTY" (
+	ECHO.[42;4H[s                                                          
+	ECHO.[u[1B:----------------------------------------------:      
+	ECHO.[u[2B  %RGB.ORANGE%No item selected[0m, press %RGB.CYAN%E[0m to choose an item. 
+	ECHO.[u[3B:----------------------------------------------:      
+) ELSE IF NOT DEFINED INV.SEL_NAME (
+	ECHO.[42;4H[s                                                          
+	ECHO.[u[1B:---------------------------------------------:      
+	ECHO.[u[2B  %RGB.ORANGE%To use an item[0m, first press %RGB.CYAN%E[0m to select it.
+	ECHO.[u[3B:---------------------------------------------:      
+) ELSE (
+	ECHO.[42;4H[s:---------------------------------------------------:
+	SETLOCAL ENABLEDELAYEDEXPANSION
+	IF "%INV.SEL_NAME%"=="ATTACK" (ECHO.[u[1B  [1mPress %RGB.CYAN%A[0m[1m to strike the enemy using %RGB.COIN%!WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ![0m[1m.                          
+	) ELSE ECHO.[u[1B  [1mPress %RGB.CYAN%A[0m[1m to use %RGB.COIN%%INV.SEL_NAME%[0m[1m on the chosen enemy.                          
+	ENDLOCAL
+	ECHO.[u[2B  Press %RGB.CYAN%E[0m to change the selected action.      
+	ECHO.[u[3B:---------------------------------------------------:       
+)
+
 SETLOCAL ENABLEDELAYEDEXPANSION
 IF !ENEMY.HP.NOW.%INPUTATK%! EQU 0 (
 	ENDLOCAL
 	CALL "%SCRIPTS_GAME%\rand_enemy.cmd"
 ) ELSE ENDLOCAL
 :BATTLE-SEL_CHOICE
-SET /P "=[u%RGB.COIN%Use W or S to navigate between enemies, press A to select the chosen enemy.[0m[75D"<NUL
 CALL :BATTLE-DISPLAY_CHOICE
 SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
 ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
-ENDLOCAL
+ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
 IF %CHOICE.INPUT%.==. GOTO BATTLE-SEL_CHOICE
 IF /I %CHOICE.INPUT%==Q (
-	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
-	IF %AUDIO.VALUE%==TRUE (
+	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
 		TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
 		CALL "%MENU.AUDIO%"
 	)
@@ -1900,8 +1891,65 @@ IF /I %CHOICE.INPUT%==W (
 	CALL :BATTLE-W_CHOICE
 	CALL :BATTLE-DISPLAY_CHOICE
 )
+
+IF /I %CHOICE.INPUT%==Z IF "%SEL.CHARACTER%"=="SIMPSONS" (
+	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
+	CALL "%CMD.CLEARVAR%"
+	CALL "%ACT.SIMPSONS.LASER%" || CALL :ERROR ERRLINE ID01.inGameLASER    -0
+	%ADD-CMD%
+	GOTO REFRESH-BATTLE
+)
 IF /I %CHOICE.INPUT%== START "" "https://github.com/136MasterNR/Battles-of-Batch#battle-42"
-IF /I %CHOICE.INPUT%==A (GOTO BATTLE-ACT_CHOICE) ELSE GOTO BATTLE-SEL_CHOICE
+
+IF /I %CHOICE.INPUT%==R (
+	MODE CON:COLS=%COLS% LINES=%LINES%
+	GOTO IN-BATTLE
+)
+
+IF /I %CHOICE.INPUT%==A (
+	IF NOT DEFINED INV.SEL_NAME (
+		ECHO.[41;14H%RGB.RED%You haven't selected an action!
+		PAUSE>NUL
+		ECHO.[41;14H                               
+	) ELSE IF "%INV.SEL_NAME%"=="EMPTY" (
+		ECHO.[41;14H%RGB.RED%You haven't selected an action!
+		PAUSE>NUL
+		ECHO.[41;14H                               
+	) ELSE (
+		CALL "%CMD.CLEARVAR%"
+		CALL "%SCRIPTS_GAME%\act.cmd" %INV.SEL_NAME% || CALL :ERROR ERRLINE ID01.inBattleACT    -0
+		GOTO REFRESH-BATTLE
+	)
+)
+IF /I %CHOICE.INPUT%==E (
+	GOTO BATTLE-INVENTORY
+)
+
+IF /I %CHOICE.INPUT%==N (
+	CALL "%CMD.CLEARVAR%"
+	CALL "%ACT.ENEMY_ATK%"
+	GOTO REFRESH-BATTLE
+)
+GOTO BATTLE-SEL_CHOICE
+:BATTLE-INVENTORY
+COLOR 08
+:BATTLE-INVENTORY_RE
+CALL "%IG.CMDS%" INVENTORY
+SETLOCAL ENABLEDELAYEDEXPANSION
+%CHOICE%
+ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
+IF /I %CHOICE.INPUT%==S (
+	IF %INV.SEL% LSS %ITEM.EQ_CNT% (SET /A INV.SEL+=1) ELSE SET /A INV.SEL=0
+	GOTO BATTLE-INVENTORY_RE
+)
+IF /I %CHOICE.INPUT%==W (
+	IF %INV.SEL% LEQ 0 (SET /A INV.SEL=%ITEM.EQ_CNT%) ELSE SET /A INV.SEL-=1
+	GOTO BATTLE-INVENTORY_RE
+)
+SET "TMP.SPACES=                        "
+ECHO.[u%TMP.SPACES%[u[1B%TMP.SPACES%[u[2B%TMP.SPACES%[u[3B%TMP.SPACES%[u[4B%TMP.SPACES%[u[5B%TMP.SPACES%[u[6B%TMP.SPACES%[u[7B%TMP.SPACES%[u[8B%TMP.SPACES%[u[9B%TMP.SPACES%[u[10B%TMP.SPACES%[u[11B%TMP.SPACES%[u[12B%TMP.SPACES%[u[13B%TMP.SPACES%[u[14B%TMP.SPACES%[u[15B%TMP.SPACES%[u[17B%TMP.SPACES%   [u[18B%TMP.SPACES%    
+GOTO IN-BATTLE
+
 :BATTLE-S_CHOICE
 SETLOCAL ENABLEDELAYEDEXPANSION
 IF %INPUTATK% GTR %EN.MAX% (SET INPUTATK=1) ELSE SET /A INPUTATK+=1
@@ -1939,61 +1987,6 @@ FOR /F "TOKENS=1-2 DELIMS=," %%A IN ("!ENEMY.ATK.AMOUNT.%INPUTATK%!") DO (
 ECHO.!LOC.HP.%INPUTATK%![4B[2D[4m^|[0m [0m^>[1B[3D' ^>[1A[10C%RGB%245;151;151mAtk: [0m!ENEMY.MINP_ATK!~!ENEMY.MAXP_ATK!!LOC.HP.%INPUTATK%![11C[3B%RGB%176;225;187mHP: [0m!ENEMY.HP.NOW.%INPUTATK%!!LOC.HP.%INPUTATK%![11C[2B%RGB.CYAN%Lvl: [0m!ENEMY.LVL.%INPUTATK%!
 ENDLOCAL&&SET TMP.LOC_HP_OLD=%TMP.LOC_HP_OLD%
 EXIT /B 0
-:BATTLE-ACT_CHOICE
-SET /P "=[u%RGB%84;204;255m             Press the first character of an action to use it.             [0m[62D"<NUL
-SETLOCAL ENABLEDELAYEDEXPANSION
-%CHOICE%
-ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
-ENDLOCAL
-IF %CHOICE.INPUT%.==. GOTO BATTLE-ACT_CHOICE  
-IF /I %CHOICE.INPUT%==R (
-	MODE CON:COLS=%COLS% LINES=%LINES%
-	GOTO IN-BATTLE
-)
-IF /I %CHOICE.INPUT%==A (
-	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
-	SET UDERFINE=ATK
-	CALL "%CMD.CLEARVAR%"
-	CALL "%ACT.ATTACK%" || CALL :ERROR ERRLINE ID01.inGameATK    -0
-	CALL "%ACT.ENEMY_ATK%"
-	%ADD-CMD%
-	GOTO REFRESH-BATTLE
-)
-IF /I %CHOICE.INPUT%==H (
-	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
-	CALL "%CMD.CLEARVAR%"
-	CALL "%ACT.HEAL%"
-	%ADD-CMD%
-	GOTO REFRESH-BATTLE
-)
-IF /I %CHOICE.INPUT%==B (
-	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
-	CALL "%CMD.CLEARVAR%"
-	CALL "%ACT.BOMB%"
-	%ADD-CMD%
-	GOTO REFRESH-BATTLE
-)
-IF "%SEL.CHARACTER%"=="SIMPSONS" IF /I %CHOICE.INPUT%==E (
-	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
-	CALL "%CMD.CLEARVAR%"
-	CALL "%ACT.SIMPSONS.LASER%" || CALL :ERROR ERRLINE ID01.inGameLASER    -0
-	%ADD-CMD%
-	GOTO REFRESH-BATTLE
-)
-IF /I %CHOICE.INPUT%==N (
-	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
-	CALL "%CMD.CLEARVAR%"
-	CALL "%ACT.ENEMY_ATK%"
-	%ADD-CMD%
-	GOTO REFRESH-BATTLE
-)
-IF /I %CHOICE.INPUT%.==. START "" "https://github.com/136MasterNR/Battles-of-Batch#battle-42"
-IF /I %CHOICE.INPUT%==Q (
-	GOTO BATTLE-SEL_CHOICE
-)
-ECHO.[2A
-GOTO BATTLE-ACT_CHOICE
-ECHO.EOF&PAUSE>NUL&GOTO :EOF
 :ERROR <resultVar> <uniqueID> [LineOffset]
 IF "%IGNORE_ERRORS%"=="TRUE" GOTO :EOF
 IF DEFINED VERCODE (
@@ -2017,7 +2010,7 @@ SET "INF_ERR=%~2"
 	SET "%~1=%LINENR%"
 	ECHO.There was a fatal error while running.
 	ECHO.
-	ECHO.Please contact us and send this:
+	ECHO.Please contact the developers and send this:
 	ECHO.- Error Information -
 	ECHO. Err Code: '%ERR.CODE%'
 	ECHO. Err Info: '%INF_ERR:~0,2%:%INF_ERR:~2%'
@@ -2026,7 +2019,7 @@ SET "INF_ERR=%~2"
 	ENDLOCAL
 	ECHO.
 	ECHO.
-	ECHO.[1;33mPlease do not contact us unless you have NOT touched anything in the files.
+	ECHO.[1;33mPlease do not contact the developers unless you have NOT touched anything in the files.
 	ECHO.In that matter, you should download and extract the game again.
 	ECHO.
 	ECHO.[0;37mPress any key to verify file indetity ...
@@ -2041,7 +2034,7 @@ ECHO.Found errors in your options!
 ECHO.Press any key to reset them.
 PAUSE>NUL
 DEL /Q "%DATA_SETTINGS%\settings.cmd"
-GOTO LAUNCHER
+GOTO RESTART
 :VERIFY-FILE-IDENTITY
 CLS
 ECHO.Preparing file identity verification...
@@ -2053,7 +2046,7 @@ SET "UPDATE.LOC=%DATA_TMP%\update.cmd"
 SET "UPDZIP.LOC=%tmp%\update.zip"
 SET "EXTRAC.LOC=%TMP%\bob"
 BREAK>".\data\logs\verify-file-identity.log"
-CURL -S "https://htssoft.tk/get-update/battlesofbatch.bat" --SSL-NO-REVOKE >"./data/temp/update.cmd"
+CURL -S "https://136masternr.github.io/HTS-Studios/get-update/battlesofbatch.bat" --SSL-NO-REVOKE >"./data/temp/update.cmd"
 >NUL FIND /I "SET UPDATE.VER=" ".\data\temp\update.cmd" && (
 	CALL "%UPDATE.LOC%"
 	DEL /Q "%UPDATE.LOC%"
