@@ -1857,7 +1857,12 @@ IF "%INV.SEL_NAME%"=="EMPTY" (
 ) ELSE (
 	ECHO.[42;4H[s:---------------------------------------------------:
 	SETLOCAL ENABLEDELAYEDEXPANSION
-	IF "%INV.SEL_NAME%"=="ATTACK" (ECHO.[u[1B  [1mPress %RGB.CYAN%A[0m[1m to strike the enemy using %RGB.COIN%!WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ![0m[1m.                          
+	IF "%INV.SEL_NAME%"=="ATTACK" (
+		IF !WEAPONS.REG_NAME.%WIELDING.WEAPON%![==[ (
+			ECHO.[u[1B  [1mPress %RGB.CYAN%A[0m[1m to strike the enemy using your %RGB.COIN%fists[0m[1m. 
+		) ELSE (
+			ECHO.[u[1B  [1mPress %RGB.CYAN%A[0m[1m to strike the enemy using %RGB.COIN%!WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ![0m[1m.                          
+		)
 	) ELSE ECHO.[u[1B  [1mPress %RGB.CYAN%A[0m[1m to use %RGB.COIN%%INV.SEL_NAME%[0m[1m on the chosen enemy.                          
 	ENDLOCAL
 	ECHO.[u[2B  Press %RGB.CYAN%E[0m to change the selected action.      
