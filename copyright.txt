@@ -1,26 +1,2 @@
-Copyright (C) 2023, 136MasterNR - Battles Of Batch (Tester's Release)
-Battles of Batch is distributed under GNU GPLv3, including the use of this product in the following purposes and in
-the following manner:
-
-- You may NOT resell, charge for, sub-license, rent, lease, loan or distrubute the Product without our prior written
-  consent. We reserve the right to withdraw any such consent (or part thereof) for any reason and without notice and
-  to demand that you immediately cease any activity in respect of which permission is withdrawn.
-
-- You may NOT repackage, translate, adapt, vary, modify, alter, create derivative works based upon, or integrate any
-  other computer programs with, the Product in whole or in part.
-
-- You may NOT use the Product to engage in or allow others to engage in any illegal activity.
-
-- You may NOT transfer or assign your rights or abligations under this License to any person or authorize all or any
-  part of the product to be copied on another user's computer.
-
-- You may NOT decompile, disassemble, reverse engineer or otherwise attempt to discover the source code of the
-  Product except to the extent that you may be expressly permitted to reverse engineer or decompile under
-  applicable law.
-
-- You are NOT permitted to grant any sub-licenses of the Product.
-
-- You may NOT use the Product in corporate environments.
-
-- You may NOT use the Poroduct to sell or deliver any other product or service to third party or other commercial
-  business.
+Copyright (C) 2023, 136MasterNR - Battles of Batch (In-Dev Release)
+Battles of Batch is distributed under GNU GPLv3.

@@ -1,3 +1,4 @@
+Branch$Stick$1
 Dustblade$Short_Blade$7$No_bonus_effects$_$_$Unknown$_$_$_$Stained_Dust?8?none?0?none?0
 Cold_Twill$Short_Bow$20$No_bonus_effects$_$_$Unknown$_$_$_$Black_Wood?14?Stained_Dust?10?none?0
 Comrade_Hammer$Large_Hammer$45$10%%%%_Chance_to_deal_a_total_amount_of$150%%%%_damage$_$Unknown$_$_$_$Black_Wood?30?Francium?6?none?0

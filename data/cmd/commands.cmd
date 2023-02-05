@@ -27,7 +27,7 @@
 @EXIT /B 0
 
 :import.cmd
-@ECHO.%1: [38;2;65;253;254mImport an ANSI sequence. Usage: "import myfile.ans"[0m (CMD)
+@ECHO.%1: [38;2;65;253;254mImport an ANSI sequence. Usage: "import myfile"[0m (CMD)
 @EXIT /B 0
 
 :script.cmd

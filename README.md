@@ -9,18 +9,20 @@
 </div>
 
 Battles of Batch is a RPG text game built for the Windows MS-DOS terminal version 10. Wanderers fight in various battles against a variety of enemies as they progress through the game. They can complete quests, acquire new items and weapons, and experience the game's story.
-##### The project was initiated by 136MasterNR on August 13, 2021.
+##### The project was initiated by 136MasterNR on August 13, 2021.<br/><br/>
 
 ## Download/Installation Process, Requirements & Notes
   - **Download manually here**: [battlesofbatch-latest.zip](https://raw.githubusercontent.com/136MasterNR/HTS-Studios/main/get-download/battlesofbatch-latest.zip) [LATEST RELEASE]
 
-Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher.<br/>
+After the download is complete, simply extract and run the batch file `BattleOfBatch.bat`.
+
+Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher.
 
 **It is not recommended to launch in the new Windows Terminal as it changes a lot of text display features. This was made specifically for Command Line!**
 
 This project uses [ANSI](https://www.robvanderwoude.com/ansi.php) as a text formatter. It's used to manage displayed text and colors on the console. It's required for almost any display-related feature to work as intended.
 
-Please note that downloading the game from the source code is not recommended because it contains features which are not yet finished or tested out. Additionally, github changes the file formats which will most likely cause the scripts to break in many ways, to the point that it can be dangerous. Please consider downloading by using a release instead!
+Please note that downloading the game from the source code is not recommended because it contains features which are not yet finished or tested out. Additionally, github changes the file text format such as the EOL which can most likely cause the scripts to break in many ways, to the point that it can be dangerous. Please consider downloading by using a release instead!
 
 # About
 ### Contact (#1.0)
@@ -330,6 +332,7 @@ Material Items [Released]
   - More Info Soon!
 
 # For Developers
+*When developing something on your own, you should use the DLC packs. **DO NOT** edit the game itself as it may corrupt it entirely or cause misbehaviour! Follow the guides provided in the example DLC pack or below.*
 ### Code your own levels
   - Coming Soon!
 
@@ -340,11 +343,10 @@ Material Items [Released]
   - Coming Soon!
 
 ### Use Commands for Devs
-  - Go to the menu, and type `cmd`, then type `commands` to list all available dev cmds. If shortcut keys enabled, hit CTRL + T.
-    - **clear**: Clears the console window.
-    - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, and reverts some User Interfaces back to preDev versions.
-    - **import**: Display an [ANSI](https://www.robvanderwoude.com/ansi.php) text file. Use `.ans` as a file type. Use an argument after the command, e.g. `import mysupertxt.ans`. Make sure to move your ansi text in the directory `.\data\cmds\`.
-    - **help**: See more information and all commands.
+  - Go to the menu and hit CTRL + T to show the game's terminal. Exit using `exit`.
+  - After entering the terminal, type in `commands` to show all available commands and their information. Below you can read some extra information about a few commands.
+    - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, reverts some User Interfaces back to preDev versions and creastes debug files. Created for developing purposes.
+    - **import**: Display an [ANSI](https://www.robvanderwoude.com/ansi.php) text file. Use `.ans` as a file type. Use an argument after the command, e.g. `import mysupertxt`. Make sure to move your ansi text in the directory `.\data\cmds\`.
 
 # FAQ
   - Q: **Why in Batch?**
@@ -357,6 +359,10 @@ Material Items [Released]
   - **Story directed** by
     - 136MasterNR
     - johnypro150
+
+### Pixel Art
+  - **Enemy Designs** by
+    - ThePurgeKing
 
 ### Ascii Art
   - **Character Designs** by
@@ -373,11 +379,11 @@ Material Items [Released]
     - [Alexander Nakarada](https://www.serpentsoundstudios.com) provided [Village Ambiance](https://www.youtube.com/watch?v=VKKSQ4UHLRE) and [Winter Night](https://www.free-stock-music.com/alexander-nakarada-winter-night.html)
 
   - **SFX** provided by
-    - 136MasterNR
-
+    - [epicstockmedia.com](https://epicstockmedia.com/)
+    - [SOUND and IMAGE FX](https://www.youtube.com/channel/UCQvVl9c7RKpyO5aKwxtb_lw) provided the swing sfx.
 ### Special Thanks
 
-  - **Shoutout** to our **Testers**:
+  - **Shoutout** to my **Testers**:
     - ThePurgeKing
     - AgentANP
     - 2002Spiele

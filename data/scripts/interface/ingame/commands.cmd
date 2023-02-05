@@ -9,19 +9,19 @@ IF NOT DEFINED SLOTW.LINE CALL :CREATE_LINE W
 IF !WEAPONS.REG_NAME.%WIELDING.WEAPON%![==[ (
 	ECHO.[42C' .-------.
 	IF %INV.SEL% EQU 0 (
-		ECHO.[42C:-: %RGB.CYAN%Fists[0m ^| ^<-
+		ECHO.[42C:-: %RGB.CYAN%Fists[0m ^| [1m^<-[0m
 		SET INV.SEL_NAME=ATTACK
 	) ELSE (
-		ECHO.[42C:-: Fists ^|   
+		ECHO.[42C:-: [1mFists[0m ^|   
 	)
 	ECHO.[42C. '-------'
 ) ELSE (
 	ECHO.[42C' .--!SLOTW.LINE!.
 	IF %INV.SEL% EQU 0 (
-		ECHO.[42C:-: %RGB.CYAN%!WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ![0m ^| ^<-
+		ECHO.[42C:-: %RGB.CYAN%!WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ![0m ^| [1m^<-[0m
 		SET INV.SEL_NAME=ATTACK
 	) ELSE (
-		ECHO.[42C:-: !WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ! ^|   
+		ECHO.[42C:-: [1m!WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ![0m ^|   
 	)
 	ECHO.[42C. '--!SLOTW.LINE!'
 )
@@ -31,7 +31,7 @@ FOR /L %%A IN (1,1,%ITEM.EQ_CNT%) DO (
 	) ELSE (
 		ECHO.[42C' .------------.
 		IF %INV.SEL% EQU %%A (
-			ECHO.[42C:-: [1;30mEmpty Slot[0m ^| ^<-
+			ECHO.[42C:-: [1;30mEmpty Slot[0m ^| %RGB.FALSE%^<-[0m
 			SET INV.SEL_NAME=EMPTY
 		) ELSE ECHO.[42C:-: [1;30mEmpty Slot[0m ^|   
 		ECHO.[42C. '------------'
@@ -50,7 +50,7 @@ SET TMP.LINE=-
 CALL :CREATE_LINE %1
 ECHO.[42C' .------!SLOT%1.LINE!.
 IF %INV.SEL%==%1 (
-	ECHO.[42C:-: %RGB.CYAN%!ITEM.REG_NAME.%2![0m [1m^(%RGB.COIN%x!ITEM.REG_LVL.%TMP.EQ_N%![0m[1m^)[0m ^| ^<-
+	ECHO.[42C:-: %RGB.CYAN%!ITEM.REG_NAME.%2![0m [1m^(%RGB.COIN%x!ITEM.REG_LVL.%TMP.EQ_N%![0m[1m^)[0m ^| [1m^<-[0m
 	SET INV.SEL_NAME=!ITEM.REG_NAME.%2!
 ) ELSE ECHO.[42C:-: [1m!ITEM.REG_NAME.%2![0m ^(x!ITEM.REG_LVL.%TMP.EQ_N%!^) ^|   
 ECHO.[42C. '------!SLOT%1.LINE!'

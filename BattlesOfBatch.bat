@@ -217,7 +217,7 @@ SET REGID_C2=
 ::VAR:-Battle Loader
 SET "SCRIPTS_GAME=%DATA_SCRIPTS%\game"
 SET "LOAD.LEVEL_=%DATA%\levels\lvl"
-SET "LOC.HP.P=[11;4H"
+SET "LOC.HP.P=[12;4H"
 ::VAR:-Action
 SET "SCRIPTS_ACT=%SCRIPTS_GAME%\acts"
 SET "ACT.ATTACK=%SCRIPTS_ACT%\ATTACK.cmd"
@@ -237,6 +237,7 @@ SET "RGB.LVL=%RGB%128;200;255m"
 SET "RGB.TRUE=%RGB%163;255;177m"
 SET "RGB.FALSE=%RGB%255;89;89m"
 SET "RGB.CYAN=%RGB%133;222;255m"
+SET "RGB.AQUA=%RGB%0;254;254m"
 SET "RGB.YELLOW=%RGB%255;252;176m"
 SET "RGB.ORANGE=%RGB%255;176;79m"
 SET "RGB.RED=%RGB%255;61;51m"
@@ -262,6 +263,10 @@ SET QREW.MONEY.TLVLS=20000
 SET QREW.XP.TLVLS=120000
 SET QMAX.TLVLS=120
 SET "QDESC.TLVLS=[1;37mWin [4m%QMAX.TLVLS%[0m[1;37m battles."
+::VAR:-DLC
+SET "DLC.DIR=%DATA%"
+SET "DLC.MAIN=%DLC.DIR%\1_example"
+SET "DLC.MAIN.AUDIO=%DLC.MAIN%\audio"
 ::VAR:-END
 
 MODE CON:COLS=%COLS% LINES=%LINES%
@@ -671,9 +676,11 @@ PUSHD "%CD%\DATA\cmd"
 CLS
 TITLE %TITLE%Command Line Enviroment
 ECHO.Battles of Batch [Version %VERCODE% / %VERTYPE% %VERS%]
-ECHO.^(^!^) Run "EXIT" to return.[H
-CMD /K "VER&PROMPT !^> "
+ECHO.Microsoft Windows [Version %WINVER:]=%]
+ECHO.^(^!^) Run "EXIT" to return.[3H
+CMD /K "PROMPT !^> "
 PUSHD "..\.."
+MODE CON:COLS=%COLS% LINES=%LINES%
 GOTO MENU
 :CREDITS
 TITLE %TITLE%Credits
@@ -811,7 +818,7 @@ IF %MAT.REG_CNT%==0 (ECHO.[u    No materials owned) ELSE FOR /L %%A IN (1,1,%MA
 IF %WEAPONS.REG_CNT% GTR 14 (SET TMP.ITEM.REG_CNT=14) ELSE SET TMP.ITEM.REG_CNT=%WEAPONS.REG_CNT%
 SET /A MORE_HIDDEN=%WEAPONS.REG_CNT%-14
 IF %MORE_HIDDEN% EQU 1 (SET MORE_HIDDEN=  ... ^(%MORE_HIDDEN% Hidden Item^) ...) ELSE IF %MORE_HIDDEN% LEQ 9 (SET MORE_HIDDEN= ... ^(%MORE_HIDDEN% Hidden Item/s^) ...) ELSE (SET MORE_HIDDEN=  ... ^(Hidden Items^) ...)
-IF DEFINED WIELDING.WEAPON (ECHO.[u[36C1: !WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ! ^(+%EQUIP.BONUS_ATK% ATK^)[2B) ELSE (ECHO.[u[36C    No equipped weapons[2B)
+IF DEFINED WIELDING.WEAPON (ECHO.[u[36C1: !WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ! %RGB%245;105;105m╀[0m[1m%EQUIP.BONUS_ATK%[0m[2B) ELSE (ECHO.[u[36C    No equipped weapons[2B)
 SET UI.POS=[81C
 IF %WEAPONS.REG_CNT%==0 (ECHO.%UI.POS%     No weapons owned) ELSE FOR /L %%A IN (1,1,%TMP.ITEM.REG_CNT%) DO (
 	CALL :WEAPON-GET-INFO !WEAPONS.REG_NAME.%%A! %%A
@@ -1053,10 +1060,15 @@ ECHO.   ':[7CPress I for more[G[50C:'
 EXIT /B 0
 :WEAPON-GET-INFO
 SET TMP.NAME=%1
-ECHO.%UI.POS%%TMP.NAME:_= % - (↑!WEAPONS.REG_LVL.%2!)
+SET /A TMP.DUPE_DMG=I.%1.DMG * WEAPONS.REG_LVL.%2
+ECHO.%RGB.YELLOW%%UI.POS%%TMP.NAME:_= %[0m - %RGB.CYAN%↑[0m[1m!WEAPONS.REG_LVL.%2! %RGB%245;105;105m╀[0m[1m!TMP.DUPE_DMG!
 EXIT /B 0
 
 :MAP
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET "STR=%RGB.CYAN%Next Story[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= ! %RGB.DGRAY%#%PLAYER.MAP.LEVEL%[0m     %RGB.CYAN%Total Wins[0m: [1m%COMPLETED.MAPS%[0m"
+CALL "%CENTER%" 195
+ENDLOCAL&SET "UI.MAP_DETAIL_C=%STR%"
 TITLE %TITLE%Map
 ECHO.[?25l[0m[H.+-----------------------------------------------------------------------------------------------------------------+.
 ECHO.^|                                                                                                                   ^|
@@ -1865,7 +1877,7 @@ IF "%INV.SEL_NAME%"=="EMPTY" (
 		)
 	) ELSE ECHO.[u[1B  [1mPress %RGB.CYAN%A[0m[1m to use %RGB.COIN%%INV.SEL_NAME%[0m[1m on the chosen enemy.                          
 	ENDLOCAL
-	ECHO.[u[2B  Press %RGB.CYAN%E[0m to change the selected action.      
+	ECHO.[u[2B  [0mPress %RGB.CYAN%E[0m to change the selected action.      
 	ECHO.[u[3B:---------------------------------------------------:       
 )
 
@@ -1879,9 +1891,9 @@ CALL :BATTLE-DISPLAY_CHOICE
 SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
 ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
-ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
 IF %CHOICE.INPUT%.==. GOTO BATTLE-SEL_CHOICE
 IF /I %CHOICE.INPUT%==Q (
+	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m
 	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
 		TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
 		CALL "%MENU.AUDIO%"
@@ -1907,11 +1919,13 @@ IF /I %CHOICE.INPUT%==Z IF "%SEL.CHARACTER%"=="SIMPSONS" (
 IF /I %CHOICE.INPUT%== START "" "https://github.com/136MasterNR/Battles-of-Batch#battle-42"
 
 IF /I %CHOICE.INPUT%==R (
+	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
 	MODE CON:COLS=%COLS% LINES=%LINES%
 	GOTO IN-BATTLE
 )
 
 IF /I %CHOICE.INPUT%==A (
+	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
 	IF NOT DEFINED INV.SEL_NAME (
 		ECHO.[41;14H%RGB.RED%You haven't selected an action!
 		PAUSE>NUL
@@ -1927,10 +1941,12 @@ IF /I %CHOICE.INPUT%==A (
 	)
 )
 IF /I %CHOICE.INPUT%==E (
+	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
 	GOTO BATTLE-INVENTORY
 )
 
 IF /I %CHOICE.INPUT%==N (
+	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
 	CALL "%CMD.CLEARVAR%"
 	CALL "%ACT.ENEMY_ATK%"
 	GOTO REFRESH-BATTLE
@@ -1943,6 +1959,7 @@ CALL "%IG.CMDS%" INVENTORY
 SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
 ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
+IF %CHOICE.INPUT%.==. GOTO BATTLE-INVENTORY_END
 IF /I %CHOICE.INPUT%==S (
 	IF %INV.SEL% LSS %ITEM.EQ_CNT% (SET /A INV.SEL+=1) ELSE SET /A INV.SEL=0
 	GOTO BATTLE-INVENTORY_RE
@@ -1951,6 +1968,7 @@ IF /I %CHOICE.INPUT%==W (
 	IF %INV.SEL% LEQ 0 (SET /A INV.SEL=%ITEM.EQ_CNT%) ELSE SET /A INV.SEL-=1
 	GOTO BATTLE-INVENTORY_RE
 )
+:BATTLE-INVENTORY_END
 SET "TMP.SPACES=                        "
 ECHO.[u%TMP.SPACES%[u[1B%TMP.SPACES%[u[2B%TMP.SPACES%[u[3B%TMP.SPACES%[u[4B%TMP.SPACES%[u[5B%TMP.SPACES%[u[6B%TMP.SPACES%[u[7B%TMP.SPACES%[u[8B%TMP.SPACES%[u[9B%TMP.SPACES%[u[10B%TMP.SPACES%[u[11B%TMP.SPACES%[u[12B%TMP.SPACES%[u[13B%TMP.SPACES%[u[14B%TMP.SPACES%[u[15B%TMP.SPACES%[u[17B%TMP.SPACES%   [u[18B%TMP.SPACES%    
 GOTO IN-BATTLE

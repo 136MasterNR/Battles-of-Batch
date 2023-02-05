@@ -1,11 +1,12 @@
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET "STR=%RGB.COIN%Chapter[0m: [1m%CHAPTER%     %RGB.COIN%Battle[0m: [1m!MAP.NAME.%SELECTED%:_= ! %RGB.DGRAY%#%SELECTED%[0m"
 CALL "%CENTER%" 160
-ECHO.[2;19H%STR%[E
+ECHO.[2;19H%STR%
 ENDLOCAL
-CALL :C%2
+ECHO.[1C%UI.MAP_DETAIL_C%
 CALL :%1
 EXIT /B 0
+
 :1
 ECHO.[1C%RGB.LVL%                              %RGB.TRUE%Recommended Lvl[0m: [1m1    %RGB.FALSE%Enemies[0m: [1mYara ↑1[0m, [1mYara ↑1[0m, [1mYara ↑2                    [0m
 EXIT /B 0
@@ -68,19 +69,4 @@ ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: 
 EXIT /B 0
 :21
 ECHO.[1C                       Difficulty: ?    Recommended Lvl: ?    Enemies: ?(L:?), ?(L:?), ?(L:?)                      
-EXIT /B 0
-
-
-:C1
-SETLOCAL ENABLEDELAYEDEXPANSION
-ECHO.[3;20H   [1m%RGB.CYAN%Chapter Difficulty[0m: [1mEasy     %RGB.CYAN%Next Story[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= ! %RGB.DGRAY%#%PLAYER.MAP.LEVEL%[0m     %RGB.CYAN%Total Wins[0m: [1m%COMPLETED.MAPS%          [0m
-ENDLOCAL
-EXIT /B 0
-
-:C2
-ECHO.[3;2H[1m                                               Chapter Coming Soon!                                                [0m
-EXIT /B 0
-
-:C3
-ECHO.[3;2H[1m                                               Chapter Coming Soon!                                                [0m
 EXIT /B 0
