@@ -48,6 +48,24 @@ IF DEFINED RUNNING (
 ) ELSE @IF /I NOT DEFINED STARTED EXIT 1
 :STARTUP-COMPLETE
 SET RUNNING=TRUE
+IF DEFINED WT_SESSION (
+		CLS
+		ECHO !^!! WARNING !^!!
+		ECHO.Windows Terminal does not support the essential display
+		ECHO.features specialized for the MS Command Line.
+		ECHO.
+		ECHO.Due to this, you will experience various unexpected
+		ECHO.display issues while playing the game.
+		ECHO.
+		ECHO.Windows Terminal has other critical issues too, such as
+		ECHO.corrupting child tasks, causing infinite error messages,
+		ECHO.and such other issues.
+		ECHO.
+		ECHO.Press any key to ignore this warning or launch the game
+		ECHO.in Command Line.
+		PAUSE>NUL
+		CLS
+)
 IF NOT EXIST "%~n0%~x0" (
 	CLS
 	ECHO.ERR : Inaccessible Directory.
@@ -196,6 +214,7 @@ SET "UI.SKILLS=%INTERFACE%\shop\skills.cmd"
 SET "UI.CRAFT=%INTERFACE%\shop\craft.cmd"
 SET "CENTER=%INTERFACE%\center.cmd"
 SET "CHARACTER=%INTERFACE%\characters.cmd"
+SET "UI.MONEY=%INTERFACE%\money_decimals.cmd"
 ::VAR:-Inventory
 SET "PLAYERDATA.ITEMS=%DATA_SAVES.INV%\ITEMS"
 SET "PLAYERDATA.EQ=%DATA_SAVES.INV%\EQUIP"
@@ -243,6 +262,7 @@ SET "RGB.ORANGE=%RGB%255;176;79m"
 SET "RGB.RED=%RGB%255;61;51m"
 SET "RGB.GREEN=%RGB%102;255;0m"
 SET "RGB.DGRAY=%RGB%169;169;169m"
+SET "RGB.AQUAMARINE=%RGB%169;169;169m"
 ::VAR:-Quests
 SET "QUEST.LOADER=%DATA_SCRIPTS%\quests.cmd"
 SET "QNAME.TOTAL_MONSTERS=Sereal Killer"
@@ -270,6 +290,10 @@ SET "DLC.MAIN.AUDIO=%DLC.MAIN%\audio"
 ::VAR:-END
 
 MODE CON:COLS=%COLS% LINES=%LINES%
+FOR /F "tokens=1,2" %%A IN ('mode con') do (
+	IF "%%A"=="Lines:" SET GETLINES=%%B
+	IF "%%A"=="Columns:" SET GETCOLS=%%B
+)
 ECHO.[?25l[s Loading ...
 IF NOT EXIST "%HTS_DATA%" MD "%HTS_DATA%"
 IF NOT EXIST "%HTS_DATA%" (
@@ -292,7 +316,7 @@ IF NOT EXIST "%MAIN_GAME%\32.dll" (
 		ECHO.We higly recommend you to upgrade!
 		ECHO.
 		ECHO.Due to this, you may be dealing with various unexpected
-		ECHO.issues while using this product.
+		ECHO.issues while using this playing.
 		ECHO.
 		ECHO.Press any key to continue or just exit.
 		PAUSE>NUL
@@ -305,9 +329,9 @@ IF NOT EXIST "%MAIN_GAME%\LICENSEAGREEMENT.dll" IF EXIST "%LICENSE%" (
 		CLS
 		ECHO.Please read and confirm that you agree to our License!
 		ECHO.By closing the License text window you agree, and be
-		ECHO.able to continue using this product.
+		ECHO.able to continue playing the game.
 		START /WAIT "" "%COPYRIGHT%"
-		ECHO.[AGREE]>"%MAIN_GAME%\LICENSEAGREEMENT.dll"
+		ECHO.[GNU_GPLv3]>"%MAIN_GAME%\LICENSEAGREEMENT.dll"
 		CLS
 	)
 ) ELSE (
@@ -461,16 +485,7 @@ TITLE %TITLE%Menu
 :REFRESH-MENU
 CALL "%PLAYERDATA.LOAD%"
 CALL "%SYS_LVL%"
-SET PLAYER.MONEY.INTF=
-SET PLAYER_MONEY_IF_4=%PLAYER.MONEY:~3,1%
-IF NOT %PLAYER.MONEY:~9%.==. ( SET PLAYER.MONEY.INTF=%PLAYER.MONEY%
-) ELSE IF NOT %PLAYER.MONEY:~8,1%.==. ( SET PLAYER.MONEY.INTF=%PLAYER.MONEY:~0,3%,%PLAYER.MONEY:~3,3%,%PLAYER.MONEY:~6%
-) ELSE IF NOT %PLAYER.MONEY:~7,1%.==. ( SET PLAYER.MONEY.INTF=%PLAYER.MONEY:~0,2%,%PLAYER.MONEY:~2,3%,%PLAYER.MONEY:~5%
-) ELSE IF NOT %PLAYER.MONEY:~6,1%.==. ( SET PLAYER.MONEY.INTF=%PLAYER.MONEY:~0,1%,%PLAYER.MONEY:~1,3%,%PLAYER.MONEY:~4%
-) ELSE IF NOT %PLAYER.MONEY:~5,1%.==. ( SET PLAYER.MONEY.INTF=%PLAYER.MONEY:~0,3%,%PLAYER.MONEY:~3,3%
-) ELSE IF NOT %PLAYER.MONEY:~4,1%.==. ( SET PLAYER.MONEY.INTF=%PLAYER.MONEY:~0,2%,%PLAYER.MONEY:~2,3%
-) ELSE IF NOT %PLAYER.MONEY:~3,1%.==. ( SET PLAYER.MONEY.INTF=%PLAYER.MONEY:~0,1%,%PLAYER.MONEY:~1,3%
-) ELSE SET PLAYER.MONEY.INTF=%PLAYER.MONEY%
+CALL "%UI.MONEY%"
 IF %PLAYER.LVL% LSS 60 ( SET "CRTLVL=%PLAYER.LVL%" ) ELSE (SET "CRTLVL=%PLAYER.LVL% ^(MAX!^)")
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET "STR=%RGB.GREEN%Money[0m: [1m%PLAYER.MONEY.INTF% %RGB.GREEN%$[0m"
@@ -484,8 +499,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 SET "STR=%RGB.RED%Next Battle[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= ! %RGB.DGRAY%([0mTotal Wins%RGB.DGRAY%: [0m%COMPLETED.MAPS%%RGB.DGRAY%^^)[0m"
 CALL "%CENTER%" 148
 ENDLOCAL&SET "UI.MENU.MA=%STR%"
-IF 0==0 (
-ECHO.[0m[H[?25l.-------------------------------------------------------------------------------------------------------------------.
+(ECHO.[0m[H[?25l.-------------------------------------------------------------------------------------------------------------------.
 IF "%RAINBOWMODE%"=="TRUE" ( CALL "%INT.TITLE_R%" ) ELSE ( CALL "%INT.TITLE%" )
 ECHO.'-.--------[1;30m.[0m--[1;30m.[0m------------.                                                             .------------------------.-'[E.-'--------[1;30m^|[0m--[1;30m^|[0m------------'                    .---.-----------.---.                    '------------------------'-.
 ECHO.^|          [1;30m^|  ^|[0m             .------------------'    :   [1;34mSTATS[0m   :    '------------------.                           ^|
@@ -527,8 +541,7 @@ ECHO.^|  ^|_^| ^(____^)                                         \ \   / /       
 ECHO.^|  \_]/______\                                         \ ' ' /                           __/_  `.  .-^"^"^"-. .        ^|
 ECHO.^|     _\_^|^|_/_                                          \ ^" /                            \_,` ^| \-'  /   ^)`-'       ^|
 ECHO.^|    ^(_,_^|^|_,_^)                                          \./                              ___Y  ,    .'7 /^|         ^|
-ECHO.^|                                                         V                              ^(_,___/...-` ^(_/_/         ^|[E^| [1;30m2023©136MasterNR[0m                                                                   [1;30mBATTLES OF BATCH: [0;33m%VERTYPE% %VERS%[0m ^|[?25h
-)
+ECHO.^|                                                         V                              ^(_,___/...-` ^(_/_/         ^|[E^| [1;30m2023©136MasterNR[0m                                                                   [1;30mBATTLES OF BATCH: [0;33m%VERTYPE% %VERS%[0m ^|[?25h)
 IF "%SHORTCUTS.VALUE%"=="TRUE" ( 
 	ECHO.^|     .                              .    .                              .    .                              .      ^|[E^|     ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|      ^|[E'-----'-------'-------'-------'------'----'-------'-------'-------'------'----'-------'-------'-------'------'------'[2A
 ) ELSE (
@@ -647,7 +660,10 @@ IF /I %CHOICE.INPUT%.==. (
 	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
 	GOTO RESTART
 )
-IF /I %CHOICE.INPUT%.==. GOTO TERMINAL
+IF /I %CHOICE.INPUT%.==. (
+	CALL :TERMINAL
+	GOTO MENU
+)
 IF /I %CHOICE.INPUT%.==. (
 	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
 	EXIT 0
@@ -675,13 +691,14 @@ GOTO DEV
 PUSHD "%CD%\DATA\cmd"
 CLS
 TITLE %TITLE%Command Line Enviroment
-ECHO.Battles of Batch [Version %VERCODE% / %VERTYPE% %VERS%]
-ECHO.Microsoft Windows [Version %WINVER:]=%]
-ECHO.^(^!^) Run "EXIT" to return.[3H
-CMD /K "PROMPT !^> "
+ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mBattles of Batch [37m[Version %VERCODE% / %VERTYPE% %VERS%]
+ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mMicrosoft Windows [37m[Version %WINVER:]=%]
+ECHO.[38;2;235;64;52m^(^!^) [38;2;245;108;98mRun "EXIT" to return.[3H
+SETX /M _DEFAULT_PDT_TERMINATE 1
+CMD /K "PROMPT [38;2;132;217;52mbob@terminal[0m[1m:[38;2;113;155;198m%%cd:~-9,9%%[0m$$ "
 PUSHD "..\.."
 MODE CON:COLS=%COLS% LINES=%LINES%
-GOTO MENU
+EXIT /B 0
 :CREDITS
 TITLE %TITLE%Credits
 CLS
@@ -1893,7 +1910,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
 IF %CHOICE.INPUT%.==. GOTO BATTLE-SEL_CHOICE
 IF /I %CHOICE.INPUT%==Q (
-	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m
+	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
 	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
 		TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
 		CALL "%MENU.AUDIO%"
