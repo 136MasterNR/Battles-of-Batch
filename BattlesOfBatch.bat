@@ -260,9 +260,10 @@ SET "RGB.AQUA=%RGB%0;254;254m"
 SET "RGB.YELLOW=%RGB%255;252;176m"
 SET "RGB.ORANGE=%RGB%255;176;79m"
 SET "RGB.RED=%RGB%255;61;51m"
+SET "RGB.PINK=%RGB%245;105;105m"
 SET "RGB.GREEN=%RGB%102;255;0m"
 SET "RGB.DGRAY=%RGB%169;169;169m"
-SET "RGB.AQUAMARINE=%RGB%169;169;169m"
+SET "RGB.AQUAMARINE=%RGB%127;255;212m"
 ::VAR:-Quests
 SET "QUEST.LOADER=%DATA_SCRIPTS%\quests.cmd"
 SET "QNAME.TOTAL_MONSTERS=Sereal Killer"
@@ -325,12 +326,12 @@ IF NOT EXIST "%MAIN_GAME%\32.dll" (
 )
 
 IF NOT EXIST "%MAIN_GAME%\LICENSEAGREEMENT.dll" IF EXIST "%LICENSE%" (
-	IF EXIST "%COPYRIGHT%" (
+	IF EXIST "%LICENSE%" (
 		CLS
 		ECHO.Please read and confirm that you agree to our License!
 		ECHO.By closing the License text window you agree, and be
 		ECHO.able to continue playing the game.
-		START /WAIT "" "%COPYRIGHT%"
+		START /WAIT "" "%LICENSE%"
 		ECHO.[GNU_GPLv3]>"%MAIN_GAME%\LICENSEAGREEMENT.dll"
 		CLS
 	)
@@ -695,7 +696,7 @@ ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mBattles of Batch [37m[Versio
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mMicrosoft Windows [37m[Version %WINVER:]=%]
 ECHO.[38;2;235;64;52m^(^!^) [38;2;245;108;98mRun "EXIT" to return.[3H
 SETX /M _DEFAULT_PDT_TERMINATE 1
-CMD /K "PROMPT [38;2;132;217;52mbob@terminal[0m[1m:[38;2;113;155;198m%%cd:~-9,9%%[0m$$ "
+CMD /K "PROMPT $E[38;2;132;217;52mbob@terminal$E[0m$E[1m:$E[38;2;113;155;198m%%cd:~-9,9%%[0m$$$S"
 PUSHD "..\.."
 MODE CON:COLS=%COLS% LINES=%LINES%
 EXIT /B 0
@@ -779,7 +780,7 @@ ECHO.^|                    : %RGB%253;255;209m^>[0m                :        %C.
 ECHO.^|                    '------------------:        %C.FRAME_1%       :------------------'                    ^|
 ECHO.^|                                       :        %C.FRAME_2%       :                                       ^|
 ECHO.^|                     .----: %RGB%122;255;126mMoney[0m :----:        %C.FRAME_3%       :--: %RGB.FALSE%Strength[0m :---.                     ^|
-ECHO.^|                     : %RGB%179;255;181m$[0m               :        %C.FRAME_4%       : %RGB%245;105;105m╀[0m [s              :                     ^|[u%STAT.NUM.ATK%[u[54D%PLAYER.MONEY.INTF%
+ECHO.^|                     : %RGB%179;255;181m$[0m               :        %C.FRAME_4%       : %RGB.PINK%╀[0m [s              :                     ^|[u%STAT.NUM.ATK%[u[54D%PLAYER.MONEY.INTF%
 ECHO.^|                     '-----------------:        %C.FRAME_5%       :-----------------'                     ^|
 ECHO.^|                                       :        %C.FRAME_6%       :                                       ^|
 ECHO.^|                     .----: %RGB.LVL%Level[0m :----:        %C.FRAME_7%       :--: %RGB%255;201;125mCrit Rate[0m :--.                     ^|
@@ -1739,9 +1740,9 @@ IF EXIST LET.DEBUG (
 CLS
 :IN-BATTLE
 (
-ECHO.[?25l[H.--.----------------------------------------------------------------------------------------------------------------.
-ECHO.^|Q ^|[113C^|
-ECHO.^|--'[113C^|
+ECHO.[?25l[H.--------------------.----------------------------------------------------------------------------------------------.
+ECHO.^| Press %RGB.PINK%Q[0m to retreat ^|[103C^|
+ECHO.^|--------------------'[95C^|
 ECHO.^|[115C^|
 ECHO.^|[115C^|
 ECHO.^|[115C^|

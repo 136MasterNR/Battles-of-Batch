@@ -1,2 +1,3 @@
 Copyright (C) 2023, 136MasterNR - Battles of Batch (In-Dev Release)
 Battles of Batch is distributed under GNU GPLv3.
+(Some assets are not under this copyright statement)

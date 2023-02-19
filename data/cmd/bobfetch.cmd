@@ -1,29 +1,53 @@
 @ECHO OFF
-set arg=%*
+SET arg=%*
 IF NOT DEFINED arg SET arg=0
 ECHO.
-ECHO(%arg% | FINDSTR /C:"/?">NUL
-IF NOT ERRORLEVEL 1 (
-   GOTO ?
-)
+ECHO(%arg% | FINDSTR /C:"/?">NUL && GOTO ?
+SET CNT_cpu=0
+SET CNT_gpu=0
+ECHO(%arg% | FINDSTR /I /C:"/D">NUL && (
+	FOR /F "SKIP=1 DELIMS=" %%A IN ('set cpu_name[') DO (
+		SET /A CNT_gpu+=1
+	)
+	FOR /F "SKIP=1 DELIMS=" %%A IN ('wmic cpu get name ^| findstr /v "^$"') DO (
+		SET /A CNT_cpu+=1
+	)
+) || (
 ECHO.Getting System Information ...
-FOR /F "tokens=1,2 delims=:" %%a IN ('systeminfo ^| FINDSTR /c:"OS Name" /c:"OS Version" /c:"Available Physical Memory" /c:"System Type" /c:"System Manufacturer" /c:"System Model" /c:"Total Physical Memory"') DO (
-  IF "%%a"=="OS Name" set "os_name=%%b"
-  IF "%%a"=="OS Version" set "os_version=%%b"
-  IF "%%a"=="System Type" set "system_type= %%b"
-  IF "%%a"=="System Manufacturer" set "system_manufacturer=%%b"
-  IF "%%a"=="System Model" set "system_model=%%b"
-  IF "%%a"=="Total Physical Memory" set "memory= %%b"
-  IF "%%a"=="Available Physical Memory" set "available_memory=%%b"
+FOR /F "tokens=1,2delims=:" %%A IN ('systeminfo ^| findstr /c:"OS Name" /c:"OS Version" /c:"Available Physical Memory" /c:"System Type" /c:"System Manufacturer" /c:"System Model" /c:"Total Physical Memory"') DO (
+  IF "%%A"=="OS Name" SET "os_name=%%B"
+  IF "%%A"=="OS Version" SET "os_version=%%B"
+  IF "%%A"=="System Type" FOR /F "tokens=1delims=-" %%G IN ("%%B") DO SET "system_type= %%G"
+  IF "%%A"=="System Manufacturer" SET "system_manufacturer=%%B"
+  IF "%%A"=="System Model" SET "system_model=%%B"
+  IF "%%A"=="Total Physical Memory" SET "total_memory= %%B"
+  IF "%%A"=="Available Physical Memory" SET "available_memory=%%B"
 )
-IF DEFINED VERCODE (SET "game_info=%VERTYPE% %VERCODE%") ELSE SET game_info=[38;2;255;122;122mERROR
-FOR /F %%i IN ('hostname') DO SET "device_name=%%i"
 SET cmd_memory=0
-FOR /F "skip=1 tokens=2 delims=," %%i IN ('tasklist /Fi "imagename eq cmd.exe" /Fo csv ^| FINDSTR /r "cmd.exe"') DO (
-	SET "get_cmd_memory=%%i"
-	CALL SET /a cmd_memory+=%%get_cmd_memory:"=%%
+FOR /F "skip=1 tokens=2 delims=," %%I IN ('tasklist /Fi "imagename eq cmd.exe" /Fo csv ^| findstr /r "cmd.exe"') DO (
+	SET "GET_CMD_MEMORY=%%I"
+	CALL SET /A cmd_memory+=%%GET_CMD_MEMORY:"=%%
+)
+FOR /F "SKIP=1 DELIMS=" %%A IN ('wmic path win32_VideoController get name ^| findstr /v "^$"') DO (
+    SET /A CNT_gpu+=1
+    CALL SET "gpu_name[%%CNT_gpu%%]=%%A"
+)
+FOR /F "SKIP=1 DELIMS=" %%A IN ('wmic cpu get name ^| findstr /v "^$"') DO (
+    SET /A CNT_cpu+=1
+    CALL SET "cpu_name[%%CNT_cpu%%]=%%A"
+)
+FOR /F "DELIMS=" %%A IN ('tasklist /nh ^| find /c /v ""') DO SET cpu_proc=%%A
+FOR /F %%I IN ('hostname') DO SET "device_name=%%I"
 )
 
+(SET BOBFETCH_LINES=
+SET ALT=%device_name%@%USERNAME%)
+:ALT
+(SET BOBFETCH_LINES=%BOBFETCH_LINES%-
+SET ALT=%ALT:~0,-1%)
+IF DEFINED ALT GOTO ALT
+
+SET system_modelmanuf=%system_model:  =% %system_manufacturer:  =%
 (ECHO.[1A                                       [38;2;14;14;14m [38;2;25;25;25m [38;2;25;25;25m [38;2;9;9;9m [s
 ECHO.                                 [38;2;25;25;25m [38;2;75;75;75m'[38;2;120;120;120mc[38;2;157;157;157mx[38;2;190;190;190mO[38;2;219;219;219mX[38;2;241;241;241mW[38;2;242;242;242mW[38;2;242;242;242mW[38;2;237;237;237mN[38;2;195;195;195m0[38;2;93;93;93m;[38;2;1;1;1m 
 ECHO.                              [38;2;9;9;9m [38;2;134;134;134mo[38;2;202;202;202m0[38;2;239;239;239mW[38;2;242;242;242mW[38;2;242;242;242mW[38;2;242;242;242mW[38;2;223;223;223mX[38;2;174;174;174mk[38;2;144;144;144mo[38;2;150;150;150md[38;2;224;224;224mX[38;2;242;242;242mW[38;2;242;242;242mW[38;2;242;242;242mW[38;2;59;59;59m.
@@ -42,37 +66,55 @@ ECHO.  [38;2;17;45;66m.[38;2;58;151;221ml[38;2;58;151;221ml[38;2;58;151;221m
 ECHO.  [38;2;13;33;48m [38;2;57;149;219ml[38;2;48;125;184m:[38;2;35;91;134m,[38;2;23;59;86m.[38;2;10;26;38m [38;2;1;2;2m 
 ECHO.  [38;2;2;5;7m [38;2;6;16;23m [0m)
 
-ECHO(%arg% | FINDSTR /I /C:"/H">NUL
-IF NOT ERRORLEVEL 1 (ECHO.[s[16A[50C[38;2;76;190;224mDESKTOP-PC[37;0m@[38;2;117;223;255mUser[0m) ELSE ECHO.[s[16A[50C[38;2;76;190;224m%device_name%[37;0m@[38;2;117;223;255m%USERNAME%[0m
-ECHO.[50C[37;0m--------------------[0m
-ECHO.[50C[38;2;109;253;118mOS[37;1m: %os_name:  =%[0m
-ECHO.[50C[38;2;109;253;118mVer[37;1m: %os_version:  =%[0m
-ECHO.[50C[38;2;109;253;118mGame Info[37;1m: %game_info%[0m
-ECHO.[50C[38;2;109;253;118mSystem Type[37;1m: %system_type:  =%[0m
-ECHO.[50C[38;2;109;253;118mSystem Model[37;1m: %system_model:  =%[0m
-ECHO.[50C[38;2;109;253;118mSystem Manufacturer[37;1m: %system_manufacturer:  =%[0m
-ECHO.[50C[38;2;109;253;118mCommand Memory[37;1m: %cmd_memory% K[0m
-ECHO.[50C[38;2;109;253;118mDevice Memory[37;1m: %available_memory:  =%[0m available of [37;1m%memory:  =%[0m
+ECHO(%arg% | FINDSTR /I /C:"/H">NUL && (ECHO.[s[16A[50C[38;2;76;190;224mDESKTOP-PC[37;0m@[38;2;117;223;255mUser[0m) || ECHO.[s[16A[50C[38;2;76;190;224m%device_name%[37;0m@[38;2;117;223;255m%USERNAME%[0m
+ECHO.[50C[37;0m%BOBFETCH_LINES%[0m
+IF DEFINED os_name ECHO.[50C[38;2;109;253;118mOS[37;1m: %os_name:  =% %system_type:  =%[0m
+IF DEFINED os_version ECHO.[50C[38;2;109;253;118mVer[37;1m: %os_version:  =%[0m
+IF DEFINED vercode ECHO.[50C[38;2;109;253;118mGame[37;1m: %VERTYPE%-%VERCODE%[0m
+IF DEFINED system_model ECHO.[50C[38;2;109;253;118mSystem Model[37;1m: %system_modelmanuf:  =, %[0m
+IF DEFINED cpu_name[1] (
+	SETLOCAL ENABLEDELAYEDEXPANSION
+	FOR /L %%A IN (1,1,%CNT_cpu%) DO (
+		ECHO.[50C[38;2;109;253;118mCPU-%%A[37;1m: !cpu_name[%%A]:  =![0m ^(%cpu_proc% Processes^)
+	)
+	ENDLOCAL
+)
+IF DEFINED gpu_name[1] (
+	SETLOCAL ENABLEDELAYEDEXPANSION
+	FOR /L %%A IN (1,1,%CNT_gpu%) DO (
+		ECHO.[50C[38;2;109;253;118mGPU-%%A[37;1m: !gpu_name[%%A]:  =![0m
+	)
+	ENDLOCAL
+)
+IF DEFINED WT_SESSION ECHO.[50C[38;2;109;253;118mWT Session[37;1m: %WT_SESSION%[0m
+IF DEFINED cmd_memory ECHO.[50C[38;2;109;253;118mCommand Memory[37;1m: %cmd_memory% K[0m
+IF DEFINED available_memory ECHO.[50C[38;2;109;253;118mDevice Memory[37;1m: %available_memory:  =%[0m available of [37;1m%total_memory:  =%[0m
 ECHO.
-ECHO(%arg% | FINDSTR /I /C:"/C">NUL
-IF ERRORLEVEL 1 (
-	ECHO.[50C[30m███[31m███[32m███[33m███[34m███[35m███[36m███[37m███[0m
-	ECHO.[50C[30;1m███[31;1m███[32;1m███[33;1m███[34;1m███[35;1m███[36;1m███[37;1m███[0m
-) ELSE (
+ECHO(%arg% | FINDSTR /I /C:"/C">NUL && (
 	ECHO.[50C[40m   [41m   [42m   [43m   [44m   [45m   [46m   [47m   [0m
 	ECHO.[50C[39m   [0m[41;1m   [42;1m   [43;1m   [44;1m   [45;1m   [46;1m   [47;1m   [0m
+) || (
+	ECHO.[50C[30m███[31m███[32m███[33m███[34m███[35m███[36m███[37m███[0m
+	ECHO.[50C[30;1m███[31;1m███[32;1m███[33;1m███[34;1m███[35;1m███[36;1m███[37;1m███[0m
 )
 ECHO.[u
 ECHO ON
 @EXIT /B 0
 
 :?
-ECHO.bobfetch /argument
-ECHO.Use this command to get information about the game and your device.
+ECHO.Use bobfetch to get information about the game and your device.
 ECHO.
 ECHO.You can use the following switches after the command:
-ECHO./?       Show this help menu.
-ECHO./H       Hide username and hostname information.
-ECHO./C       Convert foreground test colors to background test colors.
+ECHO.  /?     Show this help menu.
+ECHO.  /H     Hide username and hostname information.
+ECHO.  /C     Convert foreground test colors to background test colors.
+ECHO.  /D     Don't get system information. This allows you to edit the
+ECHO.         information using the set command, more is explained below.
+ECHO.
+ECHO.Before using the /D switch, you can edit the following variables:
+ECHO.  os_name, os_version, system_type, system_model, system_manufacturer,
+ECHO.  cpu_name[1], cpu_proc, gpu_name[1], cmd_memory, available_memory,
+ECHO.  device_name, total_memory
+ECHO.Example: set system_type=x32-based PC
 ECHO ON
 @EXIT /B 0
