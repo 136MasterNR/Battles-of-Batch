@@ -121,10 +121,10 @@ SET "ENEMY.LVL.%2=%3"
 SET "EN.%2.LINE.1=    W  W     "
 SET "EN.%2.LINE.2=   (O)(O)    "
 SET "EN.%2.LINE.3=     ||      "
-SET "EN.%2.LINE.4=     | \     "
-SET "EN.%2.LINE.5=     |  `.   "
-SET "EN.%2.LINE.6=    (.-.__)  "
-SET "EN.%2.LINE.7=     `-'     "
+SET "EN.%2.LINE.4=    / |      "
+SET "EN.%2.LINE.5=  .'  |      "
+SET "EN.%2.LINE.6= (__.-.)     "
+SET "EN.%2.LINE.7=    '-'      "
 EXIT /B 0
 
 :SKELETON <Skeleton>

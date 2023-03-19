@@ -37,7 +37,7 @@ ECHO(%ARG% | FINDSTR /C:"/?">NUL && (
 	ECHO.
 	ECHO.Examples:
 	ECHO.  script save 1 PLAYER.MONEY %%PLAYER.MONEY%% +150  -^>  Adds +150 money on your player.
-	ECHO.  script save 1 PLAYER.XP 1000                 -^>  Sets your player XP to 1000.
+	ECHO.  script save 1 PLAYER.XP 1000                    -^>  Sets your player XP to 1000.
 	ECHO.  script items REPLACE-MAT Branch 1 WEAPONS       -^>  Upgrade your Branch once. Weapon must be present in the player
 	ECHO.                                                      data.
 	ECHO.  script items REPLACE-MAT Bomb 2 ITEMS           -^>  Increase the amount of Bombs by 2. Item must be present in the
