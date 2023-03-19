@@ -1,6 +1,6 @@
 ::Created by 136MasterNR - Read the "copyright.txt" file for more info.
 ::(Use "NotePadPP" or anything other than "Notepad" to view better this file)
-:: Languages used:    99.4% Batch    0.6% VBScript
+:: Languages used:    99.8% Batch    0.2% VBScript
 ::______ ______ ______ ______ ______ ______ ______ ______ ______
 ::_____//_____//_____//_____//_____//_____//_____//_____//______\\
 ::    _____        __           _____ _             _ _         | |
@@ -29,6 +29,7 @@
 @PROMPT !^>
 @VERIFY OFF
 @ECHO OFF
+
 ECHO.[?25l Preparing ...
 FOR /F "TOKENS=4-5 DELIMS= " %%I IN ('VER') DO SET WINVER=%%I
 IF NOT "=%WINVER:~0,3%" == "=10." (
@@ -37,35 +38,41 @@ IF NOT "=%WINVER:~0,3%" == "=10." (
 	PAUSE>NUL
 	EXIT
 )
+
 :: Check if logs folder exist,
 IF NOT EXIST ".\data\logs" MD ".\data\logs"
 ::  start the logger and check if accessible,
-2>>".\data\logs\errors.txt" ( SET "STARTED=1"&CALL :STARTUP-COMPLETE )
+2>".\data\logs\errors.txt" ( SET "STARTED=1"&CALL :STARTUP-COMPLETE )
 ::   if not accessible then exit, else below command will be skipped.
 IF DEFINED RUNNING (
-	CALL :ERROR ERRLINE IDUNKNOWN    0
+	::If it enters this statement then throw an error,
+	::this usally means that the game's function has ended.
+	CALL :ERROR ERRLINE IDUNEXPECTED_CRASH    0
 	EXIT 1
 ) ELSE @IF /I NOT DEFINED STARTED EXIT 1
+
 :STARTUP-COMPLETE
 SET RUNNING=TRUE
 IF DEFINED WT_SESSION (
-		CLS
-		ECHO !^!! WARNING !^!!
-		ECHO.Windows Terminal does not support the essential display
-		ECHO.features specialized for the MS Command Line.
-		ECHO.
-		ECHO.Due to this, you will experience various unexpected
-		ECHO.display issues while playing the game.
-		ECHO.
-		ECHO.Windows Terminal has other critical issues too, such as
-		ECHO.corrupting child tasks, causing infinite error messages,
-		ECHO.and such other issues.
-		ECHO.
-		ECHO.Press any key to ignore this warning or launch the game
-		ECHO.in Command Line.
-		PAUSE>NUL
-		CLS
+	CLS
+	ECHO !^!! WARNING !^!!
+	ECHO.Windows Terminal does not support the essential display
+	ECHO.features specialized for the MS Command Line.
+	ECHO.
+	ECHO.Due to this, you will experience various unexpected
+	ECHO.display issues while playing the game.
+	ECHO.
+	ECHO.Windows Terminal has other critical issues too, such as
+	ECHO.corrupting child tasks, causing infinite error messages,
+	ECHO.and such other issues.
+	ECHO.
+	ECHO.Press any key to ignore this warning or launch the game
+	ECHO.in Command Line.
+	PAUSE>NUL
+	CLS
 )
+
+:: Check if it can access files inside the current directory, such as itself.
 IF NOT EXIST "%~n0%~x0" (
 	CLS
 	ECHO.ERR : Inaccessible Directory.
@@ -80,6 +87,9 @@ IF NOT EXIST "%~n0%~x0" (
 	ECHO.If none of the above helped, contact us.
 	PAUSE>NUL
 	EXIT /B
+
+:: Check if the game can reach the directory.
+:: This can be a problem if the directory contains characters that batch doesn't understand.
 ) ELSE IF NOT EXIST "%CD%" (
 	CLS
 	ECHO.ERR : Unreachable Directory.
@@ -308,6 +318,7 @@ IF NOT EXIST "%DATA_SAVES%" MD "%DATA_SAVES%"
 IF NOT EXIST "%DATA_SETTINGS%" MD "%DATA_SETTINGS%"
 IF NOT EXIST "%DATA_SAVES.INV%" MD "%DATA_SAVES.INV%"
 
+:: Get the supported bit units.
 REG Query "HKLM\Hardware\Description\System\CentralProcessor\0" | FIND /i "x86" > NUL && SET OSBIT=32 || SET OSBIT=64
 IF NOT EXIST "%MAIN_GAME%\32.dll" (
 	IF %OSBIT%==32 (
@@ -325,6 +336,7 @@ IF NOT EXIST "%MAIN_GAME%\32.dll" (
 	ECHO.[IGNORE]>"%MAIN_GAME%\32.dll"
 )
 
+:: Agree to the license.
 IF NOT EXIST "%MAIN_GAME%\LICENSEAGREEMENT.dll" IF EXIST "%LICENSE%" (
 	IF EXIST "%LICENSE%" (
 		CLS
@@ -387,6 +399,8 @@ IF NOT EXIST "%DATA_SETTINGS%\settings.cmd" (
 	)>%SETTINGS.LOAD%
 )
 CALL %SETTINGS.LOAD%
+
+:: Detect any missing settings
 IF NOT DEFINED AUDIO.VALUE CALL :SETT_ERR
 IF NOT DEFINED VOLUME CALL :SETT_ERR
 IF NOT DEFINED SFX.VOLUME CALL :SETT_ERR
@@ -394,6 +408,7 @@ IF NOT DEFINED AUTOSAVE.VALUE CALL :SETT_ERR
 IF NOT DEFINED UPDATE.VALUE CALL :SETT_ERR
 IF NOT DEFINED SHORTCUTS.VALUE CALL :SETT_ERR
 IF NOT DEFINED SHOW.INTRO CALL :SETT_ERR
+
 REG QUERY "%REGIT_1%" > NUL
 IF ERRORLEVEL 1 SET REGID_C1=TRUE
 REG QUERY "%REGIT_2%" > NUL
@@ -458,6 +473,7 @@ CALL "%ITEMS.LOADER%" REGISTER
 CALL "%ITEMS.LOADER%" LIST
 CALL "%ITEMS.LOADER%" LIST_EQ
 CALL "%ITEMS.LOADER%" WEAPONS
+
 SET /A "SELECTED=%PLAYER.MAP.LEVEL%"
 IF %SELECTED% GTR 13 SET SELECTED=1
 CALL "%DATA_SCRIPTS%\mapnames.cmd"
@@ -487,6 +503,7 @@ TITLE %TITLE%Menu
 CALL "%PLAYERDATA.LOAD%"
 CALL "%SYS_LVL%"
 CALL "%UI.MONEY%"
+
 IF %PLAYER.LVL% LSS 60 ( SET "CRTLVL=%PLAYER.LVL%" ) ELSE (SET "CRTLVL=%PLAYER.LVL% ^(MAX!^)")
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET "STR=%RGB.GREEN%Money[0m: [1m%PLAYER.MONEY.INTF% %RGB.GREEN%$[0m"
@@ -1570,13 +1587,14 @@ PAUSE>NUL
 GOTO S-MENU
 :SETTINGS
 CHCP 65001>NUL
-CLS
 TITLE %TITLE%Settings
+(
+CLS
 ECHO.[?25l[H[0m                                                [4m                    [0m                                                 
 ECHO. ╭──────────────────────╥──────────────╥───────[4m┬╯     SETTINGS     ╰┬[0m──────────────────────────────────────────────╮ 
 ECHO. │     %RGB%237;244;255mSetting Name[0m     ║    %RGB%237;244;255mStatus[0m    ║                                %RGB%237;244;255mDescription[0m                                │ 
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │     %RGB%187;203;250mMusic ^& SFX[0m      ║              ║    %RGB%194;255;255mTurn on or off the Music and the SFX. Use "audio" to toggle.           │ [88D[s
+ECHO. │     %RGB%187;203;250mMusic ^& SFX[0m      ║              ║    %RGB%194;255;255mTurn on or off the Music and the SFX. Use "audio" to toggle.[0m           │ [88D[s
 IF "%DENIED_AUDIO%"=="TRUE" ( ECHO.[u%RGB%195;1;1mΧ LOCKED[0m[8CYour device does not meet the requirements for this feature.) ELSE IF "%AUDIO.VALUE%"=="TRUE" ( ECHO.[u%RGB.TRUE%√ %AUDIO.VALUE%[0m ) ELSE ( ECHO.[u%RGB.FALSE%Χ %AUDIO.VALUE%[0m )
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
 ECHO. │     %RGB%187;203;250mMusic Volume[0m     ║              ║    %RGB%194;255;255mAdjust the volume. Use "volume (number)" %RGB.DGRAY%Example: "Volume 50"[0m          │ [86D%RGB%196;255;225m%VOLUME%[0m
@@ -1585,14 +1603,16 @@ ECHO. │      %RGB%187;203;250mSFX Volume[0m      ║              ║    %RGB
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
 ECHO. │      %RGB%187;203;250mAuto Save[0m       ║   %RGB%163;255;177m√ TRUE[0m     ║    %RGB%255;89;89mYet unusable.[0m                                                          │ 
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │       %RGB%187;203;250mUpdater[0m        ║              ║    %RGB%194;255;255mCheck for updates on startup. Use "updates" to toggle.                 │ [88D[s
+ECHO. │       %RGB%187;203;250mUpdater[0m        ║              ║    %RGB%194;255;255mCheck for updates on startup. Use "updates" to toggle.[0m                 │ [88D[s
 IF "%UPDATE.VALUE%"=="TRUE" ( ECHO.[u%RGB%163;255;177m√ %UPDATE.VALUE%[0m ) ELSE ( ECHO.[u%RGB%255;89;89mΧ %UPDATE.VALUE%[0m )
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │    %RGB%187;203;250mShortcut Keys[0m     ║              ║    %RGB%194;255;255mPress one key to navigate instead of typing. Use "keys" to toggle.     │ [88D[s
+ECHO. │    %RGB%187;203;250mShortcut Keys[0m     ║              ║    %RGB%194;255;255mPress one key to navigate instead of typing. Use "keys" to toggle.[0m     │ [88D[s
 IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[u%RGB%163;255;177m√ %SHORTCUTS.VALUE%[0m ) ELSE ( ECHO.[u%RGB%255;89;89mΧ %SHORTCUTS.VALUE%[0m )
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │      %RGB%187;203;250mShow Intro[0m      ║              ║    %RGB%194;255;255mWhether to show the HTS intro on startup. Use "intro" to toggle.       │ [88D[s
+ECHO. │      %RGB%187;203;250mShow Intro[0m      ║              ║    %RGB%194;255;255mWhether to show the HTS intro on startup. Use "intro" to toggle.[0m       │ [88D[s
 IF "%SHOW.INTRO%"=="TRUE" ( ECHO.[u%RGB%163;255;177m√ %SHOW.INTRO%[0m ) ELSE ( ECHO.[u%RGB%255;89;89mΧ %SHOW.INTRO%[0m )
+ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
+ECHO. │                      ║              ║                                                                           │ 
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
 ECHO. │                      ║              ║                                                                           │ 
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
@@ -1618,12 +1638,11 @@ ECHO. │                                                                       
 ECHO. │                                                                                                                 │ 
 ECHO. │                                                                                                                 │ 
 ECHO. │                                                                                                                 │ 
-ECHO. │                                                                                                                 │ 
-ECHO. │                                                                                                                 │ 
 ECHO. │ ► Type back to return to the menu.                                                                              │ 
 ECHO.╭┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴╮
 ECHO.│                                                                                                                   │
 ECHO.╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯[2A
+)
 SET UDERFINE=
 SET "INPUT_PART=options"
 SETLOCAL ENABLEDELAYEDEXPANSION
@@ -1812,48 +1831,12 @@ FOR /L %%I IN (1,1,%EN.MAX%) DO (
 CALL "%SCRIPTS_GAME%\hpbar_now.cmd"
 ::IF NOT EXIST LET.DEBUG CALL "%IG.CMDS%"
 ECHO.[47;3H^|                                                                                                                 ^|[47;3HYour HP: %PLAYER.HP.NOW%/%PLAYER.HP.FULL% ^(+%PLAYER.HEAL.AMOUNT% -%ENEMY.ATTACK.AMOUNT%^)[47;40HYou dealt %PLAYER.ATTACK.AMOUNT% DMG to %PLAYER.ATTACK.ENEMY% - CRIT: %ATK.CRIT%[47;90HEnemy Total HP: %ENEMY.HP.NOW.T%/%ENEMY.HP.FULL.T%
-:REFRESH-FADE
+CALL "%SCRIPTS_GAME%\fade.cmd"
 IF %ENEMY.HP.NOW.T% LEQ 0 (
-	IF %CNT.FADEOUT%==14 (
-		CALL "%SCRIPTS_POP%\win.cmd"
-		IF "%AUDIO.VALUE%"=="TRUE" IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
-		CALL "%MENU.AUDIO%"
-		GOTO MAP
-	)
-	HELP>NUL
-	HELP>NUL
-	IF %CNT.FADEOUT%==0 (
-		SET "FADE=[14D="
-	) ELSE IF %CNT.FADEOUT%==1 (
-		SET "FADE=[14D=="
-	) ELSE IF %CNT.FADEOUT%==2 (
-		SET "FADE=[14D==="
-	) ELSE IF %CNT.FADEOUT%==3 (
-		SET "FADE=[14D===="
-	) ELSE IF %CNT.FADEOUT%==4 (
-		SET "FADE=[14D====="
-	) ELSE IF %CNT.FADEOUT%==5 (
-		SET "FADE=[14D======"
-	) ELSE IF %CNT.FADEOUT%==6 (
-		SET "FADE=[14D======="
-	) ELSE IF %CNT.FADEOUT%==7 (
-		SET "FADE=[14D========"
-	) ELSE IF %CNT.FADEOUT%==8 (
-		SET "FADE=[14D========="
-	) ELSE IF %CNT.FADEOUT%==9 (
-		SET "FADE=[14D=========="
-	) ELSE IF %CNT.FADEOUT%==10 (
-		SET "FADE=[14D==========="
-	) ELSE IF %CNT.FADEOUT%==11 (
-		SET "FADE=[14D============"
-	) ELSE IF %CNT.FADEOUT%==12 (
-		SET "FADE=[14D============="
-	) ELSE IF %CNT.FADEOUT%==13 (
-		SET "FADE=[14D=============="
-	)
-	SET /A CNT.FADEOUT+=1
-	CALL "%SCRIPTS_GAME%\enemy_display.cmd"
-	GOTO REFRESH-FADE
+	CALL "%SCRIPTS_POP%\win.cmd"
+	IF "%AUDIO.VALUE%"=="TRUE" IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
+	CALL "%MENU.AUDIO%"
+	GOTO MAP
 )
 IF %PLAYER.HP.NOW% LEQ 0 (
 	CALL "%SCRIPTS_POP%\lose.cmd"

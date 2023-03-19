@@ -1,11 +1,11 @@
 @ECHO OFF
-SET arg=%*
-IF NOT DEFINED arg SET arg=0
+SET ARG=%*
+IF NOT DEFINED ARG SET ARG=0
 ECHO.
-ECHO(%arg% | FINDSTR /C:"/?">NUL && GOTO ?
+ECHO(%ARG% | FINDSTR /C:"/?">NUL && GOTO ?
 SET CNT_cpu=0
 SET CNT_gpu=0
-ECHO(%arg% | FINDSTR /I /C:"/D">NUL && (
+ECHO(%ARG% | FINDSTR /I /C:"/D">NUL && (
 	FOR /F "SKIP=1 DELIMS=" %%A IN ('set cpu_name[') DO (
 		SET /A CNT_gpu+=1
 	)
@@ -66,11 +66,11 @@ ECHO.  [38;2;17;45;66m.[38;2;58;151;221ml[38;2;58;151;221ml[38;2;58;151;221m
 ECHO.  [38;2;13;33;48m [38;2;57;149;219ml[38;2;48;125;184m:[38;2;35;91;134m,[38;2;23;59;86m.[38;2;10;26;38m [38;2;1;2;2m 
 ECHO.  [38;2;2;5;7m [38;2;6;16;23m [0m)
 
-ECHO(%arg% | FINDSTR /I /C:"/H">NUL && (ECHO.[s[16A[50C[38;2;76;190;224mDESKTOP-PC[37;0m@[38;2;117;223;255mUser[0m) || ECHO.[s[16A[50C[38;2;76;190;224m%device_name%[37;0m@[38;2;117;223;255m%USERNAME%[0m
+ECHO(%ARG% | FINDSTR /I /C:"/H">NUL && (ECHO.[s[16A[50C[38;2;76;190;224mDESKTOP-PC[37;0m@[38;2;117;223;255mUser[0m) || ECHO.[s[16A[50C[38;2;76;190;224m%device_name%[37;0m@[38;2;117;223;255m%USERNAME%[0m
 ECHO.[50C[37;0m%BOBFETCH_LINES%[0m
 IF DEFINED os_name ECHO.[50C[38;2;109;253;118mOS[37;1m: %os_name:  =% %system_type:  =%[0m
 IF DEFINED os_version ECHO.[50C[38;2;109;253;118mVer[37;1m: %os_version:  =%[0m
-IF DEFINED vercode ECHO.[50C[38;2;109;253;118mGame[37;1m: %VERTYPE%-%VERCODE%[0m
+IF DEFINED vercode ECHO.[50C[38;2;109;253;118mGame[37;1m: %TITLE%%VERTYPE%:%VERCODE%[0m
 IF DEFINED system_model ECHO.[50C[38;2;109;253;118mSystem Model[37;1m: %system_modelmanuf:  =, %[0m
 IF DEFINED cpu_name[1] (
 	SETLOCAL ENABLEDELAYEDEXPANSION
@@ -90,7 +90,7 @@ IF DEFINED WT_SESSION ECHO.[50C[38;2;109;253;118mWT Session[37;1m: %WT_SESSIO
 IF DEFINED cmd_memory ECHO.[50C[38;2;109;253;118mCommand Memory[37;1m: %cmd_memory% K[0m
 IF DEFINED available_memory ECHO.[50C[38;2;109;253;118mDevice Memory[37;1m: %available_memory:  =%[0m available of [37;1m%total_memory:  =%[0m
 ECHO.
-ECHO(%arg% | FINDSTR /I /C:"/C">NUL && (
+ECHO(%ARG% | FINDSTR /I /C:"/C">NUL && (
 	ECHO.[50C[40m   [41m   [42m   [43m   [44m   [45m   [46m   [47m   [0m
 	ECHO.[50C[39m   [0m[41;1m   [42;1m   [43;1m   [44;1m   [45;1m   [46;1m   [47;1m   [0m
 ) || (
@@ -105,11 +105,11 @@ ECHO ON
 ECHO.Use bobfetch to get information about the game and your device.
 ECHO.
 ECHO.You can use the following switches after the command:
-ECHO.  /?     Show this help menu.
-ECHO.  /H     Hide username and hostname information.
-ECHO.  /C     Convert foreground test colors to background test colors.
-ECHO.  /D     Don't get system information. This allows you to edit the
-ECHO.         information using the set command, more is explained below.
+ECHO.  /?    Show this help menu.
+ECHO.  /H    Hide username and hostname information.
+ECHO.  /C    Convert foreground test colors to background test colors.
+ECHO.  /D    Don't get system information. This allows you to edit the
+ECHO.        information using the set command, more is explained below.
 ECHO.
 ECHO.Before using the /D switch, you can edit the following variables:
 ECHO.  os_name, os_version, system_type, system_model, system_manufacturer,

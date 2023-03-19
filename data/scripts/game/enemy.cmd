@@ -67,13 +67,13 @@ SET /A TEMP.EN_HP=286*%3
 SET /A TEMP.EN_HP_RAND=11*%3
 SET "ENEMY.HP.AMOUNT.%2=%TEMP.EN_HP_RAND%,+%TEMP.EN_HP%"
 SET "ENEMY.LVL.%2=%3"
-SET "EN.%2.LINE.1=    wWw      "
-SET "EN.%2.LINE.2=    (O)_     "
-SET "EN.%2.LINE.3=    / __)    "
-SET "EN.%2.LINE.4=   / (       "
-SET "EN.%2.LINE.5=  (  _)      "
-SET "EN.%2.LINE.6=  / /        "
-SET "EN.%2.LINE.7=  )/         "
+SET "EN.%2.LINE.1=     wWw     "
+SET "EN.%2.LINE.2=    _(O)     "
+SET "EN.%2.LINE.3=   (__ \     "
+SET "EN.%2.LINE.4=      ) \    "
+SET "EN.%2.LINE.5=     (_  )   "
+SET "EN.%2.LINE.6=       \ \   "
+SET "EN.%2.LINE.7=        \(   "
 EXIT /B 0
 
 :S <Snek>
@@ -84,13 +84,13 @@ SET /A TEMP.EN_HP=385*%3
 SET /A TEMP.EN_HP_RAND=13*%3
 SET "ENEMY.HP.AMOUNT.%2=%TEMP.EN_HP_RAND%,+%TEMP.EN_HP%"
 SET "ENEMY.LVL.%2=%3"
-SET "EN.%2.LINE.1=    oo_      "
-SET "EN.%2.LINE.2=   /  _)-<   "
-SET "EN.%2.LINE.3=   \__ `.    "
-SET "EN.%2.LINE.4=      `. |   "
-SET "EN.%2.LINE.5=      _| |   "
-SET "EN.%2.LINE.6=   ,-'   |   "
-SET "EN.%2.LINE.7=  (_..--'    "
+SET "EN.%2.LINE.1=      _oo    "
+SET "EN.%2.LINE.2=   >-(_  \   "
+SET "EN.%2.LINE.3=    .' __/   "
+SET "EN.%2.LINE.4=   | .'      "
+SET "EN.%2.LINE.5=   | |       "
+SET "EN.%2.LINE.6=   |  `--.   "
+SET "EN.%2.LINE.7=    `--.._)  "
 EXIT /B 0
 
 :9 <Nine>
@@ -101,13 +101,13 @@ SET /A TEMP.EN_HP=590*%3
 SET /A TEMP.EN_HP_RAND=28*%3
 SET "ENEMY.HP.AMOUNT.%2=%TEMP.EN_HP_RAND%,+%TEMP.EN_HP%"
 SET "ENEMY.LVL.%2=%3"
-SET "EN.%2.LINE.1=    ,--.     "
-SET "EN.%2.LINE.2=   (O)(O)    "
-SET "EN.%2.LINE.3=   |(__)|    "
-SET "EN.%2.LINE.4=   |  __/    "
-SET "EN.%2.LINE.5=   | /|\     "
-SET "EN.%2.LINE.6=   \ `-.     "
-SET "EN.%2.LINE.7=    `--'     "
+SET "EN.%2.LINE.1=     ,--.    "
+SET "EN.%2.LINE.2=    (O)(O)   "
+SET "EN.%2.LINE.3=    |(__)|   "
+SET "EN.%2.LINE.4=    \__  |   "
+SET "EN.%2.LINE.5=     /|\ |   "
+SET "EN.%2.LINE.6=    .-' /    "
+SET "EN.%2.LINE.7=    '--'     "
 EXIT /B 0
 
 :L <Lose>
