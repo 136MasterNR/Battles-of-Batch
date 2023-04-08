@@ -6,11 +6,11 @@ ECHO(%ARG% | FINDSTR /C:"/?">NUL && GOTO ?
 SET CNT_cpu=0
 SET CNT_gpu=0
 ECHO(%ARG% | FINDSTR /I /C:"/D">NUL && (
-	FOR /F "SKIP=1 DELIMS=" %%A IN ('set cpu_name[') DO (
-		SET /A CNT_gpu+=1
-	)
-	FOR /F "SKIP=1 DELIMS=" %%A IN ('wmic cpu get name ^| findstr /v "^$"') DO (
+	FOR /F "DELIMS=" %%A IN ('set cpu_name[') DO (
 		SET /A CNT_cpu+=1
+	)
+	FOR /F "DELIMS=" %%A IN ('set gpu_name[') DO (
+		SET /A CNT_gpu+=1
 	)
 ) || (
 ECHO.Getting System Information ...
@@ -103,9 +103,10 @@ ECHO ON
 
 :?
 ECHO.Use bobfetch to get information about the game and your device.
+ECHO.  bobfetch [/switch]
 ECHO.
 ECHO.You can use the following switches after the command:
-ECHO.  /?    Show this help menu.
+ECHO.  /^?    Show this help menu.
 ECHO.  /H    Hide username and hostname information.
 ECHO.  /C    Convert foreground test colors to background test colors.
 ECHO.  /D    Don't get system information. This allows you to edit the

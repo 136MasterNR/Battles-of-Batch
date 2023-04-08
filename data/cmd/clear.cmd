@@ -1,5 +1,6 @@
 @ECHO OFF
 TITLE %TITLE%Command Line Enviroment
+MODE CON:COLS=126 LINES=9216
 CLS
 COLOR 07
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mBattles of Batch [37m[Version %VERCODE% / %VERTYPE% %VERS%]

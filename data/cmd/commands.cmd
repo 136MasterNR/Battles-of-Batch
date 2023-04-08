@@ -39,6 +39,10 @@
 @ECHO.%1 - [38;2;65;253;254mLoad any script from the game's data files and give it parameters. [38;2;238;75;43m^(!^) Dangerous (!)[0m (CMD)
 @EXIT /B 0
 
-:scroll.cmd
-@ECHO.%1 - [38;2;65;253;254mClears, expands the window and enables scrolling.[0m (CMD)
+:lookup.cmd
+@ECHO.%1 - [38;2;65;253;254mGet info of a host's IP.[0m (CMD)
+@EXIT /B 0
+
+:weather.cmd
+@ECHO.%1 - [38;2;65;253;254mShow the weather report.[0m (CMD)
 @EXIT /B 0

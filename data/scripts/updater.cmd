@@ -13,7 +13,6 @@ CURL -S "https://136masternr.github.io/HTS-Studios/get-update/battlesofbatch.bat
 )||(
 	FOR %%R IN ("%UPDATE.LOC%") DO IF %%~zR LSS 1 ( ECHO.UPDATER: Failed to check for updates because the information was empty.
 	) ELSE ( ECHO.UPDATER: Failed to check for updates because the information was not recognized. )
-	SET OUTOFDATE=UNRE
 	IF EXIST "%UPDATE.LOC%" DEL /Q "%UPDATE.LOC%"
 	EXIT /B 0
 )
@@ -38,10 +37,9 @@ IF ERRORLEVEL 25 (
 	IF EXIST "%tmp%\%~nx0" DEL /F /Q "%tmp%\%~nx0"
 	ECHO F|XCOPY /S /Q /Y "%~0" "%tmp%\%~nx0"
 	IF %RESET.DATA%==TRUE ( 
-		ECHO.
-		ECHO.
+		CLS
 		ECHO.WARNING!
-		ECHO.Your saves and settings on this game will be erased after this update.
+		ECHO.Your saves and settings will not be kept after this update.
 		ECHO.This might be so because there is a major update on the saving system.
 		ECHO.Do you still wish to continue?
 		ECHO.

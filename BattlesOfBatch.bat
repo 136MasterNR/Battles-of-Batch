@@ -23,6 +23,7 @@
 :: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ::
 ::                                                                                                                                     ::
 :LAUNCHER
+@SET OCD=%CD%
 @PUSHD "%~dp0"
 @TITLE Battles of Batch
 @CHCP 65001 >NUL
@@ -46,7 +47,7 @@ IF NOT EXIST ".\data\logs" MD ".\data\logs"
 ::   if not accessible then exit, else below command will be skipped.
 IF DEFINED RUNNING (
 	::If it enters this statement then throw an error,
-	::this usally means that the game's function has ended.
+	::this usually means that the game's main function has crashed.
 	CALL :ERROR ERRLINE IDUNEXPECTED_CRASH    0
 	EXIT 1
 ) ELSE @IF /I NOT DEFINED STARTED EXIT 1
@@ -71,8 +72,7 @@ IF DEFINED WT_SESSION (
 	PAUSE>NUL
 	CLS
 )
-
-:: Check if it can access files inside the current directory, such as itself.
+:: Check if directory files are accessible, such as itself.
 IF NOT EXIST "%~n0%~x0" (
 	CLS
 	ECHO.ERR : Inaccessible Directory.
@@ -83,10 +83,8 @@ IF NOT EXIST "%~n0%~x0" (
 	ECHO.3. Don't launch the batch file directly from a search bar or a run-in.
 	ECHO.4. If you are using a shortcut, make sure you added the correct directory.
 	ECHO.5. Do not run with administrator/elevated permissions.
-	ECHO.
-	ECHO.If none of the above helped, contact us.
 	PAUSE>NUL
-	EXIT /B
+	EXIT
 
 :: Check if the game can reach the directory.
 :: This can be a problem if the directory contains characters that batch doesn't understand.
@@ -98,8 +96,16 @@ IF NOT EXIST "%~n0%~x0" (
 	ECHO.1. Move the game ^(the whole folder^) to a different location.
 	ECHO.2. Make sure the directory's URL name includes ONLY latin characters.
 	ECHO.3. Do not move it to shared folders or onedrive.
+	PAUSE>NUL&EXIT
+)
+:: Checks if the directory was altered, this some times happens when launched in a zip file.
+IF NOT "%CD%"=="%OCD%" (
+	CLS
+	ECHO.ERR : Altered Directory.
 	ECHO.
-	ECHO.If none of the above helped, contact us.
+	ECHO.Try the following:
+	ECHO.1. Make sure to extract the game from the zip file.
+	ECHO.2. Do not launch from shared folders, such as onedrive.
 	PAUSE>NUL&EXIT
 )
 :RESTART
@@ -325,10 +331,10 @@ IF NOT EXIST "%MAIN_GAME%\32.dll" (
 		CLS
 		ECHO WARNING!
 		ECHO.Your device does not support 64-bit units.
-		ECHO.We higly recommend you to upgrade!
+		ECHO.It's highly recommended to upgrade!
 		ECHO.
 		ECHO.Due to this, you may be dealing with various unexpected
-		ECHO.issues while using this playing.
+		ECHO.issues while playing this.
 		ECHO.
 		ECHO.Press any key to continue or just exit.
 		PAUSE>NUL
@@ -707,12 +713,12 @@ ENDLOCAL
 GOTO DEV
 :TERMINAL
 PUSHD "%CD%\DATA\cmd"
+MODE CON:COLS=126 LINES=9216
 CLS
 TITLE %TITLE%Command Line Enviroment
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mBattles of Batch [37m[Version %VERCODE% / %VERTYPE% %VERS%]
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mMicrosoft Windows [37m[Version %WINVER:]=%]
 ECHO.[38;2;235;64;52m^(^!^) [38;2;245;108;98mRun "EXIT" to return.[3H
-SETX /M _DEFAULT_PDT_TERMINATE 1
 CMD /K "PROMPT $E[38;2;132;217;52mbob@terminal$E[0m$E[1m:$E[38;2;113;155;198m%%cd:~-9,9%%[0m$$$S"
 PUSHD "..\.."
 MODE CON:COLS=%COLS% LINES=%LINES%
