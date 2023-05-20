@@ -3,21 +3,21 @@ SET ARG=%*
 IF NOT DEFINED ARG SET ARG=0
 IF "%ARG%"=="0" GOTO ?
 ECHO(%ARG% | FINDSTR /C:"/?">NUL && GOTO ?
-ECHO(%ARG% | FINDSTR /I /C:"/L">NUL && GOTO L
-ECHO(%ARG% | FINDSTR /I /C:"/T">NUL && GOTO T
-
 IF NOT EXIST "..\scripts" (
 	ECHO.Error: Directory not found
 	EXIT /B 1
 )
+
+ECHO(%ARG% | FINDSTR /I /C:"/T">NUL && GOTO T
+ECHO(%ARG% | FINDSTR /I /C:"/L">NUL && GOTO L
 
 SET P=
 FOR /F "TOKENS=1,* DELIMS= " %%A IN ("%*") DO SET ARGS=%%B
 FOR /R "..\scripts" %%a IN (*) DO IF "%%~nxa"=="%1.cmd" SET P=%%~dpnxa
 
 IF NOT DEFINED P (
-	@ECHO.Script not found.
-	@EXIT /B 1
+	ECHO.Script not found.
+	EXIT /B 1
 )
 
 CALL "%P%" %ARGS%
@@ -26,8 +26,8 @@ ECHO ON
 
 :?
 ECHO.
-ECHO.script [file]
-ECHO.Runs a script located in the main scripts directory with parameters.
+ECHO.Runs a script located in the main scripts directory, with parameters.
+ECHO.  script [file]
 ECHO.
 ECHO.You can use the following switches after the command:
 ECHO.  /?          Show more information about this command.

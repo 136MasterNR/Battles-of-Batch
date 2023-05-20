@@ -38,10 +38,11 @@ FOR /F "SKIP=1 DELIMS=" %%A IN ('wmic cpu get name ^| findstr /v "^$"') DO (
 )
 FOR /F "DELIMS=" %%A IN ('tasklist /nh ^| find /c /v ""') DO SET cpu_proc=%%A
 FOR /F %%I IN ('hostname') DO SET "device_name=%%I"
+SET USER_NAME=USERNAME
 )
 
 (SET BOBFETCH_LINES=
-SET ALT=%device_name%@%USERNAME%)
+SET ALT=%device_name%@%USER_NAME%)
 :ALT
 (SET BOBFETCH_LINES=%BOBFETCH_LINES%-
 SET ALT=%ALT:~0,-1%)
@@ -66,8 +67,13 @@ ECHO.  [38;2;17;45;66m.[38;2;58;151;221ml[38;2;58;151;221ml[38;2;58;151;221m
 ECHO.  [38;2;13;33;48m [38;2;57;149;219ml[38;2;48;125;184m:[38;2;35;91;134m,[38;2;23;59;86m.[38;2;10;26;38m [38;2;1;2;2m 
 ECHO.  [38;2;2;5;7m [38;2;6;16;23m [0m)
 
-ECHO(%ARG% | FINDSTR /I /C:"/H">NUL && (ECHO.[s[16A[50C[38;2;76;190;224mDESKTOP-PC[37;0m@[38;2;117;223;255mUser[0m) || ECHO.[s[16A[50C[38;2;76;190;224m%device_name%[37;0m@[38;2;117;223;255m%USERNAME%[0m
-ECHO.[50C[37;0m%BOBFETCH_LINES%[0m
+ECHO(%ARG% | FINDSTR /I /C:"/H">NUL && (
+	ECHO.[s[16A[50C[38;2;76;190;224mDESKTOP-PC[37;0m@[38;2;117;223;255mUser[0m
+	ECHO.[50C[37;0m---------------[0m
+) || (
+	ECHO.[s[16A[50C[38;2;76;190;224m%device_name%[37;0m@[38;2;117;223;255m%USERNAME%[0m
+	ECHO.[50C[37;0m%BOBFETCH_LINES%[0m
+)
 IF DEFINED os_name ECHO.[50C[38;2;109;253;118mOS[37;1m: %os_name:  =% %system_type:  =%[0m
 IF DEFINED os_version ECHO.[50C[38;2;109;253;118mVer[37;1m: %os_version:  =%[0m
 IF DEFINED vercode ECHO.[50C[38;2;109;253;118mGame[37;1m: %TITLE%%VERTYPE%:%VERCODE%[0m
@@ -115,7 +121,7 @@ ECHO.
 ECHO.Before using the /D switch, you can edit the following variables:
 ECHO.  os_name, os_version, system_type, system_model, system_manufacturer,
 ECHO.  cpu_name[1], cpu_proc, gpu_name[1], cmd_memory, available_memory,
-ECHO.  device_name, total_memory
+ECHO.  device_name, user_name, total_memory
 ECHO.Example: set system_type=x32-based PC
 ECHO ON
 @EXIT /B 0

@@ -1,16 +1,16 @@
 ::Created by 136MasterNR - Read the "copyright.txt" file for more info.
 ::(Use "NotePadPP" or anything other than "Notepad" to view better this file)
 :: Languages used:    99.8% Batch    0.2% VBScript
-::______ ______ ______ ______ ______ ______ ______ ______ ______
-::_____//_____//_____//_____//_____//_____//_____//_____//______\\
-::    _____        __           _____ _             _ _         | |
+:: ______ ______ ______ ______ ______ ______ ______ ______ _____ __
+::/_____//_____//_____//_____//_____//_____//_____//_____//_____\\_\
+::    _____        __           _____ _             _ _         |/ / 
 ::   |  __ \      / _|         / ____| |           | |_)        | |
 ::   | |__) |__ _| |_ _   _   | (___ | |_ _   _  __| |_  ___    | |
-::   |  _  // _` |  _| | | |   \___ \| __| | | |/ _` | |/ _ \   | |
-::   | | \ \ (_| | | | |_| |   ____) | |_| |_| | (_| | | (_) |  | |
+::   |  _  // _` |  _| | | |   \___ \| __| | | |/ _` | |/ _ \   | | 
+::   | | \ \ (_| | | | |_| |   ____) | |_| |_| | (_| | | (_) |  | | 
 ::   |_|  \_\__,_|_|  \__,_|  |_____/ \__|\__,_|\__,_|_|\___/   | |
-::______ ______ ______ ______ ______ ______ ______ ______ ______| |
-::_____//_____//_____//_____//_____//_____//_____//_____//______//
+:: ______ ______ ______ ______ ______ ______ ______ ______ _____|\_\
+::/_____//_____//_____//_____//_____//_____//_____//_____//_____//_/
 ::
 ::                                                           !!!! WARNING !!!!                                                         ::
 :: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ::
@@ -78,9 +78,9 @@ IF NOT EXIST "%~n0%~x0" (
 	ECHO.ERR : Inaccessible Directory.
 	ECHO.
 	ECHO.Try the following:
-	ECHO.1. Don't run the batch file within a zip file or any winrar format.
+	ECHO.1. Do not run the batch file within a zip file or any winrar format.
 	ECHO.2. Make sure that the batch file has permissions to Read/Write in this directory.
-	ECHO.3. Don't launch the batch file directly from a search bar or a run-in.
+	ECHO.3. Do not launch the batch file directly from a search bar or a run-in.
 	ECHO.4. If you are using a shortcut, make sure you added the correct directory.
 	ECHO.5. Do not run with administrator/elevated permissions.
 	PAUSE>NUL
@@ -98,7 +98,8 @@ IF NOT EXIST "%~n0%~x0" (
 	ECHO.3. Do not move it to shared folders or onedrive.
 	PAUSE>NUL&EXIT
 )
-:: Checks if the directory was altered, this some times happens when launched in a zip file.
+
+:: Checks if the directory was altered, this mostly happens when launched in a zip file.
 IF NOT "%CD%"=="%OCD%" (
 	CLS
 	ECHO.ERR : Altered Directory.
@@ -132,16 +133,7 @@ SET "WAIT=%DATA_SCRIPTS%\wait.vbs"
 SET "TITLE=Battles of Batch - "
 SET "COPYRIGHT=copyright.txt"
 SET "LICENSE=license.txt"
-SET "PLAYERDATA.MONEY=%DATA_SCRIPTS%\playerdata\money.cmd"
-SET "PLAYERDATA.XP=%DATA_SCRIPTS%\playerdata\xp.cmd"
-SET "PLAYERDATA.LVL=%DATA_SCRIPTS%\playerdata\lvl.cmd"
-SET "PLAYERDATA.LOAD=%DATA_SAVES%\PLAYERDATA.cmd"
-SET "DATA_SAVES.INV=%DATA_SAVES%\inv"
-SET "PLAYERSKILLS.LOAD=%DATA_SAVES%\SKILLS.cmd"
-SET "SYS_LVL=%DATA_SCRIPTS%\playerdata\sys_lvl"
 SET "UPDATER=%DATA_SCRIPTS%\updater.cmd"
-SET "SAVE=%DATA_SCRIPTS%\save.cmd"
-SET "ITEMS.LOADER=%DATA_SCRIPTS%\playerdata\items.cmd"
 SET "ENEMY=%DATA_SCRIPTS%\game\enemy.cmd"
 SET "EVENT=%DATA_SCRIPTS%\game\event.cmd"
 SET "DEBUG.GAMELOADER=%DATA_SCRIPTS%\debug"
@@ -150,6 +142,16 @@ SET "SCRIPTS_POP=%DATA_SCRIPTS%\pop"
 SET "DEV_ERR=%SCRIPTS_POP%\deverr.cmd"
 SET "CHOICE=CALL ^"%DATA_SCRIPTS%\choice.bat^""
 SET "INPUT_PART=nul"
+::VAR-Player Data
+SET "PLAYERDATA.MONEY=%DATA_SCRIPTS%\playerdata\money.cmd"
+SET "PLAYERDATA.XP=%DATA_SCRIPTS%\playerdata\xp.cmd"
+SET "PLAYERDATA.LVL=%DATA_SCRIPTS%\playerdata\lvl.cmd"
+SET "PLAYERDATA.LOAD=%DATA_SAVES%\PLAYERDATA.cmd"
+SET "DATA_SAVES.INV=%DATA_SAVES%\inv"
+SET "PLAYERSKILLS.LOAD=%DATA_SAVES%\SKILLS.cmd"
+SET "SYS_LVL=%DATA_SCRIPTS%\playerdata\sys_lvl"
+SET "SAVE=%DATA_SCRIPTS%\save.cmd"
+SET "ITEMS.LOADER=%DATA_SCRIPTS%\playerdata\items.cmd"
 ::VAR:-Settings
 SET "SETTINGS.LOAD=%DATA_SETTINGS%\settings.cmd"
 SET "SETTING=%DATA_SCRIPTS%\settings.cmd"
@@ -334,7 +336,7 @@ IF NOT EXIST "%MAIN_GAME%\32.dll" (
 		ECHO.It's highly recommended to upgrade!
 		ECHO.
 		ECHO.Due to this, you may be dealing with various unexpected
-		ECHO.issues while playing this.
+		ECHO.issues while playing this game.
 		ECHO.
 		ECHO.Press any key to continue or just exit.
 		PAUSE>NUL
@@ -652,10 +654,7 @@ ECHO.[0m[1A^| [0;36mType[0m:                                                
 GOTO MENU-INPUT
 :CHOICE-INPUTS
 SET /P "=[34;61H "<NUL
-SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
-ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
-ENDLOCAL
 IF EXIST LET.DEBUG ECHO.%CHOICE.INPUT%   
 IF /I %CHOICE.INPUT%.==A. GOTO MAP
 IF /I %CHOICE.INPUT%.==E. GOTO CHARACTER
@@ -868,9 +867,7 @@ IF %WEAPONS.REG_CNT% GTR 14 ECHO.%UI.POS%%MORE_HIDDEN%
 ENDLOCAL
 SET /P "=[?25h[2;2H"<NUL
 :CHARACTER-RE
-SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
-ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
 IF %CHOICE.INPUT%.==. GOTO CHARACTER-RE
 IF /I %CHOICE.INPUT%.==R. (
 	MODE CON:COLS=%COLS% LINES=%LINES%
@@ -931,10 +928,7 @@ ECHO. Press CTRL X to clear your equipped items.                                
 TITLE %TITLE%Inventory [%INV_CHOICE%^|%INV_CHOICE_SLOT%]
 SET /A INV_CHOICE.UI=%INV_CHOICE%+2
 SET /P "=[%INV_CHOICE.UI%;2H>[1C"<NUL
-SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
-ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
-ENDLOCAL
 IF %CHOICE.INPUT%.==. GOTO INVENTORY
 IF /I %CHOICE.INPUT%==W IF NOT %INV_CHOICE% LEQ 1 (
 	ECHO.[%INV_CHOICE.UI%;2H [1A
@@ -972,10 +966,7 @@ SET /A INV_CHOICE_SLOT.UI=%ITEM.REG_CNT%+5
 SET /A INV_CHOICE_SLOT_MAX.UI=%ITEM.REG_CNT%+4+%ITEM.EQ_CNT%
 SET /A INV_CHOICE_SLOT.POS=%ITEM.REG_CNT%+4+%INV_CHOICE_SLOT%
 SET /P "=[%INV_CHOICE_SLOT.POS%;2H>[1C"<NUL
-SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
-ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
-ENDLOCAL
 IF %CHOICE.INPUT%.==. GOTO INVENTORY
 IF /I %CHOICE.INPUT%==W IF NOT %INV_CHOICE_SLOT.POS% LEQ %INV_CHOICE_SLOT.UI% (
 	ECHO.[%INV_CHOICE_SLOT.POS%;2H [1A
@@ -1054,9 +1045,7 @@ ECHO. Press CTRL X to clear your equipped items.                                
 :INV-CHOOSE_WEAPON-PRE
 SET /A W_INV_CHOICE.UI=%W_INV_CHOICE%+2
 SET /P "=[%W_INV_CHOICE.UI%;2H>[1C"<NUL
-SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
-ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
 IF %CHOICE.INPUT%.==. GOTO INVENTORY
 IF /I %CHOICE.INPUT%==W IF NOT %W_INV_CHOICE% LEQ 1 (
 	ECHO.[%W_INV_CHOICE.UI%;2H [1A
@@ -1213,10 +1202,7 @@ IF /I "%UDERFINE:~0,8%"=="CHAPTER " (
 GOTO MAP-INPUT 
 :MAP-CHOICE
 SET /P "=[44;44H"<NUL
-SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
-ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
-ENDLOCAL
 IF %CHOICE.INPUT%.==. GOTO PRE_LOAD
 IF /I %CHOICE.INPUT%==A GOTO PRE_LOAD
 IF /I %CHOICE.INPUT%==B GOTO S-MENU
@@ -1471,8 +1457,8 @@ IF %CRAFT.SEL%==3 (ECHO.[%SEL.Y%;37H '---------------'. [1B[20D              
 ) ELSE IF %CRAFT.SEL% GTR 4 (ECHO.[%SEL.Y%;37H '-----------------'[1B[20D                    [1B[20D                    [1B[19D------------------.
 ) ELSE (ECHO.[%SEL.Y%;37H '---------------'[1B[18D                  [1B[18D                  [1B[17D----------------.)
 SET /P "=[3A[13C[1m%CRAFT.UI.CENTER:_= %[u"<NUL
+ENDLOCAL
 %CHOICE%
-ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
 IF %CHOICE.INPUT%.==. GOTO CRAFT-SHOP-RE
 IF /I %CHOICE.INPUT%==E SET /A SHOP.TAB=1&&GOTO SHOP
 IF /I %CHOICE.INPUT%==Q GOTO MENU
@@ -1895,9 +1881,7 @@ IF !ENEMY.HP.NOW.%INPUTATK%! EQU 0 (
 ) ELSE ENDLOCAL
 :BATTLE-SEL_CHOICE
 CALL :BATTLE-DISPLAY_CHOICE
-SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
-ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
 IF %CHOICE.INPUT%.==. GOTO BATTLE-SEL_CHOICE
 IF /I %CHOICE.INPUT%==Q (
 	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
@@ -1963,9 +1947,7 @@ GOTO BATTLE-SEL_CHOICE
 COLOR 08
 :BATTLE-INVENTORY_RE
 CALL "%IG.CMDS%" INVENTORY
-SETLOCAL ENABLEDELAYEDEXPANSION
 %CHOICE%
-ENDLOCAL&SET CHOICE.INPUT=%ERRORLEVEL%
 IF %CHOICE.INPUT%.==. GOTO BATTLE-INVENTORY_END
 IF /I %CHOICE.INPUT%==S (
 	IF %INV.SEL% LSS %ITEM.EQ_CNT% (SET /A INV.SEL+=1) ELSE SET /A INV.SEL=0

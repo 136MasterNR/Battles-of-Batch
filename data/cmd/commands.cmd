@@ -46,3 +46,23 @@
 :weather.cmd
 @ECHO.%1 - [38;2;65;253;254mShow the weather report.[0m (CMD)
 @EXIT /B 0
+
+:rgb_regular_hsv.bat
+@ECHO.%1 - [38;2;65;253;254mRainbow, using a specific algorithm.[0m (BAT)
+@EXIT /B 0
+
+:open.cmd
+@ECHO.%1 - [38;2;65;253;254mSearch for a folder, and open it. Can take up to 1 string argument.[0m (BAT)
+@EXIT /B 0
+
+:dlc.cmd
+@ECHO.%1 - [38;2;65;253;254mDLC Manager, for development purposes.[0m (CMD)
+@EXIT /B 0
+
+:anime.cmd
+@ECHO.%1 - [38;2;65;253;254mA multi-framed colored animation made in ANSI.[0m (CMD)
+@EXIT /B 0
+
+:image.cmd
+@ECHO.%1 - [38;2;65;253;254mA colored image made in ANSI.[0m (CMD)
+@EXIT /B 0
