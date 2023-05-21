@@ -1,8 +1,10 @@
+REM : Special thanks to Grub4K for the inspiration. (https://gist.github.com/Grub4K/2d3f5875c488164b44454cbf37deae80)
+
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET "KEY="
-IF "%1."=="/WAIT." START "CHOICE_AUTO_SKIP" /MIN CMD /C TIMEOUT /T %2^&TASKKILL /IM xcopy.exe /F
+IF /I "%1."=="/T." START "CHOICE_AUTO_SKIP" /MIN CMD /C TIMEOUT /T %2^&TASKKILL /IM xcopy.exe /F
 FOR /F "DELIMS=" %%A IN ('XCOPY /W "!COMSPEC!" "!COMSPEC!" 2^>NUL') DO IF NOT DEFINED KEY SET "KEY=%%A^!"
-IF "%1."=="/WAIT." TASKKILL /FI "WINDOWTITLE eq CHOICE_AUTO_SKIP*" /IM cmd.exe 1>NUL
+IF /I "%1."=="/T." TASKKILL /FI "WINDOWTITLE eq CHOICE_AUTO_SKIP*" /IM cmd.exe 1>NUL
 IF !KEY:~-1!==^^ (
     SET "KEY=^"
 ) ELSE SET "KEY=!KEY:~-2,1!"

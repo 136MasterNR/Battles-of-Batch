@@ -717,7 +717,7 @@ CLS
 TITLE %TITLE%Command Line Enviroment
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mBattles of Batch [37m[Version %VERCODE% / %VERTYPE% %VERS%]
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mMicrosoft Windows [37m[Version %WINVER:]=%]
-ECHO.[38;2;235;64;52m^(^!^) [38;2;245;108;98mRun "EXIT" to return.[3H
+ECHO.[38;2;235;64;52m^(^!^) [38;2;245;108;98mRun "EXIT" to return.[0m[3H
 CMD /K "PROMPT $E[38;2;132;217;52mbob@terminal$E[0m$E[1m:$E[38;2;113;155;198m%%cd:~-9,9%%[0m$$$S"
 PUSHD "..\.."
 MODE CON:COLS=%COLS% LINES=%LINES%
