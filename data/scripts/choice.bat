@@ -11,8 +11,11 @@ FOR /F "DELIMS=" %%A IN ('XCOPY /W "!COMSPEC!" "!COMSPEC!" 2^>NUL ^|^| ECHO.TIME
 	IF NOT DEFINED KEY SET "KEY=%%A^!"
 )
 IF !KEY:~-1!==^^ (
-	::Escape caret
-    SET "KEY=CARET"
+	::Escape the escape character, "caret"
+	SET "KEY=CARET"
+) ELSE IF "!KEY:~-2!"=="&^!" (
+	::Escape the seperator character, "and"
+	SET "KEY=AND"
 ) ELSE IF "!KEY:~-8,7!."=="TIMEOUT." (
 	::If /T is used and times out, return it
 	SET KEY=TIMEOUT
@@ -23,12 +26,10 @@ IF !KEY:~-1!==^^ (
 
 IF /I "%1."=="/T." TASKKILL /FI "WINDOWTITLE eq CHOICE_AUTO_SKIP*" /IM cmd.exe 1>NUL
 ::Make key returns more understandable
-IF NOT DEFINED KEY SET KEY=UNK_
-IF "!KEY!."==" ." SET KEY=BLANK
+IF NOT DEFINED KEY SET KEY=BLANK
+IF "!KEY!."==" ." SET KEY=SPACE
 IF "!KEY!."=="	." SET KEY=TAB
 IF !KEY!.==). SET KEY=EXT_
-
-IF EXIST LET.DEBUG TITLE %KEY%
 
 ::Pass the key variable outside the current local enviroment
 ENDLOCAL&SET CHOICE.INPUT=%KEY%

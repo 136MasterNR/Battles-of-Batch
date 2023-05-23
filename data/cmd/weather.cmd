@@ -4,13 +4,8 @@ SET ARG=%*
 IF NOT DEFINED ARG SET ARG=0
 ECHO.
 ECHO(%ARG% | FINDSTR /C:"/?">NUL && GOTO ?
-ECHO(%ARG% | FINDSTR /C:"/reg:">NUL && (
+ECHO(%ARG% | FINDSTR /I /C:"/reg:">NUL && (
 	FOR /f "tokens=2delims=:" %%I IN ("%ARG%") DO (
-		SET REGION="%%I"
-	)
-)
-ECHO(%ARG% | FINDSTR /C:"/REG:">NUL && (
-	FOR /f "tokens=2delims=REG:" %%I IN ("%ARG%") DO (
 		SET REGION="%%I"
 	)
 )
