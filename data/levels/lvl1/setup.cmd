@@ -1,8 +1,8 @@
 IF NOT DEFINED VERCODE EXIT
 
 ::REWARDS - Start, End : In this example, it will randomize in the range of 38 to 60(<- 38+22)
-SET REWARD.MONEY=38,22
-SET REWARD.XP=45,12
+SET REWARD.MONEY=44,22
+SET REWARD.XP=30,15
 
 ::ENEMIES - Set a value between 1 - 8
 SET EN.MAX=3

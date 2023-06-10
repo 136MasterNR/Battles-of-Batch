@@ -106,7 +106,8 @@ IF NOT "%CD%"=="%OCD%" (
 	ECHO.
 	ECHO.Try the following:
 	ECHO.1. Make sure to extract the game from the zip file.
-	ECHO.2. Do not launch from shared folders, such as onedrive.
+	ECHO.2. Bad shortcut options, such as working directory.
+	ECHO.3. Do not launch from shared folders, such as onedrive.
 	PAUSE>NUL&EXIT
 )
 :RESTART
@@ -164,7 +165,7 @@ SET HTS_DIR_ERR=
 SET UDERFINE=
 SET RAINBOWMODE=
 ::VAR:-Player Stats
-SET PLAYER.XP=0
+SET PLAYER.XP=
 SET PLAYER.XP.REQ=45
 SET PLAYER.LVL=0
 SET PLAYER.MAP.LEVEL=1
@@ -184,11 +185,11 @@ SET "SHOP.BOMB=%DATA_SCRIPTS%\shop\bomb.cmd"
 ::VAR:-Skills
 SET "SKILL.UPGRADE=%DATA_SCRIPTS%\playerdata\upgrade.cmd"
 SET SKILL.ATK.MAXLVL=2
-SET SKILL.ATK.COST=460
+SET SKILL.ATK.COST=265
 SET SKILL.CRIT_RATE.MAXLVL=4
-SET SKILL.CRIT_RATE.COST=1250
+SET SKILL.CRIT_RATE.COST=825
 SET SKILL.HP.MAXLVL=5
-SET SKILL.HP.COST=8200
+SET SKILL.HP.COST=6150
 ::VAR:-Audio
 SET /A VOLUME.BATTLE=100*VOLUME/100*50
 SET /A VOLUME.BATTLE=%VOLUME%-%VOLUME.BATTLE%/100
@@ -242,26 +243,26 @@ SET INV_CHOICE=1
 SET INV_CHOICE_SLOT=1
 SET W_INV_CHOICE=1
 ::VAR:-Craft
-SET "CRAFT.MNGR=%DATA_SCRIPTS%\craft.cmd"
 SET "CRAFT.INFO=%INTERFACE%\shop\craft_info.cmd"
 SET CRAFT.SEL=0
 SET CRAFT.NAV=0
 ::VAR:-Registry
-SET "REGIT_1=HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{22d6f312-b0f6-11d0-94ab-0080c74c7e95}"
-SET "REGIT_2=HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{6BF52A52-394A-11d3-B153-00C04F79FAA6}"
-SET REGID_C1=
-SET REGID_C2=
+SET "REG_1=HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{22d6f312-b0f6-11d0-94ab-0080c74c7e95}"
+SET "REG_2=HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{6BF52A52-394A-11d3-B153-00C04F79FAA6}"
+SET REG_C1=
+SET REG_C2=
 ::VAR:-Battle Loader
 SET "SCRIPTS_GAME=%DATA_SCRIPTS%\game"
 SET "LOAD.LEVEL_=%DATA%\levels\lvl"
 SET "LOC.HP.P=[12;4H"
-::VAR:-Action
-SET "SCRIPTS_ACT=%SCRIPTS_GAME%\acts"
-SET "ACT.ATTACK=%SCRIPTS_ACT%\ATTACK.cmd"
-SET "ACT.BOMB=%SCRIPTS_ACT%\BOMB.cmd"
-SET "ACT.HEAL=%SCRIPTS_ACT%\HEAL.cmd"
-SET "ACT.ENEMY_ATK=%SCRIPTS_ACT%\ENEMY_ATK.cmd"
-SET "ACT.SIMPSONS.LASER=%SCRIPTS_ACT%\LASER.cmd"
+::VAR:-Actions
+SET "SCRIPTS.ACT=%SCRIPTS_GAME%\acts"
+SET "SCRIPTS.ACT.VISUALS=%SCRIPTS_GAME%\acts"
+SET "ACT.ATTACK=%SCRIPTS.ACT%\ATTACK.cmd"
+SET "ACT.BOMB=%SCRIPTS.ACT%\BOMB.cmd"
+SET "ACT.HEAL=%SCRIPTS.ACT%\HEAL.cmd"
+SET "ACT.ENEMY_ATK=%SCRIPTS.ACT%\ENEMY_ATK.cmd"
+SET "ACT.SIMPSONS.LASER=%SCRIPTS.ACT%\LASER.cmd"
 SET "CMD.CLEARVAR=%SCRIPTS_GAME%\CLEARVAR.cmd"
 ::VAR:-Map
 SET SELECTED=0
@@ -293,9 +294,9 @@ SET "QNAME.MTYPE=All The Species"
 SET QMAX.MTYPE=29
 SET "QDESC.MTYPE=[1;37mKill every single type of monster."
 SET "QNAME.LOSE=For God's Sake"
-SET QREW.MONEY.LOSE=2000
-SET QREW.XP.LOSE=500
-SET QMAX.LOSE=5
+SET QREW.MONEY.LOSE=5000
+SET QREW.XP.LOSE=400
+SET QMAX.LOSE=4
 SET "QDESC.LOSE=[1;37mLose the battle [4m%QMAX.LOSE%[0m[1;37m times."
 SET "QNAME.TLVLS=The Champ"
 SET QREW.MONEY.TLVLS=20000
@@ -317,7 +318,7 @@ ECHO.[?25l[s Loading ...
 IF NOT EXIST "%HTS_DATA%" MD "%HTS_DATA%"
 IF NOT EXIST "%HTS_DATA%" (
 	ECHO.Failed to create directory "HTS_DATA" on "%APPDATA%".
-	ECHO.Quitting ...
+	ECHO.Quitting ... Press Any Key
 	PAUSE>NUL
 	EXIT /B 1
 )
@@ -367,7 +368,7 @@ IF NOT EXIST "%MAIN_GAME%\LICENSEAGREEMENT.dll" IF EXIST "%LICENSE%" (
 )
 
 :SYSLOAD
-ECHO.[u Loading ... (System)  
+ECHO.[u Loading ... System
 ::System: Input 
 SET INPUT=^
 FOR %%. IN (1 2) DO IF %%.==2 (^
@@ -391,7 +392,7 @@ SET SCSCRIPT="%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs"
 ) > %SCSCRIPT%
 CSCRIPT /nologo %SCSCRIPT% || CALL :ERROR ERRLINE ID0003    -0
 DEL %SCSCRIPT%
-ECHO.[u Loading ... (Settings)
+ECHO.[u Loading ... Preferences
 ::SETTINGSREADER
 :SETT-MAKE
 IF NOT EXIST "%DATA_SETTINGS%\settings.cmd" (
@@ -417,39 +418,36 @@ IF NOT DEFINED UPDATE.VALUE CALL :SETT_ERR
 IF NOT DEFINED SHORTCUTS.VALUE CALL :SETT_ERR
 IF NOT DEFINED SHOW.INTRO CALL :SETT_ERR
 
-REG QUERY "%REGIT_1%" > NUL
-IF ERRORLEVEL 1 SET REGID_C1=TRUE
-REG QUERY "%REGIT_2%" > NUL
-IF ERRORLEVEL 1 SET REGID_C2=TRUE
+REG QUERY "%REG_1%" > NUL
+IF ERRORLEVEL 1 SET REG_C1=TRUE
+REG QUERY "%REG_2%" > NUL
+IF ERRORLEVEL 1 SET REG_C2=TRUE
 
-IF DEFINED REGID_C1 (
-	IF DEFINED REGID_C2 (
+IF DEFINED REG_C1 (
+	IF DEFINED REG_C2 (
 		IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 CALL "%TOGGLE.SOUNDS%"
 		SET DENIED_AUDIO=TRUE
 		CALL "%SETTINGS.LOAD%"
 	)
 )
-ECHO.[u Loading ... (Updates)    
+ECHO.[u Loading ... Checkng for updates
 IF "%UPDATE.VALUE%"=="TRUE" (
 	CALL "%UPDATER%" 2>NUL
 	CLS
 )
-ECHO.[u Loading ... (PlayerData)    
+
+ECHO.[u Loading ... Registering Items ^(1/2)
+CALL "%ITEMS.LOADER%" REGISTER
+ECHO.[u Loading ... Registering Items ^(2/2)
+CALL "%ITEMS.LOADER%" LIST
+
+ECHO.[u Loading ... Player Data            
 
 SET /A "SELECTED=%PLAYER.MAP.LEVEL%"
 IF %SELECTED% GTR 13 SET SELECTED=1
 CALL "%DATA_SCRIPTS%\mapnames.cmd"
->NUL 2>NUL DIR /A-D "%DATA_SAVES%\*.cmd" && (CALL "%DATA_SAVES%\PLAYERDATA.cmd")||((
-		ECHO.SET PLAYER.MONEY=0
-		ECHO.SET PLAYER.XP=0
-		ECHO.SET PLAYER.LVL=0
-		ECHO.SET PLAYER.MAP.LEVEL=1
-		ECHO.SET PLAYER.XP.REQ=%PLAYER.XP.REQ%
-		ECHO.SET COMPLETED.MAPS=0
-		ECHO.GOTO :EOF
-	)>"%DATA_SAVES%\PLAYERDATA.cmd"
-	CALL "%DATA_SAVES%\PLAYERDATA.cmd"
-)
+CALL "%DATA_SAVES%\PLAYERDATA.cmd" || CALL :ResetPlayerData
+IF NOT DEFINED PLAYER.XP CALL :ResetPlayerData
 IF NOT EXIST "%PLAYERDATA.ITEMS%" COPY NUL "%PLAYERDATA.ITEMS%" >NUL
 IF NOT EXIST "%PLAYERDATA.WEAPONS%" COPY NUL "%PLAYERDATA.WEAPONS%" >NUL
 IF NOT EXIST "%PLAYERDATA.MATERIALS%" COPY NUL "%PLAYERDATA.MATERIALS%" >NUL
@@ -477,19 +475,18 @@ IF NOT EXIST "%PLAYERDATA.EQ%" (
 	CALL "%PLAYERSKILLS.LOAD%"
 )
 
-ECHO.[u Loading ... (RegisterItem)
-CALL "%ITEMS.LOADER%" REGISTER
-CALL "%ITEMS.LOADER%" LIST
+ECHO.[u Loading ... Player Inventory ^(1/2)
 CALL "%ITEMS.LOADER%" LIST_EQ
+ECHO.[u Loading ... Player Inventory ^(2/2)
 CALL "%ITEMS.LOADER%" WEAPONS
 
-ECHO.[u Loading ... (AudioManager)    
+ECHO.[u Loading ... Audio Management       
 IF NOT DEFINED AUDIO.VALUE CALL :SETT_ERR
 IF NOT DEFINED VOLUME CALL :SETT_ERR
 IF %AUDIO.VALUE%==TRUE ( TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL&START /MIN "" "%AudioManager%" || CALL :ERROR ERRLINE ID0004    -0 )
 
 MODE CON:COLS=%COLS% LINES=%LINES%
-ECHO. Loading ... (Display)
+ECHO. Loading ... Display Features
 ::PAUSE>NUL
 ::CALL ".\data\levels\lvl1\story.cmd"
 CALL "%DATA_SAVES%\PLAYERDATA.cmd" || CALL :ERROR ERRLINE ID0005    -0
@@ -544,7 +541,7 @@ ECHO.^|      \    ^|^|    /             [1m,-,_[0m  ^|              '---------
 ECHO.^|       [   ^|^|   ]              [1m^|  _T[0m ^| [s        - [1;37mSelect a level.[0m              ^|                                    ^|
 IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[uPress %RGB.CYAN%A[0m ) ELSE ( ECHO.[u%RGB%128;210;255m   PLAY[0m)
 ECHO.^|        \__^|^|__/               [1m'-`^|^|[0m ^| - - - - - - - - - - - - - - - - - - -  ^|                          ,_,       ^|
-ECHO.^|           --                    :[1m^|^|[0m-^| [s        - [1;37mView your quests.[0m            ^|                         ^(.,.^)      ^|
+ECHO.^|          '--'                   :[1m^|^|[0m-^| [s        - [1;37mView your quests.[0m            ^|                         ^(.,.^)      ^|
 IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[uPress %RGB%138;167;255mQ[0m ) ELSE ( ECHO.[u%RGB%138;167;255m QUESTS[0m)
 ECHO.^|                                 :[1m^|^|[0m-^| - - - - - - - - - - - - - - - - - - -  ^|                         ^(   ^)      ^|
 ECHO.^|                                  [1m[][0m ^| [s        - [1;37mBuy items ^& skills.[0m          ^|                         -"-"-------^|
@@ -553,20 +550,20 @@ ECHO.^|                                     ^| - - - - - - - - - - - - - - - - -
 ECHO.^|                                     ^| [s        - [1;37mManage your character.[0m       ^|                                    ^|
 IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[uPress %RGB%191;255;221mE[0m ) ELSE ( ECHO.[u%RGB%191;255;221m    INV[0m)
 ECHO.^|                                     ^| - - - - - - - - - - - - - - - - - - -  ^|                                    ^|
-ECHO.^|               [1m/\_[]_/\[0m              ^| [s        - [1;37mChange your preferences.[0m     ^|                                    ^|
+ECHO.^|             [1m/\_[]_/\[0m                ^| [s        - [1;37mChange your preferences.[0m     ^|                                    ^|
 IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[uPress %RGB%249;241;165mS[0m ) ELSE ( ECHO.[u%RGB%249;241;165mOPTIONS[0m)
-ECHO.^|              [1m^|] _^|^|_ [^|[0m             ^| - - - - - - - - - - - - - - - - - - -  ^|                                    ^|
-ECHO.^|       ___     [1m\/ ^|^| \/[0m              '.      [s                                .'                                    ^|
+ECHO.^|            [1m^|] _^|^|_ [^|[0m               ^| - - - - - - - - - - - - - - - - - - -  ^|                                    ^|
+ECHO.^|       ___   [1m\/ ^|^| \/[0m                '.      [s                                .'                                    ^|
 IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[u       Press a Key[0m) ELSE ( ECHO.[u[1;30mMore: Credits,Cheats,CMD[0m)
-ECHO.^|      /\ /\       [1m^|^|[0m                  '--------------------------------------'                                     ^|
-ECHO.^|     ^(^|0 0^|^)      [1m^|^|[0m                                                                                               ^|
-ECHO.^|   __/{\^^/}\_ ____/^>                                .    '    .                                                    ^|
-ECHO.^|  / \  {~}   / _^|_P/                                  _______                                                      ^|
-ECHO.^|  ^| /\  ~   /_/   [1m[][0m                             _  .`_^|___^|_`.  _                                                 ^|
-ECHO.^|  ^|_^| ^(____^)                                         \ \   / /                             ___                     ^|
-ECHO.^|  \_]/______\                                         \ ' ' /                           __/_  `.  .-^"^"^"-. .        ^|
-ECHO.^|     _\_^|^|_/_                                          \ ^" /                            \_,` ^| \-'  /   ^)`-'       ^|
-ECHO.^|    ^(_,_^|^|_,_^)                                          \./                              ___Y  ,    .'7 /^|         ^|
+ECHO.^|      ╱\_/╲     [1m^|^|[0m                    '--------------------------------------'                                     ^|
+ECHO.^|     ^(^|ò ó^|^)    [1m^|^|[0m                                                                                                 ^|
+ECHO.^|   __/{\^^/}\____[1m^|^|[0m                                  .    '    .                                                    ^|
+ECHO.^|  / \  {~}  /__^|_]                                    _______                                                      ^|
+ECHO.^|  ^| /\  ~  /    [1m[][0m                               _  .`_^|___^|_`.  _                                                 ^|
+ECHO.^|  ^|_^| ^)   ^(     [1m''[0m                                   \ \   / /                             ___                     ^|
+ECHO.^|  \_]/_____\                                          \ ' ' /                           __/_  `.  .-^"^"^"-. .        ^|
+ECHO.^|    _\_^| ^|_/_                                          \ ^" /                            \_,` ^| \-'  /   ^)`-'       ^|
+ECHO.^|   ^(_,_^| ^|_,_^)                                          \./                              ___Y  ,    .'7 /^|         ^|
 ECHO.^|                                                         V                              ^(_,___/...-` ^(_/_/         ^|[E^| [1;30m2023©136MasterNR[0m                                                                   [1;30mBATTLES OF BATCH: [0;33m%VERTYPE% %VERS%[0m ^|[?25h)
 IF "%SHORTCUTS.VALUE%"=="TRUE" ( 
 	ECHO.^|     .                              .    .                              .    .                              .      ^|[E^|     ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|      ^|[E'-----'-------'-------'-------'------'----'-------'-------'-------'------'----'-------'-------'-------'------'------'[2A
@@ -791,7 +788,7 @@ SET /A STAT.NUM.HP=%SKILL.HP%*100
 SET /A STAT.NUM.ATK=(%SKILL.ATK%*50)+EQUIP.BONUS_ATK
 SET /A STAT.NUM.CRIT_RATE=%SKILL.CRIT_RATE%*5
 ECHO.[u100%%
-IF A==A (
+(
 ECHO.[?25l[H[0m.--.----------------------------------------------------------------------------------------------------------------.
 ECHO.^|Q ^|                                                                                                                ^|
 ECHO.^|--' .-----------------.                      .-----------------------.                    .----------------------. ^|
@@ -1463,7 +1460,7 @@ ENDLOCAL
 %CHOICE%
 IF %CHOICE.INPUT%.==. GOTO CRAFT-SHOP-RE
 IF /I %CHOICE.INPUT%==E SET /A SHOP.TAB=1&&GOTO SHOP
-IF /I %CHOICE.INPUT%==Q GOTO MENU
+IF /I %CHOICE.INPUT%==Q GOTO S-MENU
 IF /I %CHOICE.INPUT%==W IF %CRAFT.SEL% GEQ 1 SET /A CRAFT.SEL-=1&GOTO CRAFT-SHOP-RE
 IF /I %CHOICE.INPUT%==S IF %CRAFT.SEL% LEQ 7 SET /A CRAFT.SEL+=1&GOTO CRAFT-SHOP-RE
 ::IF /I %CHOICE.INPUT%==D IF %CRAFT.NAV% LEQ 0 SET /A CRAFT.NAV+=1&GOTO CRAFT-SHOP-RE
@@ -1756,50 +1753,7 @@ CLS
 ECHO.[?25l[H.--------------------.----------------------------------------------------------------------------------------------.
 ECHO.^| Press %RGB.PINK%Q[0m to retreat ^|[103C^|
 ECHO.^|--------------------'[95C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
-ECHO.^|[115C^|
+FOR /L %%I IN (1, 1, 44) DO ECHO.^|[115C^|
 ECHO.'-------------------------------------------------------------------------------------------------------------------'[2A
 ECHO.[13;3H     ___             
 ECHO.[2C    //_\\_          
@@ -1842,6 +1796,8 @@ SET UDERFINE=
 IF "%SHORTCUTS.VALUE%"=="TRUE" (
 	GOTO :BATTLE-CHOICE
 )
+
+::Visuals
 :BATTLE-CHOICE
 IF %SELECTED% EQU 1 (
 	ECHO.[2;45H[s:---------: HELP - ^? :---------:
@@ -1881,6 +1837,8 @@ IF !ENEMY.HP.NOW.%INPUTATK%! EQU 0 (
 	ENDLOCAL
 	CALL "%SCRIPTS_GAME%\rand_enemy.cmd"
 ) ELSE ENDLOCAL
+
+::Select Action
 :BATTLE-SEL_CHOICE
 CALL :BATTLE-DISPLAY_CHOICE
 %CHOICE%
@@ -2133,6 +2091,19 @@ IF EXIST "%VBS%" DEL /F /Q "%VBS%"
 >>%VBS% ECHO Set fso = Nothing
 >>%VBS% ECHO Set objShell = Nothing
 CSCRIPT //NOLOGO "%VBS%"
+
+:ResetPlayerData
+(
+ECHO.SET PLAYER.MONEY=0
+ECHO.SET PLAYER.XP=0
+ECHO.SET PLAYER.LVL=0
+ECHO.SET PLAYER.MAP.LEVEL=1
+ECHO.SET PLAYER.XP.REQ=%PLAYER.XP.REQ%
+ECHO.SET COMPLETED.MAPS=0
+ECHO.GOTO :EOF
+)>"%DATA_SAVES%\PLAYERDATA.cmd"
+CALL "%DATA_SAVES%\PLAYERDATA.cmd"
+EXIT /B 0
 
 :EOF
 EXIT /B 0

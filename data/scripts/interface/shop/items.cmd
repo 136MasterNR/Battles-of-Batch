@@ -1,7 +1,7 @@
 IF NOT DEFINED VERCODE EXIT
 TITLE %TITLE%Items Shop
 CALL "%ITEMS.LOADER%" LIST
-IF TRUE==TRUE (
+(
 ECHO.[?25l[H[0m.---------------------------------------------.-------.-------.-------.---------------------------------------------.
 ECHO.^|                                             ^| Craft ^| [4m[1mItems[0m ^| Skill ^|                                             ^|
 ECHO.^|                                             '-------'-------'-------'                                             ^|

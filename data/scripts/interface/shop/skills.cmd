@@ -1,6 +1,7 @@
 IF NOT DEFINED VERCODE EXIT
 CALL %PLAYERSKILLS.LOAD%
 TITLE %TITLE%Upgrades Shop
+(
 ECHO.[?25h[H[0m.---------------------------------------------.-------.-------.-------.---------------------------------------------.
 ECHO.^|                                             ^| Craft ^| Items ^| [4m[1mSkill[0m ^|                                             ^|
 ECHO.^|                                             '-------'-------'-------'                                             ^|
@@ -49,6 +50,7 @@ ECHO.^|                                  '.-------------------------------------
 ECHO.^|                            Type "%RGB%10;230;235mswitch[0m" or the %RGB%10;230;235mname[0m of the tab to switch between tabs.                           ^|
 ECHO.^|                                                                                                                   ^|
 ECHO.'-------------------------------------------------------------------------------------------------------------------'[1A
+)
 SET /A NEXT.LVL.ATK=%SKILL.ATK%+1
 SET /A STAT.NUM.ATK=%SKILL.ATK%*50
 SET /A LVL.REQ.ATK=%SKILL.ATK%*%SKILL.ATK.MAXLVL%
