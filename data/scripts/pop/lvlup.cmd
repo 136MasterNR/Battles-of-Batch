@@ -1,6 +1,7 @@
 IF NOT DEFINED VERCODE EXIT
+SET Q.POPUP.IS=TRUE
 COLOR 08
-ECHO.[1;37m[27A[49C   .-%RGB%255;248;186m Congrats [1;37m-.
+ECHO.[47H[1;37m[27A[49C   .-%RGB%255;248;186m Congrats [1;37m-.
 ECHO.[49C.---'          '---.
 ECHO.[49C^|   %RGB%0;255;0m↑ %RGB%0;153;255mLevel UP![1;37m    ^|
 ECHO.[49C^|                  ^|

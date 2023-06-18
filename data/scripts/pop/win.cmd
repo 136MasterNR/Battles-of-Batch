@@ -20,7 +20,6 @@ FOR /L %%I IN (1, 1, %LOOT.MAX%) DO (
 ECHO.[44C:                          :
 ECHO.[44C[1;37m:----------: [4m[sOK[0m[1;37m :----------:
 SET /P "=[u"<NUL
-PAUSE>NUL
 TITLE %TITLE%Saving ...
 FOR /L %%I IN (1, 1, %LOOT.MAX%) DO (
 	CALL :SAVE-LOOT %%I
@@ -64,6 +63,10 @@ SET "Replacement=SET Q.TOTAL_MONSTERS=%Q.TOTAL_MONSTERS%"
     ENDLOCAL
 ))>"%file%.new"
 MOVE "%file%.new" "%file%">NUL
+SETLOCAL ENABLEDELAYEDEXPANSION
+TITLE %TITLE%!MAP.NAME.%SELECTED%:_= ! ^(#%SELECTED%^) - Won The Battle
+ENDLOCAL
+PAUSE>NUL
 EXIT /B 0
 
 :DISPLAY-LOOT

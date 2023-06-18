@@ -34,25 +34,6 @@ This project uses [ANSI](https://www.robvanderwoude.com/ansi.php) as a text form
 # Game Details & How To Play
 
 ### Game Controls (#2.0)
-###### *(TYPING CONTROLS WILL BECOME UNSUPPORTED ANY TIME SOON)*
-  - **Menu**: 
-    - **Play**/**Start**: Level Selection
-    - **Quests**: Quests
-    - **Shop**: Items Shop & Skill Upgrades
-    - **Settings**/**Options**: Change your Preferences
-    - **Exit**: Exit The Game
-    - **Reset**: Reset your player data
-    - **HTS**: LGBTQIA+
-  - **Map**: 
-    - **Play**/**Start**: Start Selected Level
-    - **Forward**: Move Forward/Next Level
-    - **Prev**: Move Backwards/Previous Level
-    - **Exit**/**Back**: Move to the previous UI (to the Menu)
-  - **Battle**: 
-    - *Enter the Whole Word of an Action, e.g. `attack` or `atk` to attack an enemy*
-    - **Exit/Quit/Back** = End current battle and move to the previous UI (to the Map)
-
-### Shortcut Keys (#2.1)
 Press ***CTRL*** + ***W*** on some User Interfaces to get more information about it.
   - **Menu**: 
     - ***A***/***P***: Level Selection.
@@ -291,7 +272,7 @@ Material Items [Released]
   - More Info Soon!
 
 ### Character & Equipment (#6.3)
-  - The Character & Equipment interface allows you view your character's statistics, customize your character, view your character's history (based in the story) and lets you to equip or unequip items and weapons. At the top center you can view you character and at the right and left you can view the statistics of your character such as, your username, your money, your level, your experience, your total health points, your strength, your chance to strike critical hit and your defense. Below you can view your Items + Equiped Items, your Materials and your Weapons + Equipped Weapons. More statistics are shown when you move to the equipment UI.
+  - The Character & Equipment interface lets you view your character's statistics, customize your character, view your character's history (based in the story) and lets you to equip or unequip items and weapons. At the top center you can view you character and at the right and left you can view the statistics of your character such as, your username, your money, your level, your experience, your total health points, your strength, your chance to strike critical hit and your defense. Below you can view your Items + Equiped Items, your Materials and your Weapons + Equipped Weapons. More statistics are shown when you move to the equipment UI.
 ![image](https://user-images.githubusercontent.com/62593379/188514583-d3b5afcc-e39c-4ec7-b9e8-082b79e2fe69.png)
 
 ### Shop (#6.4)

@@ -1,15 +1,21 @@
 IF NOT DEFINED VERCODE EXIT
-SET "file=%DATA_SAVES%\PLAYERDATA.cmd"
-SET /a Line#ToSearch=%1
-SET /A NEWVALUE=%3 %4
-SET "Replacement=SET %2=%NEWVALUE%"
-(FOR /f "tokens=1*delims=:" %%a IN ('findstr /n "^" "%file%"') DO (
-    SET "Line=%%b"
-    IF %%a equ %Line#ToSearch% SET "Line=%Replacement%"
+
+:save.cmd "FILE=<path>" <line> <variable> <value>
+SET %1
+
+SET /A LINE#TOSEARCH=%2
+SET /A NEWVALUE=%4 %5
+SET "REPLACEMENT=SET %3=%NEWVALUE%"
+
+(FOR /f "tokens=1*delims=:" %%A IN ('findstr /n "^" "%FILE%"') DO (
+    SET "LINE=%%B"
+    IF %%A EQU %LINE#TOSEARCH% SET "LINE=%REPLACEMENT%"
     SETLOCAL ENABLEDELAYEDEXPANSION
-    ECHO(!Line!
+    ECHO(!LINE!
     ENDLOCAL
-))>"%file%.new"
-MOVE "%file%.new" "%file%">NUL
+))>"%FILE%.new"
+
+MOVE "%FILE%.new" "%FILE%">NUL
 CALL "%DATA_SAVES%\PLAYERDATA.cmd"
+
 EXIT /B 0

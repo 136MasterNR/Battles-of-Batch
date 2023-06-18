@@ -3,7 +3,7 @@ CHCP 437>NUL
 2>>".\data\logs\audManag\fatal.log" (SET "STARTED=1"&CALL :VAR)
 @IF /I NOT DEFINED STARTED EXIT 1
 :VAR
-TITLE AudioManagerHTS
+TITLE AudioManager ^(v%VERCODE.AUDIO_MANAGER:~0,1%.%VERCODE.AUDIO_MANAGER:~1,4%^)
 SET "DATA=.\data"
 SET "DATA_TMP=%DATA%\temp"
 SET "DATA_SCRIPTS=%DATA%\scripts"

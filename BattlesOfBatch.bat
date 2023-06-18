@@ -123,7 +123,6 @@ CALL "%DATA_SCRIPTS%\versions.cmd" || CALL :ERROR ERRLINE ID0001    0
 IF NOT DEFINED VERCODE CALL :ERROR ERRLINE ID0001A    0
 IF NOT DEFINED VERS CALL :ERROR ERRLINE ID0001B    0
 IF NOT DEFINED VERTYPE CALL :ERROR ERRLINE ID0001C    0
-IF NOT DEFINED VERCOD.AUDIO_MANAGER CALL :ERROR ERRLINE ID0001D    0
 IF NOT EXIST "%DATA_TMP%" MD "%DATA_TMP%"
 SET "HTS_DATA=%APPDATA%\HTS_DATA"
 SET "MAIN_GAME=%HTS_DATA%\BATTLESOFBATCH-%VERTYPE%-%VERCODE%"
@@ -294,7 +293,7 @@ SET "QNAME.MTYPE=All The Species"
 SET QMAX.MTYPE=29
 SET "QDESC.MTYPE=[1;37mKill every single type of monster."
 SET "QNAME.LOSE=For God's Sake"
-SET QREW.MONEY.LOSE=5000
+SET QREW.MONEY.LOSE=750
 SET QREW.XP.LOSE=400
 SET QMAX.LOSE=4
 SET "QDESC.LOSE=[1;37mLose the battle [4m%QMAX.LOSE%[0m[1;37m times."
@@ -322,6 +321,15 @@ IF NOT EXIST "%HTS_DATA%" (
 	PAUSE>NUL
 	EXIT /B 1
 )
+ECHO.[u Loading ... System ^& Config
+
+IF NOT EXIST "%DATA_SAVES%\main.config" (
+	ECHO.[SYSTEM]
+	ECHO.profile=main
+	ECHO.unitsWarning=null
+	ECHO.licesneAgreed=none
+)>"main.config"
+
 IF NOT EXIST "%MAIN_GAME%" MD "%MAIN_GAME%"
 IF NOT EXIST "%DATA_SAVES%" MD "%DATA_SAVES%"
 IF NOT EXIST "%DATA_SETTINGS%" MD "%DATA_SETTINGS%"
@@ -367,18 +375,18 @@ IF NOT EXIST "%MAIN_GAME%\LICENSEAGREEMENT.dll" IF EXIST "%LICENSE%" (
 	EXIT 0
 )
 
-:SYSLOAD
-ECHO.[u Loading ... System
-::System: Input 
+REM Input
 SET INPUT=^
 FOR %%. IN (1 2) DO IF %%.==2 (^
 FOR /F "DELIMS=" %%I IN ('.\data\scripts\input.bat !ARGS!') DO ^
 	SET "UDERFINE=%%I"^
 ) ELSE SET ARGS=
-::System: Super Characters
+
+REM Super Characters
 FOR /F %%A IN ('COPY /Z "%COMSPEC%" NUL') DO SET "CR=%%A"
-FOR /F %%A IN ('"PROMPT $H$E&FOR %%B IN (1) DO REM"') DO SET "BS=%%A"    
-::Shortcut
+FOR /F %%A IN ('"PROMPT $H$E&FOR %%B IN (1) DO REM"') DO SET "BS=%%A" 
+   
+REM Shortcut
 IF EXIST "Battles of Batch.lnk" GOTO SETT-MAKE
 SET SCSCRIPT="%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs"
 (
@@ -392,8 +400,9 @@ SET SCSCRIPT="%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs"
 ) > %SCSCRIPT%
 CSCRIPT /nologo %SCSCRIPT% || CALL :ERROR ERRLINE ID0003    -0
 DEL %SCSCRIPT%
+
 ECHO.[u Loading ... Preferences
-::SETTINGSREADER
+:: SETTINGS READER
 :SETT-MAKE
 IF NOT EXIST "%DATA_SETTINGS%\settings.cmd" (
 	(
@@ -402,7 +411,6 @@ IF NOT EXIST "%DATA_SETTINGS%\settings.cmd" (
 		ECHO.SET SFX.VOLUME=90
 		ECHO.SET AUTOSAVE.VALUE=TRUE
 		ECHO.SET UPDATE.VALUE=TRUE
-		ECHO.SET SHORTCUTS.VALUE=TRUE
 		ECHO.SET SHOW.INTRO=TRUE
 		ECHO.GOTO :EOF
 	)>%SETTINGS.LOAD%
@@ -415,7 +423,6 @@ IF NOT DEFINED VOLUME CALL :SETT_ERR
 IF NOT DEFINED SFX.VOLUME CALL :SETT_ERR
 IF NOT DEFINED AUTOSAVE.VALUE CALL :SETT_ERR
 IF NOT DEFINED UPDATE.VALUE CALL :SETT_ERR
-IF NOT DEFINED SHORTCUTS.VALUE CALL :SETT_ERR
 IF NOT DEFINED SHOW.INTRO CALL :SETT_ERR
 
 REG QUERY "%REG_1%" > NUL
@@ -443,10 +450,10 @@ CALL "%ITEMS.LOADER%" LIST
 
 ECHO.[u Loading ... Player Data            
 
-SET /A "SELECTED=%PLAYER.MAP.LEVEL%"
-IF %SELECTED% GTR 13 SET SELECTED=1
 CALL "%DATA_SCRIPTS%\mapnames.cmd"
 CALL "%DATA_SAVES%\PLAYERDATA.cmd" || CALL :ResetPlayerData
+SET /A "SELECTED=%PLAYER.MAP.LEVEL%"
+IF %SELECTED% GTR 13 SET SELECTED=1
 IF NOT DEFINED PLAYER.XP CALL :ResetPlayerData
 IF NOT EXIST "%PLAYERDATA.ITEMS%" COPY NUL "%PLAYERDATA.ITEMS%" >NUL
 IF NOT EXIST "%PLAYERDATA.WEAPONS%" COPY NUL "%PLAYERDATA.WEAPONS%" >NUL
@@ -538,23 +545,17 @@ ECHO.^|    ]      ^(^)      [                                                   
 ECHO.^|     \     ^|^|     /                              .--.----------.--.                                                ^|
 ECHO.^|      [    ^|^|    ]                   .----------'   : [1;34mCOMMANDS[0m :   '----------.                                    ^|
 ECHO.^|      \    ^|^|    /             [1m,-,_[0m  ^|              '----------'              ^|                                    ^|
-ECHO.^|       [   ^|^|   ]              [1m^|  _T[0m ^| [s        - [1;37mSelect a level.[0m              ^|                                    ^|
-IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[uPress %RGB.CYAN%A[0m ) ELSE ( ECHO.[u%RGB%128;210;255m   PLAY[0m)
+ECHO.^|       [   ^|^|   ]              [1m^|  _T[0m ^| Press %RGB.CYAN%A[0m - [1;37mSelect a level.[0m              ^|                                    ^|
 ECHO.^|        \__^|^|__/               [1m'-`^|^|[0m ^| - - - - - - - - - - - - - - - - - - -  ^|                          ,_,       ^|
-ECHO.^|          '--'                   :[1m^|^|[0m-^| [s        - [1;37mView your quests.[0m            ^|                         ^(.,.^)      ^|
-IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[uPress %RGB%138;167;255mQ[0m ) ELSE ( ECHO.[u%RGB%138;167;255m QUESTS[0m)
+ECHO.^|          '--'                   :[1m^|^|[0m-^| Press %RGB%138;167;255mQ[0m - [1;37mView your quests.[0m            ^|                         ^(.,.^)      ^|
 ECHO.^|                                 :[1m^|^|[0m-^| - - - - - - - - - - - - - - - - - - -  ^|                         ^(   ^)      ^|
-ECHO.^|                                  [1m[][0m ^| [s        - [1;37mBuy items ^& skills.[0m          ^|                         -"-"-------^|
-IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[uPress %RGB%105;255;147mW[0m ) ELSE ( ECHO.[u%RGB%105;255;147m   SHOP[0m)
+ECHO.^|                                  [1m[][0m ^| Press %RGB%105;255;147mW[0m - [1;37mBuy items ^& skills.[0m          ^|                         -"-"-------^|
 ECHO.^|                                     ^| - - - - - - - - - - - - - - - - - - -  ^|                                    ^|
-ECHO.^|                                     ^| [s        - [1;37mManage your character.[0m       ^|                                    ^|
-IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[uPress %RGB%191;255;221mE[0m ) ELSE ( ECHO.[u%RGB%191;255;221m    INV[0m)
+ECHO.^|                                     ^| Press %RGB%191;255;221mE[0m - [1;37mManage your character.[0m       ^|                                    ^|
 ECHO.^|                                     ^| - - - - - - - - - - - - - - - - - - -  ^|                                    ^|
-ECHO.^|             [1m/\_[]_/\[0m                ^| [s        - [1;37mChange your preferences.[0m     ^|                                    ^|
-IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[uPress %RGB%249;241;165mS[0m ) ELSE ( ECHO.[u%RGB%249;241;165mOPTIONS[0m)
+ECHO.^|             [1m/\_[]_/\[0m                ^| Press %RGB%249;241;165mS[0m - [1;37mChange your preferences.[0m     ^|                                    ^|
 ECHO.^|            [1m^|] _^|^|_ [^|[0m               ^| - - - - - - - - - - - - - - - - - - -  ^|                                    ^|
-ECHO.^|       ___   [1m\/ ^|^| \/[0m                '.      [s                                .'                                    ^|
-IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[u       Press a Key[0m) ELSE ( ECHO.[u[1;30mMore: Credits,Cheats,CMD[0m)
+ECHO.^|       ___   [1m\/ ^|^| \/[0m                '.             Press a Key              .'                                    ^|
 ECHO.^|      ╱\_/╲     [1m^|^|[0m                    '--------------------------------------'                                     ^|
 ECHO.^|     ^(^|ò ó^|^)    [1m^|^|[0m                                                                                                 ^|
 ECHO.^|   __/{\^^/}\____[1m^|^|[0m                                  .    '    .                                                    ^|
@@ -565,90 +566,11 @@ ECHO.^|  \_]/_____\                                          \ ' ' /            
 ECHO.^|    _\_^| ^|_/_                                          \ ^" /                            \_,` ^| \-'  /   ^)`-'       ^|
 ECHO.^|   ^(_,_^| ^|_,_^)                                          \./                              ___Y  ,    .'7 /^|         ^|
 ECHO.^|                                                         V                              ^(_,___/...-` ^(_/_/         ^|[E^| [1;30m2023©136MasterNR[0m                                                                   [1;30mBATTLES OF BATCH: [0;33m%VERTYPE% %VERS%[0m ^|[?25h)
-IF "%SHORTCUTS.VALUE%"=="TRUE" ( 
-	ECHO.^|     .                              .    .                              .    .                              .      ^|[E^|     ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|      ^|[E'-----'-------'-------'-------'------'----'-------'-------'-------'------'----'-------'-------'-------'------'------'[2A
-) ELSE (
-	ECHO..-------------------------------------------------------------------------------------------------------------------.
-	ECHO.^|                                                                                                                   ^|
-	ECHO.'-------------------------------------------------------------------------------------------------------------------'[2A
-)
-IF NOT %OLD.PLAYER.LVL%==%PLAYER.LVL% (
-	CALL "%SCRIPTS_POP%\lvlup.cmd"
-	GOTO REFRESH-MENU
-)
+ECHO.^|     .                              .    .                              .    .                              .      ^|[E^|     ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|      ^|[E'-----'-------'-------'-------'------'----'-------'-------'-------'------'----'-------'-------'-------'------'------'[2A
+IF NOT %OLD.PLAYER.LVL%==%PLAYER.LVL% CALL "%SCRIPTS_POP%\lvlup.cmd"
 CALL "%QUEST.LOADER%" LOAD
 IF DEFINED Q.POPUP.IS SET "Q.POPUP.IS="&GOTO MENU
 SET UDERFINE=
-:MENU-INPUT
-IF "%SHORTCUTS.VALUE%"=="TRUE" (
-	GOTO :CHOICE-INPUTS
-)
-SET "INPUT_PART=menu"
-SETLOCAL ENABLEDELAYEDEXPANSION
-IF EXIST LET.DEBUG ( SET /P "UDERFINE=| Type: [s[30;1mDEBUG MODE ENABLED![1;37m[18D" ) ELSE %INPUT% "PROMPT=[0m| [0;36mType[0m: [1;37m[s" "LENGTH=107"
-ENDLOCAL&SET UDERFINE=%UDERFINE%
-ENDLOCAL
-SET "INPUT_PART=nul"
- IF NOT DEFINED UDERFINE ECHO.[2A&GOTO MENU-INPUT
-	IF /I "%UDERFINE%"=="SHOP" GOTO SHOP
-	 IF /I "%UDERFINE%"=="BUY" GOTO SHOP
-      IF /I "%UDERFINE%"=="SKILLS" (
-  	    SET "SHOP.TAB=2"
-  	    GOTO SHOP
-      )
-      IF /I "%UDERFINE%"=="ITEMS" (
-  	    SET "SHOP.TAB=1"
-	    GOTO SHOP
-      )
-	IF /I "%UDERFINE%"=="MAP" GOTO MAP
-	 IF /I "%UDERFINE%"=="MAPS" GOTO MAP
-	  IF /I "%UDERFINE%"=="LEVEL" GOTO MAP
-	   IF /I "%UDERFINE%"=="LEVELS" GOTO MAP
-	IF /I "%UDERFINE%"=="SET" GOTO SETTINGS
-	 IF /I "%UDERFINE%"=="SETTINGS" GOTO SETTINGS
-	  IF /I "%UDERFINE%"=="SETTING" GOTO SETTINGS
-	   IF /I "%UDERFINE%"=="OPTIONS" GOTO SETTINGS
-		IF /I "%UDERFINE%"=="OPTION" GOTO SETTINGS
-		 IF /I "%UDERFINE%"=="PREFERENCES" GOTO SETTINGS
-		  IF /I "%UDERFINE%"=="PREFERENCE" GOTO SETTINGS
-	IF /I "%UDERFINE%"=="START" GOTO MAP
-	 IF /I "%UDERFINE%"=="PLAY" GOTO MAP
-	  IF /I "%UDERFINE%"=="FIGHT" GOTO MAP
-	   IF /I "%UDERFINE%"=="BATTLE" GOTO MAP
-	    IF /I "%UDERFINE%"=="START GAME" GOTO MAP
-	IF /I "%UDERFINE%"=="QUESTS" GOTO QUESTS
-	 IF /I "%UDERFINE%"=="QUEST" GOTO QUESTS
-	IF /I "%UDERFINE%"=="INV" GOTO INVENTORY
-	 IF /I "%UDERFINE%"=="INVENTORY" GOTO INVENTORY
-	IF /I "%UDERFINE%"=="CHARACTER" GOTO CHARACTER
-	 IF /I "%UDERFINE%"=="CHAR" GOTO CHARACTER
-	IF /I "%UDERFINE%"=="LICENSE" GOTO LICENSE
-	IF /I "%UDERFINE%"=="CREDITS" GOTO CREDITS
-	 IF /I "%UDERFINE%"=="CREDIT" GOTO CREDITS
-	IF /I "%UDERFINE%"=="UPDATE" CALL "%UPDATER%" MANUAL&GOTO MENU
-	IF /I "%UDERFINE%"=="EXIT" EXIT
-	 IF /I "%UDERFINE%"=="QUIT" EXIT
-	IF /I "%UDERFINE%"=="DEV" GOTO DEV
-	 IF /I "%UDERFINE%"=="CHEATS" ECHO.THIS IS DISABLED&PAUSE>NUL
-	  IF /I "%UDERFINE%"=="CMD" GOTO TERMINAL
-	IF /I "%UDERFINE%"=="RESET" GOTO RESET
-	IF /I "%UDERFINE%"=="RESTART" GOTO RESTART
-	IF /I "%UDERFINE%"=="APPDATA" START "" "%MAIN_GAME%"
-
-	IF /I "%UDERFINE:~0,2%"=="RE" ( 
-		MODE CON:COLS=%COLS% LINES=%LINES%
-		GOTO MENU
-	)
-	IF /I "%UDERFINE%"=="HTS" (
-		IF "%RAINBOWMODE%"=="TRUE" ( SET "RAINBOWMODE=" ) ELSE SET "RAINBOWMODE=TRUE"
-		GOTO REFRESH-MENU
-	)
-	IF /I "%UDERFINE%"=="VERIFY FILES" (
-		CALL :VERIFY-FILE-IDENTITY
-		GOTO REFRESH-MENU
-	)
-ECHO.[0m[1A^| [0;36mType[0m:                                                                                                            [1A
-GOTO MENU-INPUT
 :CHOICE-INPUTS
 SET /P "=[34;61H "<NUL
 %CHOICE%
@@ -1097,106 +1019,32 @@ SET "STR=%RGB.CYAN%Next Story[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= ! %RGB.DG
 CALL "%CENTER%" 195
 ENDLOCAL&SET "UI.MAP_DETAIL_C=%STR%"
 TITLE %TITLE%Map
-ECHO.[?25l[0m[H.+-----------------------------------------------------------------------------------------------------------------+.
+
+(ECHO.[?25l[0m[H.+-----------------------------------------------------------------------------------------------------------------+.
 ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|[s
-ECHO.'+-----------------------------------------------------------------------------------------------------------------+'[33B
+ECHO.^|                                                                                                                   ^|
+ECHO.'+-----------------------------------------------------------------------------------------------------------------+'[s[33B
 ECHO.^|     ^|`-._/\_.-`^|                                                                                 ^|`-._/\_.-`^|     ^|
-ECHO.^|     ^|    ^|^|    ^|                                                                                 ^|    ^|^|    ^|     ^|
-IF NOT "%SHORTCUTS.VALUE%"=="TRUE" (
-	ECHO.[1A[41C[1;30mType "[0mstart[1;30m" or "[0mplay[1;30m" to begin the level.[0m
-)
+ECHO.^|     ^|    ^|^|    ^|                                                                                 ^|    ^|^|    ^|     ^|)
 ECHO.^|     ^|___o()o___^|                                                                                 ^|___o()o___^|     ^|
-IF NOT "%SHORTCUTS.VALUE%"=="TRUE" (
-	ECHO.[1A[31C[1;30mType "[0mchapter {number}[1;30m" to change chapter. E.g. "chapter 2"[0m
-)
 ECHO.^|     ^|__((^<^>))__^|                                                                                 ^|__((^<^>))__^|     ^|
-IF NOT "%SHORTCUTS.VALUE%"=="TRUE" (
-	ECHO.[1A[31C[1;37mType "forward" to go to the next level, "prev" for previous[0m
-)
-IF "%SHORTCUTS.VALUE%"=="TRUE" (
-	ECHO.^|     \   o\/o   /                                                                                 \   o\/o   /     ^|
-	ECHO.^|      \   ^|^|   /                          [0mPress "%RGB.CYAN%A[0m" or "%RGB.CYAN%P[0m" to begin the level.[0m                     \   ^|^|   /      ^|
-	ECHO.^|       \  ^|^|  /               [0m Press "[1;37mC[0m" to jump 7 levels forward or "[1;37mZ[0m" to go backwards.[0m           \  ^|^|  /       ^|
-	ECHO.^|        '.^|^|.'                   [0mPress "%RGB.YELLOW%D[0m" to move to the next level, "%RGB.YELLOW%S[0m" for previous.[0m              '.^|^|.'        ^|
-	ECHO.^|          ''                                                                                           ''          ^|
-) ELSE (
-	ECHO.^|     \   o\/o   /             .---------------------------------------------------------.         \   o\/o   /     ^|
-	ECHO.^|      \   ^|^|   /              ^|                                                         ^|          \   ^|^|   /      ^|
-	ECHO.^|       \  ^|^|  /               ^|                                                         ^|           \  ^|^|  /       ^|
-	ECHO.^|        '.^|^|.'                ^|                                                         ^|            '.^|^|.'        ^|
-	ECHO.^|          ''                  '---------------------------------------------------------'              ''          ^|
-)
-ECHO.'-._______________________________________________________________________________________________________________.-'[4A[u
+ECHO.^|     \   o\/o   /                                                                                 \   o\/o   /     ^|
+ECHO.^|      \   ^|^|   /                          [0mPress "%RGB.CYAN%A[0m" or "%RGB.CYAN%P[0m" to begin the level.[0m                     \   ^|^|   /      ^|
+ECHO.^|       \  ^|^|  /               [0m Press "[1;37mC[0m" to jump 7 levels forward or "[1;37mZ[0m" to go backwards.[0m           \  ^|^|  /       ^|
+ECHO.^|        '.^|^|.'                   [0mPress "%RGB.YELLOW%D[0m" to move to the next level, "%RGB.YELLOW%S[0m" for previous.[0m              '.^|^|.'        ^|
+ECHO.^|          ''                                                                                           ''          ^|
+ECHO.'-._______________________________________________________________________________________________________________.-'[4A[u)
 :MAP-RE
 CALL "%MAP.LOAD%\limit.cmd"
-CALL "%MAP.LOAD%\details.cmd" %SELECTED% %CHAPTER%
-ECHO.
+ECHO.[u
 IF %SELECTED% LEQ 7 (CALL "%MAP.LOAD%\c1.cmd") ELSE CALL "%MAP.LOAD%\c2.cmd"
-:MAP-INPUT
-SET UDERFINE=
-IF "%SHORTCUTS.VALUE%"=="TRUE" (
-	GOTO :MAP-CHOICE
-)
-SET "INPUT_PART=map"
-SETLOCAL ENABLEDELAYEDEXPANSION
-%INPUT% "PROMPT=|[45;0H|       \  ||  /               |                       [1m[s[?25h" "LENGTH=10"
-ECHO.[45;52H                       
-ENDLOCAL&SET UDERFINE=%UDERFINE%
-ENDLOCAL
-SET "INPUT_PART=nul"
- IF NOT DEFINED UDERFINE GOTO S-MENU
-  IF /I "%UDERFINE%"=="BACK" GOTO S-MENU
-   IF /I "%UDERFINE%"=="EXIT" GOTO S-MENU
-    IF /I "%UDERFINE%"=="GO BACK" GOTO S-MENU
-     IF /I "%UDERFINE%"=="MENU" GOTO S-MENU
-	  IF /I "%UDERFINE%"=="RETURN" GOTO S-MENU
-  IF /I "%UDERFINE%"=="SET" GOTO SETTINGS
-   IF /I "%UDERFINE%"=="SETT" GOTO SETTINGS
-	IF /I "%UDERFINE%"=="SETTING" GOTO SETTINGS
-	 IF /I "%UDERFINE%"=="SETTINGS" GOTO SETTINGS
-   IF /I "%UDERFINE%"=="PLAY" GOTO PRE_LOAD
-  IF /I "%UDERFINE%"=="START" GOTO PRE_LOAD
-    IF /I "%UDERFINE%"=="FIGHT" GOTO PRE_LOAD
-	 IF /I "%UDERFINE%"=="BATTLE" GOTO PRE_LOAD
-	  IF /I "%UDERFINE%"=="START GAME" GOTO PRE_LOAD
-  IF /I "%UDERFINE%"=="REFRESH" (MODE CON:COLS=%COLS% LINES=%LINES%&GOTO MAP)
-   IF /I "%UDERFINE%"=="RE" (MODE CON:COLS=%COLS% LINES=%LINES%&GOTO MAP)
-IF /I "%UDERFINE%"=="FORWARD" (
-	SET /A SELECTED=SELECTED+1
-	CALL "%MAP.LOAD%\limit.cmd"
-	IF %SELECTED% LEQ 7 (
-		IF %SELECTED%==7 (
-			GOTO MAP
-		)
-		CALL "%MAP.LOAD%\c1.cmd" NUMS
-	) ELSE (
-		CALL "%MAP.LOAD%\c2.cmd" NUMS
-	)
-)
-IF /I "%UDERFINE%"=="PREV" (
-	SET /A SELECTED=SELECTED-1
-	CALL "%MAP.LOAD%\limit.cmd"
-	IF %SELECTED% LEQ 8 (
-		IF %SELECTED%==8 (
-			GOTO MAP
-		)
-		CALL "%MAP.LOAD%\c1.cmd" NUMS
-	) ELSE (
-		CALL "%MAP.LOAD%\c2.cmd" NUMS
-	)
-	GOTO MAP-INPUT
-)
-IF /I "%UDERFINE:~0,8%"=="CHAPTER " (
-	SET "VAR="&FOR /F "DELIMS=0123456789" %%I IN ("%UDERFINE:~8%") DO SET VAR=%%I
-	IF NOT DEFINED VAR (
-		SET SELECTED=0
-		SET /A SELECTED=7*%UDERFINE:~8%
-		GOTO MAP
-	)
-)
-GOTO MAP-INPUT 
+CALL "%MAP.LOAD%\details.cmd" %SELECTED% %CHAPTER%
+
+CALL "%SYS_LVL%"
+IF NOT %OLD.PLAYER.LVL%==%PLAYER.LVL% CALL "%SCRIPTS_POP%\lvlup.cmd"
+CALL "%QUEST.LOADER%" LOAD
+IF DEFINED Q.POPUP.IS SET "Q.POPUP.IS="&GOTO MAP
 :MAP-CHOICE
 SET /P "=[44;44H"<NUL
 %CHOICE%
@@ -1216,7 +1064,7 @@ IF /I %CHOICE.INPUT%==S (
 	) ELSE (
 		CALL "%MAP.LOAD%\c2.cmd" NUMS
 	)
-	GOTO MAP-INPUT
+	GOTO MAP-CHOICE
 )
 IF /I %CHOICE.INPUT%==D (
 	SET /A SELECTED=SELECTED+1
@@ -1477,7 +1325,7 @@ IF /I %CHOICE.INPUT%==A (
 		ECHO.[63C.--------------------------.
 		ECHO.[62C ^|  [1m%RGB.FALSE%Upgrade is maxed out! [0m  ^| 
 		ECHO.[63C'------------[1mOK[0m------------'
-		PAUSE>NUL
+		TIMEOUT /T 2 >NUL
 	) ELSE (
 		IF %MAT.1.OWNED% GEQ %MAT.1.X% IF %MAT.2.OWNED% GEQ %MAT.2.X% IF %MAT.3.OWNED% GEQ %MAT.3.X% (
 			IF NOT %MAT.1.X%==0 CALL "%ITEMS.LOADER%" CRAFT_REM %MAT.1.NAME% %MAT.1.X%
@@ -1499,7 +1347,7 @@ IF /I %CHOICE.INPUT%==A (
 				ECHO.[62C ^|   [1m%RGB.TRUE%Successfuly crafted![0m   ^| 
 				ECHO.[63C'------------[1mOK[0m------------'
 			)
-			PAUSE>NUL
+			TIMEOUT /T 3 >NUL
 			GOTO CRAFT-SHOP
 		)
 		ENDLOCAL
@@ -1507,7 +1355,7 @@ IF /I %CHOICE.INPUT%==A (
 		ECHO.[63C.--------------------------.
 		ECHO.[62C ^|  [1m%RGB.FALSE%You cannot craft this![0m  ^| 
 		ECHO.[63C'------------[1mOK[0m------------'
-		PAUSE>NUL
+		TIMEOUT /T 2 >NUL
 	)
 )
 IF /I %CHOICE.INPUT%.==. START "" "https://github.com/136MasterNR/Battles-of-Batch#shop-44"
@@ -1585,38 +1433,37 @@ ECHO.[?25l[H[0m                                                [4m          
 ECHO. ╭──────────────────────╥──────────────╥───────[4m┬╯     SETTINGS     ╰┬[0m──────────────────────────────────────────────╮ 
 ECHO. │     %RGB%237;244;255mSetting Name[0m     ║    %RGB%237;244;255mStatus[0m    ║                                %RGB%237;244;255mDescription[0m                                │ 
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │     %RGB%187;203;250mMusic ^& SFX[0m      ║              ║    %RGB%194;255;255mTurn on or off the Music and the SFX. Use "audio" to toggle.[0m           │ [88D[s
+ECHO. │     %RGB%187;203;250mMusic ^& SFX[0m      ║   [s           ║    %RGB%194;255;255mTurn ON or OFF the Music and the SFX. %RGB.CYAN%Use "audio" to toggle.[0m           │ 
 IF "%DENIED_AUDIO%"=="TRUE" ( ECHO.[u%RGB%195;1;1mΧ LOCKED[0m[8CYour device does not meet the requirements for this feature.) ELSE IF "%AUDIO.VALUE%"=="TRUE" ( ECHO.[u%RGB.TRUE%√ %AUDIO.VALUE%[0m ) ELSE ( ECHO.[u%RGB.FALSE%Χ %AUDIO.VALUE%[0m )
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │     %RGB%187;203;250mMusic Volume[0m     ║              ║    %RGB%194;255;255mAdjust the volume. Use "volume (number)" %RGB.DGRAY%Example: "Volume 50"[0m          │ [86D%RGB%196;255;225m%VOLUME%[0m
+ECHO. │     %RGB%187;203;250mMusic Volume[0m     ║   [s           ║    %RGB%194;255;255mAdjust the Music volume. %RGB.CYAN%Use "music (number)" %RGB.DGRAY%Example: "Volume 50"[0m     │ [86D%RGB%196;255;225m%VOLUME%[0m
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │      %RGB%187;203;250mSFX Volume[0m      ║              ║    %RGB%255;89;89mYet unusable.[0m                                                          │ [86D%RGB%196;255;225m%SFX.VOLUME%[0m
+ECHO. │      %RGB%187;203;250mSFX Volume[0m      ║   [s           ║    %RGB%194;255;255mAdjust the SFX volume. %RGB.CYAN%Use "sfx (number)"[0m                              │ [86D%RGB%196;255;225m%SFX.VOLUME%[0m
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │      %RGB%187;203;250mAuto Save[0m       ║   %RGB%163;255;177m√ TRUE[0m     ║    %RGB%255;89;89mYet unusable.[0m                                                          │ 
+ECHO. │      %RGB%187;203;250mAuto Save[0m       ║   %RGB%163;255;177m√ TRUE[0m     ║    %RGB%255;89;89mFeature unavailable.[0m                                                   │ 
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │       %RGB%187;203;250mUpdater[0m        ║              ║    %RGB%194;255;255mCheck for updates on startup. Use "updates" to toggle.[0m                 │ [88D[s
+ECHO. │       %RGB%187;203;250mUpdater[0m        ║   [s           ║    %RGB%194;255;255mCheck for updates on startup. %RGB.CYAN%Use "updates" to toggle.[0m                 │ 
 IF "%UPDATE.VALUE%"=="TRUE" ( ECHO.[u%RGB%163;255;177m√ %UPDATE.VALUE%[0m ) ELSE ( ECHO.[u%RGB%255;89;89mΧ %UPDATE.VALUE%[0m )
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │    %RGB%187;203;250mShortcut Keys[0m     ║              ║    %RGB%194;255;255mPress one key to navigate instead of typing. Use "keys" to toggle.[0m     │ [88D[s
-IF "%SHORTCUTS.VALUE%"=="TRUE" ( ECHO.[u%RGB%163;255;177m√ %SHORTCUTS.VALUE%[0m ) ELSE ( ECHO.[u%RGB%255;89;89mΧ %SHORTCUTS.VALUE%[0m )
-ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │      %RGB%187;203;250mShow Intro[0m      ║              ║    %RGB%194;255;255mWhether to show the HTS intro on startup. Use "intro" to toggle.[0m       │ [88D[s
+ECHO. │      %RGB%187;203;250mShow Intro[0m      ║   [s           ║    %RGB%194;255;255mWhether to show the HTS intro on startup. %RGB.CYAN%Use "intro" to toggle.[0m       │ 
 IF "%SHOW.INTRO%"=="TRUE" ( ECHO.[u%RGB%163;255;177m√ %SHOW.INTRO%[0m ) ELSE ( ECHO.[u%RGB%255;89;89mΧ %SHOW.INTRO%[0m )
-ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │                      ║              ║                                                                           │ 
-ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │                      ║              ║                                                                           │ 
-ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │                      ║              ║                                                                           │ 
-ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │                      ║              ║                                                                           │ 
-ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │                      ║              ║                                                                           │ 
-ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │                      ║              ║                                                                           │ 
-ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │                      ║              ║                                                                           │ 
 ECHO. ╞══════════════════════╩══════════════╩═══════════════════════════════════════════════════════════════════════════╡ 
+ECHO. │                                                                                                                 │ 
+ECHO. │                                                                                                                 │ 
+ECHO. │                                                                                                                 │ 
+ECHO. │                                                                                                                 │ 
+ECHO. │                                                                                                                 │ 
+ECHO. │                                                                                                                 │ 
+ECHO. │                                                                                                                 │ 
+ECHO. │                                                                                                                 │ 
+ECHO. │                                                                                                                 │ 
+ECHO. │                                                                                                                 │ 
+ECHO. │                                                                                                                 │ 
+ECHO. │                                                                                                                 │ 
+ECHO. │                                                                                                                 │ 
+ECHO. │                                                                                                                 │ 
+ECHO. │                                                                                                                 │ 
+ECHO. │                                                                                                                 │ 
 ECHO. │                                                                                                                 │ 
 ECHO. │                                                                                                                 │ 
 ECHO. │                                                                                                                 │ 
@@ -1649,28 +1496,23 @@ SET "INPUT_PART=nul"
 	  IF /I "%UDERFINE%"=="RETURN" GOTO S-MENU
 	   IF /I "%UDERFINE%"=="Q" GOTO S-MENU
  IF /I "%UDERFINE%"=="REFRESH" (MODE CON:COLS=%COLS% LINES=%LINES%&GOTO SETTINGS)
- IF /I "%UDERFINE:~0,5%"=="SOUND" CALL "%SETTING%" AUDIO
+ IF /I "%UDERFINE%"=="SOUND" CALL "%SETTING%" AUDIO
   IF /I "%UDERFINE%"=="MUSIC" CALL "%SETTING%" AUDIO
-   IF /I "%UDERFINE%"=="PLAY AUDIO" CALL "%SETTING%" AUDIO
-	IF /I "%UDERFINE%"=="AUDIO" CALL "%SETTING%" AUDIO
-	 IF /I "%UDERFINE%"=="PLAY SOUNDS" CALL "%SETTING%" AUDIO
-	  IF /I "%UDERFINE%"=="PLAY MUSIC" CALL "%SETTING%" AUDIO
-	   IF /I "%UDERFINE%"=="TURN OFF MUSIC" CALL "%SETTING%" AUDIO
-		IF /I "%UDERFINE%"=="TURN ON MUSIC" CALL "%SETTING%" AUDIO
-		 IF /I "%UDERFINE%"=="TURN OFF SOUNDS" CALL "%SETTING%" AUDIO
-		  IF /I "%UDERFINE%"=="TURN ON SOUNDS" CALL "%SETTING%" AUDIO
-		    IF /I "%UDERFINE%"=="TURN OFF AUDIO" CALL "%SETTING%" AUDIO
-			 IF /I "%UDERFINE%"=="TURN ON MUSIC" CALL "%SETTING%" AUDIO
+   IF /I "%UDERFINE%"=="AUDIO" CALL "%SETTING%" AUDIO
  IF /I "%UDERFINE%"=="KEYS" CALL "%SETTING%" SET %SHORTCUTS.VALUE% 6 SHORTCUTS.VALUE
   IF /I "%UDERFINE%"=="SHORTCUT" CALL "%SETTING%" SET %SHORTCUTS.VALUE% 6 SHORTCUTS.VALUE
    IF /I "%UDERFINE%"=="SHORTCUT KEYS" CALL "%SETTING%" SET %SHORTCUTS.VALUE% 6 SHORTCUTS.VALUE
  IF /I "%UDERFINE:~0,6%"=="VOLUME" CALL "%SETTING%" VOLUME
+  IF /I "%UDERFINE:~0,6%"=="MUSIC " CALL "%SETTING%" VOLUME
+   IF /I "%UDERFINE:~0,6%"=="AUDIO " CALL "%SETTING%" VOLUME
+    IF /I "%UDERFINE:~0,6%"=="SOUND " CALL "%SETTING%" VOLUME
+ IF /I "%UDERFINE:~0,3%"=="SFX" CALL "%SETTING%" VOLUME
  IF /I "%UDERFINE%"=="UPDATE" CALL "%SETTING%" SET %UPDATE.VALUE% 5 UPDATE.VALUE
   IF /I "%UDERFINE%"=="UPDATES" CALL "%SETTING%" SET %UPDATE.VALUE% 5 UPDATE.VALUE
    IF /I "%UDERFINE%"=="UPDATER" CALL "%SETTING%" SET %UPDATE.VALUE% 5 UPDATE.VALUE
- IF /I "%UDERFINE%"=="INTRO" CALL "%SETTING%" SET %SHOW.INTRO% 7 SHOW.INTRO
-  IF /I "%UDERFINE%"=="SHOW" CALL "%SETTING%" SET %SHOW.INTRO% 7 SHOW.INTRO
-   IF /I "%UDERFINE%"=="SHOW INTRO" CALL "%SETTING%" SET %SHOW.INTRO% 7 SHOW.INTRO
+ IF /I "%UDERFINE%"=="INTRO" CALL "%SETTING%" SET %SHOW.INTRO% 6 SHOW.INTRO
+  IF /I "%UDERFINE%"=="SHOW" CALL "%SETTING%" SET %SHOW.INTRO% 6 SHOW.INTRO
+   IF /I "%UDERFINE%"=="SHOW INTRO" CALL "%SETTING%" SET %SHOW.INTRO% 6 SHOW.INTRO
 GOTO SETTINGS
 :RESET
 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL 2>NUL
@@ -1740,7 +1582,7 @@ ECHO.[u 62%%
 CALL "%SCRIPTS_GAME%\loader.cmd"
 ECHO.[u 96%%
 SETLOCAL ENABLEDELAYEDEXPANSION
-TITLE %TITLE%!MAP.NAME.%SELECTED%:_= ! (Battle #%SELECTED%)
+TITLE %TITLE%!MAP.NAME.%SELECTED%:_= ! ^(#%SELECTED%^)
 ENDLOCAL
 ECHO.[u100%%
 IF EXIST LET.DEBUG (
