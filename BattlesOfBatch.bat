@@ -112,21 +112,24 @@ IF NOT "%CD%"=="%OCD%" (
 )
 :RESTART
 COLOR 0F
-::VAR:-Variables
+SET COLS=117
+SET LINES=48
+MODE CON:COLS=%COLS% LINES=%LINES%
+ECHO.[H[s Loading ...
+::VAR:-Core Variables
 SET "DM=%CD%"
 SET "DATA=%CD%\data"
 SET "DATA_TMP=%DATA%\temp"
 SET "DATA_IMAGES=%DATA%\images"
 SET "DATA_SCRIPTS=%DATA%\scripts"
 CALL "%DATA_SCRIPTS%\versions.cmd" || CALL :ERROR ERRLINE ID0001    0
-:: Detect Errors
+REM Detect Errors
 IF NOT DEFINED VERCODE CALL :ERROR ERRLINE ID0001A    0
 IF NOT DEFINED VERS CALL :ERROR ERRLINE ID0001B    0
 IF NOT DEFINED VERTYPE CALL :ERROR ERRLINE ID0001C    0
 IF NOT EXIST "%DATA_TMP%" MD "%DATA_TMP%"
 SET "HTS_DATA=%APPDATA%\HTS_DATA"
 SET "MAIN_GAME=%HTS_DATA%\BATTLESOFBATCH-%VERTYPE%-%VERCODE%"
-SET "DATA_SAVES=%MAIN_GAME%\SAVES"
 SET "DATA_SETTINGS=%MAIN_GAME%\SETTINGS"
 SET "HTSANI=%DATA_SCRIPTS%\htsani.cmd"
 SET "WAIT=%DATA_SCRIPTS%\wait.vbs"
@@ -142,16 +145,13 @@ SET "SCRIPTS_POP=%DATA_SCRIPTS%\pop"
 SET "DEV_ERR=%SCRIPTS_POP%\deverr.cmd"
 SET "CHOICE=CALL ^"%DATA_SCRIPTS%\choice.bat^""
 SET "INPUT_PART=nul"
-::VAR-Player Data
+::VAR:-Saves Manager
 SET "PLAYERDATA.MONEY=%DATA_SCRIPTS%\playerdata\money.cmd"
 SET "PLAYERDATA.XP=%DATA_SCRIPTS%\playerdata\xp.cmd"
 SET "PLAYERDATA.LVL=%DATA_SCRIPTS%\playerdata\lvl.cmd"
-SET "PLAYERDATA.LOAD=%DATA_SAVES%\PLAYERDATA.cmd"
-SET "DATA_SAVES.INV=%DATA_SAVES%\inv"
-SET "PLAYERSKILLS.LOAD=%DATA_SAVES%\SKILLS.cmd"
+SET "ITEMS.LOADER=%DATA_SCRIPTS%\playerdata\items.cmd"
 SET "SYS_LVL=%DATA_SCRIPTS%\playerdata\sys_lvl"
 SET "SAVE=%DATA_SCRIPTS%\save.cmd"
-SET "ITEMS.LOADER=%DATA_SCRIPTS%\playerdata\items.cmd"
 ::VAR:-Settings
 SET "SETTINGS.LOAD=%DATA_SETTINGS%\settings.cmd"
 SET "SETTING=%DATA_SCRIPTS%\settings.cmd"
@@ -213,9 +213,6 @@ SET "AUD.MENU=%DATA_AUD_S%\menu.mp3"
 SET "AUD.BATTLE.NORMAL=%DATA_AUDIO_G_B%\battle_normal.mp3"
 SET "AUD.BATTLE.BOSS=%DATA_AUDIO_G_B%\battle_bossfight.mp3"
 SET "MENU.AUDIO=%DATA_SCRIPTS%\menuaudio.cmd"
-::VAR:-Layout
-SET COLS=117
-SET LINES=48
 ::VAR:-Interface
 SET "INTERFACE=%DATA_SCRIPTS%\interface"
 SET "STAT.MONEY=%INTERFACE%\money.cmd"
@@ -233,11 +230,6 @@ SET "UI.CRAFT=%INTERFACE%\shop\craft.cmd"
 SET "CENTER=%INTERFACE%\center.cmd"
 SET "CHARACTER=%INTERFACE%\characters.cmd"
 SET "UI.MONEY=%INTERFACE%\money_decimals.cmd"
-::VAR:-Inventory
-SET "PLAYERDATA.ITEMS=%DATA_SAVES.INV%\ITEMS"
-SET "PLAYERDATA.EQ=%DATA_SAVES.INV%\EQUIP"
-SET "PLAYERDATA.MATERIALS=%DATA_SAVES.INV%\MATERIALS"
-SET "PLAYERDATA.WEAPONS=%DATA_SAVES.INV%\WEAPONS"
 SET INV_CHOICE=1
 SET INV_CHOICE_SLOT=1
 SET W_INV_CHOICE=1
@@ -306,14 +298,39 @@ SET "QDESC.TLVLS=[1;37mWin [4m%QMAX.TLVLS%[0m[1;37m battles."
 SET "DLC.DIR=%DATA%"
 SET "DLC.MAIN=%DLC.DIR%\1_example"
 SET "DLC.MAIN.AUDIO=%DLC.MAIN%\audio"
-::VAR:-END
 
-MODE CON:COLS=%COLS% LINES=%LINES%
+::VAR-Player Data
+ECHO.[u Loading ... System ^& Config
+
+IF NOT EXIST "%MAIN_GAME%\main.config" (
+	ECHO.[SYSTEM]
+	ECHO.profile=main
+	ECHO.unitsWarning=null
+	ECHO.licesneAgreed=null
+)>"%MAIN_GAME%\main.config"
+
+FOR /F "TOKENS=1,2DELIMS==" %%A IN (%MAIN_GAME%\main.config) DO (
+	IF NOT %%B.==. (
+		SET %%A=%%B
+	)
+)
+
+SET "DATA_SAVES=%MAIN_GAME%\SAVES\%profile%"
+SET "DATA_SAVES.INV=%DATA_SAVES%\inv"
+SET "PLAYERDATA.LOAD=%DATA_SAVES%\PLAYERDATA.cmd"
+SET "PLAYERSKILLS.LOAD=%DATA_SAVES%\SKILLS.cmd"
+
+::VAR:-Inventory
+SET "PLAYERDATA.ITEMS=%DATA_SAVES.INV%\ITEMS"
+SET "PLAYERDATA.EQ=%DATA_SAVES.INV%\EQUIP"
+SET "PLAYERDATA.MATERIALS=%DATA_SAVES.INV%\MATERIALS"
+SET "PLAYERDATA.WEAPONS=%DATA_SAVES.INV%\WEAPONS"
+
 FOR /F "tokens=1,2" %%A IN ('mode con') do (
 	IF "%%A"=="Lines:" SET GETLINES=%%B
 	IF "%%A"=="Columns:" SET GETCOLS=%%B
 )
-ECHO.[?25l[s Loading ...
+
 IF NOT EXIST "%HTS_DATA%" MD "%HTS_DATA%"
 IF NOT EXIST "%HTS_DATA%" (
 	ECHO.Failed to create directory "HTS_DATA" on "%APPDATA%".
@@ -321,14 +338,6 @@ IF NOT EXIST "%HTS_DATA%" (
 	PAUSE>NUL
 	EXIT /B 1
 )
-ECHO.[u Loading ... System ^& Config
-
-IF NOT EXIST "%DATA_SAVES%\main.config" (
-	ECHO.[SYSTEM]
-	ECHO.profile=main
-	ECHO.unitsWarning=null
-	ECHO.licesneAgreed=none
-)>"main.config"
 
 IF NOT EXIST "%MAIN_GAME%" MD "%MAIN_GAME%"
 IF NOT EXIST "%DATA_SAVES%" MD "%DATA_SAVES%"
@@ -337,8 +346,9 @@ IF NOT EXIST "%DATA_SAVES.INV%" MD "%DATA_SAVES.INV%"
 
 :: Get the supported bit units.
 REG Query "HKLM\Hardware\Description\System\CentralProcessor\0" | FIND /i "x86" > NUL && SET OSBIT=32 || SET OSBIT=64
-IF NOT EXIST "%MAIN_GAME%\32.dll" (
-	IF %OSBIT%==32 (
+
+IF %unitsWarning%==null (
+	IF %OSBIT%==64 (
 		CLS
 		ECHO WARNING!
 		ECHO.Your device does not support 64-bit units.
@@ -349,21 +359,20 @@ IF NOT EXIST "%MAIN_GAME%\32.dll" (
 		ECHO.
 		ECHO.Press any key to continue or just exit.
 		PAUSE>NUL
+		CLS
 	)
-	ECHO.[IGNORE]>"%MAIN_GAME%\32.dll"
+	CALL "%SAVE%" "FILE=%MAIN_GAME%\main.config" 3 unitsWarning=false
 )
 
 :: Agree to the license.
-IF NOT EXIST "%MAIN_GAME%\LICENSEAGREEMENT.dll" IF EXIST "%LICENSE%" (
-	IF EXIST "%LICENSE%" (
-		CLS
-		ECHO.Please read and confirm that you agree to our License!
-		ECHO.By closing the License text window you agree, and be
-		ECHO.able to continue playing the game.
-		START /WAIT "" "%LICENSE%"
-		ECHO.[GNU_GPLv3]>"%MAIN_GAME%\LICENSEAGREEMENT.dll"
-		CLS
-	)
+IF NOT %licesneAgreed%==GNU_GPLv3 IF EXIST "%LICENSE%" (
+	CLS
+	ECHO.Please read and confirm that you agree to our License!
+	ECHO.By closing the License text window you agree, and be
+	ECHO.able to continue playing the game.
+	START /WAIT "" "%LICENSE%"
+	CALL "%SAVE%" "FILE=%MAIN_GAME%\main.config" 4 licesneAgreed=GNU_GPLv3
+	CLS
 ) ELSE (
 	CLS
 	ECHO.No ACCEPTED license was found within this product.

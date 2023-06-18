@@ -28,41 +28,15 @@ CALL "%PLAYERDATA.XP%"
 CALL "%PLAYERDATA.MONEY%"
 IF NOT %SELECTED% GEQ %PLAYER.MAP.LEVEL% GOTO SKIP-SAVE
 SET /A PLAYER.MAP.LEVEL+=1
-SET "file=%DATA_SAVES%\PLAYERDATA.cmd"
-SET /A Line#ToSearch=4
-SET "Replacement=SET PLAYER.MAP.LEVEL=%PLAYER.MAP.LEVEL%"
-(FOR /F "tokens=1*delims=:" %%a IN ('findstr /n "^" "%file%"') DO (
-    SET "Line=%%b"
-    IF %%a EQU %Line#ToSearch% SET "Line=%Replacement%"
-    SETLOCAL ENABLEDELAYEDEXPANSION
-    ECHO(!Line!
-    ENDLOCAL
-))>"%file%.new"
-MOVE "%file%.new" "%file%">NUL
+CALL "%SAVE%" "FILE=%DATA_SAVES%\PLAYERDATA.cmd" 4 /A PLAYER.MAP.LEVEL= %PLAYER.MAP.LEVEL%
+
 :SKIP-SAVE
-SET /A Line#ToSearch=6
-SET /A COMPLETED.MAPS=COMPLETED.MAPS+1
-SET "Replacement=SET COMPLETED.MAPS=%COMPLETED.MAPS%"
-(FOR /F "tokens=1*delims=:" %%a IN ('findstr /n "^" "%file%"') DO (
-    SET "Line=%%b"
-    IF %%a EQU %Line#ToSearch% SET "Line=%Replacement%"
-    SETLOCAL ENABLEDELAYEDEXPANSION
-    ECHO(!Line!
-    ENDLOCAL
-))>"%file%.new"
-MOVE "%file%.new" "%file%">NUL
-SET "file=%DATA_SAVES%\QUESTS.cmd"
-SET /A Line#ToSearch=1
-SET /A Q.TOTAL_MONSTERS=%Q.TOTAL_MONSTERS%+3
-SET "Replacement=SET Q.TOTAL_MONSTERS=%Q.TOTAL_MONSTERS%"
-(FOR /f "tokens=1*delims=:" %%a IN ('findstr /n "^" "%file%"') DO (
-    SET "Line=%%b"
-    IF %%a equ %Line#ToSearch% SET "Line=%Replacement%"
-    SETLOCAL ENABLEDELAYEDEXPANSION
-    ECHO(!Line!
-    ENDLOCAL
-))>"%file%.new"
-MOVE "%file%.new" "%file%">NUL
+SET /A COMPLETED.MAPS+=1
+CALL "%SAVE%" "FILE=%DATA_SAVES%\PLAYERDATA.cmd" 6 /A COMPLETED.MAPS= %COMPLETED.MAPS%
+
+SET /A Q.TOTAL_MONSTERS+=%EN.MAX%
+CALL "%SAVE%" "FILE=%DATA_SAVES%\QUESTS.cmd" 1 /A Q.TOTAL_MONSTERS= %Q.TOTAL_MONSTERS%
+
 SETLOCAL ENABLEDELAYEDEXPANSION
 TITLE %TITLE%!MAP.NAME.%SELECTED%:_= ! ^(#%SELECTED%^) - Won The Battle
 ENDLOCAL

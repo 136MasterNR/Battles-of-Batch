@@ -1,31 +1,15 @@
 IF NOT DEFINED VERCODE EXIT
-IF NOT %PLAYER.MONEY% LEQ 0 (
-	SET /A PLAYER.MONEY.LOSE=%random% %% 5 +5
-	SET /A PLAYER.MONEY-=%PLAYER.MONEY.LOSE%
-	SET "file=%DATA_SAVES%\PLAYERDATA.cmd"
-	SET /A Line#ToSearch=1
-	SET "Replacement=SET PLAYER.MONEY=%PLAYER.MONEY"
-	(FOR /F "tokens=1*delims=:" %%a IN ('findstr /n "^" "%file%"') DO (
-		SET "Line=%%b"
-		IF %%a equ !Line#ToSearch! SET "Line=%Replacement%"
-		SETLOCAL ENABLEDELAYEDEXPANSION
-		ECHO(!Line!
-		ENDLOCAL
-	))>"%file%.new"
-	MOVE "%file%.new" "%file%">NUL
+
+SET /A PLAYER.MONEY.LOSE=%random% %% 5 +5
+IF %PLAYER.MONEY% LSS %PLAYER.MONEY.LOSE% (
+	SET PLAYER.MONEY.LOSE=%PLAYER.MONEY%
 )
-SET "file=%DATA_SAVES%\QUESTS.cmd"
-SET /A Line#ToSearch=3
+SET /A PLAYER.MONEY-=%PLAYER.MONEY.LOSE%
+
+CALL "%SAVE%" "FILE=%DATA_SAVES%\PLAYERDATA.cmd" 1 /A PLAYER.MONEY= %PLAYER.MONEY%
+
 SET /A Q.LOSE=%Q.LOSE%+1
-SET "Replacement=SET Q.LOSE=%Q.LOSE%"
-(FOR /f "tokens=1*delims=:" %%a IN ('findstr /n "^" "%file%"') DO (
-    SET "Line=%%b"
-    IF %%a equ %Line#ToSearch% SET "Line=%Replacement%"
-    SETLOCAL ENABLEDELAYEDEXPANSION
-    ECHO(!Line!
-    ENDLOCAL
-))>"%file%.new"
-MOVE "%file%.new" "%file%">NUL
+CALL "%SAVE%" "FILE=%DATA_SAVES%\QUESTS.cmd" 3 /A Q.LOSE= %Q.LOSE%
 SET GAME.STATUS=LOSE
 CLS
 ECHO.You died! You lost $%PLAYER.MONEY.LOSE%...
