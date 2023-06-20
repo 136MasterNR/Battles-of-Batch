@@ -500,18 +500,17 @@ CALL "%DATA_SAVES%\QUESTS.cmd"||((
 	CALL "%DATA_SAVES%\QUESTS.cmd"
 )
 
-CALL "%PLAYERSKILLS.LOAD%"||((
-		ECHO.SET SKILL.ATK=1
-		ECHO.SET SKILL.CRIT_RATE=1
-		ECHO.SET SKILL.HP=1
-		ECHO.EXIT /B 0
-	)>"%PLAYERSKILLS.LOAD%"
-	CALL "%PLAYERSKILLS.LOAD%"
+SET SKILL.ATK=
+SET SKILL.CRIT_RATE=
+SET SKILL.HP=
+
+CALL "%PLAYERSKILLS.LOAD%"||(
+	CALL :ResetSkills
 )
 
-IF NOT DEFINED SKILL.ATK CALL :ResetPlayerData
-IF NOT DEFINED SKILL.CRIT_RATE CALL :ResetPlayerData
-IF NOT DEFINED SKILL.HP CALL :ResetPlayerData
+IF NOT DEFINED SKILL.ATK CALL :ResetSkills
+IF NOT DEFINED SKILL.CRIT_RATE CALL :ResetSkills
+IF NOT DEFINED SKILL.HP CALL :ResetSkills
 
 ECHO.[u Loading ... Player Inventory ^(1/2)
 CALL "%ITEMS.LOADER%" LIST_EQ
@@ -761,7 +760,6 @@ CALL :PROFILE_SELECT
 :PROFILES_RE
 SET /P "=[2;3H[?25h"<NUL
 %CHOICE%
-ECHO.%CHOICE.INPUT%>TEST.txt
 IF /I %CHOICE.INPUT%.==R. GOTO PROFILES
 IF /I %CHOICE.INPUT%.==Q. GOTO S-MENU
 IF /I %CHOICE.INPUT%.==A. (
@@ -846,7 +844,7 @@ IF NOT DEFINED SELECTED_PROFILE IF %PROFILE%==%ITEM% SET SELECTED_PROFILE=%PROFI
 REM IF DEFINED SELECTED_PROFILE IF %SELECTED_PROFILE%==%PROFILE_COUNTER% SET PROFILE_CLR=[1m
 
 (      ECHO.[29C%PROFILE_CLR%╭─────────────┬────────────────────────────────────────────╮
-ECHO.[1B[29C%PROFILE_CLR%│[13C├╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┤[G[31C%RGB%252;255;179m%STR%[0m[2A
+ECHO.[1B[29C%PROFILE_CLR%│[13C├╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┤[G[31C%RGB%252;255;179m%STR:_= %[0m[2A
 ECHO.[3B[29C%PROFILE_CLR%╰─────────────┴────────────────────────────────────────────╯[4A
       ECHO.[29C%PROFILE_CLR%│[13C┆[44C│[G[46C%RGB%122;255;126mMONEY %RGB%179;255;181m$%PLAYER.MONEY%[0m  [1A%PROFILE_CLR%┬[1B[1D┆[1B[1D┴[1A  %RGB.LVL%LEVEL %RGB%194;228;255m↑%PLAYER.LVL%[0m  [1A%PROFILE_CLR%┬[1B[1D┆[1B[1D┴[1A  %RGB.BROWN%MAP %RGB.ORANGE%ͼ%PLAYER.MAP.LEVEL%[0m
 ECHO.[1B[29C%PROFILE_CLR%│[13C┆[44C│[G[47C%RGB%191;255;186m♥ %HP%[0m   [1A%PROFILE_CLR%┬[1B[1D┆[1B[1D┴[1A   %RGB.PINK%╀ %ATK%[0m   [1A%PROFILE_CLR%┬[1B[1D┆[1B[1D┴[1A   %RGB%255;209;143m֍ %CRIT%[0m   [1A%PROFILE_CLR%┬[1B[1D┆[1B[1D┴[1A   %RGB%201;252;255m▲ 0[0m
@@ -861,13 +859,13 @@ CLS
 ECHO.What should your profile be called? This will be your in-game username.[2B[GEnter Q or CANCEL to cancel.[2A
 SETLOCAL ENABLEDELAYEDEXPANSION
 %INPUT% "PROMPT=[0m[?25h> " "length=11"
-ENDLOCAL&SET UDERFINE=%UDERFINE%
+ENDLOCAL&SET UDERFINE=%UDERFINE: =_%
 IF /I %UDERFINE%==Q EXIT /B 0
 IF /I %UDERFINE%==CANCEL EXIT /B 0
 IF EXIST "%MAIN_GAME%\SAVES\%UDERFINE%" (
 	ECHO.ERR: Profile already exists!
 	ECHO.
-	ECHO.Press any key to try again . . .
+	ECHO.Press any key to try again...
 	PAUSE>NUL
 	GOTO CREATE_PROFILE
 )
@@ -887,7 +885,7 @@ IF %PROFILE%==%1 (
 	ECHO.ERR: This is your currently active profile, and cannot be deleted!
 	ECHO.     Activate another profile and try again.
 	ECHO.
-	ECHO.Press any key to return . . .
+	ECHO.Press any key to return...
 	PAUSE>NUL
 	EXIT /B 0
 )
@@ -937,7 +935,7 @@ ECHO.^|--' .-----------------.                      .-----------------------.   
 ECHO.^|    : Press Z to view :                   .--: %RGB%158;177;255mCharacter[0m ^& %RGB%133;255;196mEquipment[0m :--.                 : Press X to customize : ^|
 ECHO.^|    : your history .--'                .--'  '-----------------------'  '--.              '----. your appearance : ^|
 ECHO.^|    '-------------' .-----: %RGB%252;255;179mName[0m :-----:                                   :----: %RGB.TRUE%Health[0m :----. '----------------' ^|
-ECHO.^|                    : %RGB%253;255;209m^>[0m                :        %C.FRAME_0%       : %RGB%191;255;186m♥[0m [s               :                    ^|[u%STAT.NUM.HP%[u[55DWanderer
+ECHO.^|                    : %RGB%253;255;209m^>[0m                :        %C.FRAME_0%       : %RGB%191;255;186m♥[0m [s               :                    ^|[u%STAT.NUM.HP%[u[55D%profile:_= %
 ECHO.^|                    '------------------:        %C.FRAME_1%       :------------------'                    ^|
 ECHO.^|                                       :        %C.FRAME_2%       :                                       ^|
 ECHO.^|                     .----: %RGB%122;255;126mMoney[0m :----:        %C.FRAME_3%       :--: %RGB.FALSE%Strength[0m :---.                     ^|
@@ -2167,6 +2165,16 @@ ECHO.SET COMPLETED.MAPS=0
 ECHO.GOTO :EOF
 )>"%DATA_SAVES%\PLAYERDATA.cmd"
 CALL "%DATA_SAVES%\PLAYERDATA.cmd"
+EXIT /B 0
+
+:ResetSkills
+(
+	ECHO.SET SKILL.ATK=1
+	ECHO.SET SKILL.CRIT_RATE=1
+	ECHO.SET SKILL.HP=1
+	ECHO.EXIT /B 0
+)>"%PLAYERSKILLS.LOAD%"
+CALL "%PLAYERSKILLS.LOAD%"
 EXIT /B 0
 
 :EOF
