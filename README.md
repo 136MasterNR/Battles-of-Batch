@@ -45,7 +45,8 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
     - ***X***: Buy items from the in-game Workshop.
     - ***C***: View and upgrade your Skills.
     - ***V***: View the [Credits](https://github.com/136MasterNR/Battles-of-Batch#credits).
-    - ***CTRL*** + ***Q***: Exit in safe-mode.
+    - ***P***: Manage your profiles.
+    - ***CTRL*** + ***Q***: Exit safely.
     - ***CTRL*** + ***R***: Restart the game.
     - ***CTRL*** + ***SHIFT*** + ***6***: Reset your player data.
     - ***CTRL*** + ***SHIFT*** + ***-***: LGBTQIA+
