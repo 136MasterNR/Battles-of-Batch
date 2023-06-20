@@ -268,12 +268,13 @@ SET "RGB.FALSE=%RGB%255;89;89m"
 SET "RGB.CYAN=%RGB%133;222;255m"
 SET "RGB.AQUA=%RGB%0;254;254m"
 SET "RGB.YELLOW=%RGB%255;252;176m"
-SET "RGB.ORANGE=%RGB%255;176;79m"
+SET "RGB.ORANGE=%RGB%255;209;143m"
 SET "RGB.RED=%RGB%255;61;51m"
 SET "RGB.PINK=%RGB%245;105;105m"
 SET "RGB.GREEN=%RGB%102;255;0m"
 SET "RGB.DGRAY=%RGB%169;169;169m"
 SET "RGB.AQUAMARINE=%RGB%127;255;212m"
+SET "RGB.BROWN=%RGB%255;176;79m"
 ::VAR:-Quests
 SET "QUEST.LOADER=%DATA_SCRIPTS%\quests.cmd"
 SET "QNAME.TOTAL_MONSTERS=Sereal Killer"
@@ -299,20 +300,29 @@ SET "DLC.DIR=%DATA%"
 SET "DLC.MAIN=%DLC.DIR%\1_example"
 SET "DLC.MAIN.AUDIO=%DLC.MAIN%\audio"
 
+FOR /F "TOKENS=1* DELIMS==" %%A IN ('SET QMEM_TOTAL') DO (
+  SET "%%A="
+)
+
 ::VAR-Player Data
 ECHO.[u Loading ... System ^& Config
 
 IF NOT EXIST "%MAIN_GAME%\main.config" (
 	ECHO.[SYSTEM]
-	ECHO.profile=main
+	ECHO.profile=Wanderer
 	ECHO.unitsWarning=null
-	ECHO.licesneAgreed=null
+	ECHO.licesneAgreed=none
 )>"%MAIN_GAME%\main.config"
 
 FOR /F "TOKENS=1,2DELIMS==" %%A IN (%MAIN_GAME%\main.config) DO (
 	IF NOT %%B.==. (
 		SET %%A=%%B
 	)
+)
+
+IF NOT DEFINED profile (
+	DEL /Q "%MAIN_GAME%\main.config"
+	GOTO RESTART
 )
 
 SET "DATA_SAVES=%MAIN_GAME%\SAVES\%profile%"
@@ -348,7 +358,7 @@ IF NOT EXIST "%DATA_SAVES.INV%" MD "%DATA_SAVES.INV%"
 REG Query "HKLM\Hardware\Description\System\CentralProcessor\0" | FIND /i "x86" > NUL && SET OSBIT=32 || SET OSBIT=64
 
 IF %unitsWarning%==null (
-	IF %OSBIT%==64 (
+	IF %OSBIT%==32 (
 		CLS
 		ECHO WARNING!
 		ECHO.Your device does not support 64-bit units.
@@ -421,7 +431,7 @@ IF NOT EXIST "%DATA_SETTINGS%\settings.cmd" (
 		ECHO.SET AUTOSAVE.VALUE=TRUE
 		ECHO.SET UPDATE.VALUE=TRUE
 		ECHO.SET SHOW.INTRO=TRUE
-		ECHO.GOTO :EOF
+		ECHO.EXIT /B 0
 	)>%SETTINGS.LOAD%
 )
 CALL %SETTINGS.LOAD%
@@ -446,8 +456,9 @@ IF DEFINED REG_C1 (
 		CALL "%SETTINGS.LOAD%"
 	)
 )
-ECHO.[u Loading ... Checkng for updates
+
 IF "%UPDATE.VALUE%"=="TRUE" (
+	ECHO.[u Loading ... Retrieving updates
 	CALL "%UPDATER%" 2>NUL
 	CLS
 )
@@ -464,6 +475,11 @@ CALL "%DATA_SAVES%\PLAYERDATA.cmd" || CALL :ResetPlayerData
 SET /A "SELECTED=%PLAYER.MAP.LEVEL%"
 IF %SELECTED% GTR 13 SET SELECTED=1
 IF NOT DEFINED PLAYER.XP CALL :ResetPlayerData
+IF NOT DEFINED PLAYER.MONEY CALL :ResetPlayerData
+IF NOT DEFINED PLAYER.LVL CALL :ResetPlayerData
+IF NOT DEFINED PLAYER.MAP.LEVEL CALL :ResetPlayerData
+IF NOT DEFINED PLAYER.XP.REQ CALL :ResetPlayerData
+
 IF NOT EXIST "%PLAYERDATA.ITEMS%" COPY NUL "%PLAYERDATA.ITEMS%" >NUL
 IF NOT EXIST "%PLAYERDATA.WEAPONS%" COPY NUL "%PLAYERDATA.WEAPONS%" >NUL
 IF NOT EXIST "%PLAYERDATA.MATERIALS%" COPY NUL "%PLAYERDATA.MATERIALS%" >NUL
@@ -474,22 +490,28 @@ IF NOT EXIST "%PLAYERDATA.EQ%" (
 	ECHO.EMPTY>>"%PLAYERDATA.EQ%"
 	ECHO.EMPTY>>"%PLAYERDATA.EQ%"
 )
->NUL 2>NUL DIR /A-D "%DATA_SAVES%\*.cmd" && CALL "%DATA_SAVES%\QUESTS.cmd"||((
+
+CALL "%DATA_SAVES%\QUESTS.cmd"||((
 		ECHO.SET Q.TOTAL_MONSTERS=0
 		ECHO.SET Q.MONSTER_TYPE=0
 		ECHO.SET Q.LOSE=0
-		ECHO.GOTO :EOF
+		ECHO.EXIT /B 0
 	)>"%DATA_SAVES%\QUESTS.cmd"
 	CALL "%DATA_SAVES%\QUESTS.cmd"
 )
->NUL 2>NUL DIR /A-D "%DATA_SAVES%\*.cmd" && CALL "%PLAYERSKILLS.LOAD%"||((
+
+CALL "%PLAYERSKILLS.LOAD%"||((
 		ECHO.SET SKILL.ATK=1
 		ECHO.SET SKILL.CRIT_RATE=1
 		ECHO.SET SKILL.HP=1
-		ECHO.GOTO :EOF
+		ECHO.EXIT /B 0
 	)>"%PLAYERSKILLS.LOAD%"
 	CALL "%PLAYERSKILLS.LOAD%"
 )
+
+IF NOT DEFINED SKILL.ATK CALL :ResetPlayerData
+IF NOT DEFINED SKILL.CRIT_RATE CALL :ResetPlayerData
+IF NOT DEFINED SKILL.HP CALL :ResetPlayerData
 
 ECHO.[u Loading ... Player Inventory ^(1/2)
 CALL "%ITEMS.LOADER%" LIST_EQ
@@ -587,7 +609,7 @@ IF EXIST LET.DEBUG ECHO.%CHOICE.INPUT%
 IF /I %CHOICE.INPUT%.==A. GOTO MAP
 IF /I %CHOICE.INPUT%.==E. GOTO CHARACTER
 IF /I %CHOICE.INPUT%.==. CALL "%EVENT%"&GOTO MENU
-IF /I %CHOICE.INPUT%.==P. GOTO MAP
+IF /I %CHOICE.INPUT%.==P. GOTO PROFILES
 IF /I %CHOICE.INPUT%.==Q. GOTO QUESTS
 IF /I %CHOICE.INPUT%.==S. GOTO SETTINGS
 IF /I %CHOICE.INPUT%.==W. GOTO SHOP
@@ -683,6 +705,159 @@ ECHO.
 ECHO.[0mPress any key to return...[?47l
 PAUSE>NUL
 GOTO S-MENU
+:PROFILES
+TITLE %TITLE%Profiles Manager
+SET PROFILE_COUNTER=0
+SET SELECTED_PROFILE=
+SET CNT=0
+CLS
+
+(
+ECHO.[?25l[H╭───╮
+ECHO.│ Q │
+ECHO.╰───╯
+ECHO.[7B[25C                          %RGB.AQUAMARINE%PROFILES MANAGER[0m[1m
+ECHO.[25C┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+ECHO.[25C┃[s[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃[66C┃
+ECHO.[25C┃                     Navigate using [4mW[24m and [4mS[24m[23C┃
+ECHO.[25C┃               Choose your desired profile using [4mA[24m[16C┃
+ECHO.[25C┃        Create a profile using [4mD[24m, delete a profile using [4mX[24m[8C┃
+ECHO.[25C┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛[0m[u
+FOR /L %%I IN (1, 1, 4) DO (
+	ECHO.[29C%RGB%69;69;69m╭─────────────┬────────────────────────────────────────────╮
+	ECHO.[1B[29C│[13C├╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┤[G[35C???[2A
+	ECHO.[3B[29C╰─────────────┴────────────────────────────────────────────╯[4A
+	ECHO.[29C│[13C┆[44C│[G[46CMONEY $0  [1A┬[1B[1D┆[1B[1D┴[1A  LEVEL ↑0  [1A┬[1B[1D┆[1B[1D┴[1A  MAP ͼ0
+	ECHO.[1B[29C│[13C┆[44C│[G[47C♥ 0   [1A┬[1B[1D┆[1B[1D┴[1A   ╀ 0   [1A┬[1B[1D┆[1B[1D┴[1A   ֍ 0   [1A┬[1B[1D┆[1B[1D┴[1A   ▲ 0[0m
+	ECHO.
+)
+ECHO.[u
+)
+
+FOR /D %%I IN (%MAIN_GAME%\SAVES\*) DO CALL :PROFILE_DISPLAY %%~nI
+CALL :PROFILE_SELECT
+
+:PROFILES_RE
+SET /P "=[2;3H[?25h"<NUL
+%CHOICE%
+IF /I %CHOICE.INPUT%.==R. GOTO PROFILES
+IF /I %CHOICE.INPUT%.==Q. GOTO S-MENU
+IF /I %CHOICE.INPUT%.==A. (
+	FOR /D %%I IN (%MAIN_GAME%\SAVES\*) DO CALL :APPLY %%~nI
+)
+IF /I %CHOICE.INPUT%.==D. (
+	CALL :CREATE_PROFILE
+)
+IF /I %CHOICE.INPUT%.==W. IF NOT %SELECTED_PROFILE% LEQ 1 (
+	SET /A SELECTED_PROFILE-=1
+	CALL :PROFILE_SELECT
+)
+IF /I %CHOICE.INPUT%.==S. IF NOT %SELECTED_PROFILE% GEQ %PROFILE_COUNTER% (
+	SET /A SELECTED_PROFILE+=1
+	CALL :PROFILE_SELECT
+)
+GOTO PROFILES_RE
+
+:PROFILE_SELECT
+SET /A POS=5*%SELECTED_PROFILE%
+
+(
+IF DEFINED OLD_POS ECHO.[u%RGB.YELLOW%[3A[%OLD_POS%B  [1D[1B [1D[1B [2A[62C [1D[1B [1D[1B [0m
+SET OLD_POS=%POS%
+ECHO.[u%RGB.YELLOW%[3A[%POS%B ^>[1D[1B^>[1D[1B^>[2A[62C^<[1D[1B^<[1D[1B^<[0m
+)
+
+EXIT /B 0
+
+:APPLY
+SET /A CNT+=1
+IF NOT %CNT% EQU %SELECTED_PROFILE% EXIT /B 0
+CALL "%SAVE%" "FILE=%MAIN_GAME%\main.config" 2 profile=%1
+GOTO RESTART
+
+:PROFILE_DISPLAY
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET ITEM=%1
+IF NOT EXIST "%MAIN_GAME%\SAVES\%ITEM%\PLAYERDATA.cmd" EXIT /B 0
+IF NOT EXIST "%MAIN_GAME%\SAVES\%ITEM%\SKILLS.cmd" EXIT /B 0
+
+SET "DATA_SAVES=%MAIN_GAME%\SAVES\%ITEM%"
+SET "DATA_SAVES.INV=%DATA_SAVES%\inv"
+SET "PLAYERDATA.WEAPONS=%DATA_SAVES.INV%\WEAPONS"
+
+SET PLAYER.MONEY=
+SET PLAYER.LVL=
+SET PLAYER.MAP.LEVEL=
+SET SKILL.ATK=
+SET SKILL.CRIT_RATE=
+SET SKILL.HP=
+CALL "%MAIN_GAME%\SAVES\%ITEM%\PLAYERDATA.cmd"
+CALL "%MAIN_GAME%\SAVES\%ITEM%\SKILLS.cmd"
+CALL "%ITEMS.LOADER%" WEAPONS
+
+IF NOT DEFINED PLAYER.MONEY EXIT /B 0
+IF NOT DEFINED PLAYER.LVL EXIT /B 0
+IF NOT DEFINED PLAYER.MAP.LEVEL EXIT /B 0
+
+IF NOT DEFINED SKILL.ATK EXIT /B 0
+IF NOT DEFINED SKILL.CRIT_RATE EXIT /B 0
+IF NOT DEFINED SKILL.HP EXIT /B 0
+
+SET /A HP=%SKILL.HP%*100
+SET /A ATK=(%SKILL.ATK% * 50) + EQUIP.BONUS_ATK
+SET /A CRIT=%SKILL.CRIT_RATE%*5
+
+SET "STR=%ITEM%"
+CALL "%CENTER%" 11
+
+SET /A PROFILE_COUNTER+=1
+IF NOT DEFINED SELECTED_PROFILE IF %PROFILE%==%ITEM% SET SELECTED_PROFILE=%PROFILE_COUNTER%
+REM IF DEFINED SELECTED_PROFILE IF %SELECTED_PROFILE%==%PROFILE_COUNTER% SET PROFILE_CLR=[1m
+
+(      ECHO.[29C%PROFILE_CLR%╭─────────────┬────────────────────────────────────────────╮
+ECHO.[1B[29C%PROFILE_CLR%│[13C├╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┤[G[31C%RGB%252;255;179m%STR%[0m[2A
+ECHO.[3B[29C%PROFILE_CLR%╰─────────────┴────────────────────────────────────────────╯[4A
+      ECHO.[29C%PROFILE_CLR%│[13C┆[44C│[G[46C%RGB%122;255;126mMONEY %RGB%179;255;181m$%PLAYER.MONEY%[0m  [1A%PROFILE_CLR%┬[1B[1D┆[1B[1D┴[1A  %RGB.LVL%LEVEL %RGB%194;228;255m↑%PLAYER.LVL%[0m  [1A%PROFILE_CLR%┬[1B[1D┆[1B[1D┴[1A  %RGB.BROWN%MAP %RGB.ORANGE%ͼ%PLAYER.MAP.LEVEL%[0m
+ECHO.[1B[29C%PROFILE_CLR%│[13C┆[44C│[G[47C%RGB%191;255;186m♥ %HP%[0m   [1A%PROFILE_CLR%┬[1B[1D┆[1B[1D┴[1A   %RGB.PINK%╀ %ATK%[0m   [1A%PROFILE_CLR%┬[1B[1D┆[1B[1D┴[1A   %RGB%255;209;143m֍ %CRIT%[0m   [1A%PROFILE_CLR%┬[1B[1D┆[1B[1D┴[1A   %RGB%201;252;255m▲ 0[0m
+ECHO.)
+
+ENDLOCAL&SET SELECTED_PROFILE=%SELECTED_PROFILE%
+SET /A PROFILE_COUNTER+=1
+EXIT /B 0
+
+:CREATE_PROFILE
+CLS
+ECHO.What should your profile be called?
+SETLOCAL ENABLEDELAYEDEXPANSION
+%INPUT% "PROMPT=[0m[?25h" "length=11"
+ENDLOCAL&SET UDERFINE=%UDERFINE%
+IF /I %UDERFINE%==Q EXIT /B 0
+IF /I %UDERFINE%==CANCEL EXIT /B 0
+MD "%MAIN_GAME%\SAVES\%UDERFINE%"
+CALL "%SAVE%" "FILE=%MAIN_GAME%\main.config" 2 profile=%UDERFINE%
+GOTO RESTART
+
 :CHARACTER
 TITLE %TITLE%Character ^& Equipment
 COLOR 08
@@ -726,7 +901,7 @@ ECHO.^|--' .-----------------.                      .-----------------------.   
 ECHO.^|    : Press Z to view :                   .--: %RGB%158;177;255mCharacter[0m ^& %RGB%133;255;196mEquipment[0m :--.                 : Press X to customize : ^|
 ECHO.^|    : your history .--'                .--'  '-----------------------'  '--.              '----. your appearance : ^|
 ECHO.^|    '-------------' .-----: %RGB%252;255;179mName[0m :-----:                                   :----: %RGB.TRUE%Health[0m :----. '----------------' ^|
-ECHO.^|                    : %RGB%253;255;209m^>[0m                :        %C.FRAME_0%       : %RGB%191;255;186m+[0m [s               :                    ^|[u%STAT.NUM.HP%[u[55DWanderer
+ECHO.^|                    : %RGB%253;255;209m^>[0m                :        %C.FRAME_0%       : %RGB%191;255;186m♥[0m [s               :                    ^|[u%STAT.NUM.HP%[u[55DWanderer
 ECHO.^|                    '------------------:        %C.FRAME_1%       :------------------'                    ^|
 ECHO.^|                                       :        %C.FRAME_2%       :                                       ^|
 ECHO.^|                     .----: %RGB%122;255;126mMoney[0m :----:        %C.FRAME_3%       :--: %RGB.FALSE%Strength[0m :---.                     ^|
@@ -788,7 +963,10 @@ SET /A MORE_HIDDEN=%WEAPONS.REG_CNT%-14
 IF %MORE_HIDDEN% EQU 1 (SET MORE_HIDDEN=  ... ^(%MORE_HIDDEN% Hidden Item^) ...) ELSE IF %MORE_HIDDEN% LEQ 9 (SET MORE_HIDDEN= ... ^(%MORE_HIDDEN% Hidden Item/s^) ...) ELSE (SET MORE_HIDDEN=  ... ^(Hidden Items^) ...)
 IF DEFINED WIELDING.WEAPON (ECHO.[u[36C1: !WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ! %RGB%245;105;105m╀[0m[1m%EQUIP.BONUS_ATK%[0m[2B) ELSE (ECHO.[u[36C    No equipped weapons[2B)
 SET UI.POS=[81C
-IF %WEAPONS.REG_CNT%==0 (ECHO.%UI.POS%     No weapons owned) ELSE FOR /L %%A IN (1,1,%TMP.ITEM.REG_CNT%) DO (
+
+IF %WEAPONS.REG_CNT%==0 (
+	ECHO.%UI.POS%     No weapons owned
+) ELSE FOR /L %%A IN (1,1,%TMP.ITEM.REG_CNT%) DO (
 	CALL :WEAPON-GET-INFO !WEAPONS.REG_NAME.%%A! %%A
 )
 IF %WEAPONS.REG_CNT% GTR 14 ECHO.%UI.POS%%MORE_HIDDEN%
@@ -1661,12 +1839,12 @@ IF %SELECTED% EQU 1 (
 IF "%INV.SEL_NAME%"=="EMPTY" (
 	ECHO.[42;4H[s                                                          
 	ECHO.[u[1B:----------------------------------------------:      
-	ECHO.[u[2B  %RGB.ORANGE%No item selected[0m, press %RGB.CYAN%E[0m to choose an item. 
+	ECHO.[u[2B  %RGB.BROWN%No item selected[0m, press %RGB.CYAN%E[0m to choose an item. 
 	ECHO.[u[3B:----------------------------------------------:      
 ) ELSE IF NOT DEFINED INV.SEL_NAME (
 	ECHO.[42;4H[s                                                          
 	ECHO.[u[1B:---------------------------------------------:      
-	ECHO.[u[2B  %RGB.ORANGE%To use an item[0m, first press %RGB.CYAN%E[0m to select it.
+	ECHO.[u[2B  %RGB.BROWN%To use an item[0m, first press %RGB.CYAN%E[0m to select it.
 	ECHO.[u[3B:---------------------------------------------:      
 ) ELSE (
 	ECHO.[42;4H[s:---------------------------------------------------:
@@ -1818,7 +1996,6 @@ IF DEFINED VERCODE (
 	IF NOT DEFINED SFX.VOLUME CALL :SETT_ERR
 	IF NOT DEFINED AUTOSAVE.VALUE CALL :SETT_ERR
 	IF NOT DEFINED UPDATE.VALUE CALL :SETT_ERR
-	IF NOT DEFINED SHORTCUTS.VALUE CALL :SETT_ERR
 	IF NOT DEFINED SHOW.INTRO CALL :SETT_ERR
 )
 SET "ERR.CODE=%ERRORLEVEL%"
@@ -1838,7 +2015,7 @@ SET "INF_ERR=%~2"
 	ECHO. Err Code: '%ERR.CODE%'
 	ECHO. Err Info: '%INF_ERR:~0,2%:%INF_ERR:~2%'
 	SETLOCAL ENABLEDELAYEDEXPANSION
-	ECHO. At Line: '!%~1!'
+	ECHO. Position: '!%~1!'
 	ENDLOCAL
 	ECHO.
 	ECHO.

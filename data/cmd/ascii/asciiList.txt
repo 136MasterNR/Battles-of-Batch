@@ -150,7 +150,7 @@ z
 •  Dot
 –
 —
-˜
+˜   ~
 ™  TM
 š
 ›  Right Arrow
@@ -158,7 +158,6 @@ z
 
 ž
 Ÿ
-
 ¡  Upside Down Exclamation Mark
 ¢
 £
