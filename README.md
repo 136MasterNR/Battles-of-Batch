@@ -12,7 +12,8 @@ Battles of Batch is a RPG text game built for the Windows MS-DOS terminal versio
 ##### The project was initiated by 136MasterNR on August 13, 2021.<br/><br/>
 
 ## Download/Installation Process, Requirements & Notes
-  - **Download manually here**: [battlesofbatch-latest.zip](https://raw.githubusercontent.com/136MasterNR/HTS-Studios/main/get-download/battlesofbatch-latest.zip) \[LATEST RELEASE\]
+  - **Latest release**: [battlesofbatch-v0350.zip](https://github.com/136MasterNR/Battles-of-Batch/releases/latest/download/battlesofbatch-v0350.zip)
+  - **Source code**: [main.zip](https://github.com/136MasterNR/Battles-of-Batch/archive/refs/heads/main.zip)
 
 After the download is complete, simply extract and run the batch file `BattleOfBatch.bat`.
 
@@ -21,7 +22,7 @@ Battles of Batch is currently only available on Windows, with a required command
 **It is not recommended to launch in the new Windows Terminal as it changes a lot of text display features. This was made specifically for Command Line!**
 
 If you download the project directly from the Source Code, make sure to run the file [fixGitHub.ps1](fixGitHub.ps1) in order to convert all the files' EOF from Unix to Windows. The game will not run properly otherwise.
-Please note that the Source Code contains untested files, it's recommended to use a release instead.
+Please note that the Source Code contains untested features, it's recommended to use a release instead.
 
 This project uses [ANSI](https://www.robvanderwoude.com/ansi.php) as a text formatter. It's used to manage displayed text and colors on the console. It's required for almost any display-related feature to work as intended.
 # About

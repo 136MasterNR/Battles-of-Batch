@@ -58,7 +58,7 @@ IF DEFINED WT_SESSION (
 	CLS
 	ECHO !^!! WARNING !^!!
 	ECHO.Windows Terminal does not support the essential display
-	ECHO.features specialized for the MS Command Line.
+	ECHO.features specialized for the Command Prompt.
 	ECHO.
 	ECHO.Due to this, you will experience various unexpected
 	ECHO.display issues while playing the game.
@@ -68,7 +68,7 @@ IF DEFINED WT_SESSION (
 	ECHO.and such other issues.
 	ECHO.
 	ECHO.Press any key to ignore this warning or launch the game
-	ECHO.in Command Line.
+	ECHO.in Command Prompt.
 	PAUSE>NUL
 	CLS
 )
@@ -82,7 +82,7 @@ IF NOT EXIST "%~n0%~x0" (
 	ECHO.2. Make sure that the batch file has permissions to Read/Write in this directory.
 	ECHO.3. Do not launch the batch file directly from a search bar or a run-in.
 	ECHO.4. If you are using a shortcut, make sure you added the correct directory.
-	ECHO.5. Do not run with administrator/elevated permissions.
+	ECHO.5. Try launching with administrator/elevated permissions.
 	PAUSE>NUL
 	EXIT
 
@@ -107,7 +107,7 @@ IF NOT "%CD%"=="%OCD%" (
 	ECHO.Try the following:
 	ECHO.1. Make sure to extract the game from the zip file.
 	ECHO.2. Bad shortcut options, such as working directory.
-	ECHO.3. Do not launch from shared folders, such as onedrive.
+	ECHO.3. Do not launch from shared folders or onedrive.
 	PAUSE>NUL&EXIT
 )
 :RESTART
