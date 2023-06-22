@@ -580,7 +580,7 @@ ECHO.^|       [   ^|^|   ]              [1m^|  _T[0m ^| Press %RGB.CYAN%A[0m 
 ECHO.^|        \__^|^|__/               [1m'-`^|^|[0m ^| - - - - - - - - - - - - - - - - - - -  ^|                          ,_,       ^|
 ECHO.^|          '--'                   :[1m^|^|[0m-^| Press %RGB%138;167;255mQ[0m - [1;37mView your quests.[0m            ^|                         ^(.,.^)      ^|
 ECHO.^|                                 :[1m^|^|[0m-^| - - - - - - - - - - - - - - - - - - -  ^|                         ^(   ^)      ^|
-ECHO.^|                                  [1m[][0m ^| Press %RGB%105;255;147mW[0m - [1;37mBuy items ^& skills.[0m          ^|                         -"-"-------^|
+ECHO.^|                                  [1m[][0m ^| Press %RGB%105;255;147mW[0m - [1;37mBuy items ^& skills.[0m %RGB.GRAY%^(Z/X/C^)[0m  ^|                         -"-"-------^|
 ECHO.^|                                     ^| - - - - - - - - - - - - - - - - - - -  ^|                                    ^|
 ECHO.^|                                     ^| Press %RGB%191;255;221mE[0m - [1;37mManage your character.[0m       ^|                                    ^|
 ECHO.^|                                     ^| - - - - - - - - - - - - - - - - - - -  ^|                                    ^|
@@ -771,13 +771,13 @@ ECHO.^|          [1mPress %RGB.CYAN%[4mA[0m[1m to equip an Item[0m         
 ECHO.^|      .--------.-----------.--------.     .--------.-----------.--------.     .--------.-----------.--------.      ^|
 ECHO.^|      : .-'-.- :   [1mItems[0m   : -.-'-. :     : -/\/\- : [1mMaterials[0m : -/\/\- :     : -^|---- :  [1mWeapons[0m  : ----^|- :      ^|
 ECHO.^|      '--------'-----------'--------'     '--------'-----------'--------'     '--------'-----------'--------'      ^|
-ECHO.^|      . - - : EQUIPPED  ITEMS : - - .     . - - : OWNED MATERIALS : - - .     . - - : EQUIPPED WEAPON : - - .      ^|
+ECHO.^|      . - - : [1mEQUIPPED  ITEMS[0m : - - .     . - - : [1mOWNED MATERIALS[0m : - - .     . - - : [1mEQUIPPED WEAPON[0m : - - .      ^|
 ECHO.^|      : 1:                          :     : [s                            :     :                             :      ^|
 ECHO.^|      : 2:                          :     :                             :     '                             '      ^|
-ECHO.^|      : 3:                          :     :                             :     . - - :  OWNED WEAPONS  : - - .      ^|
+ECHO.^|      : 3:                          :     :                             :     . - - :  [1mOWNED WEAPONS[0m  : - - .      ^|
 ECHO.^|      : 4:                          :     :                             :     :                             :      ^|
 ECHO.^|      '                             '     :                             :     :                             :      ^|
-ECHO.^|      . - - - : OWNED ITEMS : - - - .     :                             :     :                             :      ^|
+ECHO.^|      . - - - : [1mOWNED ITEMS[0m : - - - .     :                             :     :                             :      ^|
 ECHO.^|      :                             :     :                             :     :                             :      ^|
 ECHO.^|      :                             :     :                             :     :                             :      ^|
 ECHO.^|      :                             :     :                             :     :                             :      ^|
@@ -803,7 +803,7 @@ SET UI.POS=[9C
 IF %ITEM.REG_CNT% GTR 11 (SET TMP.ITEM.REG_CNT=11) ELSE SET TMP.ITEM.REG_CNT=%ITEM.REG_CNT%
 SET /A MORE_HIDDEN=%ITEM.REG_CNT%-11
 IF %MORE_HIDDEN% EQU 1 (SET MORE_HIDDEN=  ... ^(%MORE_HIDDEN% Hidden Item^) ...) ELSE IF %MORE_HIDDEN% LEQ 9 (SET MORE_HIDDEN= ... ^(%MORE_HIDDEN% Hidden Item/s^) ...) ELSE (SET MORE_HIDDEN=  ... ^(Hidden Items^) ...)
-IF %ITEM.REG_CNT%==0 (ECHO.%UI.POS% You do not own any items) ELSE FOR /L %%A IN (1,1,%TMP.ITEM.REG_CNT%) DO (ECHO.%UI.POS%!ITEM.REG_NAME.%%A! ^(x!ITEM.REG_LVL.%%A!^))
+IF %ITEM.REG_CNT%==0 (ECHO.%UI.POS% You do not own any items) ELSE FOR /L %%A IN (1,1,%TMP.ITEM.REG_CNT%) DO (ECHO.%UI.POS%%RGB.CYAN%!ITEM.REG_NAME.%%A![0m ×[1m!ITEM.REG_LVL.%%A![0m)
 IF %ITEM.REG_CNT% GTR 11 ECHO.%UI.POS%%MORE_HIDDEN%
 SET UI.POS=[81C
 IF %MAT.REG_CNT%==0 (ECHO.[u    No materials owned) ELSE FOR /L %%A IN (1,1,%MAT.REG_CNT%) DO (
@@ -812,7 +812,7 @@ IF %MAT.REG_CNT%==0 (ECHO.[u    No materials owned) ELSE FOR /L %%A IN (1,1,%MA
 IF %WEAPONS.REG_CNT% GTR 14 (SET TMP.ITEM.REG_CNT=14) ELSE SET TMP.ITEM.REG_CNT=%WEAPONS.REG_CNT%
 SET /A MORE_HIDDEN=%WEAPONS.REG_CNT%-14
 IF %MORE_HIDDEN% EQU 1 (SET MORE_HIDDEN=  ... ^(%MORE_HIDDEN% Hidden Item^) ...) ELSE IF %MORE_HIDDEN% LEQ 9 (SET MORE_HIDDEN= ... ^(%MORE_HIDDEN% Hidden Item/s^) ...) ELSE (SET MORE_HIDDEN=  ... ^(Hidden Items^) ...)
-IF DEFINED WIELDING.WEAPON (ECHO.[u[36C1: !WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ! %RGB%245;105;105m╀[0m[1m%EQUIP.BONUS_ATK%[0m[2B) ELSE (ECHO.[u[36C    No equipped weapons[2B)
+IF DEFINED WIELDING.WEAPON (ECHO.[u[36C1: %RGB.YELLOW%!WEAPONS.REG_NAME.%WIELDING.WEAPON%:_= ! %RGB%245;105;105m╀[0m[1m%EQUIP.BONUS_ATK%[0m[2B) ELSE (ECHO.[u[36C    No equipped weapons[2B)
 SET UI.POS=[81C
 
 IF %WEAPONS.REG_CNT%==0 (
@@ -874,7 +874,7 @@ ECHO.
 ECHO.EQUIPPED:
 SET UI.POS=[3C
 IF NOT DEFINED ITEM.EQ_CNT ( ECHO.EMPTY ) ELSE FOR /L %%A IN (1,1,%ITEM.EQ_CNT%) DO (
-	IF !ITEM.EQ_NAME.%%A!==EMPTY ( ECHO.%UI.POS%EMPTY ) ELSE (
+	IF !ITEM.EQ_NAME.%%A!==EMPTY ( ECHO.%UI.POS%[1mEMPTY ) ELSE (
 		CALL :INVENTORY-EQUIPPED %%A !ITEM.EQ_NAME.%%A!
 	)
 )
@@ -967,11 +967,11 @@ IF /I %CHOICE.INPUT%==A (
 ) ELSE GOTO INV-CHOOSE_SLOT
 :INVENTORY-EQUIPPED
 SET TMP.EQ_N=!ITEM.EQ_NAME.%1!
-ECHO.%UI.POS%!ITEM.REG_NAME.%2! (x!ITEM.REG_LVL.%TMP.EQ_N%!)
+ECHO.%UI.POS%%RGB.CYAN%!ITEM.REG_NAME.%2![0m ×[1m!ITEM.REG_LVL.%TMP.EQ_N%![0m
 EXIT /B 0
 :MAT_DISPLAY
 SET TMP.DISPLAY=%1
-ECHO.[u[1A[%3B%TMP.DISPLAY:_= % ^(x%2^)
+ECHO.[u[1A[%3B%RGB.ORANGE%%TMP.DISPLAY:_= %[0m ×[1m%2[0m
 EXIT /B 0
 :INV-CHOOSE_WEAPON
 CALL "%ITEMS.LOADER%" REGISTER
@@ -1051,7 +1051,7 @@ EXIT /B 0
 :WEAPON-GET-INFO
 SET TMP.NAME=%1
 SET /A TMP.DUPE_DMG=I.%1.DMG * WEAPONS.REG_LVL.%2
-ECHO.%RGB.YELLOW%%UI.POS%%TMP.NAME:_= %[0m - %RGB.CYAN%↑[0m[1m!WEAPONS.REG_LVL.%2! %RGB%245;105;105m╀[0m[1m!TMP.DUPE_DMG!
+ECHO.%RGB.YELLOW%%UI.POS%%TMP.NAME:_= %[0m %RGB.CYAN%↑[0m[1m!WEAPONS.REG_LVL.%2! %RGB%245;105;105m╀[0m[1m!TMP.DUPE_DMG!
 EXIT /B 0
 
 :PROFILES
@@ -1295,7 +1295,7 @@ ECHO.^|     \   o\/o   /                                                        
 ECHO.^|      \   ^|^|   /                            [0mPress %RGB.CYAN%[4mA[0m or %RGB.CYAN%[4mP[0m to begin the level.[0m                       \   ^|^|   /      ^|
 ECHO.^|       \  ^|^|  /                 [0m Press %RGB.AQUAMARINE%[4mC[0m to jump [1m7[0m levels forward or %RGB.AQUAMARINE%[4mZ[0m to go backwards.[0m             \  ^|^|  /       ^|
 ECHO.^|        '.^|^|.'                     [0mPress %RGB.YELLOW%[4mD[0m to move to the next level, %RGB.YELLOW%[4mS[0m for previous.[0m                '.^|^|.'        ^|
-ECHO.^|          ''                                  Use %RGB.FALSE%[4mQ[0m to return to the menu.                             ''          ^|
+ECHO.^|          ''                                 Press %RGB.FALSE%[4mQ[0m to return to the menu.                             ''         ^|
 ECHO.'-._______________________________________________________________________________________________________________.-'[4A[u
 )
 
