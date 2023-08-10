@@ -14,7 +14,7 @@ EXIT /B 0
 ECHO.[1C%RGB.LVL%                       %RGB.TRUE%Recommended Lvl[0m: [1m3       %RGB.FALSE%Enemies[0m: [1mJumpo ↑1[0m, [1mJumpo ↑1[0m, [1mYara ↑2[0m, [1mYara ↑2          [0m
 EXIT /B 0
 :3
-ECHO.[1C%RGB.LVL%                              %RGB.TRUE%Recommended Lvl[0m: [1m5    %RGB.FALSE%Enemies[0m: [1mNimbo ↑1[0m, [1mNimbo ↑1[0m, [1mNimbo ↑1                 [0m
+ECHO.[1C%RGB.LVL%                            %RGB.TRUE%Recommended Lvl[0m: [1m5    %RGB.FALSE%Enemies[0m: [1mNimbo ↑1[0m, [1mNimbo ↑1[0m, [1mNimbo ↑1                   [0m
 EXIT /B 0
 :4
 ECHO.[1C%RGB.LVL%                        %RGB.TRUE%Recommended Lvl[0m: [1m6    %RGB.FALSE%Enemies[0m: [1mFrench ↑1[0m, [1mFrench ↑1[0m, [1mNimbo ↑1[0m, [1mNimbo ↑1        [0m

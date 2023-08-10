@@ -1,6 +1,6 @@
 IF NOT DEFINED VERCODE EXIT
 
-SET /A PLAYER.MONEY.LOSE=%random% %% 5 +5
+SET /A PLAYER.MONEY.LOSE=%random% %% 5*%SELECTED% +%SELECTED%
 IF %PLAYER.MONEY% LSS %PLAYER.MONEY.LOSE% (
 	SET PLAYER.MONEY.LOSE=%PLAYER.MONEY%
 )
@@ -11,8 +11,17 @@ CALL "%SAVE%" "FILE=%DATA_SAVES%\PLAYERDATA.cmd" 1 /A PLAYER.MONEY= %PLAYER.MONE
 SET /A Q.LOSE=%Q.LOSE%+1
 CALL "%SAVE%" "FILE=%DATA_SAVES%\QUESTS.cmd" 3 /A Q.LOSE= %Q.LOSE%
 SET GAME.STATUS=LOSE
-CLS
-ECHO.You died! You lost $%PLAYER.MONEY.LOSE%...
-ECHO.Press any key to return to the Menu.
+CALL "%SCRIPTS%\charcnt.cmd" %PLAYER.MONEY.LOSE%
+SET /A SPACES=%CHARCNT% -2
+SET SPACE=
+FOR /L %%S IN (1,1,0) DO (
+	SET "SPACE=%SPACE% "
+)
+COLOR 08
+ECHO.[20;45H[0m[1m-[4mX[0m[1m- %RGB.PINK% You Lost The Battle [1;37m%SPACE% -[4mX[0m[1m-
+ECHO.[44C[1m'.'                       %SPACE%'.'
+ECHO.[44C[1m.'                         %SPACE%'.[G[48C%RGB%179;233;255mYou dropped %RGB.COIN%[4m$%PLAYER.MONEY.LOSE% Coins[0m[1;37m
+ECHO.[44C[1m:                           %SPACE%:
+ECHO.[44C[1m '..'..'...'.....'...'..'..'
 PAUSE>NUL
 EXIT /B 0

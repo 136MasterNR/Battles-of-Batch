@@ -1,6 +1,5 @@
 ::Created by 136MasterNR - Read the "copyright.txt" file for more info.
 ::(Use "NotePadPP" or anything other than "Notepad" to view better this file)
-:: Languages used:    99.8% Batch    0.2% VBScript
 :: ______ ______ ______ ______ ______ ______ ______ ______ _____ __
 ::/_____//_____//_____//_____//_____//_____//_____//_____//_____\\_\
 ::    _____        __           _____ _             _ _         |/ / 
@@ -248,7 +247,6 @@ SET "LOAD.LEVEL_=%DATA%\levels\lvl"
 SET "LOC.HP.P=[12;4H"
 ::VAR:-Actions
 SET "SCRIPTS.ACT=%SCRIPTS_GAME%\acts"
-SET "SCRIPTS.ACT.VISUALS=%SCRIPTS_GAME%\acts"
 SET "ACT.ATTACK=%SCRIPTS.ACT%\ATTACK.cmd"
 SET "ACT.BOMB=%SCRIPTS.ACT%\BOMB.cmd"
 SET "ACT.HEAL=%SCRIPTS.ACT%\HEAL.cmd"
@@ -282,10 +280,10 @@ SET "QNAME.TOTAL_MONSTERS=Sereal Killer"
 SET QREW.MONEY.TOTAL_MONSTERS=12500
 SET QREW.XP.TOTAL_MONSTERS=30000
 SET QMAX.TOTAL_MONSTERS=250
-SET "QDESC.TOTAL_MONSTERS=[1;37mKill a total of [4m%QMAX.TOTAL_MONSTERS%[0m[1;37m monsters."
+SET "QDESC.TOTAL_MONSTERS=[1;37mKill a total of [4m%QMAX.TOTAL_MONSTERS%[0m[1;37m enemies."
 SET "QNAME.MTYPE=All The Species"
 SET QMAX.MTYPE=29
-SET "QDESC.MTYPE=[1;37mKill every single type of monster."
+SET "QDESC.MTYPE=[1;37mKill every single type of enemy."
 SET "QNAME.LOSE=For God's Sake"
 SET QREW.MONEY.LOSE=750
 SET QREW.XP.LOSE=400
@@ -308,11 +306,24 @@ FOR /F "TOKENS=1* DELIMS==" %%A IN ('SET QMEM_') DO (
 ::VAR-Player Data
 ECHO.[u Loading ... System ^& Config
 
+IF NOT EXIST "%MAIN_GAME%" (
+	MD "%MAIN_GAME%"
+	IF NOT EXIST "%MAIN_GAME%" (
+		ECHO.Couldn't create folder at
+		ECHO.%MAIN_GAME%
+		ECHO.
+		ECHO.Press any key to exit.
+		PAUSE>NUL
+		EXIT 1
+	)
+)
+
 IF NOT EXIST "%MAIN_GAME%\main.config" (
 	ECHO.[SYSTEM]
 	ECHO.profile=Wanderer
 	ECHO.unitsWarning=null
 	ECHO.licesneAgreed=none
+	ECHO.terminal=0
 )>"%MAIN_GAME%\main.config"
 
 FOR /F "TOKENS=1,2DELIMS==" %%A IN (%MAIN_GAME%\main.config) DO (
@@ -350,7 +361,6 @@ IF NOT EXIST "%HTS_DATA%" (
 	EXIT /B 1
 )
 
-IF NOT EXIST "%MAIN_GAME%" MD "%MAIN_GAME%"
 IF NOT EXIST "%DATA_SAVES%" MD "%DATA_SAVES%"
 IF NOT EXIST "%DATA_SETTINGS%" MD "%DATA_SETTINGS%"
 IF NOT EXIST "%DATA_SAVES.INV%" MD "%DATA_SAVES.INV%"
@@ -584,19 +594,19 @@ ECHO.^|                                  [1m[][0m ^| Press %RGB%105;255;147mW
 ECHO.^|                                     ^| - - - - - - - - - - - - - - - - - - -  ^|                                    ^|
 ECHO.^|                                     ^| Press %RGB%191;255;221mE[0m - [1;37mManage your character.[0m       ^|                                    ^|
 ECHO.^|                                     ^| - - - - - - - - - - - - - - - - - - -  ^|                                    ^|
-ECHO.^|             [1m/\_[]_/\[0m                ^| Press %RGB%249;241;165mS[0m - [1;37mChange your preferences.[0m     ^|                                    ^|
-ECHO.^|            [1m^|] _^|^|_ [^|[0m               ^| - - - - - - - - - - - - - - - - - - -  ^|                                    ^|
-ECHO.^|       ___   [1m\/ ^|^| \/[0m                '.             Press a Key              .'                                    ^|
-ECHO.^|      ╱\_/╲     [1m^|^|[0m                    '--------------------------------------'                                     ^|
-ECHO.^|     ^(^|ò ó^|^)    [1m^|^|[0m                                                                                                 ^|
-ECHO.^|   __/{\^^/}\____[1m^|^|[0m                                  .    '    .                                                    ^|
-ECHO.^|  / \  {~}  /__^|_]                                    _______                                                      ^|
-ECHO.^|  ^| /\  ~  /    [1m[][0m                               _  .`_^|___^|_`.  _                                                 ^|
-ECHO.^|  ^|_^| ^)   ^(     [1m''[0m                                   \ \   / /                             ___                     ^|
-ECHO.^|  \_]/_____\                                          \ ' ' /                           __/_  `.  .-^"^"^"-. .        ^|
-ECHO.^|    _\_^| ^|_/_                                          \ ^" /                            \_,` ^| \-'  /   ^)`-'       ^|
-ECHO.^|   ^(_,_^| ^|_,_^)                                          \./                              ___Y  ,    .'7 /^|         ^|
-ECHO.^|                                                         V                              ^(_,___/...-` ^(_/_/         ^|[E^| [1;30m2023©136MasterNR[0m                                                                   [1;30mBATTLES OF BATCH: [0;33m%VERTYPE% %VERS%[0m ^|[?25h)
+ECHO.^|                                     ^| Press %RGB%249;241;165mS[0m - [1;37mChange your preferences.[0m     ^|                                    ^|
+ECHO.^|              /\_[]_/\               ^| - - - - - - - - - - - - - - - - - - -  ^|                                    ^|
+ECHO.^|             ^|] _^|^|_ [^|              '.             Press a Key              .'                                    ^|
+ECHO.^|        ___   \/ ^|^| \/                '--------------------------------------'                                     ^|
+ECHO.^|       ╱\_/╲     ^|^|                                                                                                ^|
+ECHO.^|      ^(^|ò ó^|^)    ^|^|                                 .    '    .                                                    ^|
+ECHO.^|    __/{\^^/}\____^|^|                                   _______                                                      ^|
+ECHO.^|   / \  {~}  /__^|_]                              _  .`_^|___^|_`.  _                                                 ^|
+ECHO.^|   ^| /\  ~  /    []                                  \ \   / /                             ___                     ^|
+ECHO.^|   ^|_^| ^)   ^(     ''                                   \ ' ' /                           __/_  `.  .-^"^"^"-. .        ^|
+ECHO.^|   \_]/_____\                                          \ ^" /                            \_,` ^| \-'  /   ^)`-'       ^|
+ECHO.^|     _\_^| ^|_/_                                          \./                              ___Y  ,    .'7 /^|         ^|
+ECHO.^|    ^(_,_^| ^|_,_^)                                          V                              ^(_,___/...-` ^(_/_/         ^|[E^|                                                                                         [1;30m2023©136MasterNR[0m          ^|[114D[1;30mBATTLES OF BATCH [0;33m%VERS%-%VERTYPE%[0m[?25h)
 ECHO.^|     .                              .    .                              .    .                              .      ^|[E^|     ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|      ^|[E'-----'-------'-------'-------'------'----'-------'-------'-------'------'----'-------'-------'-------'------'------'[2A
 IF NOT %OLD.PLAYER.LVL%==%PLAYER.LVL% CALL "%SCRIPTS_POP%\lvlup.cmd"
 CALL "%QUEST.LOADER%" LOAD
@@ -636,7 +646,7 @@ IF /I %CHOICE.INPUT%.==. (
 	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
 	GOTO RESTART
 )
-IF /I %CHOICE.INPUT%.==. (
+IF /I %CHOICE.INPUT%.==. IF %terminal% EQU 1 (
 	CALL :TERMINAL
 	GOTO MENU
 )
@@ -1131,6 +1141,10 @@ IF /I %CHOICE.INPUT%.==. (
 	FOR /D %%I IN (%MAIN_GAME%\SAVES\*) DO CALL :DEL_PROFILE %%~nI
 	GOTO PROFILES
 )
+IF /I %CHOICE.INPUT%.==. (
+	FOR /D %%I IN (%MAIN_GAME%\SAVES\*) DO CALL :REN_PROFILE %%~nI
+	GOTO PROFILES
+)
 GOTO PROFILES_RE
 
 :PROFILE_SELECT
@@ -1215,7 +1229,7 @@ IF %PROFILE_COUNTER% GEQ 4 (
 COLOR 08
 ECHO.[?25l[0m[18;35H┏━━━━━━━━━━━━━━━━━━━┫%RGB.CYAN%INPUT[0m┠━━━━━━━━━━━━━━━━━━━┓
 ECHO.[34C┃                                             ┃
-ECHO.[34C┃    What should your profile be called?      ┃
+ECHO.[34C┃    What should your profile be called^?      ┃
 ECHO.[34C┃    This will be your %RGB.CYAN%in-game username[0m.      ┃
 ECHO.[34C┃                                             ┃
 ECHO.[34C┠╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┨
@@ -1250,6 +1264,45 @@ BREAK>"%MAIN_GAME%\SAVES\%UDERFINE%\SKILLS.cmd"
 CALL "%SAVE%" "FILE=%MAIN_GAME%\main.config" 2 profile=%UDERFINE%
 EXIT /B 0
 
+:REN_PROFILE
+IF NOT EXIST "%MAIN_GAME%\SAVES\%1\PLAYERDATA.cmd" EXIT /B 0
+IF NOT EXIST "%MAIN_GAME%\SAVES\%1\SKILLS.cmd" EXIT /B 0
+SET /A CNT+=1
+IF NOT %CNT% EQU %SELECTED_PROFILE% EXIT /B 0
+CLS
+IF %PROFILE%==%1 (
+	ECHO.[?25l[0m[18;35H┏━━━━━━━━━━━━━━━━━━━┫%RGB.RED%ERROR[0m┠━━━━━━━━━━━━━━━━━━━┓
+	ECHO.[34C┃                                             ┃
+	ECHO.[34C┃  This is your currently active profile[0m,     ┃
+	ECHO.[34C┃  and %RGB.PINK%cannot be renamed[0m!                     ┃
+	ECHO.[34C┃                                             ┃
+	ECHO.[34C┠╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┨
+	ECHO.[34C┃  Activate another profile, then try again.  ┃
+	ECHO.[34C┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+	ECHO.
+	ECHO.[45C%RGB.GRAY%[Press any key to return]
+	PAUSE>NUL
+	EXIT /B 0
+)
+ECHO.[?25l[0m[18;35H┏━━━━━━━━━━━━━━━━━━━┫%RGB.CYAN%INPUT[0m┠━━━━━━━━━━━━━━━━━━━┓
+ECHO.[34C┃                                             ┃
+ECHO.[34C┃   How do you want to rename your profile^?   ┃
+ECHO.[34C┃   This will be your %RGB.CYAN%in-game username[0m.       ┃
+ECHO.[34C┃                                             ┃
+ECHO.[34C┠╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┨
+ECHO.[34C┃               ^> [s            ^<               ┃
+ECHO.[34C┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+ECHO.
+ECHO.[43C%RGB.GRAY%[Enter Q or CANCEL to cancel]
+SETLOCAL ENABLEDELAYEDEXPANSION
+%INPUT% "PROMPT=[0m[?25h[u[1m" "length=11"
+ENDLOCAL&SET UDERFINE=%UDERFINE: =_%
+IF "%UDERFINE%"==")_" GOTO REN_PROFILE
+IF /I %UDERFINE%==Q EXIT /B 0
+IF /I %UDERFINE%==CANCEL EXIT /B 0
+REN "%MAIN_GAME%\SAVES\%1" "%UDERFINE%"
+EXIT /B 0
+
 :DEL_PROFILE
 IF NOT EXIST "%MAIN_GAME%\SAVES\%1\PLAYERDATA.cmd" EXIT /B 0
 IF NOT EXIST "%MAIN_GAME%\SAVES\%1\SKILLS.cmd" EXIT /B 0
@@ -1271,7 +1324,6 @@ IF %PROFILE%==%1 (
 	EXIT /B 0
 )
 RD /S /Q "%MAIN_GAME%\SAVES\%1"
-EXIT /B 0
 EXIT /B 0
 
 :MAP
@@ -1295,7 +1347,7 @@ ECHO.^|     \   o\/o   /                                                        
 ECHO.^|      \   ^|^|   /                            [0mPress %RGB.CYAN%[4mA[0m or %RGB.CYAN%[4mP[0m to begin the level.[0m                       \   ^|^|   /      ^|
 ECHO.^|       \  ^|^|  /                 [0m Press %RGB.AQUAMARINE%[4mC[0m to jump [1m7[0m levels forward or %RGB.AQUAMARINE%[4mZ[0m to go backwards.[0m             \  ^|^|  /       ^|
 ECHO.^|        '.^|^|.'                     [0mPress %RGB.YELLOW%[4mD[0m to move to the next level, %RGB.YELLOW%[4mS[0m for previous.[0m                '.^|^|.'        ^|
-ECHO.^|          ''                                 Press %RGB.FALSE%[4mQ[0m to return to the menu.                             ''         ^|
+ECHO.^|          ''                                 Press %RGB.FALSE%[4mQ[0m to return to the menu.                            ''          ^|
 ECHO.'-._______________________________________________________________________________________________________________.-'[4A[u
 )
 
@@ -1777,6 +1829,14 @@ SET "INPUT_PART=nul"
  IF /I "%UDERFINE%"=="INTRO" CALL "%SETTING%" SET %SHOW.INTRO% 6 SHOW.INTRO
   IF /I "%UDERFINE%"=="SHOW" CALL "%SETTING%" SET %SHOW.INTRO% 6 SHOW.INTRO
    IF /I "%UDERFINE%"=="SHOW INTRO" CALL "%SETTING%" SET %SHOW.INTRO% 6 SHOW.INTRO
+ IF "%UDERFINE%"=="IAMADEVELOPER" (
+	IF %terminal% EQU 0 (
+		START /WAIT "" "%CD%\data\cmd\TerminalGuidelines.txt"
+		CALL "%SAVE%" "FILE=%MAIN_GAME%\main.config" 5 terminal=1
+		SET terminal=1
+	)
+	CALL :TERMINAL
+ )
 GOTO SETTINGS
 :RESET
 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL 2>NUL
@@ -1842,19 +1902,18 @@ CALL "%CMD.CLEARVAR%"
 ECHO.[u 41%%
 CALL "%LOAD.LEVEL_%%SELECTED%\setup.cmd"
 IF DEFINED LOAD.ERR GOTO MENU
-ECHO.[u 62%%
 CALL "%SCRIPTS_GAME%\loader.cmd"
-ECHO.[u 96%%
+ECHO.[u 98%%
 SETLOCAL ENABLEDELAYEDEXPANSION
 TITLE %TITLE%!MAP.NAME.%SELECTED%:_= ! ^(#%SELECTED%^)
 ENDLOCAL
 ECHO.[u100%%
-IF EXIST LET.DEBUG (
-	CALL "%DEBUG.GAMELOADER%\1"
-	GOTO BATTLE-INPUT
-)
 CLS
 :IN-BATTLE
+IF EXIST LET.DEBUG (
+	CALL "%DEBUG.GAMELOADER%\1"
+	GOTO :REFRESH-BATTLE
+)
 (
 ECHO.[?25l[H.--------------------.----------------------------------------------------------------------------------------------.
 ECHO.^| Press %RGB.PINK%Q[0m to retreat ^|[103C^|
@@ -1874,14 +1933,17 @@ ECHO.[2C    ^|     .-'  \
 ECHO.[2C    ^|  .-'.     ^)   
 ECHO.[2C    ^| (  _/--.-'    
 ECHO.[2C    ^|  `.___.'      
-ECHO.[2C    ^|               )
-
+ECHO.[2C    ^|               
+)
 :REFRESH-BATTLE
 SET /A A+=1
 SET ENEMY.HP.NOW.T=
 FOR /L %%I IN (1,1,%EN.MAX%) DO (
 	SET /A ENEMY.HP.NOW.T+=ENEMY.HP.NOW.%%I
 )
+
+CALL "%SCRIPTS_GAME%\turn.cmd"
+
 CALL "%SCRIPTS_GAME%\hpbar_now.cmd"
 ::IF NOT EXIST LET.DEBUG CALL "%IG.CMDS%"
 ECHO.[47;3H^|                                                                                                                 ^|[47;3HYour HP: %PLAYER.HP.NOW%/%PLAYER.HP.FULL% ^(+%PLAYER.HEAL.AMOUNT% -%ENEMY.ATTACK.AMOUNT%^)[47;40HYou dealt %PLAYER.ATTACK.AMOUNT% DMG to %PLAYER.ATTACK.ENEMY% - CRIT: %ATK.CRIT%[47;90HEnemy Total HP: %ENEMY.HP.NOW.T%/%ENEMY.HP.FULL.T%
@@ -1984,16 +2046,16 @@ IF /I %CHOICE.INPUT%==R (
 IF /I %CHOICE.INPUT%==A (
 	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
 	IF NOT DEFINED INV.SEL_NAME (
-		ECHO.[41;14H%RGB.RED%You haven't selected an action!
+		ECHO.[41;14H%RGB.RED%[4mYou haven't selected an action![0m
 		PAUSE>NUL
 		ECHO.[41;14H                               
 	) ELSE IF "%INV.SEL_NAME%"=="EMPTY" (
-		ECHO.[41;14H%RGB.RED%You haven't selected an action!
+		ECHO.[41;14H%RGB.RED%[4mYou haven't selected an action![0m
 		PAUSE>NUL
 		ECHO.[41;14H                               
 	) ELSE (
 		CALL "%CMD.CLEARVAR%"
-		CALL "%SCRIPTS_GAME%\act.cmd" %INV.SEL_NAME% || CALL :ERROR ERRLINE ID01.inBattleACT    -0
+		CALL "%SCRIPTS.ACT%\act.cmd" %INV.SEL_NAME% || CALL :ERROR ERRLINE ID01.inBattleACT    -0
 		GOTO REFRESH-BATTLE
 	)
 )

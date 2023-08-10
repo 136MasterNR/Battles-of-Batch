@@ -1,0 +1,23 @@
+Terminal Guidelines: Read Before Proceeding
+
+This tool is provided for developers but also anyone who wishes to explore and experiment with the game's mechanics. However, please be aware of the following points to ensure a safe and enjoyable experience.
+
+(‼) Use at Your Own Risk: The console is a powerful tool that allows direct interaction with the game's internals and your whole system. Incorrect usage can lead to unexpected behavior, crashes, or even corrupt your saved data. Be cautious and make sure to back up your progress before experimenting.
+
+(‼) Security Risks: Pasting malicious code could compromise the security of your system, leading to unauthorized access, data breaches, or even system damage.
+
+(•) No Official Support: The console is not officially supported by our development team. We won't be able to provide assistance or troubleshooting for issues arising from console usage.
+
+(•) Commands and Syntax: Incorrectly entering commands or using the wrong syntax can lead to unintended consequences. Make sure you have a clear understanding of the commands you're entering, their arguments, and their potential outcomes. Use the /? switch after a command to learn more about it.
+
+(•) Cheating and Fair Play: Using the console to gain unfair advantages, manipulate in-game currencies, or disrupt the intended gameplay balance is strongly discouraged. It can negatively impact your own enjoyment and the experiences of others, unless you are using the console on a profile for testing purposes.
+
+(•) Save Game Compatibility: Altering your game state through the console might affect the compatibility of your save files with future updates or patches. We recommend using a separate save file for console experimentation.
+
+(•) Backup Saves: Before using the console, make sure to create a backup of your existing save files. This precaution can help you restore your progress in case something goes wrong.
+
+(•) Exploration and Learning: The console can be a great way to learn about the game's mechanics and experiment with different scenarios. Feel free to explore, but remember that unintended outcomes are a possibility.
+
+(•) Respect the Experience: Keep in mind that the console's purpose is to enhance your understanding of the game, not to replace the intended gameplay experience. Make sure to enjoy the game as it was designed before diving into console experimentation.
+
+You can read more about console commands at https://github.com/136MasterNR/Battles-of-Batch#use-commands-for-devs-83

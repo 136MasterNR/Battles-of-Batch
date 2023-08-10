@@ -1,6 +1,6 @@
 IF NOT DEFINED VERCODE EXIT
 
-::REWARDS - Start, End : In this example, it will randomize in the range of 38 to 60(<- 38+22)
+::REWARDS - Start, End : In this example, it will randomize in the range of 44 to 66 (Why 66? Cuz 44+22)
 SET REWARD.MONEY=44,22
 SET REWARD.XP=30,15
 
@@ -21,9 +21,9 @@ SET LOC.W1=87
 SET LOC.W2=92
 SET LOC.W3=86
 
-SET LOC.H1=8
-SET LOC.H2=17
-SET LOC.H3=26
+SET LOC.H1=10
+SET LOC.H2=19
+SET LOC.H3=28
 
 ::LOOT TABLE - Find the list of items inside scripts\list\items.txt
 :: Item name, Randomized Amount, Type(Materials, Items, Weapons), Claim only the first time?

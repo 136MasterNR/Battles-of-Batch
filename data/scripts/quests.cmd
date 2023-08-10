@@ -43,6 +43,26 @@ IF NOT DEFINED QMEM_LOSE_SEEN IF NOT [%QMEM_LOSE%]==[%Q.LOSE%] IF NOT %Q.LOSE% G
 
 EXIT /B 0
 :INTERFACE
+ECHO.[4;3H
+FOR /L %%I IN (1,1,7) DO (
+	ECHO.  .----------------------------------------------------.  
+	ECHO.--' [0mQuest #%%I[0m: [1;30m"???"[0m                                    '--
+	ECHO.    [0mObjective[0m: [1;30m*Mysterious Music Plays*
+	ECHO.    [0mProgress[0m: [s                                            
+	ECHO.[u[1;30m^(Locked^)[0m
+	ECHO.--. [0mRewards[0m: [1;30m∞ Coins - ∞ XP[0m                            .--
+	ECHO.  '----------------------------------------------------'  
+)
+ECHO.[4;0H
+FOR /L %%I IN (8,1,14) DO (
+	ECHO.[59C  .----------------------------------------------------.  
+	ECHO.[59C--' [0mQuest #%%I[0m: [1;30m"???"[0m                                   '--
+	ECHO.[59C    [0mObjective[0m: [1;30m*Mysterious Music Plays*
+	ECHO.[59C    [0mProgress[0m: [s                                            
+	ECHO.[59C[u[1;30m^(Locked^)[0m
+	ECHO.[59C--. [0mRewards[0m: [1;30m∞ Coins - ∞ XP[0m                            .--
+	ECHO.[59C  '----------------------------------------------------'  
+)
 
 IF %Q.TOTAL_MONSTERS% LEQ 0 ( SET Q.PERC=000 ) ELSE SET /A Q.PERC=Q.TOTAL_MONSTERS * 100000 / %QMAX.TOTAL_MONSTERS%
 IF %Q.PERC% GTR 100000 SET Q.PERC=100000
@@ -114,34 +134,4 @@ ECHO.[u[1;37m%Q.PERC:~0,-3%%%[0m (%Q.PROGRESS%[0m: Total %COMPLETED.MAPS%)[
 ECHO.--. %RGB%128;255;253mRewards[0m: [s                                          .--
 ECHO.[u%RGB.COIN%%QREW.MONEY.TLVLS% Coins[0m - %RGB.LVL%%QREW.XP.TLVLS% XP[0m
 ECHO.  '----------------------------------------------------'  
-
-
-FOR /L %%I IN (5,1,7) DO (
-	ECHO.  .----------------------------------------------------.  
-	ECHO.--' [0mQuest #%%I[0m: [1;30m"???"[0m                                    '--
-	ECHO.    [0mObjective[0m: [1;30m*Mysterious Music Plays*
-	ECHO.    [0mProgress[0m: [s                                            
-	ECHO.[u[1;30m^(Locked^)[0m
-	ECHO.--. [0mRewards[0m: [1;30m∞ Coins - ∞ XP[0m                            .--
-	ECHO.  '----------------------------------------------------'  
-)
-ECHO.[4;0H
-FOR /L %%I IN (8,1,9) DO (
-	ECHO.[59C  .----------------------------------------------------.  
-	ECHO.[59C--' [0mQuest #%%I[0m: [1;30m"???"[0m                                    '--
-	ECHO.[59C    [0mObjective[0m: [1;30m*Mysterious Music Plays*
-	ECHO.[59C    [0mProgress[0m: [s                                            
-	ECHO.[59C[u[1;30m^(Locked^)[0m
-	ECHO.[59C--. [0mRewards[0m: [1;30m∞ Coins - ∞ XP[0m                            .--
-	ECHO.[59C  '----------------------------------------------------'  
-)
-FOR /L %%I IN (10,1,14) DO (
-	ECHO.[59C  .----------------------------------------------------.  
-	ECHO.[59C--' [0mQuest #%%I[0m: [1;30m"???"[0m                                   '--
-	ECHO.[59C    [0mObjective[0m: [1;30m*Mysterious Music Plays*
-	ECHO.[59C    [0mProgress[0m: [s                                            
-	ECHO.[59C[u[1;30m^(Locked^)[0m
-	ECHO.[59C--. [0mRewards[0m: [1;30m∞ Coins - ∞ XP[0m                            .--
-	ECHO.[59C  '----------------------------------------------------'  
-)
 EXIT /B 0
