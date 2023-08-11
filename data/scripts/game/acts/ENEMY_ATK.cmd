@@ -1,7 +1,23 @@
 IF NOT DEFINED VERCODE EXIT
+CALL "%SCRIPTS_GAME%\turn.cmd"
+
+SET /A %CURR.TURN%-=10
+SETLOCAL ENABLEDELAYEDEXPANSION
+IF !%CURR.TURN%! LSS 0 (
+	ENDLOCAL
+	SET /A %CURR.TURN%+=50
+)
+
+CALL :INDIVIDUAL
+EXIT /B 0
+
+:INDIVIDUAL <Enemy>
+:: Reset variables
 FOR /F "TOKENS=1 DELIMS==" %%A IN ('SET ENEMY.ATTACK.AMOUNT.') DO (
 	SET /A %%A=0
 )
+
+::Create random amounts of dmg for every enemy individually
 FOR /L %%I IN (1,1,%EN.MAX%) DO (
 	SETLOCAL ENABLEDELAYEDEXPANSION
 	FOR /F "TOKENS=1-2 DELIMS=," %%A IN ("!ENEMY.ATK.AMOUNT.%%I!") DO IF !ENEMY.HP.NOW.%%I! NEQ 0 (
@@ -9,10 +25,41 @@ FOR /L %%I IN (1,1,%EN.MAX%) DO (
 		SET /A "ENEMY.ATTACK.AMOUNT.%%I=%random% %% %%A %%B"
 	) ELSE ENDLOCAL
 )
+
+::Calculate the final total damage
 SET ENEMY.ATTACK.AMOUNT=0
 FOR /F "TOKENS=2 DELIMS==" %%A IN ('SET ENEMY.ATTACK.AMOUNT.') DO (
 	SET /A ENEMY.ATTACK.AMOUNT+=%%A
 )
+
+::Decrease player's HP accordingly
+SET /A "PLAYER.HP.NOW=PLAYER.HP.NOW -ENEMY.ATTACK.AMOUNT"
+IF %PLAYER.HP.NOW% LSS 0 (SET "PLAYER.HP.NOW=0")
+EXIT /B 0
+
+
+:SIMULTANEOUS
+:: Reset variables
+FOR /F "TOKENS=1 DELIMS==" %%A IN ('SET ENEMY.ATTACK.AMOUNT.') DO (
+	SET /A %%A=0
+)
+
+::Create random amounts of dmg for every enemy individually
+FOR /L %%I IN (1,1,%EN.MAX%) DO (
+	SETLOCAL ENABLEDELAYEDEXPANSION
+	FOR /F "TOKENS=1-2 DELIMS=," %%A IN ("!ENEMY.ATK.AMOUNT.%%I!") DO IF !ENEMY.HP.NOW.%%I! NEQ 0 (
+		ENDLOCAL
+		SET /A "ENEMY.ATTACK.AMOUNT.%%I=%random% %% %%A %%B"
+	) ELSE ENDLOCAL
+)
+
+::Calculate the final total damage
+SET ENEMY.ATTACK.AMOUNT=0
+FOR /F "TOKENS=2 DELIMS==" %%A IN ('SET ENEMY.ATTACK.AMOUNT.') DO (
+	SET /A ENEMY.ATTACK.AMOUNT+=%%A
+)
+
+::Decrease player's HP accordingly
 SET /A "PLAYER.HP.NOW=PLAYER.HP.NOW -ENEMY.ATTACK.AMOUNT"
 IF %PLAYER.HP.NOW% LSS 0 (SET "PLAYER.HP.NOW=0")
 EXIT /B 0

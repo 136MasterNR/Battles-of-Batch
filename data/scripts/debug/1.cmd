@@ -17,11 +17,4 @@ ECHO.[2K Enemy dealt %ENEMY.ATTACK.AMOUNT% DMG to %profile%
 ECHO. Turns: %TURNS%
 ECHO. Rounds: %rounds%
 
-SETLOCAL ENABLEDELAYEDEXPANSION
-ECHO. AV.1: %AV.1%[s
-FOR /F "SKIP=1TOKENS=1,2DELIMS==" %%1 IN ('SET AV.') DO (
-	ECHO.[u ^| %%1: %%2[s
-)
-ENDLOCAL
-
 EXIT /B 0

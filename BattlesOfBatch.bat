@@ -309,7 +309,7 @@ ECHO.[u Loading ... System ^& Config
 IF NOT EXIST "%MAIN_GAME%" (
 	MD "%MAIN_GAME%"
 	IF NOT EXIST "%MAIN_GAME%" (
-		ECHO.Couldn't create folder at
+		ECHO.Couldn't create directory at
 		ECHO.%MAIN_GAME%
 		ECHO.
 		ECHO.Press any key to exit.
@@ -1936,16 +1936,13 @@ ECHO.[2C    ^|  `.___.'
 ECHO.[2C    ^|               
 )
 :REFRESH-BATTLE
-SET /A A+=1
 SET ENEMY.HP.NOW.T=
 FOR /L %%I IN (1,1,%EN.MAX%) DO (
 	SET /A ENEMY.HP.NOW.T+=ENEMY.HP.NOW.%%I
 )
 
-CALL "%SCRIPTS_GAME%\turn.cmd"
-
 CALL "%SCRIPTS_GAME%\hpbar_now.cmd"
-::IF NOT EXIST LET.DEBUG CALL "%IG.CMDS%"
+
 ECHO.[47;3H^|                                                                                                                 ^|[47;3HYour HP: %PLAYER.HP.NOW%/%PLAYER.HP.FULL% ^(+%PLAYER.HEAL.AMOUNT% -%ENEMY.ATTACK.AMOUNT%^)[47;40HYou dealt %PLAYER.ATTACK.AMOUNT% DMG to %PLAYER.ATTACK.ENEMY% - CRIT: %ATK.CRIT%[47;90HEnemy Total HP: %ENEMY.HP.NOW.T%/%ENEMY.HP.FULL.T%
 CALL "%SCRIPTS_GAME%\fade.cmd"
 IF %ENEMY.HP.NOW.T% LEQ 0 (
@@ -1963,6 +1960,28 @@ IF %PLAYER.HP.NOW% LEQ 0 (
 SET UDERFINE=
 IF "%SHORTCUTS.VALUE%"=="TRUE" (
 	GOTO :BATTLE-CHOICE
+)
+
+:TURN
+CALL "%SCRIPTS_GAME%\turn.cmd" ACT
+
+ECHO.[15H[TURN: %CURR.TURN%]
+SETLOCAL ENABLEDELAYEDEXPANSION
+ECHO. AV.1: %AV.1%[s
+FOR /F "SKIP=1TOKENS=1,2DELIMS==" %%1 IN ('SET AV.') DO (
+	ECHO.[u ^| %%1: %%2[s
+)
+ECHO.[u    
+ENDLOCAL
+
+IF %CURR.TURN%==NONE (
+	CALL "%SCRIPTS_GAME%\turn.cmd" AV
+	GOTO TURN
+)
+
+IF NOT %CURR.TURN%==AV.PLAYER (
+	CALL "%ACT.ENEMY_ATK%"
+	GOTO IN-BATTLE
 )
 
 ::Visuals
@@ -2055,7 +2074,7 @@ IF /I %CHOICE.INPUT%==A (
 		ECHO.[41;14H                               
 	) ELSE (
 		CALL "%CMD.CLEARVAR%"
-		CALL "%SCRIPTS.ACT%\act.cmd" %INV.SEL_NAME% || CALL :ERROR ERRLINE ID01.inBattleACT    -0
+		CALL "%SCRIPTS.ACT%\act.cmd" %INV.SEL_NAME% || CALL :ERROR ERRLINE ID01.inBattleACT.A    -0
 		GOTO REFRESH-BATTLE
 	)
 )
@@ -2067,7 +2086,6 @@ IF /I %CHOICE.INPUT%==E (
 IF /I %CHOICE.INPUT%==N (
 	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   [1A[10C              %TMP.LOC_HP_OLD%[11C[3B              [0m%TMP.LOC_HP_OLD%[11C[2B              
 	CALL "%CMD.CLEARVAR%"
-	CALL "%ACT.ENEMY_ATK%"
 	GOTO REFRESH-BATTLE
 )
 GOTO BATTLE-SEL_CHOICE
