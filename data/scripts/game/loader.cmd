@@ -114,6 +114,9 @@ ECHO.[u 92%%
 CALL "%SCRIPTS_GAME%\rand_enemy.cmd"
 ECHO.[u 93%%
 ::Turns
+FOR /F "TOKENS=1DELIMS==" %%A IN ('SET AV.') DO (
+	SET /A %%A=0
+)
 SET /A AV.PLAYER=0
 SET CNT=0
 FOR /L %%I IN (1,1,%EN.MAX%) DO (
