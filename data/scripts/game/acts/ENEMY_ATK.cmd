@@ -13,13 +13,12 @@ FOR /F "TOKENS=2DELIMS=." %%1 IN ("%1") DO (
 )
 
 :: Update the Action Values
-CALL "%SCRIPTS_GAME%\turn.cmd" AV-SINGLE %CURR.TURN% %TMP.EN%
+CALL "%SCRIPTS_GAME%\turn.cmd" AV-SINGLE %CURR_TURN% %TMP.EN%
 
 :: If enemy is dead, quit
 SETLOCAL ENABLEDELAYEDEXPANSION
 IF !ENEMY.HP.NOW.%TMP.EN%! LEQ 0 (
 	ENDLOCAL
-	SET AV.%TMP.EN%=
 	EXIT /B 0
 ) ELSE ENDLOCAL
 
@@ -45,7 +44,7 @@ IF %PLAYER.HP.NOW% LSS 0 (SET "PLAYER.HP.NOW=0")
 EXIT /B 0
 
 
-:SIMULTANEOUS [Not Used]
+:SIMULTANEOUS [Not Used & Needs AV Update]
 :: Reset variables
 FOR /F "TOKENS=1DELIMS==" %%A IN ('SET ENEMY.ATTACK.AMOUNT.') DO (
 	SET /A %%A=0

@@ -30,7 +30,7 @@
 @VERIFY OFF
 @ECHO OFF
 
-ECHO.[?25l Preparing ...
+ECHO.[3 q[?25l Preparing ...
 FOR /F "TOKENS=4-5 DELIMS= " %%I IN ('VER') DO SET WINVER=%%I
 IF NOT "=%WINVER:~0,3%" == "=10." (
 	CLS
@@ -119,6 +119,7 @@ ECHO.[H[s Loading ...
 SET "DM=%CD%"
 SET "DATA=%CD%\data"
 SET "DATA_TMP=%DATA%\temp"
+IF NOT EXIST "%DATA_TMP%" MD "%DATA_TMP%"
 SET "DATA_IMAGES=%DATA%\images"
 SET "DATA_SCRIPTS=%DATA%\scripts"
 CALL "%DATA_SCRIPTS%\versions.cmd" || CALL :ERROR ERRLINE ID0001    0
@@ -126,7 +127,6 @@ REM Detect Errors
 IF NOT DEFINED VERCODE CALL :ERROR ERRLINE ID0001A    0
 IF NOT DEFINED VERS CALL :ERROR ERRLINE ID0001B    0
 IF NOT DEFINED VERTYPE CALL :ERROR ERRLINE ID0001C    0
-IF NOT EXIST "%DATA_TMP%" MD "%DATA_TMP%"
 SET "HTS_DATA=%APPDATA%\HTS_DATA"
 SET "MAIN_GAME=%HTS_DATA%\BATTLESOFBATCH-%VERTYPE%-%VERCODE%"
 SET "DATA_SETTINGS=%MAIN_GAME%\SETTINGS"
@@ -1936,51 +1936,53 @@ ECHO.[2C    ^|  `.___.'
 ECHO.[2C    ^|               
 )
 :REFRESH-BATTLE
+:: Calculate the HP of all enemies together
 SET ENEMY.HP.NOW.T=
 FOR /L %%I IN (1,1,%EN.MAX%) DO (
 	SET /A ENEMY.HP.NOW.T+=ENEMY.HP.NOW.%%I
 )
 
+:: Display the HP bars
 CALL "%SCRIPTS_GAME%\hpbar_now.cmd"
 
+:: Display HP and last action information
 ECHO.[47;3H^|                                                                                                                 ^|[47;3HYour HP: %PLAYER.HP.NOW%/%PLAYER.HP.FULL% ^(+%PLAYER.HEAL.AMOUNT% -%ENEMY.ATTACK.AMOUNT%^)[47;40HYou dealt %PLAYER.ATTACK.AMOUNT% DMG to %PLAYER.ATTACK.ENEMY% - CRIT: %ATK.CRIT%[47;90HEnemy Total HP: %ENEMY.HP.NOW.T%/%ENEMY.HP.FULL.T%
+
+:: Display death animation if needed
 CALL "%SCRIPTS_GAME%\fade.cmd"
+
+:: If all enemies are dead, win
 IF %ENEMY.HP.NOW.T% LEQ 0 (
 	CALL "%SCRIPTS_POP%\win.cmd"
 	IF "%AUDIO.VALUE%"=="TRUE" IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
 	CALL "%MENU.AUDIO%"
 	GOTO MAP
 )
+
+:: If the player is dead, lose
 IF %PLAYER.HP.NOW% LEQ 0 (
 	CALL "%SCRIPTS_POP%\lose.cmd"
 	IF "%AUDIO.VALUE%"=="TRUE" IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
 	CALL "%MENU.AUDIO%"
 	GOTO MAP
 )
-SET UDERFINE=
-IF "%SHORTCUTS.VALUE%"=="TRUE" (
-	GOTO :BATTLE-CHOICE
-)
 
 :TURN
 CALL "%SCRIPTS_GAME%\turn.cmd" ACT
 
-ECHO.[40H[TURN: %CURR.TURN%]
+ECHO.[40;2H CURR_TURN: %CURR_TURN%      
 SETLOCAL ENABLEDELAYEDEXPANSION
 ECHO.[s
 FOR /F "TOKENS=1,2DELIMS==" %%1 IN ('SET AV.') DO (
-	ECHO.[u ^| %%1: %%2[s
+	ECHO.[u^| %%1: %%2 [s
 )
-ECHO.[u    
+ECHO.[u          
+ECHO.[5;4HTurn: %TURNS%
+ECHO.[6;3HRound: %ROUNDS%
 ENDLOCAL
 
-IF %CURR.TURN%==NONE (
-	CALL "%SCRIPTS_GAME%\turn.cmd" AV
-	GOTO TURN
-)
-
-IF NOT %CURR.TURN%==AV.PLAYER (
-	CALL "%ACT.ENEMY_ATK%" %CURR.TURN%
+IF NOT %CURR_TURN%==AV.PLAYER (
+	CALL "%ACT.ENEMY_ATK%" %CURR_TURN%
 	GOTO IN-BATTLE
 )
 
