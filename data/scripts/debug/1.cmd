@@ -16,5 +16,10 @@ ECHO.[2K CRIT: %ATK.CRIT%
 ECHO.[2K Enemy dealt %ENEMY.ATTACK.AMOUNT% DMG to %profile%
 ECHO. Turns: %TURNS%
 ECHO. Rounds: %rounds%
+ECHO.[s
+FOR /F "TOKENS=1,2DELIMS==" %%1 IN ('SET AV.') DO (
+	ECHO.[u^| %%1: %%2 [s
+)
+ECHO.[u          
 
 EXIT /B 0

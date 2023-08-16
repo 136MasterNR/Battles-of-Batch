@@ -1,8 +1,8 @@
 @ECHO OFF
 CHCP 437>NUL
-2>>".\data\logs\audManag\fatal.log" (SET "STARTED=1"&CALL :VAR)
-@IF /I NOT DEFINED STARTED EXIT 1
-:VAR
+2>>".\data\logs\audManag\fatal.log" (CALL :START)
+EXIT 1
+:START
 TITLE AudioManager
 SET "DATA=.\data"
 SET "DATA_TMP=%DATA%\temp"
@@ -25,21 +25,30 @@ IF EXIST "%LOG_INFO%" IF EXIST "%LOG_INFO.OLD%" ( DEL /Q "%LOG_INFO.OLD%" ) ELSE
 :START
 IF EXIST "%DATA_SETTINGS%\settings.cmd" CALL "%SETTINGS.LOAD%"
 IF %AUDIO.VALUE%==FALSE GOTO END
-IF EXIST "%APPDATA%\HTS_DATA\BATTLESOFBATCH-%GVER%\SETTINGS\OFFSOUNDS.dll" EXIT
-TASKLIST /FI "IMAGENAME eq wscript.exe*" 2>NUL | FIND /I /N ":"
-SET ERRORLEVEL.CACHE=%ERRORLEVEL%
-MODE CON:COLS=58 LINES=6
-IF /I "%ERRORLEVEL.CACHE%"=="1" ( ECHO.[1;30mINFO: Detected audio! ) ELSE ( ECHO.[1;30mINFO: No audio. )
+
+MODE CON:COLS=53 LINES=5
 ECHO.[0m
-ECHO.[31m^(!!^)    DO NOT close or click inside this window!    ^(!!^)[0m
-ECHO.        [1;31mIf you accidentally did, press backspace.
+ECHO.[31m^(!!^)  DO NOT close or click inside this window!  ^(!!^)[0m
+ECHO.      [1;31mIf you accidentally did, press backspace.[0m
+ECHO.[36m ^(?^)  Every wscript.exe task is an audio player  ^(?^) [0m
+
+IF EXIST LET.DEBUG (
+	TASKLIST /FI "IMAGENAME eq wscript.exe*" | FIND /I /N ":" >NUL && (
+	ECHO.[1;30mINFO: No audio.[1A) || ECHO.INFO: Detected audio![1A
+)
+
 TIMEOUT /T 1 /NOBREAK>NUL
-TASKLIST /FI "WINDOWTITLE eq Battles Of Batch*" | FIND /I /N ":" || GOTO START
-IF ERRORLEVEL 1 GOTO START
-TASKLIST /FI "WINDOWTITLE eq Select Battles Of Batch*" | FIND /I /N ":"
-IF ERRORLEVEL 1 GOTO START
-TASKLIST /FI "WINDOWTITLE eq Battles Of Batch*" | FIND /I /N ":"
-IF ERRORLEVEL 1 GOTO START
+
+(
+	TASKLIST /FI "WINDOWTITLE eq Battles Of Batch*" | FIND /I /N "cmd.exe" && GOTO START
+	TASKLIST /FI "WINDOWTITLE eq Select Battles Of Batch*" | FIND /I /N "cmd.exe" && GOTO START
+	TASKLIST /FI "WINDOWTITLE eq Battles Of Batch*" | FIND /I /N "cmd.exe" && GOTO START
+
+	TASKLIST /FI "WINDOWTITLE eq Battles Of Batch*" | FIND /I /N "WindowsTerminal.exe" && GOTO START
+	TASKLIST /FI "WINDOWTITLE eq Select Battles Of Batch*" | FIND /I /N "WindowsTerminal.exe" && GOTO START
+	TASKLIST /FI "WINDOWTITLE eq Battles Of Batch*" | FIND /I /N "WindowsTerminal.exe" && GOTO START
+)>nul
+
 :END
 %ERRORLEVEL% >>"%LOG_INFO%"
 %INFO%Exit Code %ERRORLEVEL% >>"%LOG_INFO%"

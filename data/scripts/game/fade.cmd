@@ -15,7 +15,7 @@ IF NOT "!FRAME.FADE.%1!."=="==========." (
 	ENDLOCAL
 	IF NOT "%FADE%."=="----------." (
 		SET "FADE=%FADE%-"
-		CALL :FINALIZE_FRAME %1 %%FADE%%
+		CALL :FIX_FRAME %1 %%FADE%%
 		CALL "%SCRIPTS_GAME%\enemy_display.cmd"
 		GOTO CREATE_FRAMES
 	)
@@ -24,7 +24,7 @@ ENDLOCAL
 SET FADE=
 EXIT /B 0
 
-:FINALIZE_FRAME
+:FIX_FRAME
 SET ARG=%2
 SET FRAME.FADE.%1=%ARG:-==%
 SET FADE=%2
