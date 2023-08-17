@@ -1747,7 +1747,7 @@ ECHO. ╞══════════════════════╬�
 ECHO. │     %RGB%187;203;250mMusic ^& SFX[0m      ║   [s           ║    %RGB%194;255;255mTurn ON or OFF the Music and the SFX. %RGB.CYAN%Use "audio" to toggle.[0m           │ 
 IF "%DENIED_AUDIO%"=="TRUE" ( ECHO.[u%RGB%195;1;1mΧ LOCKED[0m[8CYour device does not meet the requirements for this feature.) ELSE IF "%AUDIO.VALUE%"=="TRUE" ( ECHO.[u%RGB.TRUE%√ %AUDIO.VALUE%[0m ) ELSE ( ECHO.[u%RGB.FALSE%Χ %AUDIO.VALUE%[0m )
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │     %RGB%187;203;250mMusic Volume[0m     ║   [s           ║    %RGB%194;255;255mAdjust the Music volume. %RGB.CYAN%Use "music (number)" %RGB.GRAY%Example: "Volume 50"[0m     │ [86D%RGB%196;255;225m%VOLUME%[0m
+ECHO. │     %RGB%187;203;250mMusic Volume[0m     ║   [s           ║    %RGB%194;255;255mAdjust the Music volume. %RGB.CYAN%Use "music (number)" %RGB.GRAY%Example: "Music 50"[0m      │ [86D%RGB%196;255;225m%VOLUME%[0m
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
 ECHO. │      %RGB%187;203;250mSFX Volume[0m      ║   [s           ║    %RGB%194;255;255mAdjust the SFX volume. %RGB.CYAN%Use "sfx (number)"[0m                              │ [86D%RGB%196;255;225m%SFX.VOLUME%[0m
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
