@@ -335,7 +335,7 @@ Material Items [Released]
 
 # FAQ
   - Q: **Why in Batch?**
-    - A: **I started this project as a challenge for myself. Making a game in such a tricky and badly-made langauge might have been hell, but a great challenge. But I ended up being a masochist, so here we are now.**
+    - A: **I started this project as a challenge for myself. Making a game in such a tricky and weirdly-made langauge might have been hell, but a great challenge. But I ended up being a masochist, so here we are now.**
   - Q: **Should I contribute into the project?**
     - A: **For your own fucking good, DO NOT contribute unless you hate yourself more than I hate myself. Contributing is worse than creating a batch project from scratch for this very simple reason; unreadability.**
 

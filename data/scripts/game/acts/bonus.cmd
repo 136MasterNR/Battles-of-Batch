@@ -7,41 +7,59 @@ SET EFFECT.BONUS_CRIT=0
 CALL :%TMP.WEAPON%
 EXIT /B 0
 
+:Branch
+EXIT /B 0
+
 :Dustblade
 EXIT /B 0
 
 :Cold_Twill
-CALL "%SCRIPTS_GAME%\acts\effect.cmd" SLOWDOWN 25
+CALL "%SCRIPTS_GAME%\acts\effect.cmd" SLOWDOWN %INPUTATK% 25
 EXIT /B 0
 
 :Comrade_Hammer
 SET /A "TMP.CHANCE=%random% %% 100"
 IF %TMP.CHANCE% GEQ 50 (
-	SET /A "EFFECT.BONUS_ATK=(EQUIP.BONUS_ATK*350)/100"
+	SET /A "EFFECT.BONUS_ATK=(EQUIP.BONUS_ATK *350)/100"
 )
 EXIT /B 0
 :Stylefi
-IF !WEAPONS.REG_NAME.%WIELDING.WEAPON%!==Stylefi (
-	ENDLOCAL
-	IF %SKILL.CRIT_RATE% LSS 19 (
-		SET /A EFFECT.BONUS_CRIT+=10
-	) ELSE IF %SKILL.CRIT_RATE% EQU 19 (
-		SET /A EFFECT.BONUS_CRIT+=5
-	)
-) ELSE ENDLOCAL
+IF %SKILL.CRIT_RATE% LSS 19 (
+	SET /A EFFECT.BONUS_CRIT+=10
+) ELSE IF %SKILL.CRIT_RATE% EQU 19 (
+	SET /A EFFECT.BONUS_CRIT+=5
+)
 EXIT /B 0
 
 :Flora_Thrower
+CALL "%SCRIPTS_GAME%\acts\effect.cmd" POISON-CREATE %INPUTATK% 5
 EXIT /B 0
 
 :Trident_of_Gawra
-CALL "%SCRIPTS_GAME%\acts\effect.cmd" SLOWDOWN 100
+CALL "%SCRIPTS_GAME%\acts\effect.cmd" SLOWDOWN %INPUTATK% 100
 EXIT /B 0
 
 :Infernal_Blade
+CALL "%SCRIPTS_GAME%\acts\effect.cmd" FIRE-CREATE %INPUTATK% 6 20
 EXIT /B 0
 
 :Ornate_Cobalt
+:: Calculate the damage to deal to the enemies
+SET /A TMP.DMG=(((50 * SKILL.ATK) + EQUIP.BONUS_ATK + EFFECT.BONUS_ATK) *20) / 100
+FOR /L %%I IN (1,1,%EN.MAX%) DO (
+	IF NOT %%I==%INPUTATK% (
+		:: Decrease the HP of the enemy.
+		SET /A "ENEMY.HP.NOW.%%I-=%TMP.DMG%"
+		
+		:: Make sure that the enemy doesn't have less than 0 HP.
+		SETLOCAL ENABLEDELAYEDEXPANSION
+		SET /A ENEMY.HP.NOW.%%I=!ENEMY.HP.NOW.%%I! - %TMP.DMG%
+		IF !ENEMY.HP.NOW.%%I! LEQ 0 (
+			ENDLOCAL
+			SET ENEMY.HP.NOW.%%I=0
+		) ELSE ENDLOCAL
+	)
+)
 EXIT /B 0
 
 :Brainleader

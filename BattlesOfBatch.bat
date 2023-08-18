@@ -1579,7 +1579,7 @@ IF %MAT.2.OWNED% GEQ %MAT.2.X% (SET CRAFT.UI.2.OWNED=%MAT.2.OWNED% %RGB.TRUE%√
 IF %MAT.3.OWNED% GEQ %MAT.3.X% (SET CRAFT.UI.3.OWNED=%MAT.3.OWNED% %RGB.TRUE%√[0m) ELSE (SET CRAFT.UI.3.OWNED=%MAT.3.OWNED% %RGB.FALSE%X[0m)
 SET /A SEL.Y=(3*%CRAFT.SEL%)+8
 IF %CRAFT.NAV% EQU 0 (
-	ECHO.[4H^|                                                                                                                   ^|
+	ECHO.[4H[0m^|                                                                                                                   ^|
 	ECHO.^|        .-------------------------.                                                                                ^|
 	ECHO.^|       /  [1;30m?  ← %RGB%255;204;153mCRAFT WEAPONS[1;30m →  ?[0m  \                   .-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+.                  ^|
 	ECHO.^|      :'- - - - - - - - - - - - - -':               .-'                                          '-.               ^|
@@ -1627,7 +1627,7 @@ IF %CRAFT.SEL%==3 (ECHO.[%SEL.Y%;37H '---------------'. [1B[20D              
 ) ELSE IF %CRAFT.SEL%==4 (ECHO.[%SEL.Y%;37H '---------------'  [1B[20D                    [1B[20D                    [1B[19D------------------.
 ) ELSE IF %CRAFT.SEL% GTR 4 (ECHO.[%SEL.Y%;37H '-----------------'[1B[20D                    [1B[20D                    [1B[19D------------------.
 ) ELSE (ECHO.[%SEL.Y%;37H '---------------'[1B[18D                  [1B[18D                  [1B[17D----------------.)
-SET /P "=[3A[13C[1m%CRAFT.UI.CENTER:_= %[u"<NUL
+SET /P "=[3A[13C[1m%CRAFT.UI.CENTER:_= %[0m[u"<NUL
 ENDLOCAL
 %CHOICE%
 IF %CHOICE.INPUT%.==. GOTO CRAFT-SHOP-RE
@@ -1635,8 +1635,6 @@ IF /I %CHOICE.INPUT%==E SET /A SHOP.TAB=1&&GOTO SHOP
 IF /I %CHOICE.INPUT%==Q GOTO S-MENU
 IF /I %CHOICE.INPUT%==W IF %CRAFT.SEL% GEQ 1 SET /A CRAFT.SEL-=1&GOTO CRAFT-SHOP-RE
 IF /I %CHOICE.INPUT%==S IF %CRAFT.SEL% LEQ 7 SET /A CRAFT.SEL+=1&GOTO CRAFT-SHOP-RE
-::IF /I %CHOICE.INPUT%==D IF %CRAFT.NAV% LEQ 0 SET /A CRAFT.NAV+=1&GOTO CRAFT-SHOP-RE
-::IF /I %CHOICE.INPUT%==A IF %CRAFT.NAV% GEQ 1 SET /A CRAFT.NAV-=1&GOTO CRAFT-SHOP-RE
 IF /I %CHOICE.INPUT%==R (
 	MODE CON:COLS=%COLS% LINES=%LINES%
 	GOTO SHOP
@@ -1987,6 +1985,7 @@ ENDLOCAL
 
 IF NOT %CURR_TURN%==AV.PLAYER (
 	CALL "%ACT.ENEMY_ATK%" %CURR_TURN%
+	CALL "%SCRIPTS_GAME%\acts\effect.cmd" FIRE-EFFECT
 	GOTO IN-BATTLE
 )
 

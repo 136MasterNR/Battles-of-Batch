@@ -15,7 +15,7 @@ CURL -S "https://136masternr.github.io/HTS-Studios/get-update/battlesofbatch.bat
 	IF EXIST "%UPDATE.LOC%" DEL /Q "%UPDATE.LOC%"
 	EXIT /B 0
 )
-IF %UPDATE.VER%==%VERCODE% (
+IF %UPDATE.VER% LEQ %VERCODE% (
 	IF EXIST "%UPDATE.LOC%" DEL /Q "%UPDATE.LOC%"
 	EXIT /B 0
 )
