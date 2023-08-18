@@ -3,9 +3,6 @@ CALL :%1 %2 %3 && (
 	CALL "%SCRIPTS_GAME%\turn.cmd"
 	CALL "%SCRIPTS_GAME%\turn.cmd" AV-SINGLE %CURR_TURN%
 	CALL "%SCRIPTS_GAME%\turn.cmd" AV-CORRECT
-	
-	CALL "%SCRIPTS_GAME%\acts\effect.cmd" POISON-EFFECT
-	CALL "%SCRIPTS_GAME%\acts\effect.cmd" FIRE-EFFECT
 )
 
 EXIT /B 0

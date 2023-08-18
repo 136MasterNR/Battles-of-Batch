@@ -12,10 +12,16 @@ FOR /F %%1 IN ('SET AV.') DO (
 	SET /A TMP.CNT+=1
 )
 
+:: Execute commands every turn
+CALL "%SCRIPTS_GAME%\acts\effect.cmd" FIRE-EFFECT
+
 SET /A CHECK=%TURNS% %% %TMP.CNT%
 IF %CHECK% EQU 1 (
 	SET /A ROUNDS+=1
 	SET TURNS=1
+	
+	::Execute commands every round
+	CALL "%SCRIPTS_GAME%\acts\effect.cmd" POISON-EFFECT
 )
 EXIT /B 0
 

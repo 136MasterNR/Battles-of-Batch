@@ -5,7 +5,7 @@ SET REWARD.MONEY=44,22
 SET REWARD.XP=30,15
 
 ::ENEMIES - Set a value between 1 - 8
-SET EN.MAX=3
+SET EN.MAX=1
 
 REM - IMPORTANT - MER
 :: When adding more than 3 enemies, make sure to add the additional
@@ -13,8 +13,8 @@ REM - IMPORTANT - MER
 :: Take for example the lvl2's setup config file.
 
 CALL "%ENEMY%" Y 1 1
-CALL "%ENEMY%" Y 2 1
-CALL "%ENEMY%" Y 3 2
+REM CALL "%ENEMY%" Y 2 1
+REM CALL "%ENEMY%" Y 3 2
 
 ::DISPLAY - W = Width Pos    H = Height Pos
 SET LOC.W1=87

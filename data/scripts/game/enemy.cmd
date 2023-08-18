@@ -6,6 +6,7 @@ IF %3 EQU 0 CALL "%DEV_ERR%" Out of range for "ENEMY.LEVEL" argument:Value can't
 IF %2 EQU 0 CALL "%DEV_ERR%" Out of range for "ENEMY.SELECTOR" argument:Value can't be zero.&&SET LOAD.ERR=TRUE&&EXIT /B 1
 IF %2 GTR 8 CALL "%DEV_ERR%" Out of range for "ENEMY.SELECTOR" argument:Value must be lower than 6.&&SET LOAD.ERR=TRUE&&EXIT /B 1
 CALL :%1 %1 %2 %3
+SET "ENEMY.TYPE.%2=%1"
 EXIT /B 0
 
 :Y <Yara>
