@@ -1,10 +1,10 @@
 Branch$Stick$1
 Dustblade$Short_Blade$7$No_bonus_effects$_$_$Unknown$_$_$_$Stained_Dust?8?none?0?none?0
-Cold_Twill$Short_Bow$20$No_bonus_effects$_$_$Unknown$_$_$_$Black_Wood?14?Stained_Dust?10?none?0
-Comrade_Hammer$Large_Hammer$45$10%%%%_Chance_to_deal_a_total_amount_of$150%%%%_damage$_$Unknown$_$_$_$Black_Wood?30?Francium?6?none?0
-Stylefi$Long_Bow$60$Extra_2%%%%_Crit_Rate$_$_$Unknown$_$_$_$Black_Wood?45?Light_Resin?5?none?0
+Cold_Twill$Short_Bow$20$Slows_down_the_enemy_by_25_action_points$_$_$Unknown$_$_$_$Black_Wood?14?Stained_Dust?10?none?0
+Comrade_Hammer$Large_Hammer$45$50%%%%_Chance_to_deal_a_total_amount_of$350%%%%_damage_of_its_own_base_damage$_$Unknown$_$_$_$Black_Wood?30?Francium?6?none?0
+Stylefi$Long_Bow$60$Extra_10%%%%_Crit_Rate$_$_$Unknown$_$_$_$Black_Wood?45?Light_Resin?5?none?0
 Flora_Thrower$Magic_Wand$75$10%%%%_Chance_to_Poison_a_single_enemy$dealing_10%%%%_of_your_base_damage_on$every_round$Unknown$_$_$_$Exalted_Nickel?30?Prism_Dust?20?Stained_Dust?60
 Trident_of_Gawra$Trident$80$25%%%%_Chance_to_stun_a_single_enemy$skipping_their_next_round$_$Unknown$_$_$_$Stained_Dust?86?Prism_Dust?45?Double_Marble?30
 Infernal_Blade$Greatsword$85$80%%%%_Chance_to_set_on_fire_an_enemy$dealing_20%%%%_of_your_base_damage_on$every_round$Unknown$_$_$_$Reactive_Powder?100?Double_Marble?50?Exalted_Nickel?45
 Ornate_Cobalt$Shield$200$Shares_an_extra_amount_of_20%%%%_of_your$dealt_damage_to_all_enemies$_$Unknown$_$_$_$Double_Marble?90?Francium?60?Palladium?20
-Brainleader$Magic_Ball$250$An_extra_amount_of_9750_damage_is_dealt$to_ALL_enemies_on_every_single_round$Debuff:_-99%%%%_HP$Unknown$_$_$_$Prism_Dust?1250?Palladium?650?Eternal_Ethereal?4
+Brainleader$Magic_Ball$250$An_extra_amount_of_9750_damage_is_dealt$to_ALL_enemies_on_every_single_round$Debuff:_Lose_99%%%%_HP_every_turn$Unknown$_$_$_$Prism_Dust?1250?Palladium?650?Eternal_Ethereal?4

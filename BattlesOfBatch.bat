@@ -749,9 +749,22 @@ CALL "%ITEMS.LOADER%" MATERIALS
 ECHO.[u 91%%
 CALL "%CHARACTER%" MAIN
 ECHO.[u 98%%
+SET EFFECT.BONUS_CRIT=0
+SETLOCAL ENABLEDELAYEDEXPANSION
+
+:: Stylefi's bonus effect
+IF !WEAPONS.REG_NAME.%WIELDING.WEAPON%!==Stylefi (
+	ENDLOCAL
+	IF %SKILL.CRIT_RATE% LSS 19 (
+		SET /A EFFECT.BONUS_CRIT+=10
+	) ELSE IF %SKILL.CRIT_RATE% EQU 19 (
+		SET /A EFFECT.BONUS_CRIT+=5
+	)
+) ELSE ENDLOCAL
+
 SET /A STAT.NUM.HP=%SKILL.HP%*100
 SET /A STAT.NUM.ATK=(%SKILL.ATK%*50)+EQUIP.BONUS_ATK
-SET /A STAT.NUM.CRIT_RATE=%SKILL.CRIT_RATE%*5
+SET /A STAT.NUM.CRIT_RATE=(%SKILL.CRIT_RATE%*5)+EFFECT.BONUS_CRIT
 ECHO.[u100%%
 (
 ECHO.[?25l[H[0m.--.----------------------------------------------------------------------------------------------------------------.
@@ -1590,8 +1603,8 @@ IF %CRAFT.NAV% EQU 0 (
 	ECHO.^|      :'     [s                      ':                 :                                          :                 ^|[u%CRAFT.6_FOUND%
 	ECHO.^|      :.                           .:                 :                                          :                 ^|
 	ECHO.^|       :      Infernal Blade       :                  :                                          :                 ^|
-	ECHO.^|      :'     [s                      ':                 :              %RGB.FALSE%^(^!^) WARNING ^(^!^)[0m             :                 ^|[u%CRAFT.7_FOUND%
-	ECHO.^|      :.                           .:                 :      %RGB.FALSE%BONUS EFFECTS WILL NOT FUNCTION[0m     :                 ^|
+	ECHO.^|      :'     [s                      ':                 :                                          :                 ^|[u%CRAFT.7_FOUND%
+	ECHO.^|      :.                           .:                 :                                          :                 ^|
 	ECHO.^|       :       Ornate Cobalt       :                  :                                          :                 ^|
 	ECHO.^|      :'     [s                      ':                 :             - %RGB%229;204;255mITEM HISTORY[0m -             :                 ^|[u%CRAFT.8_FOUND%
 	ECHO.^|      :.                           .:                 :                                          :                 ^|
