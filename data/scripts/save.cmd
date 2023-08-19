@@ -1,6 +1,6 @@
 IF NOT DEFINED VERCODE EXIT
 
-:save.cmd "FILE=<path>" <line> [/A] <variable> [+variable]
+:save.cmd "FILE=<path>" <line> [/A] <variable> [<variable>]
 SET %1
 
 SET LINE#TOSEARCH=%2

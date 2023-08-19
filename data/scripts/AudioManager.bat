@@ -1,8 +1,17 @@
 @ECHO OFF
 CHCP 437>NUL
+IF NOT EXIST ".\data\logs\audManag" MD ".\data\logs\audManag"
 2>>".\data\logs\audManag\fatal.log" (CALL :START)
 EXIT 1
 :START
+SETLOCAL ENABLEDELAYEDEXPANSION
+FOR /F "TOKENS=3DELIMS=" %%I IN ('TASKLIST /FI "WINDOWTITLE eq AudioManager*"') DO (
+	TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
+	IF NOT "%%I"=="" SET STARTED=TRUE
+)
+IF NOT DEFINED STARTED EXIT /B 0
+ENDLOCAL
+
 TITLE AudioManager
 SET "DATA=.\data"
 SET "DATA_TMP=%DATA%\temp"
@@ -43,6 +52,10 @@ TIMEOUT /T 1 /NOBREAK>NUL
 	TASKLIST /FI "WINDOWTITLE eq Battles Of Batch*" | FIND /I /N "cmd.exe" && GOTO START
 	TASKLIST /FI "WINDOWTITLE eq Select Battles Of Batch*" | FIND /I /N "cmd.exe" && GOTO START
 	TASKLIST /FI "WINDOWTITLE eq Battles Of Batch*" | FIND /I /N "cmd.exe" && GOTO START
+	
+	TASKLIST /FI "WINDOWTITLE eq Administrator:  Battles Of Batch*" | FIND /I /N "cmd.exe" && GOTO START
+	TASKLIST /FI "WINDOWTITLE eq Administrator:  Select Battles Of Batch*" | FIND /I /N "cmd.exe" && GOTO START
+	TASKLIST /FI "WINDOWTITLE eq Administrator:  Battles Of Batch*" | FIND /I /N "cmd.exe" && GOTO START
 
 	TASKLIST /FI "WINDOWTITLE eq Battles Of Batch*" | FIND /I /N "WindowsTerminal.exe" && GOTO START
 	TASKLIST /FI "WINDOWTITLE eq Select Battles Of Batch*" | FIND /I /N "WindowsTerminal.exe" && GOTO START
