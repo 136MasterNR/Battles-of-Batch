@@ -40,6 +40,7 @@ CALL "%SCRIPTS_GAME%\acts\effect.cmd" SLOWDOWN %INPUTATK% 100
 EXIT /B 0
 
 :Infernal_Blade
+CALL "%SCRIPTS_GAME%\acts\effect.cmd" FIRE-CREATE %INPUTATK% 7 20
 EXIT /B 0
 
 :Ornate_Cobalt
@@ -50,9 +51,8 @@ FOR /L %%I IN (1,1,%EN.MAX%) DO (
 		:: Decrease the HP of the enemy.
 		SET /A "ENEMY.HP.NOW.%%I-=%TMP.DMG%"
 		
-		:: Make sure that the enemy doesn't have less than 0 HP.
+		:: Make sure that the enemy doesn't have less than 0 HP
 		SETLOCAL ENABLEDELAYEDEXPANSION
-		SET /A ENEMY.HP.NOW.%%I=!ENEMY.HP.NOW.%%I! - %TMP.DMG%
 		IF !ENEMY.HP.NOW.%%I! LEQ 0 (
 			ENDLOCAL
 			SET ENEMY.HP.NOW.%%I=0
@@ -63,18 +63,19 @@ EXIT /B 0
 
 :Brainleader
 FOR /L %%I IN (1,1,%EN.MAX%) DO (
-	:: Decrease the HP of the enemy.
+	:: Decrease the HP of the enemy
 	SET /A ENEMY.HP.NOW.%%I-=9750
 	
-	:: Make sure that the enemy doesn't have less than 0 HP.
+	:: Make sure that the enemy doesn't have less than 0 HP
 	SETLOCAL ENABLEDELAYEDEXPANSION
-	SET /A ENEMY.HP.NOW.%%I=!ENEMY.HP.NOW.%%I! - 9750
 	IF !ENEMY.HP.NOW.%%I! LEQ 0 (
 		ENDLOCAL
 		SET ENEMY.HP.NOW.%%I=0
 	) ELSE ENDLOCAL
 )
 
-:: Decrease the HP of the player.
-SET PLAYER.HP.NOW=1
+:: Decrease the HP of the player
+IF %PLAYER.HP.NOW% GEQ 100 (
+	SET /A PLAYER.HP.NOW=PLAYER.HP.NOW/100
+) ELSE ( SET /A PLAYER.HP.NOW=1 )
 EXIT /B 0

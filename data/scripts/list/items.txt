@@ -7,4 +7,4 @@ Flora_Thrower$Magic_Wand$75$60%%%%_Chance_to_Poison_a_single_enemy$dealing_26%%%
 Trident_of_Gawra$Trident$80$25%%%%_Chance_to_stun_a_single_enemy$skipping_their_next_round$_$Unknown$_$_$_$Stained_Dust?86?Prism_Dust?45?Double_Marble?30
 Infernal_Blade$Greatsword$85$80%%%%_Chance_to_set_on_fire_an_enemy$dealing_20%%%%_of_your_base_damage_on$for_7_turns$Unknown$_$_$_$Reactive_Powder?100?Double_Marble?50?Exalted_Nickel?45
 Ornate_Cobalt$Shield$200$Shares_an_extra_amount_of_20%%%%_of_your$dealt_damage_to_all_enemies$_$Unknown$_$_$_$Double_Marble?90?Francium?60?Palladium?20
-Brainleader$Magic_Ball$250$An_extra_amount_of_9750_damage_is_dealt$to_ALL_enemies_on_every_single_round$Debuff:_Lose_99%%%%_HP_every_turn$Unknown$_$_$_$Prism_Dust?1250?Palladium?650?Eternal_Ethereal?4
+Brainleader$Magic_Ball$250$An_extra_amount_of_9750_damage_is_dealt$to_ALL_enemies_on_every_player_turn$Debuff:_Lose_99%%%%_HP_every_turn$Unknown$_$_$_$Prism_Dust?1250?Palladium?650?Eternal_Ethereal?4

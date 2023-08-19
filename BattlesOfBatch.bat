@@ -264,6 +264,7 @@ SET "RGB.ORANGE=%RGB%255;209;143m"
 SET "RGB.RED=%RGB%255;61;51m"
 SET "RGB.PINK=%RGB%245;105;105m"
 SET "RGB.GREEN=%RGB%102;255;0m"
+SET "RGB.LIME=%RGB%163;232;151m"
 SET "RGB.GRAY=%RGB%169;169;169m"
 SET "RGB.BLACK=%RGB%69;69;69m"
 SET "RGB.AQUAMARINE=%RGB%127;255;212m"
@@ -370,7 +371,7 @@ IF %unitsWarning%==null (
 		ECHO.It's highly recommended to upgrade!
 		ECHO.
 		ECHO.Due to this, you may be dealing with various unexpected
-		ECHO.issues while playing this game.
+		ECHO.minor issues while playing the game.
 		ECHO.
 		ECHO.Press any key to continue or just exit.
 		PAUSE>NUL
@@ -382,7 +383,7 @@ IF %unitsWarning%==null (
 :: Agree to the license.
 IF NOT %licesneAgreed%==GNU_GPLv3 IF EXIST "%LICENSE%" (
 	CLS
-	ECHO.Please read and confirm that you agree to our License!
+	ECHO.Please read and confirm that you agree with our License!
 	ECHO.By closing the License text window you agree, and be
 	ECHO.able to continue playing the game.
 	START /WAIT "" "%LICENSE%"
@@ -391,7 +392,7 @@ IF NOT %licesneAgreed%==GNU_GPLv3 IF EXIST "%LICENSE%" (
 ) ELSE (
 	CLS
 	ECHO.No ACCEPTED license was found within this product.
-	ECHO.Using a product without a lisence is legally disallowed by the Copyright Laws.
+	ECHO.Using a product without its lisence is illegal.
 	ECHO.
 	ECHO.Please consider reinstalling this product.
 	ECHO.If this solution does not help, please contact us to find a solution.
@@ -399,7 +400,7 @@ IF NOT %licesneAgreed%==GNU_GPLv3 IF EXIST "%LICENSE%" (
 	EXIT 0
 )
 
-REM Input
+REM Setup for input.bat
 SET INPUT=^
 FOR %%. IN (1 2) DO IF %%.==2 (^
 FOR /F "DELIMS=" %%I IN ('.\data\scripts\input.bat !ARGS!') DO ^
@@ -678,7 +679,7 @@ CLS
 TITLE %TITLE%Command Line Enviroment
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mBattles of Batch [37m[Version %VERCODE% / %VERTYPE% %VERS%]
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mMicrosoft Windows [37m[Version %WINVER:]=%]
-ECHO.[38;2;235;64;52m^(^!^) [38;2;245;108;98mRun "EXIT" to return.[0m[3H
+ECHO.[38;2;235;64;52m^(^!^) [38;2;245;108;98mRun "EXIT" to return.[0m[3H[?25h
 CMD /K "PROMPT $E[38;2;132;217;52mbob@terminal$E[0m$E[1m:$E[38;2;113;155;198m%%cd:~-9,9%%[0m$$$S"
 POPD
 MODE CON:COLS=%COLS% LINES=%LINES%
@@ -1424,6 +1425,10 @@ IF /I %CHOICE.INPUT%==Z (
 	GOTO MAP
 )
 IF /I %CHOICE.INPUT%.==. START "" "https://github.com/136MasterNR/Battles-of-Batch#map-41"
+IF /I %CHOICE.INPUT%.==. IF %terminal% EQU 1 (
+	CALL :TERMINAL
+	GOTO MAP
+)
 GOTO MAP-CHOICE
 :SHOP
 CALL "%PLAYERDATA.LOAD%"
@@ -1893,22 +1898,8 @@ IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
 		START /min "wscript.exe.battle" cmd /c START /min /wait "" "%DATA_TMP_A%"^&DEL /Q "%DATA_TMP_A%"^&EXIT
 	)
 )
-ECHO.[u 13%%
-SET LOAD.ERR=
-ECHO.[u 18%%
-CALL "%PLAYERSKILLS.LOAD%"
-ECHO.[u 22%%
-CALL "%ITEMS.LOADER%" LIST
-ECHO.[u 27%%
-CALL "%ITEMS.LOADER%" LIST_EQ
-ECHO.[u 34%%
-CALL "%ITEMS.LOADER%" WEAPONS
-ECHO.[u 38%%
-CALL "%CMD.CLEARVAR%"
-ECHO.[u 41%%
-CALL "%LOAD.LEVEL_%%SELECTED%\setup.cmd"
-IF DEFINED LOAD.ERR GOTO MENU
 CALL "%SCRIPTS_GAME%\loader.cmd"
+IF DEFINED LOAD.ERR GOTO MENU
 ECHO.[u 98%%
 SETLOCAL ENABLEDELAYEDEXPANSION
 TITLE %TITLE%!MAP.NAME.%SELECTED%:_= ! ^(#%SELECTED%^)
@@ -1976,12 +1967,7 @@ IF %PLAYER.HP.NOW% LEQ 0 (
 :TURN
 CALL "%SCRIPTS_GAME%\turn.cmd" ACT
 
-SETLOCAL ENABLEDELAYEDEXPANSION
-ECHO.[40;3HYour AV: %AV.PLAYER%  
-ECHO.[4;3HCurrent Turn: %CURR_TURN%     
-ECHO.[5;10HRound: %ROUNDS%  
-ECHO.[6;11HTurn: %TURNS%  
-ENDLOCAL
+IF %AV.PLAYER%==0 (ECHO.[46;3HYour AV: %AV.PLAYER% ^(Your Turn^)   ) ELSE ECHO.[46;3HYour AV: %AV.PLAYER%               
 
 IF NOT %CURR_TURN%==AV.PLAYER (
 	CALL "%ACT.ENEMY%" %CURR_TURN%
@@ -1991,13 +1977,7 @@ IF NOT %CURR_TURN%==AV.PLAYER (
 
 ::Visuals
 :BATTLE-CHOICE
-IF %SELECTED% EQU 1 (
-	ECHO.[2;45H[s:---------: HELP - ^? :---------:
-	ECHO.[u[1B: %RGB.COIN%Select an enemy to attack:[0m   :
-	ECHO.[u[2B: Navigate using %RGB.CYAN%W[0m and %RGB.CYAN%S[0m, then[0m :
-	ECHO.[u[3B: press %RGB.CYAN%A[0m to make your action![0m :
-	ECHO.[u[4B:------------------------------:
-)
+CALL "%SCRIPTS_GAME%\visual.cmd"
 
 IF "%INV.SEL_NAME%"=="EMPTY" (
 	ECHO.[42;4H[s                                                          
@@ -2061,12 +2041,6 @@ IF /I %CHOICE.INPUT%==Z IF "%SEL.CHARACTER%"=="SIMPSONS" (
 )
 IF /I %CHOICE.INPUT%== START "" "https://github.com/136MasterNR/Battles-of-Batch#battle-42"
 
-IF /I %CHOICE.INPUT%==R (
-	CALL :CLEAR_INFO_SELECTION
-	MODE CON:COLS=%COLS% LINES=%LINES%
-	GOTO IN-BATTLE
-)
-
 IF /I %CHOICE.INPUT%==A (
 	CALL :CLEAR_INFO_SELECTION
 	IF NOT DEFINED INV.SEL_NAME (
@@ -2094,6 +2068,22 @@ IF /I %CHOICE.INPUT%==N (
 	CALL "%SCRIPTS.ACT%\act.cmd" NOTHING
 	GOTO REFRESH-BATTLE
 )
+
+IF /I %CHOICE.INPUT%==R (
+	CALL :CLEAR_INFO_SELECTION
+	MODE CON:COLS=%COLS% LINES=%LINES%
+	GOTO IN-BATTLE
+)
+
+IF /I %CHOICE.INPUT%== (
+	GOTO PRE_LOAD
+)
+
+IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
+	CALL :TERMINAL
+	GOTO IN-BATTLE
+)
+
 GOTO BATTLE-SEL_CHOICE
 :CLEAR_INFO_SELECTION
 :: Clears the info that appear on the right side when focusing on an enemy.

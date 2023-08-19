@@ -43,10 +43,12 @@ FOR /F "TOKENS=2DELIMS==" %%A IN ('SET ENEMY.ATTACK.AMOUNT.') DO (
 :: Decrease player's HP accordingly
 SET /A "PLAYER.HP.NOW=PLAYER.HP.NOW -ENEMY.ATTACK.AMOUNT"
 IF %PLAYER.HP.NOW% LSS 0 (SET "PLAYER.HP.NOW=0")
+
+CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m#%TMP.EN%[24m dealt %RGB.RED%%ENEMY.ATTACK.AMOUNT%[0m[1m damage to you!%RGB.YELLOW%[0m
 EXIT /B 0
 
 
-:SIMULTANEOUS [Not Used & Needs AV Update]
+:SIMULTANEOUS [Not Used & Needs Update]
 :: Reset variables
 FOR /F "TOKENS=1DELIMS==" %%A IN ('SET ENEMY.ATTACK.AMOUNT.') DO (
 	SET /A %%A=0

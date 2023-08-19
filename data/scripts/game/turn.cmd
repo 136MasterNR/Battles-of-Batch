@@ -7,13 +7,15 @@ EXIT /B 0
 SET /A TURNS+=1
 SET /A TURNS.T+=1
 
+:: Execute commands every turn
+CALL "%SCRIPTS_GAME%\acts\effect.cmd" FIRE-EFFECT
+CALL "%SCRIPTS_GAME%\visual.cmd"
+
+:: Update the amount of enemies that are still alive
 SET TMP.CNT=0
 FOR /F %%1 IN ('SET AV.') DO (
 	SET /A TMP.CNT+=1
 )
-
-:: Execute commands every turn
-CALL "%SCRIPTS_GAME%\acts\effect.cmd" FIRE-EFFECT
 
 SET /A CHECK=%TURNS% %% %TMP.CNT%
 IF %CHECK% EQU 1 (

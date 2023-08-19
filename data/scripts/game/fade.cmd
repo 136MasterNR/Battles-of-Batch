@@ -1,7 +1,11 @@
 SETLOCAL ENABLEDELAYEDEXPANSION
 FOR /L %%I IN (1,1,!EN.MAX!) DO (
 	IF !ENEMY.HP.NOW.%%I! LEQ 0 (
-		ENDLOCAL
+		:: Log the death of the enemy
+		IF NOT "!FRAME.FADE.%%I!."=="==========." (
+			ENDLOCAL
+			CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m#%%I[24m has %RGB.RED%died[0m[1m!%RGB.YELLOW%[0m
+		) ELSE ENDLOCAL
 		CALL :CREATE_FRAMES %%I
 		SETLOCAL ENABLEDELAYEDEXPANSION
 	)

@@ -9,11 +9,17 @@ EXIT /B 0
 :POISON-CREATE <"Enemy/Player": Integer/String> <"Turns": Integer> <"Power": Integer>
 SET EFF.POISON.%1=%2
 SET EFF.POISON.%1.POWER=%3
+:: Log the action
+IF NOT %1==PLAYER (
+	CALL "%SCRIPTS_GAME%\logger.cmd" ADD You applied %RGB.LIME%poison[0m[1m to [4m#%1[24m!%RGB.YELLOW%[0m
+) ELSE (
+	CALL "%SCRIPTS_GAME%\logger.cmd" ADD You have been %RGB.LIME%poisoned[0m[1m![24m[0m%RGB.YELLOW%[0m
+)
 EXIT /B 0
 :POISON-EFFECT
 FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.POISON.') DO (
 	IF NOT %%2==POWER IF %%1==PLAYER (
-	:: POISON for player
+	:: Poison for player
 		SET /A EFF.POISON.%%1-=1
 		SETLOCAL ENABLEDELAYEDEXPANSION
 		IF %PLAYER.HP.NOW% LEQ 0 (
@@ -26,6 +32,11 @@ FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.POISON.') DO (
 			SET /A EFF.POISON.%%1-=1
 			SET /A PLAYER.HP.NOW-=EFF.POISON.%%1.POWER
 		)
+		
+		SETLOCAL ENABLEDELAYEDEXPANSION
+		SET TMP.DMG=!EFF.POISON.%%1.POWER!
+		ENDLOCAL&SET TMP.DMG=%TMP.DMG%
+		CALL "%SCRIPTS_GAME%\logger.cmd" ADD You took %RGB.LIME%%%TMP.DMG%% poison[0m[1m damage!%RGB.YELLOW%
 	) ELSE (
 		:: Poison for any enemy
 		SETLOCAL ENABLEDELAYEDEXPANSION
@@ -46,6 +57,9 @@ FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.POISON.') DO (
 				ENDLOCAL
 				SET EFF.POISON.%%1=
 			) ELSE ENDLOCAL
+			
+			:: Log the action
+			CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m#%%1[0m[1m took %RGB.LIME%%%TMP.DMG%% poison[0m[1m damage![0m[0m[0m
 		) ELSE ENDLOCAL
 	)
 )
@@ -71,6 +85,7 @@ FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.FIRE.') DO (
 			SET /A EFF.FIRE.%%1-=1
 			SET /A PLAYER.HP.NOW-=EFF.FIRE.%%1.POWER
 		)
+		CALL "%SCRIPTS_GAME%\logger.cmd" ADD You took %RGB.ORANGE%%%TMP.DMG%% fire[0m[1m damage!%RGB.YELLOW%
 	) ELSE (
 	:: Fire for any enemy
 		SETLOCAL ENABLEDELAYEDEXPANSION
@@ -94,6 +109,9 @@ FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.FIRE.') DO (
 				SET EFF.FIRE.%%1=
 				SET EFF.FIRE.%%1.POWER=
 			) ELSE ENDLOCAL
+			
+			:: Log the action
+			CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m#%%1[0m[1m took %RGB.ORANGE%%%TMP.DMG%% fire[0m[1m damage!%RGB.YELLOW%
 		) ELSE ENDLOCAL
 	)
 )
