@@ -13,7 +13,7 @@ IF %SELECTED% EQU 1 (
 ) ELSE (
 	ECHO.[2;47H[s:------------------------:
 	ECHO.[u[2B:------------------------:
-	ECHO.[u[1B:                        :[23D%RGB.YELLOW%Round: %ROUNDS%  [0m^|[1D[1A.[1D[2B'[1A%RGB.YELLOW%  Turn: %TURNS%[0m
+	ECHO.[u[1B:                        :[23D%RGB.YELLOW%Round: %ROUNDS%  [0m^|[1D[1A.[1D[2B'[1A%RGB.YELLOW%  Turn: %TURNS.T%[0m
 	IF %CURR_TURN%==AV.PLAYER (
 		ECHO.[u[3B       %RGB.GREEN%^> Your Turn ^<[0m       
 	) ELSE (

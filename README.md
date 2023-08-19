@@ -19,6 +19,10 @@ After the download is complete, simply extract and run the batch file `BattleOfB
 
 Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher.
 
+Recommended Command Prompt settings:
+- Font size: 18 or 20 (for 1080p displays), 13 (for 720p displays)
+- Font family: Consolas
+
 **It is not recommended to launch in the new Windows Terminal as it changes a lot of text display features. This was made specifically for Command Line!**
 
 If you download the project directly from the Source Code, make sure to run the file [fixGitHub.ps1](fixGitHub.ps1) in order to convert all the files' EOF from Unix to Windows. The game will not run properly otherwise.
@@ -69,10 +73,21 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
     - ***Q***: End current battle and move to the previous UI (to the Map).
 
 ## Strategy & Details
+
+### How it Works : Combat (#3.0)
+  - Battles of Batch features a turn based combat mechanic, with various features associated within it.
+  - Both players and enemies have AVs (Action Values), AV indicates who has the next turn, and in which order. It's important to take note of one's AV so you can make your plan.
+
+### How it Works : Effects (#3.0)
+  - Effects are turn-based damages, it can be applied on both the player and the enemy. Effects such as poison or fire are useful for damaging the enemies without the need of any more additional player actions.
+  - **Fire**: This effect will damage the enemy or the player every registered turn, for a set amount of turns.
+  - **Poison**: This effect will damage the enemy or the player every registered 
+
 ### How it Works : Enemies (#3.0)
   - Enemies spawn with a random amount of HP, the amount increases depending on the level you have selected.
   - Enemies deal a random amount of damage to the player, the amount increases depending on the level you have selected.
   - Every enemy deals its own damage, so this means once one enemy is dead it will no longer deal damage, dealing less total damage to the player.
+  - Some enemies have special ablities, such as poisoning the player.
 
 ### How it Works : Skills (#3.1)
   - **Main Attack**: Increases your base damage.
@@ -94,23 +109,23 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
 Note
   Some stuff in here are not yet released.
 
-About [Not Released]
+About
 	Items, such as weapons and armour, are used in-game to boost stats, such as extra attack damage or critical strikes etc., they can also give special buffs or any debuffs.
 	Artifact items can be used to buff the player, debuff enemies or deal damage.
 	Items are upgradable, every item can be upgraded 15 times. Once an item is upgraded, its level will be increased by one. Every upgrade will increase the
 	item's stats by 115%. To upgrade an item witha level of 15 or higher, you must own at least one material of Mythril. The materials required to upgrade an
 	item increases as the level of the item is increased.
 
-Weapon Items [Releasing]
-	Dustblade (Lvl 1 Lame Blade) {Base Damage: 8}
-	Cold Twill (Lvl 2 Short Bow) {Base Damage: 20}
-	Comrade Saluter (Lvl 15 Kusarigama) {Base Damage: 45} [Bonus Effects: 10% Chance to deal a total amount of 150% damage)
-	Stylefi (Lvl 16 Long Bow) {Base Damage: 60} [Bonus Effects: Extra 5% Crit Rate]
-	Flora Thrower (Lvl 20 Light Blue Toxicthrower) {Base Damage: 75} [Bonus Effects: 10% Chance to Poison a single enemy, lasts for a total of 2 rounds]
-	Trident of Gawra (lvl 26 Blue Trident) {Base Damage: 80} [Bonus Effects: 30% Chance to stun the targeted enemy, skipping their next round]
-	Infernal Blade (Lvl 30 Fire Blade) (Base Damage: 85) [Bonus Effects: 80% Chance to set on fire the targeted enemy, dealing 20% of your base damage on every round]
-	Ornate Cobalt (Lvl 40 Plasma Shooter) {Main Damage: 200} [Bonus Effects: Shares an extra amount of 15% of your base damage to all enemies]
-	Brainleader (Lvl 60 One-Shot Gun) {Base Damage: 5} [Bonus Effects: An extra amount of 495 damage is dealt to ALL enemies on every single round] [Debuff: -99% HP]
+Weapon Items [Released]
+	Dustblade (Short Blade) {Base Damage: 8}
+	Cold Twill (Short Bow) {Base Damage: 20} [Bonus Effects: Slows down the enemy by 25 action points]
+	Comrade Hammer (Kusarigama) {Base Damage: 45} [Bonus Effects: 50% Chance to deal a total amount of 350% damage)
+	Stylefi (Long Bow) {Base Damage: 60} [Bonus Effects: Extra 10% Crit Rate]
+	Flora Thrower (Magic Wand) {Base Damage: 75} [Bonus Effects: 10% Chance to Poison a single enemy, lasts for a total of 2 rounds]
+	Trident of Gawra (Trident) {Base Damage: 80} [Bonus Effects: 30% Chance to stun the targeted enemy, skipping their next round]
+	Infernal Blade (Greatsword) (Base Damage: 85) [Bonus Effects: 80% Chance to set on fire the targeted enemy, dealing 20% of your base damage on every round]
+	Ornate Cobalt (Shield) {Main Damage: 200} [Bonus Effects: Shares an extra amount of 20% of your base damage to all enemies]
+	Brainleader (Magic Ball) {Base Damage: 250} [Bonus Effects: An extra amount of 9750 damage is dealt to ALL enemies on every single round. Debuff: Loe -99% HP every time you make an action.]
 
 Artifact Items [Releasing]
 	Healing Potion (Lvl 1 Healing Item) {Effects: Heals you by 15% when used, and again 5% when the next round finishes}

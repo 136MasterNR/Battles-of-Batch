@@ -19,7 +19,7 @@ EXIT /B 0
 
 :Comrade_Hammer
 SET /A "TMP.CHANCE=%random% %% 100"
-IF %TMP.CHANCE% GEQ 50 (
+IF %TMP.CHANCE% LEQ 50 (
 	SET /A "EFFECT.BONUS_ATK=(EQUIP.BONUS_ATK *350)/100"
 )
 EXIT /B 0
@@ -40,7 +40,8 @@ CALL "%SCRIPTS_GAME%\acts\effect.cmd" SLOWDOWN %INPUTATK% 100
 EXIT /B 0
 
 :Infernal_Blade
-CALL "%SCRIPTS_GAME%\acts\effect.cmd" FIRE-CREATE %INPUTATK% 7 20
+SET /A "TMP.CHANCE=%random% %% 100"
+IF %TMP.CHANCE% LEQ 80 CALL "%SCRIPTS_GAME%\acts\effect.cmd" FIRE-CREATE %INPUTATK% 7 20
 EXIT /B 0
 
 :Ornate_Cobalt
