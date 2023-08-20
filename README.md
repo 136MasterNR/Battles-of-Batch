@@ -80,7 +80,8 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
   - Both players and enemies have AVs (Action Values), AV indicates who has the next turn, and in which order. It's important to take note of one's AV so you can make your plan.
 
 ### How it Works : Effects (#3.1)
-  - Effects are turn-based damages, it can be applied on both the player and the enemy. Effects such as poison or fire are useful for damaging the enemies without the need of any more additional player actions.
+  - Some effects are turn-based damages, it can be applied on both the player and the enemy. Effects such as poison or fire are useful for damaging the enemies without the need of any more additional player actions. Other effects such as slow down or weakness, can be used to debuff the player or enemy for a set of turns.
+  - **Slow Down**: This effect will increase the action value of the enemy or player, basically slowying them down by a bit.
   - **Fire**: This effect will damage the enemy or the player every registered turn, for a set amount of turns.
   - **Poison**: This effect will damage the enemy or the player every registered 
 
@@ -287,7 +288,8 @@ Material Items [Released]
 ![](data/images/preview_map.png)
 
 ### Battle (#6.2)
-  - The Battle interface is where you will encounter your true enemies.
+  - The Battle interface is the only place where you will encounter your true enemies. The enemies will appear at the right side of your screen, waiting for your first action. At the top, you can view the current turn, the current numeric turn and current numeric round. At the bottom, you can view the action logs, which shows a list of recently made actions, and below that you can view the currenlty equipped item. Pressing E will reveal your inventory, allowing you to swap between your equipped items. At the bottom
+![](data/images/preview_battle.png)
 
 ### Character & Equipment (#6.3)
   - The Character & Equipment interface lets you view your character's statistics, customize your character, view your character's history (based in the story) and lets you to equip or unequip items and weapons. At the top center you can view you character and at the right and left you can view the statistics of your character such as, your username, your money, your level, your experience, your total health points, your strength, your chance to strike critical hit and your defense. Below you can view your Items + Equiped Items, your Materials and your Weapons + Equipped Weapons. More statistics are shown when you move to the equipment UI.
@@ -312,13 +314,13 @@ Material Items [Released]
 # Explaining Technical Features
 ### Saves Manager (#7.0)
   - How your game data are stored:
-    - All your game data are saved in a single local directory in your appdata; `%appdata%\HTS_DATA`. Battles of Batch's directory is named after its PHASE and VERSION. On `%appdata%\HTS_DATA`, you will find the game named as `BATTLESOFBATCH-%PHASE%-%VERSION%`. `%PHASE%` means the stage of the project, and `%VERSION%` the game version. E.g. `BATTLESOFBATCH-INDEV-0245`. Under that directory are the child directories `SAVES` and `SETTINGS`, plus some other `.dll` true/false files. On your first start-up of the game, it automatically creates the player data saves under your game's appdata path directory.
+    - All your game data are saved in a single local directory in your appdata; `%appdata%\HTS_DATA`. Battles of Batch's directory is named after its PHASE and VERSION. On `%appdata%\HTS_DATA`, you will find the game named as `BATTLESOFBATCH-%PHASE%-%VERSION%`, where `%PHASE%` stands for the stage of the project, and `%VERSION%` the game version, e.g. `BATTLESOFBATCH-INDEV-0400`. Under that directory are the child directories `SAVES`, `SETTINGS` and `main.config`. Under the SAVES directory, you will find your profile's player data. On your first start-up of the game, it automatically creates the player data saves under your game's appdata path directory.
   - How the saving system works:
     - The game automatically saves your progress every time your player data variables are modified. The script used for this process does not rewrite the whole save file, it only modifies lines on it. For example, if you complete a quest, it will only change the line where that quest is saved on, that also goes for total completed levels and the rest.
   - How your inventory is managed:
     - Your in-game inventory is a complete different process than the ones mentioned above. There are no variables in your inventory save files, this fact makes this saves manager one of the most difficult things coded in this game. Your inventory is managed by a script called `items.cmd` located in `.\data\scripts\playerdata`, and it manages files in `SAVES\inv\`, files such materials, regular items, and weapons. Your inventory save data is completely dynamic, this means that data written in it can easily be modified by other scripts and leaving it empty won't affect it at all. To store an item in your player data, it must include its name and its level (or amount). When an item's amount reaches a value of 0, it no longer stays in your player data, instead the items script uses its name to search for the line position and then completely wipe out that line leaving all the other items present. When an item with the same name of an existing item tries to save in, it just stacks up and increases the amount value instead of saving the same item twice. When the game requests the manager to take data from the save files, there's a very complex way of doing this; first, the script seperates every single line into temporary variables, then take that line in another process and seperate every part of it into other usable variables. I hope that sounds simple.
-  - Multiple profiles:
-    - Coming Soon!
+  - Profiles Manager:
+    - The saves manager creates multiple save data for you. Your profile will appear on `%appdata%\HTS_DATA\BATTLESOFBATCH-%phase%-%version%\SAVES\`. Under that directory, you will see folders named after the profiles you created. The first profile will be created automatically upon launching the game, by the name "Wanderer". Profile names will effect your in-game name, e.g. how you will be called in the story.
   - Saves encryption:
     - Coming Soon!
 
