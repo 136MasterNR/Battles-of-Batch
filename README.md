@@ -389,11 +389,11 @@ Material Items [Released]
 ### Special Thanks
 
   - **Shoutout** to my **Testers**:
-    - ThePurgeKing
-    - AgentANP
+    - Bench
+    - BlackStorm
     - 2002Spiele
     - [ComradeTurtle](https://github.com/ComradeTurtle)
-    - BlackStorm
+    - AgentANP
     - JayKayHere3987
 
 ### More information on this project will be added in this read me every now and then :shipit:
