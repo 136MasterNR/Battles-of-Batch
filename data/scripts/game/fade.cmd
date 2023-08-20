@@ -4,7 +4,7 @@ FOR /L %%I IN (1,1,!EN.MAX!) DO (
 		:: Log the death of the enemy
 		IF NOT "!FRAME.FADE.%%I!."=="==========." (
 			ENDLOCAL
-			CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m#%%I[24m has %RGB.RED%died[0m[1m!%RGB.YELLOW%[0m
+			CALL :LOGIT %%I
 		) ELSE ENDLOCAL
 		CALL :CREATE_FRAMES %%I
 		SETLOCAL ENABLEDELAYEDEXPANSION
@@ -32,4 +32,10 @@ EXIT /B 0
 SET ARG=%2
 SET FRAME.FADE.%1=%ARG:-==%
 SET FADE=%2
+EXIT /B 0
+
+:LOGIT
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET TMP.ENEMY=!ENEMY.TYPE.%1!
+ENDLOCAL&CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m%TMP.ENEMY%[24m ^(#%1^) has %RGB.RED%died[0m[1m!%RGB.YELLOW%[0m
 EXIT /B 0

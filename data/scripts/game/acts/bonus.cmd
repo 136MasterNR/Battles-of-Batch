@@ -21,6 +21,7 @@ EXIT /B 0
 SET /A "TMP.CHANCE=%random% %% 100"
 IF %TMP.CHANCE% LEQ 50 (
 	SET /A "EFFECT.BONUS_ATK=(EQUIP.BONUS_ATK *350)/100"
+	CALL "%SCRIPTS_GAME%\logger.cmd" ADD The [4mcomrades[0m[1m salute, blessing you with %RGB.ORANGE%%%EFFECT.BONUS_ATK%%[0m[1m extra damage!%RGB.YELLOW%
 )
 EXIT /B 0
 :Stylefi
@@ -36,7 +37,10 @@ CALL "%SCRIPTS_GAME%\acts\effect.cmd" POISON-CREATE %INPUTATK% 4 26
 EXIT /B 0
 
 :Trident_of_Gawra
-CALL "%SCRIPTS_GAME%\acts\effect.cmd" SLOWDOWN %INPUTATK% 100
+SET /A "TMP.CHANCE=%random% %% 100"
+IF %TMP.CHANCE% LEQ 40 (
+	CALL "%SCRIPTS_GAME%\acts\effect.cmd" SLOWDOWN %INPUTATK% 100
+)
 EXIT /B 0
 
 :Infernal_Blade

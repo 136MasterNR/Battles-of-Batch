@@ -5,17 +5,25 @@ EXIT /B 0
 :SLOWDOWN <"Enemy": Integer> <"Amount": Integer>
 SET /A AV.%1+=%2
 :: Log the action
-CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m#%INPUTATK%[24m has been %RGB.PURPLE%slowed down[1;37m by %RGB.RED%%2[1;37m points!
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET TMP.ENEMY=!ENEMY.TYPE.%INPUTATK%!
+ENDLOCAL&SET TMP.ENEMY=%TMP.ENEMY%
+IF %2 LSS 100 (
+	CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m#%TMP.ENEMY%[24m ^(#%INPUTATK%^) has been %RGB.PURPLE%slowed down[1;37m by %RGB.RED%%2[1;37m points!
+) ELSE CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m%TMP.ENEMY%[24m ^(#%INPUTATK%^) has been %RGB.PURPLE%stunned[0m[1m!%RGB.YELLOW%
 EXIT /B 0
 
 :POISON-CREATE <"Enemy/Player": Integer/String> <"Turns": Integer> <"Power": Integer>
 SET EFF.POISON.%1=%2
 SET EFF.POISON.%1.POWER=%3
 :: Log the action
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET TMP.ENEMY=!ENEMY.TYPE.%INPUTATK%!
+ENDLOCAL&SET TMP.ENEMY=%TMP.ENEMY%
 IF NOT %1==PLAYER (
-	CALL "%SCRIPTS_GAME%\logger.cmd" ADD You applied %RGB.LIME%poison[0m[1m to [4m#%1[24m!%RGB.YELLOW%[0m
+	CALL "%SCRIPTS_GAME%\logger.cmd" ADD You applied %RGB.LIME%poison[0m[1m to [4m%TMP.ENEMY%[24m ^(#%1^)!%RGB.YELLOW%[0m
 ) ELSE (
-	CALL "%SCRIPTS_GAME%\logger.cmd" ADD You have been %RGB.LIME%poisoned[0m[1m![24m[0m%RGB.YELLOW%[0m
+	CALL "%SCRIPTS_GAME%\logger.cmd" ADD You have been %RGB.LIME%poisoned[0m[1m for %2 rounds![24m[0m%RGB.YELLOW%[0m
 )
 EXIT /B 0
 :POISON-EFFECT
@@ -61,7 +69,10 @@ FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.POISON.') DO (
 			) ELSE ENDLOCAL
 			
 			:: Log the action
-			CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m#%%1[0m[1m took %RGB.LIME%%%TMP.DMG%% poison[0m[1m damage![0m[0m[0m
+			SETLOCAL ENABLEDELAYEDEXPANSION
+			SET TMP.ENEMY=!ENEMY.TYPE.%%1!
+			ENDLOCAL&CALL SET TMP.ENEMY=%%TMP.ENEMY%%
+			CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m%%TMP.ENEMY%%[0m[1m ^(#%%1^) took %RGB.LIME%%%TMP.DMG%% poison[0m[1m damage![0m[0m[0m
 		) ELSE ENDLOCAL
 	)
 )
@@ -70,6 +81,15 @@ EXIT /B 0
 :FIRE-CREATE <"Enemy/Player": Integer/String> <"Turns": Integer> <"Power": Integer>
 SET EFF.FIRE.%1=%2
 SET EFF.FIRE.%1.POWER=%3
+:: Log the action
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET TMP.ENEMY=!ENEMY.TYPE.%INPUTATK%!
+ENDLOCAL&SET TMP.ENEMY=%TMP.ENEMY%
+IF NOT %1==PLAYER (
+	CALL "%SCRIPTS_GAME%\logger.cmd" ADD You applied %RGB.ORANGE%fire[0m[1m to [4m%TMP.ENEMY%[24m ^(#%1^)!%RGB.YELLOW%[0m
+) ELSE (
+	CALL "%SCRIPTS_GAME%\logger.cmd" ADD You are %RGB.ORANGE%on fire[0m[1m for %2 turns![24m[0m%RGB.YELLOW%[0m
+)
 EXIT /B 0
 :FIRE-EFFECT
 FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.FIRE.') DO (
@@ -96,7 +116,7 @@ FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.FIRE.') DO (
 			SET /A "TMP.DMG=(((50 * SKILL.ATK) + EQUIP.BONUS_ATK + EFFECT.BONUS_ATK) *EFF.FIRE.%%1.POWER) / 100"
 			SET /A EFF.FIRE.%%1-=1
 			SET /A ENEMY.HP.NOW.%%1-=%TMP.DMG%
-
+			
 			:: Make sure that the enemy doesn't have less than 0 HP.
 			SETLOCAL ENABLEDELAYEDEXPANSION
 			TITLE !EFF.FIRE.%%1!
@@ -113,7 +133,10 @@ FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.FIRE.') DO (
 			) ELSE ENDLOCAL
 			
 			:: Log the action
-			CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m#%%1[0m[1m took %RGB.ORANGE%%%TMP.DMG%% fire[0m[1m damage!%RGB.YELLOW%
+			SETLOCAL ENABLEDELAYEDEXPANSION
+			SET TMP.ENEMY=!ENEMY.TYPE.%%1!
+			ENDLOCAL&CALL SET TMP.ENEMY=%%TMP.ENEMY%%
+			CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m%%TMP.ENEMY%%[0m[1m ^(#%%1^) took %RGB.ORANGE%%%TMP.DMG%% fire[0m[1m damage!%RGB.YELLOW%
 		) ELSE ENDLOCAL
 	)
 )

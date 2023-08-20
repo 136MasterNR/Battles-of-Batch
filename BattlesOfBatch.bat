@@ -1966,7 +1966,7 @@ IF %PLAYER.HP.NOW% LEQ 0 (
 :TURN
 CALL "%SCRIPTS_GAME%\turn.cmd" ACT
 
-IF %AV.PLAYER%==0 (ECHO.[46;3HYour AV: %AV.PLAYER% ^(Your Turn^)   ) ELSE ECHO.[46;3HYour AV: %AV.PLAYER%               
+IF %AV.PLAYER%==0 (ECHO.[46;3H[1mYour AV: %RGB.PURPLE%%AV.PLAYER%[0m ^(Your Turn^)   ) ELSE ECHO.[46;3H[1mYour AV: %RGB.PURPLE%%AV.PLAYER%[0m               
 
 IF NOT %CURR_TURN%==AV.PLAYER (
 	CALL "%ACT.ENEMY%" %CURR_TURN%

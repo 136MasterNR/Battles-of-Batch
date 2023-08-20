@@ -124,7 +124,7 @@ Weapon Items [Released]
 	Comrade Hammer (Kusarigama) {Base Damage: 45} [Bonus Effects: 50% Chance to deal a total amount of 350% damage)
 	Stylefi (Long Bow) {Base Damage: 60} [Bonus Effects: Extra 10% Crit Rate]
 	Flora Thrower (Magic Wand) {Base Damage: 75} [Bonus Effects: 10% Chance to Poison a single enemy, lasts for a total of 2 rounds]
-	Trident of Gawra (Trident) {Base Damage: 80} [Bonus Effects: 30% Chance to stun the targeted enemy, skipping their next round]
+	Trident of Gawra (Trident) {Base Damage: 80} [Bonus Effects: 40% Chance to stun the targeted enemy, skipping their next round]
 	Infernal Blade (Greatsword) (Base Damage: 85) [Bonus Effects: 80% Chance to set on fire the targeted enemy, dealing 20% of your base damage on every round]
 	Ornate Cobalt (Shield) {Main Damage: 200} [Bonus Effects: Shares an extra amount of 20% of your base damage to all enemies]
 	Brainleader (Magic Ball) {Base Damage: 250} [Bonus Effects: An extra amount of 9750 damage is dealt to ALL enemies on every single round. Debuff: Loe -99% HP every time you make an action.]

@@ -35,7 +35,7 @@ FOR /L %%I IN (1,1,%CHARCNT%) DO (
 ECHO.[u.
 FOR /F "TOKENS=2DELIMS==" %%1 IN ('SET LOG.') DO (
 	:: Clear the old text
-	ECHO.[3C                                               [1A
+	ECHO.[3C                                                        [1A
 	:: Print the new text
 	ECHO.[3C[0m[1m%%1[0m
 )
