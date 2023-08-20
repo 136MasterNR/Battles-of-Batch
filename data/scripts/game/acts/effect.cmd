@@ -4,6 +4,8 @@ EXIT /B 0
 
 :SLOWDOWN <"Enemy": Integer> <"Amount": Integer>
 SET /A AV.%1+=%2
+:: Log the action
+CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m#%INPUTATK%[24m has been %RGB.PURPLE%slowed down[1;37m by %RGB.RED%%2[1;37m points!
 EXIT /B 0
 
 :POISON-CREATE <"Enemy/Player": Integer/String> <"Turns": Integer> <"Power": Integer>

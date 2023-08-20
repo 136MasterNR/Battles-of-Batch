@@ -263,6 +263,7 @@ SET "RGB.YELLOW=%RGB%255;252;176m"
 SET "RGB.ORANGE=%RGB%255;209;143m"
 SET "RGB.RED=%RGB%255;61;51m"
 SET "RGB.PINK=%RGB%245;105;105m"
+SET "RGB.PURPLE=%RGB%194;200;255m"
 SET "RGB.GREEN=%RGB%102;255;0m"
 SET "RGB.LIME=%RGB%163;232;151m"
 SET "RGB.GRAY=%RGB%169;169;169m"
@@ -413,7 +414,7 @@ FOR /F %%A IN ('"PROMPT $H$E&FOR %%B IN (1) DO REM"') DO SET "BS=%%A"
 
 REM Shortcut
 IF EXIST "Battles of Batch.lnk" GOTO SETT-MAKE
-SET SCSCRIPT="%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs"
+SET SCSCRIPT="%TEMP%\%random%-%random%-%random%-%random%.vbs"
 (
 	ECHO Set oWS = WScript.CreateObject^("WScript.Shell"^)
 	ECHO sLinkFile = "%cd%\Battles of Batch.lnk"
@@ -568,7 +569,7 @@ CALL "%CENTER%" 148
 ENDLOCAL&SET "UI.MENU.MA=%STR%"
 (ECHO.[0m[H[?25l.-------------------------------------------------------------------------------------------------------------------.
 IF "%RAINBOWMODE%"=="TRUE" ( CALL "%INT.TITLE_R%" ) ELSE ( CALL "%INT.TITLE%" )
-ECHO.'-.--------[1;30m.[0m--[1;30m.[0m------------.                                                             .------------------------.-'[E.-'--------[1;30m^|[0m--[1;30m^|[0m------------'  2nd Anniversary!  .---.-----------.---.                    '------------------------'-.
+ECHO.'-.--------[1;30m.[0m--[1;30m.[0m------------.                                                             .------------------------.-'[E.-'--------[1;30m^|[0m--[1;30m^|[0m------------'  [1m2nd Anniversary![0m  .---.-----------.---.                    '------------------------'-.
 ECHO.^|          [1;30m^|  ^|[0m             .------------------'    :   [1;34mSTATS[0m   :    '------------------.                           ^|
 ECHO.^|          [1;30m^|  ^|[0m             \                       '-----------'                       /        _   ,_,   _        ^|
 ECHO.^|  \_      [1;30m^|  ^|[0m      _/     /   %UI.MENU.XP%  \       / `'=^) ^(='` \       ^|
@@ -766,9 +767,9 @@ SET /A STAT.NUM.ATK=(%SKILL.ATK%*50)+EQUIP.BONUS_ATK
 SET /A STAT.NUM.CRIT_RATE=(%SKILL.CRIT_RATE%*5)+EFFECT.BONUS_CRIT
 ECHO.[u100%%
 (
-ECHO.[?25l[H[0m.--.----------------------------------------------------------------------------------------------------------------.
-ECHO.^|Q ^|                                                                                                                ^|
-ECHO.^|--' .-------------------.                    .-----------------------.                    .----------------------. ^|
+ECHO.[?25l[H[0m.---.---------------------------------------------------------------------------------------------------------------.
+ECHO.^| %RGB.PINK%Q[0m ^|                                                                                                               ^|
+ECHO.^|---'.-------------------.                    .-----------------------.                    .----------------------. ^|
 ECHO.^|    : [1mPress %RGB.YELLOW%[4mP[0m[1m to switch[0m :                 .--: %RGB%158;177;255mCharacter[0m ^& %RGB%133;255;196mEquipment[0m :--.                 : Press X to customize : ^|
 ECHO.^|    : [1myour profile[0m .----'              .--'  '-----------------------'  '--.              '----. your appearance : ^|
 ECHO.^|    '-------------' .-----: %RGB%252;255;179mName[0m :-----:                                   :----: %RGB.TRUE%Health[0m :----. '----------------' ^|
@@ -842,7 +843,7 @@ IF %WEAPONS.REG_CNT%==0 (
 )
 IF %WEAPONS.REG_CNT% GTR 14 ECHO.%UI.POS%%MORE_HIDDEN%
 ENDLOCAL
-SET /P "=[?25h[2;2H"<NUL
+SET /P "=[?25h[2;3H"<NUL
 :CHARACTER-RE
 %CHOICE%
 IF %CHOICE.INPUT%.==. GOTO CHARACTER-RE
@@ -1082,9 +1083,9 @@ SET CNT=0
 CLS
 
 (
-ECHO.[?25l[H╭───╮
+ECHO.[?25l[H%RGB.PINK%╭───╮
 ECHO.│ Q │
-ECHO.╰───╯
+ECHO.╰───╯[0m
 ECHO.[7B[25C                          %RGB.AQUAMARINE%PROFILES MANAGER[0m[1m
 ECHO.[25C┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ECHO.[25C┃[s[66C┃
@@ -1941,7 +1942,7 @@ FOR /L %%I IN (1,1,%EN.MAX%) DO (
 CALL "%SCRIPTS_GAME%\hpbar_now.cmd"
 
 :: Display HP and last action information
-ECHO.[47;3H^|                                                                                                                 ^|[47;3HYour HP: %PLAYER.HP.NOW%/%PLAYER.HP.FULL% ^(+%PLAYER.HEAL.AMOUNT% -%ENEMY.ATTACK.AMOUNT%^)[47;40HYou dealt %PLAYER.ATTACK.AMOUNT% DMG to %PLAYER.ATTACK.ENEMY% - CRIT: %ATK.CRIT%[47;90HEnemy Total HP: %ENEMY.HP.NOW.T%/%ENEMY.HP.FULL.T%
+ECHO.[47;3H^|                                                                                                                 ^|[47;3H[1mYour HP: %RGB.GREEN%%PLAYER.HP.NOW%[0m%RGB.GRAY%/%PLAYER.HP.FULL%[0m [47;40HYou dealt %PLAYER.ATTACK.AMOUNT% DMG to %PLAYER.ATTACK.ENEMY% - CRIT: %ATK.CRIT%[47;90HEnemy Total HP: %ENEMY.HP.NOW.T%/%ENEMY.HP.FULL.T%
 
 :: Display death animation if needed
 CALL "%SCRIPTS_GAME%\fade.cmd"
@@ -1974,6 +1975,7 @@ IF NOT %CURR_TURN%==AV.PLAYER (
 
 ::Visuals
 :BATTLE-CHOICE
+CALL "%SCRIPTS_GAME%\logger.cmd" DISPLAY
 CALL "%SCRIPTS_GAME%\visual.cmd"
 
 IF "%INV.SEL_NAME%"=="EMPTY" (
@@ -2141,7 +2143,7 @@ FOR /F "TOKENS=1-2 DELIMS=," %%A IN ("!ENEMY.ATK.AMOUNT.%INPUTATK%!") DO (
 	SET /A "ENEMY.MAXP_ATK=%%A+%%B"
 	SET /A "ENEMY.MINP_ATK=%%A"
 )
-ECHO.!LOC.HP.%INPUTATK%![4B[2D[4m^|[0m [0m^>[1B[3D' ^>!LOC.HP.%INPUTATK%![11C[5B%RGB%194;200;255mAV:[0m !AV.%INPUTATK%!!LOC.HP.%INPUTATK%![11C[4B%RGB%245;151;151mAtk: [0m!ENEMY.MINP_ATK!~!ENEMY.MAXP_ATK!!LOC.HP.%INPUTATK%![11C[3B%RGB%176;225;187mHP: [0m!ENEMY.HP.NOW.%INPUTATK%!!LOC.HP.%INPUTATK%![11C[2B%RGB.CYAN%Lvl: [0m!ENEMY.LVL.%INPUTATK%!
+ECHO.!LOC.HP.%INPUTATK%![4B[2D[4m^|[0m [0m^>[1B[3D' ^>!LOC.HP.%INPUTATK%![11C[5B%RGB.PURPLE%AV:[0m !AV.%INPUTATK%!!LOC.HP.%INPUTATK%![11C[4B%RGB%245;151;151mAtk: [0m!ENEMY.MINP_ATK!~!ENEMY.MAXP_ATK!!LOC.HP.%INPUTATK%![11C[3B%RGB%176;225;187mHP: [0m!ENEMY.HP.NOW.%INPUTATK%!!LOC.HP.%INPUTATK%![11C[2B%RGB.CYAN%Lvl: [0m!ENEMY.LVL.%INPUTATK%!
 ENDLOCAL&&SET TMP.LOC_HP_OLD=%TMP.LOC_HP_OLD%
 EXIT /B 0
 :ERROR <resultVar> <uniqueID> [LineOffset]

@@ -27,20 +27,16 @@ ECHO.[33;3H                                                 [33;3H.[s
 FOR /L %%I IN (1,1,%CHARCNT%) DO (
 	ECHO.[u-[s
 )
-ECHO.[u: ACTIONS LOG :%UI.LINE_CHARS%[s
+ECHO.[u[1m: %RGB.PURPLE%ACTIONS LOG[0m [1m:[0m%UI.LINE_CHARS%[s
 FOR /L %%I IN (1,1,%CHARCNT%) DO (
 	ECHO.[u-[s
 )
 
-:: Clear the old text
 ECHO.[u.
 FOR /F "TOKENS=2DELIMS==" %%1 IN ('SET LOG.') DO (
-	ECHO.[3C                                        
-)
-
-:: Print the new text
-ECHO.[u.
-FOR /F "TOKENS=2DELIMS==" %%1 IN ('SET LOG.') DO (
+	:: Clear the old text
+	ECHO.[3C                                               [1A
+	:: Print the new text
 	ECHO.[3C[0m[1m%%1[0m
 )
 EXIT /B 0

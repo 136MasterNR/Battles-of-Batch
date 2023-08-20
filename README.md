@@ -68,8 +68,9 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
     - ***Q***: Move to the previous UI (Menu).
     - Press any **number** to immediately move to a level.
   - **Battle**: 
-    - *Press the First Letter of an Action, e.g. `A` to attack.*
-    - ***E***: Cast special skill.
+    - ***A***: Make your action.
+    - ***E***: Choose an item from your inventory.
+    - ***Z***: Cast special skill.
     - ***Q***: End current battle and move to the previous UI (to the Map).
 
 ## Strategy & Details
@@ -78,30 +79,30 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
   - Battles of Batch features a turn based combat mechanic, with various features associated within it.
   - Both players and enemies have AVs (Action Values), AV indicates who has the next turn, and in which order. It's important to take note of one's AV so you can make your plan.
 
-### How it Works : Effects (#3.0)
+### How it Works : Effects (#3.1)
   - Effects are turn-based damages, it can be applied on both the player and the enemy. Effects such as poison or fire are useful for damaging the enemies without the need of any more additional player actions.
   - **Fire**: This effect will damage the enemy or the player every registered turn, for a set amount of turns.
   - **Poison**: This effect will damage the enemy or the player every registered 
 
-### How it Works : Enemies (#3.0)
+### How it Works : Enemies (#3.2)
   - Enemies spawn with a random amount of HP, the amount increases depending on the level you have selected.
   - Enemies deal a random amount of damage to the player, the amount increases depending on the level you have selected.
   - Every enemy deals its own damage, so this means once one enemy is dead it will no longer deal damage, dealing less total damage to the player.
   - Some enemies have special ablities, such as poisoning the player.
 
-### How it Works : Skills (#3.1)
+### How it Works : Skills (#3.3)
   - **Main Attack**: Increases your base damage.
   - **Crit Rate**: Increases the chance to throw a critical strike to an enemy.
   - **Max Health**: Increases maximum HP by 100.
 
-### How it Works : Items (#3.2)
-  - **Bomb**: Stuns enemies, skipping their next round/action. Bosses cannot be stunned by this attack type. Effects, such as poison on the player, will still function.
-  - **Heal**: Gives the player HP. This does not skip the next enemy round/action, and still take damage. Thus it's upgradable.
+### How it Works : Items (#3.4)
+  - **Bomb**: Stuns enemies, skipping their next round/action. Bosses cannot be stunned by this attack type. Effects, such as poison on the player, will still function (Not yet an implemented feature).
+  - **Heal**: Increases the HP of the player. This does not skip the next enemy round/action, and the player will still take damage as usual.
   - More Coming Soon!
 
 <details><summary>
 
-### List of all Items (Click) Items (#3.2.1)
+### List of all Items (Click) Items (#3.4.1)
 
 </summary>
 
@@ -153,17 +154,17 @@ Material Items [Released]
 
 </details>
 
-### How it Works : Crafting Items (#3.3)
-  - You can craft items by accessing the Shop, and switching to the Craft tab. Every item requires materials for it to be crafted, once you gather all required materials, you will be able to craft your item.
+### How it Works : Crafting Items (#3.5)
+  - You can craft items by accessing the Shop, and switching to the Craft tab or otherwise by pressing Z on the menu. Every item requires materials for it to be crafted, once you gather all required materials, you will be able to craft your item.
   - Items serve a rich in-game usage. You can equip weapons and other items such bombs or healing pots through your inventory. Weapons usually give you a big boost when it's about fighting enemies, they can give you extra damage and bonus effects.
 
 ## Enemy Details
 ### How Enemies Were Designed (#4.0)
   - The design of the enemies were inspired by the Latin characters and other references. These enemies are unable to wield any weapons, thus they could only upgrade their defense. That's the reason they have way too much HP. Enemies that seem to have something sharp on them can deal a much larger amount of damage compared to other enemies.
   
-  - Additionally, some other enemeis have learnt other combat skills that aren't based on damage but instead on other combat mechanic elements, this fact can make them extremely dangerous when fought unexpectedly.
+  - Additionally, some other enemeis have special abilities or combat skills that aren't based on damage but instead on other combat mechanic elements, this fact can make them extremely dangerous when fought unexpectedly.
 
-  - Many enemies can be extremely difficult to fight, but they have their weaknesses too. For example, if their main weapon is too short there's much more chance for them to miss a hit (Not yet an implemented feature).
+  - Large amounts of enemies can be extremely difficult to fight, but they have their weaknesses too. For example, if their main weapon is too short there's much more chance for them to miss a hit (Not yet an implemented feature).
 
 ### Easy Level (#4.1)
   - **Yara**: It's the first enemy that a beginner will encouter during their first battle. It's one of the weakest enemies, and there is nothing special about them.
@@ -286,7 +287,7 @@ Material Items [Released]
 ![](data/images/preview_map.png)
 
 ### Battle (#6.2)
-  - More Info Soon!
+  - The Battle interface is where you will encounter your true enemies.
 
 ### Character & Equipment (#6.3)
   - The Character & Equipment interface lets you view your character's statistics, customize your character, view your character's history (based in the story) and lets you to equip or unequip items and weapons. At the top center you can view you character and at the right and left you can view the statistics of your character such as, your username, your money, your level, your experience, your total health points, your strength, your chance to strike critical hit and your defense. Below you can view your Items + Equiped Items, your Materials and your Weapons + Equipped Weapons. More statistics are shown when you move to the equipment UI.
