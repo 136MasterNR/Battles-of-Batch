@@ -39,6 +39,17 @@ IF NOT "=%WINVER:~0,3%" == "=10." (
 	EXIT
 )
 
+:: Check whether it's running on Windows Terminal or Command Prompt
+CHCP 437>NUL
+IF NOT "%1"=="-BYPASS" POWERSHELL.EXE -nop -ep Bypass -c ^"$c=Add-Type -Name pInv -PassThru -MemberDefinition '^
+%=% [DllImport(\"user32.dll\")] public static extern IntPtr SendMessageW(IntPtr hWnd,int Msg,IntPtr wParam,IntPtr lParam);^
+%=% [DllImport(\"kernel32.dll\")] public static extern IntPtr GetConsoleWindow(); ';^
+%=% exit [int]($c::SendMessageW($c::GetConsoleWindow(),($WM_GETICON=0x7F),[IntPtr]::Zero,[IntPtr]::Zero) -ne [IntPtr]::Zero);^" && (
+  START "" conhost.exe -- "%~nx0" -BYPASS
+  EXIT 0
+)
+CHCP 65001 >NUL
+
 :: Check if logs folder exist,
 IF NOT EXIST ".\data\logs" MD ".\data\logs"
 ::  start the logger and check if accessible,
@@ -53,26 +64,9 @@ IF DEFINED RUNNING (
 
 :STARTUP-COMPLETE
 SET RUNNING=TRUE
-IF DEFINED WT_SESSION (
-	CLS
-	ECHO !^!! WARNING !^!!
-	ECHO.Windows Terminal does not support the essential display
-	ECHO.features specialized for the Command Prompt.
-	ECHO.
-	ECHO.Due to this, you will experience various unexpected
-	ECHO.display issues while playing the game.
-	ECHO.
-	ECHO.Windows Terminal has other critical issues too, such as
-	ECHO.corrupting child tasks, causing infinite error messages,
-	ECHO.and such other issues.
-	ECHO.
-	ECHO.Press any key to ignore this warning or launch the game
-	ECHO.in Command Prompt.
-	PAUSE>NUL
-	CLS
-)
+
 :: Check if directory files are accessible, such as itself.
-IF NOT EXIST "%~n0%~x0" (
+IF NOT EXIST "%~nx0" (
 	CLS
 	ECHO.ERR : Inaccessible Directory.
 	ECHO.
