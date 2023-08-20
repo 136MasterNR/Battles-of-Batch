@@ -1898,7 +1898,11 @@ IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
 		START /min "wscript.exe.battle" cmd /c START /min /wait "" "%DATA_TMP_A%"^&DEL /Q "%DATA_TMP_A%"^&EXIT
 	)
 )
-CALL "%SCRIPTS_GAME%\loader.cmd"
+CALL "%SCRIPTS_GAME%\loader.cmd" || (
+	ECHO.[u[1A[10D[2K%RGB.RED%Failed to load the battle!
+	PAUSE>NUL
+	GOTO S-MENU
+)
 IF DEFINED LOAD.ERR GOTO MENU
 ECHO.[u 98%%
 SETLOCAL ENABLEDELAYEDEXPANSION
