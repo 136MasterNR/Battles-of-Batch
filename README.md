@@ -12,8 +12,8 @@ Battles of Batch is a RPG text game built for the Windows MS-DOS terminal versio
 ##### The project was initiated by 136MasterNR on August 13, 2021.<br/><br/>
 
 ## Download/Installation Process, Requirements & Notes
-  - **Latest release**: [battlesofbatch-v0350.zip](https://github.com/136MasterNR/Battles-of-Batch/releases/latest/download/battlesofbatch-v0350.zip)
-  - **Source code**: [main.zip](https://github.com/136MasterNR/Battles-of-Batch/archive/refs/heads/main.zip)
+  - **Latest release**: [Battles.Of.Batch.-.v0400.-.Third.Alpha.Release.zip](https://github.com/136MasterNR/Battles-of-Batch/releases/latest/download/Battles.Of.Batch.-.v0400.-.Third.Alpha.Release.zip)
+  - **Source code**: [Battles-of-Batch-main.zip](https://github.com/136MasterNR/Battles-of-Batch/archive/refs/heads/main.zip)
 
 After the download is complete, simply extract and run the batch file `BattleOfBatch.bat`.
 
@@ -288,7 +288,7 @@ Material Items [Released]
 ![](data/images/preview_map.png)
 
 ### Battle (#6.2)
-  - The Battle interface is the only place where you will encounter your true enemies. The enemies will appear at the right side of your screen, waiting for your first action. At the top, you can view the current turn, the current numeric turn and current numeric round. At the bottom, you can view the action logs, which shows a list of recently made actions, and below that you can view the currenlty equipped item. Pressing E will reveal your inventory, allowing you to swap between your equipped items. At the bottom
+  - The Battle interface is the only place where you will encounter your true enemies. The enemies will appear at the right side of your screen, waiting for your first action. At the top, you can view the current turn, the current numeric turn and current numeric round. At the bottom, you can view the action logs, which shows a list of recently made actions, and below that you can view the currenlty equipped item. Pressing E will reveal your inventory, allowing you to swap between your equipped items. Right at the bottom, you can view your player HP, your AV (Action Value), the damage you last dealt, and the total HP of all enemies together.
 ![](data/images/preview_battle.png)
 
 ### Character & Equipment (#6.3)
