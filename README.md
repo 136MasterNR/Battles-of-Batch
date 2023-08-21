@@ -23,8 +23,6 @@ Recommended Command Prompt settings:
 - Font size: 18 or 20 (for 1080p displays), 13 (for 720p displays)
 - Font family: Consolas
 
-**It is not recommended to launch in the new Windows Terminal as it changes a lot of text display features. This was made specifically for Command Line!**
-
 If you download the project directly from the Source Code, make sure to run the file [fixGitHub.ps1](fixGitHub.ps1) in order to convert all the files' EOF from Unix to Windows. The game will not run properly otherwise.
 Please note that the Source Code contains untested features, it's recommended to use a release instead.
 

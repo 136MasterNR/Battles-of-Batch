@@ -40,15 +40,17 @@ IF NOT "=%WINVER:~0,3%" == "=10." (
 )
 
 :: Check whether it's running on Windows Terminal or Command Prompt
-CHCP 437>NUL
-IF NOT "%1"=="-BYPASS" POWERSHELL.EXE -nop -ep Bypass -c ^"$c=Add-Type -Name pInv -PassThru -MemberDefinition '^
-%=% [DllImport(\"user32.dll\")] public static extern IntPtr SendMessageW(IntPtr hWnd,int Msg,IntPtr wParam,IntPtr lParam);^
-%=% [DllImport(\"kernel32.dll\")] public static extern IntPtr GetConsoleWindow(); ';^
-%=% exit [int]($c::SendMessageW($c::GetConsoleWindow(),($WM_GETICON=0x7F),[IntPtr]::Zero,[IntPtr]::Zero) -ne [IntPtr]::Zero);^" && (
-  START "" conhost.exe -- "%~nx0" -BYPASS
-  EXIT 0
+IF NOT "%1"=="-BYPASS" (
+	CHCP 437>NUL
+	POWERSHELL.EXE -nop -ep Bypass -c ^"$c=Add-Type -Name pInv -PassThru -MemberDefinition '^
+	%=% [DllImport^(\"user32.dll\"^)] public static extern IntPtr SendMessageW^(IntPtr hWnd,int Msg,IntPtr wParam,IntPtr lParam^);^
+	%=% [DllImport^(\"kernel32.dll\"^)] public static extern IntPtr GetConsoleWindow^(^); ';^
+	%=% exit [int]^($c::SendMessageW^($c::GetConsoleWindow^(^),^($WM_GETICON=0x7F^),[IntPtr]::Zero,[IntPtr]::Zero^) -ne [IntPtr]::Zero^);^" && (
+	  START "" conhost.exe -- "%~nx0" -BYPASS
+	  EXIT 0
+	)
+	CHCP 65001 >NUL
 )
-CHCP 65001 >NUL
 
 :: Check if logs folder exist,
 IF NOT EXIST ".\data\logs" MD ".\data\logs"
@@ -60,7 +62,7 @@ IF DEFINED RUNNING (
 	::this usually means that the game's main function has crashed.
 	CALL :ERROR ERRLINE IDUNEXPECTED_CRASH    0
 	EXIT 1
-) ELSE @IF /I NOT DEFINED STARTED EXIT 1
+) ELSE EXIT 1
 
 :STARTUP-COMPLETE
 SET RUNNING=TRUE
