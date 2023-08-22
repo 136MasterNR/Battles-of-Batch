@@ -1,13 +1,13 @@
 IF NOT DEFINED VERCODE EXIT
 
-::REWARDS - Start, End : In this example, it will randomize in the range of 44 to 66 (Why 66? Cuz 44+22)
+::REWARDS - Start, End : In this example, it will randomize in the range of 84 to 96 (Why 96? Cuz 84+12)
 SET REWARD.MONEY=84,12
 SET REWARD.XP=50,15
 
 ::ENEMIES
 REM - IMPORTANT - MER
 :: When adding more enemies, make sure to add the additional
-:: variables for the locations and the additional calls aswell.
+:: variables for the locations and anything else.
 :: Take for example the lvl2's setup config file.
 
 CALL "%ENEMY%" Y 1 1

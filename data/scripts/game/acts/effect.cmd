@@ -9,7 +9,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 SET TMP.ENEMY=!ENEMY.TYPE.%INPUTATK%!
 ENDLOCAL&SET TMP.ENEMY=%TMP.ENEMY%
 IF %2 LSS 100 (
-	CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m#%TMP.ENEMY%[24m ^(#%INPUTATK%^) has been %RGB.PURPLE%slowed down[1;37m by %RGB.RED%%2[1;37m points!
+	CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m%TMP.ENEMY%[24m ^(#%INPUTATK%^) has been %RGB.PURPLE%slowed down[1;37m by %RGB.RED%%2[1;37m points!
 ) ELSE CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m%TMP.ENEMY%[24m ^(#%INPUTATK%^) has been %RGB.PURPLE%stunned[0m[1m!%RGB.YELLOW%
 EXIT /B 0
 

@@ -12,19 +12,18 @@ Battles of Batch is a RPG text game built for the Windows MS-DOS terminal versio
 ##### The project was initiated by 136MasterNR on August 13, 2021.<br/><br/>
 
 ## Download/Installation Process, Requirements & Notes
-  - **Latest release**: [Battles.Of.Batch.-.v0400.-.Third.Alpha.Release.zip](https://github.com/136MasterNR/Battles-of-Batch/releases/latest/download/Battles.Of.Batch.-.v0400.-.Third.Alpha.Release.zip)
+  - **Latest release**: [Battles.Of.Batch.-.v0405.-.indev.20.zip](https://github.com/136MasterNR/Battles-of-Batch/releases/latest/download/Battles.Of.Batch.-.v0405.-.indev.20.zip)
   - **Source code**: [Battles-of-Batch-main.zip](https://github.com/136MasterNR/Battles-of-Batch/archive/refs/heads/main.zip)
 
 After the download is complete, simply extract and run the batch file `BattleOfBatch.bat`.
 
 Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher.
 
-Recommended Command Prompt settings:
-- Font size: 18 or 20 (for 1080p displays), 13 (for 720p displays)
-- Font family: Consolas
+**Recommended Command Prompt settings**:
+- **Font size**: 18 or 20 (for 1080p displays), 13 (for 720p displays)
+- **Font family**: Consolas
 
-If you download the project directly from the Source Code, make sure to run the file [fixGitHub.ps1](fixGitHub.ps1) in order to convert all the files' EOF from Unix to Windows. The game will not run properly otherwise.
-Please note that the Source Code contains untested features, it's recommended to use a release instead.
+Please note that the Source Code version contains untested features, you should use a release instead, do not report issues otherwise.
 
 This project uses [ANSI](https://www.robvanderwoude.com/ansi.php) as a text formatter. It's used to manage displayed text and colors on the console. It's required for almost any display-related feature to work as intended.
 # About
@@ -57,7 +56,7 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
     - ***A***: Equip items.
     - ***D***: Equip weapons.
     - ***X***: Customize your character's appearance.
-    - ***Z***: View your character's history.
+    - ***P***: Manage your profiles.
     - ***Q***: Return to the menu.
   - **Map**: 
     - ***A***/***Enter***: Start Selected Level.
@@ -79,15 +78,15 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
 
 ### How it Works : Effects (#3.1)
   - Some effects are turn-based damages, it can be applied on both the player and the enemy. Effects such as poison or fire are useful for damaging the enemies without the need of any more additional player actions. Other effects such as slow down or weakness, can be used to debuff the player or enemy for a set of turns.
-  - **Slow Down**: This effect will increase the action value of the enemy or player, basically slowying them down by a bit.
+  - **Slow Down**: This effect will increase the action value of the enemy or player, basically slowing them down by a bit.
   - **Fire**: This effect will damage the enemy or the player every registered turn, for a set amount of turns.
-  - **Poison**: This effect will damage the enemy or the player every registered 
+  - **Poison**: This effect will damage the enemy or the player every registered round, for a set amount of rounds.
 
 ### How it Works : Enemies (#3.2)
-  - Enemies spawn with a random amount of HP, the amount increases depending on the level you have selected.
-  - Enemies deal a random amount of damage to the player, the amount increases depending on the level you have selected.
-  - Every enemy deals its own damage, so this means once one enemy is dead it will no longer deal damage, dealing less total damage to the player.
-  - Some enemies have special ablities, such as poisoning the player.
+  - Enemies spawn with a random amount of HP, the amount increases depending on the enemy's level.
+  - Enemies deal a random amount of damage to the player, the amount increases depending on the enemy's level.
+  - Every enemy deals its own damage, which means once one enemy is dead it will no longer deal damage, dealing less total damage to the player.
+  - Some enemies have special ablities, such as poisoning the player, or other self-buffs.
 
 ### How it Works : Skills (#3.3)
   - **Main Attack**: Increases your base damage.
@@ -129,10 +128,11 @@ Weapon Items [Released]
 
 Artifact Items [Releasing]
 	Healing Potion (Lvl 1 Healing Item) {Effects: Heals you by 15% when used, and again 5% when the next round finishes}
+  Reactive Bomb (Lvl 4 Healing Item) {Effects: Deals an additinal 20% of your base damage to all enemies, and 100% normal damage to the selected enemy.}
 	Oracle Shield (Lvl 4 Buff Item) {Effects: Take 30% less damage for 4 rounds, 20% chance to stun all enemies, skipping their next round}
 	Cup of Misery (Lvl 8 Buff Item) {Effects: Extra 10% base damage for 4 rounds}
 	Totem of Salute (Lvl 10 Buff Item) {Effects: If you lose all your HP on the next round, your HP will be increased by 100%}
-	Barrel Bomb (Lvl 14 Explosive Item) {Effects: Deals 60% of your base damage to all enemies}
+	Barrel Bomb (Lvl 14 Explosive Item) {Effects: Deals an additinal 60% of your base damage to all enemies}
 
 Armour Items [Not Released]
 	Boots of the Aether (Lvl 45) {Effects: Increases HP by 20%, automatically heals you by 20% every 3 rounds, if HP already maxed then max HP increases by 20%}

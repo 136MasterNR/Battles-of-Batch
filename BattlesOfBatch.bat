@@ -1,5 +1,5 @@
 ::Created by 136MasterNR - Read the "copyright.txt" file for more info.
-::(Use "NotePadPP" or anything other than "Notepad" to view better this file)
+::(Use "Notepad++" or anything other than "Notepad" to view better this file)
 :: ______ ______ ______ ______ ______ ______ ______ ______ _____ __
 ::/_____//_____//_____//_____//_____//_____//_____//_____//_____\\_\
 ::    _____        __           _____ _             _ _         |/ / 
@@ -39,8 +39,15 @@ IF NOT "=%WINVER:~0,3%" == "=10." (
 	EXIT
 )
 
+:: Check if game is already running by trying to access its error logging file.
+DEL /Q ".\data\logs\errors.txt" >NUL
+IF EXIST ".\data\logs\errors.txt" (
+	ECHO.Game was already running at %TIME%>>".\data\logs\logs.txt"
+	EXIT 1
+)
+
 :: Check whether it's running on Windows Terminal or Command Prompt
-IF NOT "%1"=="-BYPASS" (
+IF /I NOT "%1"=="-BYPASS" (
 	CHCP 437>NUL
 	POWERSHELL.EXE -nop -ep Bypass -c ^"$c=Add-Type -Name pInv -PassThru -MemberDefinition '^
 	%=% [DllImport^(\"user32.dll\"^)] public static extern IntPtr SendMessageW^(IntPtr hWnd,int Msg,IntPtr wParam,IntPtr lParam^);^
@@ -55,18 +62,19 @@ IF NOT "%1"=="-BYPASS" (
 :: Check if logs folder exist,
 IF NOT EXIST ".\data\logs" MD ".\data\logs"
 ::  start the logger and check if accessible,
-2>".\data\logs\errors.txt" ( SET "STARTED=1"&CALL :STARTUP-COMPLETE )
+2>".\data\logs\errors.txt" ( SET RUNNING=TRUE&CALL :STARTUP-COMPLETE )
 ::   if not accessible then exit, else below command will be skipped.
 IF DEFINED RUNNING (
 	::If it enters this statement then throw an error,
 	::this usually means that the game's main function has crashed.
 	CALL :ERROR ERRLINE IDUNEXPECTED_CRASH    0
 	EXIT 1
-) ELSE EXIT 1
+) ELSE (
+	ECHO.Game was already running at %TIME%>>".\data\logs\logs.txt"
+	EXIT 1
+)
 
 :STARTUP-COMPLETE
-SET RUNNING=TRUE
-
 :: Check if directory files are accessible, such as itself.
 IF NOT EXIST "%~nx0" (
 	CLS
@@ -602,71 +610,85 @@ ECHO.^|     _\_^| ^|_/_                                          \./            
 ECHO.^|    ^(_,_^| ^|_,_^)                                          V                              ^(_,___/...-` ^(_/_/         ^|[E^|                                                                                         [1;30m2023©136MasterNR[0m          ^|[114D[1;30mBATTLES OF BATCH [0;33m%VERS%-%VERTYPE%[0m[?25h)
 ECHO.^|     .                              .    .                              .    .                              .      ^|[E^|     ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|      ^|[E'-----'-------'-------'-------'------'----'-------'-------'-------'------'----'-------'-------'-------'------'------'[2A
 IF NOT %OLD.PLAYER.LVL%==%PLAYER.LVL% CALL "%SCRIPTS_POP%\lvlup.cmd"
+CALL "%DATA_SCRIPTS%\pop\daily.cmd" || GOTO MENU
 CALL "%QUEST.LOADER%" LOAD
 IF DEFINED Q.POPUP.IS SET "Q.POPUP.IS="&GOTO MENU
+:: Daily rewards check
 SET UDERFINE=
 :CHOICE-INPUTS
 SET /P "=[34;61H "<NUL
 %CHOICE%
 IF EXIST LET.DEBUG ECHO.%CHOICE.INPUT%   
-IF /I %CHOICE.INPUT%.==A. GOTO MAP
-IF /I %CHOICE.INPUT%.==E. GOTO CHARACTER
-IF /I %CHOICE.INPUT%.==. CALL "%EVENT%"&GOTO MENU
-IF /I %CHOICE.INPUT%.==P. (
+IF NOT DEFINED CHOICE.INPUT GOTO CHOICE-INPUTS
+IF /I %CHOICE.INPUT%==A GOTO MAP
+IF /I %CHOICE.INPUT%==E GOTO CHARACTER
+IF /I %CHOICE.INPUT%== CALL "%EVENT%"&GOTO MENU
+IF /I %CHOICE.INPUT%==P (
 	SET RETURN_TO=S-MENU
 	GOTO PROFILES
 )
-IF /I %CHOICE.INPUT%.==Q. GOTO QUESTS
-IF /I %CHOICE.INPUT%.==S. GOTO SETTINGS
-IF /I %CHOICE.INPUT%.==W. GOTO SHOP
-IF /I %CHOICE.INPUT%.==X. (
+IF /I %CHOICE.INPUT%==Q GOTO QUESTS
+IF /I %CHOICE.INPUT%==S GOTO SETTINGS
+IF /I %CHOICE.INPUT%==W GOTO SHOP
+IF /I %CHOICE.INPUT%==X (
 	SET "SHOP.TAB=1"
 	GOTO SHOP
 )
-IF /I %CHOICE.INPUT%.==C. (
+IF /I %CHOICE.INPUT%==C (
 	SET "SHOP.TAB=2"
 	GOTO SHOP
 )
-IF /I %CHOICE.INPUT%.==Z. (
+IF /I %CHOICE.INPUT%==Z (
 	SET "SHOP.TAB=3"
 	GOTO SHOP
 )
-IF /I %CHOICE.INPUT%.==V. GOTO CREDITS
-IF /I %CHOICE.INPUT%.==. START "" "https://github.com/136MasterNR/Battles-of-Batch#menu-40"
-IF /I %CHOICE.INPUT%.==I. IF %ITEM.REG_CNT%==0 (SET /P "=[4C%RGB.FALSE%UI_ERR: ITEMS LIST IS EMPTY   [2G"<NUL) ELSE GOTO S-MENU
-IF /I %CHOICE.INPUT%.==R. (MODE CON:COLS=%COLS% LINES=%LINES%&GOTO MENU)
-IF /I %CHOICE.INPUT%.==. (
+IF /I %CHOICE.INPUT%==K (
+	CALL :DAILY
+	GOTO S-MENU
+)
+IF /I %CHOICE.INPUT%==V GOTO CREDITS
+IF /I %CHOICE.INPUT%==. START "" "https://github.com/136MasterNR/Battles-of-Batch#menu-40"
+IF /I %CHOICE.INPUT%==I IF %ITEM.REG_CNT%==0 (SET /P "=[4C%RGB.FALSE%UI_ERR: ITEMS LIST IS EMPTY   [2G"<NUL) ELSE GOTO S-MENU
+IF /I %CHOICE.INPUT%==R (MODE CON:COLS=%COLS% LINES=%LINES%&GOTO MENU)
+IF /I %CHOICE.INPUT%== (
 	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
 	GOTO RESTART
 )
-IF /I %CHOICE.INPUT%.==. IF %terminal% EQU 1 (
+IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
 	CALL :TERMINAL
 	GOTO MENU
 )
-IF /I %CHOICE.INPUT%.==. (
+IF /I %CHOICE.INPUT%== (
 	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
 	POPD
 	EXIT 0
 )
-IF /I %CHOICE.INPUT%.==. GOTO RESET
-IF /I %CHOICE.INPUT%.==. (
+IF /I %CHOICE.INPUT%== GOTO RESET
+IF /I %CHOICE.INPUT%== (
 	CALL "%UPDATER%" MANUAL
 	GOTO MENU
 )
-IF /I %CHOICE.INPUT%.==. (
+IF /I %CHOICE.INPUT%== (
 	IF DEFINED RAINBOWMODE ( SET "RAINBOWMODE=" ) ELSE SET "RAINBOWMODE=TRUE"
 	GOTO REFRESH-MENU
 )
 GOTO CHOICE-INPUTS
-:DEV
-TITLE DEV
-SET UDERFINE=
-SETLOCAL ENABLEDELAYEDEXPANSION
-%INPUT% "PROMPT=[u[0m" "length=13"
-ENDLOCAL&SET UDERFINE=%UDERFINE%
-ENDLOCAL
- IF /I "%UDERFINE%"=="BACK" GOTO S-MENU
-GOTO DEV
+:DAILY
+FOR /F "DELIMS=" %%N IN ('DATE /T') DO (
+	IF EXIST "%DATA_SAVES%\MEMORY" (
+		FOR /F "DELIMS=" %%O IN (%DATA_SAVES%\MEMORY) DO (
+			IF NOT "%%N"=="%%O " (
+				CALL "%DATA_SCRIPTS%/pop/daily.cmd" %%N
+			)
+			EXIT /B 0
+		)
+	) ELSE (
+		ECHO.%%N>"%DATA_SAVES%\MEMORY"
+		ECHO.0>>"%DATA_SAVES%\MEMORY"
+	)
+)
+EXIT /B 0
+
 :TERMINAL
 PUSHD "%CD%\DATA\cmd"
 MODE CON:COLS=126 LINES=9216
@@ -2142,7 +2164,7 @@ IF DEFINED TMP.LOC_HP_OLD (
 SET TMP.LOC_HP_OLD=!LOC.HP.%INPUTATK%!
 FOR /F "TOKENS=1-2 DELIMS=," %%A IN ("!ENEMY.ATK.AMOUNT.%INPUTATK%!") DO (
 	SET /A "ENEMY.MAXP_ATK=%%A+%%B"
-	SET /A "ENEMY.MINP_ATK=%%A"
+	SET /A "ENEMY.MINP_ATK=%%B"
 )
 ECHO.!LOC.HP.%INPUTATK%![4B[2D[4m^|[0m [0m^>[1B[3D' ^>!LOC.HP.%INPUTATK%![11C[5B%RGB.PURPLE%AV:[0m !AV.%INPUTATK%!!LOC.HP.%INPUTATK%![11C[4B%RGB%245;151;151mAtk: [0m!ENEMY.MINP_ATK!~!ENEMY.MAXP_ATK!!LOC.HP.%INPUTATK%![11C[3B%RGB%176;225;187mHP: [0m!ENEMY.HP.NOW.%INPUTATK%!!LOC.HP.%INPUTATK%![11C[2B%RGB.CYAN%Lvl: [0m!ENEMY.LVL.%INPUTATK%!
 ENDLOCAL&&SET TMP.LOC_HP_OLD=%TMP.LOC_HP_OLD%

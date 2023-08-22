@@ -31,7 +31,7 @@ CALL "%SCRIPTS_GAME%\turn.cmd"
 SETLOCAL ENABLEDELAYEDEXPANSION
 FOR /F "TOKENS=1,2DELIMS=," %%A IN ("!ENEMY.ATK.AMOUNT.%TMP.EN%!") DO (
 	ENDLOCAL
-	SET /A "ENEMY.ATTACK.AMOUNT.%TMP.EN%=%random% %% %%A %%B"
+	SET /A "ENEMY.ATTACK.AMOUNT.%TMP.EN%=%random% %% (%%A+1) %%B"
 )
 
 :: Calculate final total damage

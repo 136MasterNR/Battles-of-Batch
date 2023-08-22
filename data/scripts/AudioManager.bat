@@ -54,14 +54,11 @@ TIMEOUT /T 1 /NOBREAK>NUL
 	
 	TASKLIST /FI "WINDOWTITLE eq Administrator:  Battles Of Batch*" | FIND /I /N "cmd.exe" && GOTO START
 	TASKLIST /FI "WINDOWTITLE eq Administrator:  Select Battles Of Batch*" | FIND /I /N "cmd.exe" && GOTO START
-	TASKLIST /FI "WINDOWTITLE eq Administrator:  Battles Of Batch*" | FIND /I /N "cmd.exe" && GOTO START
-
-	TASKLIST /FI "WINDOWTITLE eq Battles Of Batch*" | FIND /I /N "WindowsTerminal.exe" && GOTO START
-	TASKLIST /FI "WINDOWTITLE eq Select Battles Of Batch*" | FIND /I /N "WindowsTerminal.exe" && GOTO START
-	TASKLIST /FI "WINDOWTITLE eq Battles Of Batch*" | FIND /I /N "WindowsTerminal.exe" && GOTO START
 	
 	TASKLIST /FI "WINDOWTITLE eq Battles Of Batch*" | FIND /I /N "cmd.exe" && GOTO START
 	TASKLIST /FI "WINDOWTITLE eq Select Battles Of Batch*" | FIND /I /N "cmd.exe" && GOTO START
+	
+	TASKLIST /FI "WINDOWTITLE eq Administrator:  Battles Of Batch*" | FIND /I /N "cmd.exe" && GOTO START
 )>nul
 
 :END

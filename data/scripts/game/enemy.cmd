@@ -44,10 +44,10 @@ SET "EN.%2.LINE.7=    `--.)    "
 EXIT /B 0
 
 :N <Nimbo>
-SET /A TEMP.EN_ATK=5*%3
-SET /A TEMP.EN_ATK_RAND=2*%3
+SET /A TEMP.EN_ATK=4*%3
+SET /A TEMP.EN_ATK_RAND=1*%3
 SET "ENEMY.ATK.AMOUNT.%2=%TEMP.EN_ATK_RAND%,+%TEMP.EN_ATK%"
-SET /A TEMP.EN_HP=385*%3
+SET /A TEMP.EN_HP=500*%3
 SET /A TEMP.EN_HP_RAND=15*%3
 SET "ENEMY.HP.AMOUNT.%2=%TEMP.EN_HP_RAND%,+%TEMP.EN_HP%"
 SET "ENEMY.LVL.%2=%3"
@@ -195,46 +195,3 @@ SET "EN.%2.LINE.5=[49m            [m"
 SET "EN.%2.LINE.6=[49m            [m"
 SET "EN.%2.LINE.7=[49m            [m"
 EXIT /B 0
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

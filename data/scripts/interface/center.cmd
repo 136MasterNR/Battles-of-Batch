@@ -1,6 +1,6 @@
 IF NOT DEFINED VERCODE EXIT
 
-:center.cmd <number of spaces available>
+:center.cmd <"Spaces Available": Integer>
 SET "LNGTH=:~%1,1"
 :L
 IF "!STR%LNGTH%!" NEQ "" GOTO END

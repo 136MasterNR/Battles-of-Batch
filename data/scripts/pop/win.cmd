@@ -6,19 +6,19 @@ FOR /F "TOKENS=1-2 DELIMS=," %%A IN ("%REWARD.MONEY%") DO SET /A PLAYER.MONEY.NE
 SET /A PLAYER.MONEY+=%PLAYER.MONEY.NEW%
 COLOR 08
 ECHO.[15;45H[1;37m .                        . 
-ECHO.[44C[1m-[4m^|[0m[1m- %RGB%84;255;130m You Won The Battle [1;37m -[4m^|[0m[1m-
-ECHO.[44C[1m.'                        '.
-ECHO.[44C[1m:                          :[%5C[26D%RGB%179;233;255mBattle: %SELECTED% - Chapter: 1[1;37m
-ECHO.[44C[1m:                          :
-ECHO.[44C: - - - : Rewards : - - - -:
-ECHO.[44C:                          :[21D%RGB%179;233;255m %RGB.COIN%[4m%PLAYER.MONEY.NEW% Coins[0m[1;37m
-ECHO.[44C[1m:                          :[21D%RGB%179;233;255m %RGB.LVL%[4m%PLAYER.XP.NEW% XP[0m[1;37m
+ECHO.[44C[1m-[4m^|[0m[1m- %RGB%84;255;130m You Won The Battle [1;37m -[4m^|[0m[1m-[0m
+ECHO.[44C[1m.'                        '.[0m
+ECHO.[44C[1m:                          :[%5C[26D%RGB%179;233;255mBattle: %SELECTED% - Chapter: 1[0m
+ECHO.[44C[1m:                          :[0m
+ECHO.[44C[1m: - - - : Rewards : - - - -:[0m
+ECHO.[44C[1m:                          :[21D%RGB%179;233;255m %RGB.COIN%[4m%PLAYER.MONEY.NEW% Coins[0m
+ECHO.[44C[1m:                          :[21D%RGB%179;233;255m %RGB.LVL%[4m%PLAYER.XP.NEW% XP[0m
 IF %LOOT.1.ONCE%==TRUE (SET "TMP=IF %SELECTED% EQU %PLAYER.MAP.LEVEL% ") ELSE SET "TMP="
 FOR /L %%I IN (1, 1, %LOOT.MAX%) DO (
 	CALL :DISPLAY-LOOT %%I
 )
 ECHO.[44C:                          :
-ECHO.[44C[1;37m:----------: [4m[sOK[0m[1;37m :----------:
+ECHO.[44C[1m:----------: [4m[sOK[24m :----------:[0m
 SET /P "=[u"<NUL
 TITLE %TITLE%Saving ...
 FOR /L %%I IN (1, 1, %LOOT.MAX%) DO (
@@ -51,8 +51,8 @@ IF !LOOT.%1.ONCE!==TRUE (
 	SET "LOOT.ONCE.MSG=ONCE"
 ) ELSE SET "LOOT.ONCE.MSG="
 IF NOT DEFINED DROPPED_LOOT (
-	ECHO.[44C:                          :
-	ECHO.[44C: - - : Dropped Loot : - - :
+	ECHO.[44C[1m:                          :
+	ECHO.[44C[1m: - - : Dropped Loot : - - :
 	SET DROPPED_LOOT=TRUE
 )
 SET "STR=!LOOT.%1:_= ! [0mx!LOOT.%1.X! %LOOT.ONCE.MSG%"
