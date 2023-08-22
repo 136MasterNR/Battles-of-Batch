@@ -12,7 +12,7 @@ Battles of Batch is a RPG text game built for the Windows MS-DOS terminal versio
 ##### The project was initiated by 136MasterNR on August 13, 2021.<br/><br/>
 
 ## Download/Installation Process, Requirements & Notes
-  - **Latest release**: [Battles.Of.Batch.-.v0405.-.indev.20.zip](https://github.com/136MasterNR/Battles-of-Batch/releases/latest/download/Battles.Of.Batch.-.v0405.-.indev.20.zip)
+  - **Latest release**: [Battles.Of.Batch.-.v0400.-.Third.Alpha.Release.zip](https://github.com/136MasterNR/Battles-of-Batch/releases/latest/download/Battles.Of.Batch.-.v0400.-.Third.Alpha.Release.zip)
   - **Source code**: [Battles-of-Batch-main.zip](https://github.com/136MasterNR/Battles-of-Batch/archive/refs/heads/main.zip)
 
 After the download is complete, simply extract and run the batch file `BattleOfBatch.bat`.
