@@ -73,10 +73,10 @@ CALL "%CENTER%" 51
 ECHO.[44C[1m:                          :[27D%RGB%179;233;255m %STR%
 ECHO.[44C[1m:                          :[0m
 ECHO.[44C[1m: - - - : Materials : - - -:[0m
-SET "STR=%RGB.GREEN%%TMP.DROP_1% [0mx%TMP.DROP_1_AMOUNT%"
+SET "STR=%RGB.GREEN%%TMP.DROP_1:_= % [0mx%TMP.DROP_1_AMOUNT%"
 CALL "%CENTER%" 43
 ECHO.[44C[1m:                          :[24D%STR%
-SET "STR=%RGB.GREEN%%TMP.DROP_2% [0mx%TMP.DROP_2_AMOUNT%"
+SET "STR=%RGB.GREEN%%TMP.DROP_2:_= % [0mx%TMP.DROP_2_AMOUNT%"
 CALL "%CENTER%" 43
 ECHO.[44C[1m:                          :[24D%STR%
 ENDLOCAL
