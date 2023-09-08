@@ -50,13 +50,15 @@ ECHO.[u[2B  %RGB.GREEN%Once done[0m[1m, press %RGB.CYAN%P[0m[1m to export.
 ECHO.[u[3B:-------------------------------:
 
 ECHO.[30;4H .-----------: %RGB.PURPLE%GUIDE[0m :-----------.[1m
-ECHO.[4C Use [4mU[24m ^& [4mJ[24m to %RGB.YELLOW%select[0m[1m an enemy.
+ECHO.[4C Use [4mI[24m ^& [4mK[24m to %RGB.YELLOW%select[0m[1m an enemy.
 ECHO.[4C Use [4mW[24m [4mA[24m [4mS[24m ^& [4mD[24m to %RGB.YELLOW%move[0m[1m the enemy.
 ECHO.[4C Use [4mH[24m ^& [4mK[24m to %RGB.YELLOW%move[0m[1m an enemy left
 ECHO.[4C or right by just one character.
 ECHO.[4C Use [4mC[24m to %RGB.YELLOW%create[0m[1m a new enemy.
 ECHO.[4C Use [4mE[24m to %RGB.YELLOW%edit[0m[1m an enemy's %RGB.CYAN%data[0m[1m.
-ECHO.[4C Use [4mCTRL[24m + [4mC[24m to %RGB.RED%delete[0m[1m an enemy.
+ECHO.[4C Use [4mCTRL[24m + [4mX[24m to %RGB.RED%delete[0m[1m an enemy.
+ECHO.[4C Use [4mR[24m to %RGB.YELLOW%refresh[0m[1m the menu.
+ECHO.[4C Use [4mCTRL[24m + [4mR[24m to %RGB.YELLOW%undo[0m[1m all changes.
 )
 
 :: Calculate the HP of all enemies together
@@ -73,18 +75,18 @@ CALL :BATTLE-DISPLAY_CHOICE
 
 %CHOICE%
 IF %CHOICE.INPUT%.==. GOTO DISPLAY
-IF /I "%CHOICE.INPUT%"=="J" (
+IF /I "%CHOICE.INPUT%"=="K" (
 	CALL :BATTLE-S_CHOICE
 	CALL :BATTLE-DISPLAY_CHOICE
 )
-IF /I "%CHOICE.INPUT%"=="U" (
+IF /I "%CHOICE.INPUT%"=="I" (
 	CALL :BATTLE-W_CHOICE
 	CALL :BATTLE-DISPLAY_CHOICE
 )
-IF /I "%CHOICE.INPUT%"=="H" (
+IF /I "%CHOICE.INPUT%"=="J" (
 	CALL :MOVE LEFT
 )
-IF /I "%CHOICE.INPUT%"=="K" (
+IF /I "%CHOICE.INPUT%"=="L" (
 	CALL :MOVE RIGHT
 )
 IF /I "%CHOICE.INPUT%"=="W" (
@@ -158,15 +160,16 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 ENDLOCAL&SET UDERFINE=%UDERFINE: =_%
 IF "%UDERFINE%"==")_" GOTO EDIT-INPUT
 IF %TMP.SELECTED% EQU 1 (
-	SET TMP.OLDTYPE=%TMP.TYPE%
+	CALL SET TMP.OLDTYPE=%%ENEMY.TYPE.%INPUTATK%%%
 	SET TMP.TYPE=%UDERFINE%
-) ELSE SET TMP.TYPE=%%ENEMY.TYPE.%INPUTATK%%%
+) ELSE (
+	SET TMP.TYPE=%%ENEMY.TYPE.%INPUTATK%%%
+)
 IF %TMP.SELECTED% EQU 2 (
 	SETLOCAL ENABLEDELAYEDEXPANSION
 	ECHO %UDERFINE%| FINDSTR /R "^[1-9][0-9]*$">NUL
 	IF ERRORLEVEL 1 (
-		ECHO.Error registering enemy, level is not an integer.
-		PAUSE
+		CALL "%DEV_ERR%" Error registering enemy:Level is not an integer.
 		GOTO EDIT-RE
 	)
 	ENDLOCAL
@@ -175,12 +178,23 @@ IF %TMP.SELECTED% EQU 2 (
 for /l %%I in (1,1,7) do (
     SET "EN.%INPUTATK%.LINE.%%I="
 )
+
+:: Register the enemy
 CALL "%ENEMY%" %TMP.TYPE% %INPUTATK% %TMP.LVL%
 IF NOT DEFINED EN.%INPUTATK%.LINE.1 (
-	ECHO.Error registering enemy, 
+	:: If it doesn't exist, return.
+	CALL "%DEV_ERR%" Error registering enemy:Invalid Enemy.
 	CALL "%ENEMY%" %TMP.OLDTYPE% %INPUTATK% %TMP.LVL%
-	PAUSE
+	GOTO EDIT-RE
 )
+
+:: Setup for the enemy.
+SETLOCAL ENABLEDELAYEDEXPANSION
+FOR /F "TOKENS=1-2 DELIMS=," %%A IN ("!ENEMY.HP.AMOUNT.%EN.MAX%!") DO (
+	ENDLOCAL
+	CALL :RAND %EN.MAX% %%A %%B
+)
+SET /A ENEMY.HP.FULL.%EN.MAX%=ENEMY.HP.NOW.%EN.MAX%
 COLOR 08
 GOTO EDIT-RE
 
@@ -271,8 +285,38 @@ IF %1==DOWN (
 	SET /A LOC.H%INPUTATK%+=1%2
 )
 
+SETLOCAL ENABLEDELAYEDEXPANSION
+IF !LOC.H%INPUTATK%! LEQ 3 (
+	ENDLOCAL
+	CALL :MOVE-UNDO %1 %2
+) ELSE IF !LOC.H%INPUTATK%! GEQ 40 (
+	ENDLOCAL
+	CALL :MOVE-UNDO %1 %2
+) ELSE IF !LOC.W%INPUTATK%! LEQ 21 (
+	ENDLOCAL
+	CALL :MOVE-UNDO %1 %2
+) ELSE ENDLOCAL
+
+
 CALL :CREATE-LOCATION %INPUTATK% %%LOC.W%INPUTATK%%% %%LOC.H%INPUTATK%%%
 
+EXIT /B 0
+:MOVE-UNDO
+IF %1==LEFT (
+	SET /A LOC.W%INPUTATK%+=1%2
+)
+
+IF %1==RIGHT (
+	SET /A LOC.W%INPUTATK%-=1%2
+)
+
+IF %1==UP (
+	SET /A LOC.H%INPUTATK%+=1%2
+)
+
+IF %1==DOWN (
+	SET /A LOC.H%INPUTATK%-=1%2
+)
 EXIT /B 0
 
 :CREATE-LOCATION

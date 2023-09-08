@@ -4,7 +4,7 @@ IF "%2."=="." CALL "%DEV_ERR%" Undefined "ENEMY.POSITION" argument:Empty.&&SET L
 IF "%3."=="." CALL "%DEV_ERR%" Undefined "ENEMY.LEVEL" argument:Empty.&&SET LOAD.ERR=TRUE&&EXIT /B 1
 IF %3 EQU 0 CALL "%DEV_ERR%" Out of range for "ENEMY.LEVEL" argument:Value can't be zero.&&SET LOAD.ERR=TRUE&&EXIT /B 1
 IF %2 EQU 0 CALL "%DEV_ERR%" Out of range for "ENEMY.SELECTOR" argument:Value can't be zero.&&SET LOAD.ERR=TRUE&&EXIT /B 1
-IF %2 GTR 8 CALL "%DEV_ERR%" Out of range for "ENEMY.SELECTOR" argument:Value must be lower than 6.&&SET LOAD.ERR=TRUE&&EXIT /B 1
+IF %2 GTR 8 CALL "%DEV_ERR%" Out of range for "ENEMY.SELECTOR" argument:Value must be lower than 8.&&SET LOAD.ERR=TRUE&&EXIT /B 1
 CALL :%1 %1 %2 %3
 SET "ENEMY.TYPE.%2=%1"
 EXIT /B 0
