@@ -12,16 +12,13 @@ REM - IMPORTANT - MER
 
 CALL "%ENEMY%" Y 1 1
 CALL "%ENEMY%" Y 2 1
-CALL "%ENEMY%" Y 3 2
 
 ::DISPLAY - W = Width Pos    H = Height Pos
 SET LOC.W1=87
 SET LOC.W2=92
-SET LOC.W3=86
 
 SET LOC.H1=10
 SET LOC.H2=19
-SET LOC.H3=28
 
 ::LOOT TABLE - Find the list of items inside scripts\list\items.txt
 :: Item name, Randomized Amount, Type(Materials, Items, Weapons), Claim only the first time?

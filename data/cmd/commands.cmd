@@ -1,9 +1,9 @@
 @ECHO.
 @FOR /F %%I IN ('DIR /B /A *.cmd') DO @(
-	@CALL :%%I %%~nsI||ECHO.%%~nsI - [38;2;238;75;43m^(!^) Unknown Script ^(!^)[0m ^(CMD^)
+	@(CALL :%%I %%~nI)||ECHO.%%~nI - [38;2;238;75;43m^(!^) Unknown Script ^(!^)[0m ^(CMD^)
 )
 @FOR /F %%I IN ('DIR /B /A *.bat') DO @(
-	@CALL :%%I %%~nI||ECHO.%%~nI - [38;2;238;75;43m^(!^) Unknown Script ^(!^)[0m ^(BAT^)
+	@(CALL :%%I %%~nI)||ECHO.%%~nI - [38;2;238;75;43m^(!^) Unknown Script ^(!^)[0m ^(BAT^)
 )
 @EXIT /B 0
 
@@ -65,4 +65,8 @@
 
 :image.cmd
 @ECHO.%1 - [38;2;65;253;254mA colored image made in ANSI.[0m (CMD)
+@EXIT /B 0
+
+:leveleditor.cmd
+@ECHO.%1 - [38;2;65;253;254mEdit the selected level.[0m (CMD)
 @EXIT /B 0

@@ -50,7 +50,7 @@ EXIT /B 0
 
 :Ornate_Cobalt
 :: Calculate the damage to deal to the enemies
-SET /A TMP.DMG=(((50 * SKILL.ATK) + EQUIP.BONUS_ATK + EFFECT.BONUS_ATK) *20) / 100
+SET /A TMP.DMG=(((SKILL.ATK.BASE * SKILL.ATK) + EQUIP.BONUS_ATK + EFFECT.BONUS_ATK) *20) / 100
 FOR /L %%I IN (1,1,%EN.MAX%) DO (
 	IF NOT %%I==%INPUTATK% (
 		:: Decrease the HP of the enemy.

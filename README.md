@@ -68,7 +68,8 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
     - ***A***: Make your action.
     - ***E***: Choose an item from your inventory.
     - ***Z***: Cast special skill.
-    - ***Q***: End current battle and move to the previous UI (to the Map).
+    - ***Q***: Retreat current battle and go back to the map UI.
+	- ***CTRL*** + ***R***: Restart battle.
 
 ## Strategy & Details
 
@@ -348,6 +349,8 @@ Material Items [Released]
   - After entering the terminal, type in `commands` to show all available commands and their information. Below you can read some extra information about a few commands.
     - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, reverts some User Interfaces back to preDev versions and creastes debug files. Created for developing purposes.
     - **import**: Display an [ANSI](https://www.robvanderwoude.com/ansi.php) text file. Use `.ans` as a file type. Use an argument after the command, e.g. `import mysupertxt`. Make sure to move your ansi text in the directory `.\data\cmds\`.
+#### Example commands (#8.4)
+  - **Set player money**: ECHO OFF & CALL "%SAVE%" "FILE=%DATA_SAVES%\PLAYERDATA.cmd" 1 /A PLAYER.MONEY= 50000 & ECHO ON
 
 # FAQ
   - Q: **Why in Batch?**
@@ -390,8 +393,8 @@ Material Items [Released]
     - Bench
     - BlackStorm
     - 2002Spiele
-    - [ComradeTurtle](https://github.com/ComradeTurtle)
-    - AgentANP
-    - JayKayHere3987
+    - [ComradeTurtle](https://github.com/ComradeTurtle) [OLD]
+    - AgentANP [OLD]
+    - JayKayHere3987 [OLD]
 
 ### More information on this project will be added in this read me every now and then :shipit:

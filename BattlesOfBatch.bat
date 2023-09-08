@@ -43,6 +43,7 @@ IF NOT "=%WINVER:~0,3%" == "=10." (
 DEL /Q ".\data\logs\errors.txt" >NUL
 IF EXIST ".\data\logs\errors.txt" (
 	ECHO.Game was already running at %TIME%>>".\data\logs\logs.txt"
+	CSCRIPT "%CD%\data\scripts\focus.vbs" "Battles of Batch - " >NUL
 	EXIT 1
 )
 
@@ -111,8 +112,22 @@ IF NOT "%CD%"=="%OCD%" (
 	ECHO.1. Make sure to extract the game from the zip file.
 	ECHO.2. Bad shortcut options, such as working directory.
 	ECHO.3. Do not launch from shared folders or onedrive.
+	ECHO.4. Do not launch with Administrator Privileges.
 	PAUSE>NUL&EXIT
 )
+
+:: Check whether the scripts are accessible.
+FOR /F "TOKENS=*" %%I IN ('DIR /S /B /A-D ".\data\scripts"') DO IF NOT "%%~nI"=="" (
+	TYPE "%%~dpnxI" >NUL || (
+		CLS
+		ECHO.[X] Access denied:
+		ECHO."%%~dpnxI"
+		>&2 ECHO.[X] Access denied: "%%~dpnxI"
+		PAUSE
+		EXIT /B 1
+	)
+)
+
 :RESTART
 COLOR 0F
 SET COLS=117
@@ -171,15 +186,14 @@ SET CRIT.RATE=4
 SET "SEL.CHARACTER=SIMPSONS"
 ::VAR:-Shop
 SET SHOP.PRICE.HEAL=10
-SET SHOP.MAX.HEAL=400
+SET SHOP.MAX.HEAL=750
 SET SHOP.LVLREQ.HEAL=1
 SET SHOP.PRICE.BOMB=100
 SET SHOP.LVLREQ.BOMB=4
-SET SHOP.MAX.BOMB=50
-SET "SHOP.HEAL=%DATA_SCRIPTS%\shop\heal.cmd"
-SET "SHOP.BOMB=%DATA_SCRIPTS%\shop\bomb.cmd"
+SET SHOP.MAX.BOMB=25
 ::VAR:-Skills
 SET "SKILL.UPGRADE=%DATA_SCRIPTS%\playerdata\upgrade.cmd"
+SET SKILL.ATK.BASE=25
 SET SKILL.ATK.MAXLVL=2
 SET SKILL.ATK.COST=265
 SET SKILL.CRIT_RATE.MAXLVL=4
@@ -187,8 +201,6 @@ SET SKILL.CRIT_RATE.COST=825
 SET SKILL.HP.MAXLVL=5
 SET SKILL.HP.COST=6150
 ::VAR:-Audio
-SET /A VOLUME.BATTLE=100*VOLUME/100*50
-SET /A VOLUME.BATTLE=%VOLUME%-%VOLUME.BATTLE%/100
 SET "DATA_AUD=%DATA%\audio"
 SET "DATA_AUD_S=%DATA_AUD%\system"
 SET "DATA_AUDIO_G=%DATA_AUD%\game"
@@ -426,9 +438,9 @@ SET SCSCRIPT="%TEMP%\%random%-%random%-%random%-%random%.vbs"
 CSCRIPT /nologo %SCSCRIPT% || CALL :ERROR ERRLINE ID0003    -0
 DEL %SCSCRIPT%
 
-ECHO.[u Loading ... Preferences
 :: SETTINGS READER
 :SETT-MAKE
+ECHO.[u Loading ... Preferences     
 IF NOT EXIST "%DATA_SETTINGS%\settings.cmd" (
 	(
 		ECHO.SET AUDIO.VALUE=TRUE
@@ -605,19 +617,24 @@ ECHO.^|     _\_^| ^|_/_                                          \./            
 ECHO.^|    ^(_,_^| ^|_,_^)                                          V                              ^(_,___/...-` ^(_/_/         ^|[E^|                                                                                         [1;30m2023©136MasterNR[0m          ^|[114D[1;30mBATTLES OF BATCH [0;33m%VERS%-%VERTYPE%[0m[?25h)
 ECHO.^|     .                              .    .                              .    .                              .      ^|[E^|     ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|      ^|[E'-----'-------'-------'-------'------'----'-------'-------'-------'------'----'-------'-------'-------'------'------'[2A
 IF NOT %OLD.PLAYER.LVL%==%PLAYER.LVL% CALL "%SCRIPTS_POP%\lvlup.cmd"
-CALL "%DATA_SCRIPTS%\pop\daily.cmd" || GOTO MENU
+CALL "%DATA_SCRIPTS%\pop\daily.cmd" || GOTO S-MENU
 CALL "%QUEST.LOADER%" LOAD
-IF DEFINED Q.POPUP.IS SET "Q.POPUP.IS="&GOTO MENU
+IF DEFINED Q.POPUP.IS (
+	SET "Q.POPUP.IS="
+	GOTO S-MENU
+)
 :: Daily rewards check
 SET UDERFINE=
 :CHOICE-INPUTS
 SET /P "=[34;61H "<NUL
 %CHOICE%
-IF EXIST LET.DEBUG ECHO.%CHOICE.INPUT%   
-IF NOT DEFINED CHOICE.INPUT GOTO CHOICE-INPUTS
+IF EXIST LET.DEBUG (
+	ECHO.%CHOICE.INPUT%
+	ECHO.Pressed: '%CHOICE.INPUT%'>>"debug.log"
+)
+IF %CHOICE.INPUT%.==. GOTO CHOICE-INPUTS
 IF /I %CHOICE.INPUT%==A GOTO MAP
 IF /I %CHOICE.INPUT%==E GOTO CHARACTER
-IF /I %CHOICE.INPUT%== CALL "%EVENT%"&GOTO MENU
 IF /I %CHOICE.INPUT%==P (
 	SET RETURN_TO=S-MENU
 	GOTO PROFILES
@@ -667,6 +684,11 @@ IF /I %CHOICE.INPUT%== (
 	IF DEFINED RAINBOWMODE ( SET "RAINBOWMODE=" ) ELSE SET "RAINBOWMODE=TRUE"
 	GOTO REFRESH-MENU
 )
+IF /I %CHOICE.INPUT%== (
+	CALL "%EVENT%"
+	GOTO MENU
+)
+
 GOTO CHOICE-INPUTS
 :DAILY
 FOR /F "DELIMS=" %%N IN ('DATE /T') DO (
@@ -718,8 +740,8 @@ ECHO.[ SFX ]
 ECHO.Swing Sound Effects by "SOUND and IMAGE FX"
 ECHO.Other Sound Effects by "epicstockmedia.com"
 ECHO.
-ECHO.[ TESTERS ]: "The Purge King (Latest)", "AgentANP (Latest)", "ComradeTurtle", "JayKayHere3987",
-ECHO.             "2002Spiele (Latest)", "BlackStorm (Latest)"
+ECHO.[ TESTERS ]: "bench", "BlackStorm", "2002Spiele"
+ECHO.      ^(OLD^): "AgentANP", "ComradeTurtle", "JayKayHere3987"
 ECHO.
 ECHO.
 ECHO.%RGB.TRUE%DISCLAIMER: Any unauthorized Assets used for this project are not claimed by us, and are used with no copyright
@@ -775,9 +797,9 @@ IF !WEAPONS.REG_NAME.%WIELDING.WEAPON%!==Stylefi (
 	)
 ) ELSE ENDLOCAL
 
-SET /A STAT.NUM.HP=%SKILL.HP%*100
-SET /A STAT.NUM.ATK=(%SKILL.ATK%*50)+EQUIP.BONUS_ATK
-SET /A STAT.NUM.CRIT_RATE=(%SKILL.CRIT_RATE%*5)+EFFECT.BONUS_CRIT
+SET /A STAT.NUM.HP=SKILL.HP * 100
+SET /A STAT.NUM.ATK=(SKILL.ATK.BASE * SKILL.ATK) + EQUIP.BONUS_ATK
+SET /A STAT.NUM.CRIT_RATE=(SKILL.CRIT_RATE * 5) + EFFECT.BONUS_CRIT
 ECHO.[u100%%
 (
 ECHO.[?25l[H[0m.---.---------------------------------------------------------------------------------------------------------------.
@@ -1213,16 +1235,15 @@ CALL "%MAIN_GAME%\SAVES\%ITEM%\PLAYERDATA.cmd"
 CALL "%MAIN_GAME%\SAVES\%ITEM%\SKILLS.cmd"
 CALL "%ITEMS.LOADER%" WEAPONS
 
-SET /A HP=%SKILL.HP%*100
-SET /A ATK=(%SKILL.ATK% * 50) + EQUIP.BONUS_ATK
-SET /A CRIT=%SKILL.CRIT_RATE%*5
+SET /A HP=SKILL.HP * 100
+SET /A ATK=(SKILL.ATK.BASE * SKILL.ATK) + EQUIP.BONUS_ATK
+SET /A CRIT=SKILL.CRIT_RATE * 5
 
 SET "STR=%ITEM%"
 CALL "%CENTER%" 11
 
 SET /A PROFILE_COUNTER+=1
 IF NOT DEFINED SELECTED_PROFILE IF %PROFILE%==%ITEM% SET SELECTED_PROFILE=%PROFILE_COUNTER%
-REM IF DEFINED SELECTED_PROFILE IF %SELECTED_PROFILE%==%PROFILE_COUNTER% SET PROFILE_CLR=[1m
 
 (      ECHO.[29C%PROFILE_CLR%╭─────────────┬────────────────────────────────────────────╮
 ECHO.[1B[29C%PROFILE_CLR%│[13C├╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┤[G[31C%RGB%252;255;179m%STR:_= %[0m[2A
@@ -2104,7 +2125,7 @@ IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
 GOTO BATTLE-SEL_CHOICE
 :CLEAR_INFO_SELECTION
 :: Clears the info that appear on the right side when focusing on an enemy.
-ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   %TMP.LOC_HP_OLD%[11C[5B             %TMP.LOC_HP_OLD%[11C[4B             %TMP.LOC_HP_OLD%[11C[3B             [0m%TMP.LOC_HP_OLD%[11C[2B              
+ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   %TMP.LOC_HP_OLD%[11C[5B             %TMP.LOC_HP_OLD%[11C[4B             %TMP.LOC_HP_OLD%[11C[3B             [0m%TMP.LOC_HP_OLD%[11C[2B             
 EXIT /B 0
 :BATTLE-INVENTORY
 COLOR 08
@@ -2154,7 +2175,7 @@ EXIT /B 0
 SETLOCAL ENABLEDELAYEDEXPANSION
 IF DEFINED TMP.LOC_HP_OLD (
 	:: Clears the info that appear on the right side when focusing on an enemy.
-	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   %TMP.LOC_HP_OLD%[11C[5B             %TMP.LOC_HP_OLD%[11C[4B             %TMP.LOC_HP_OLD%[11C[3B             [0m%TMP.LOC_HP_OLD%[11C[2B              
+	ECHO.%TMP.LOC_HP_OLD%[4B[2D   [1B[3D   %TMP.LOC_HP_OLD%[11C[5B             %TMP.LOC_HP_OLD%[11C[4B             %TMP.LOC_HP_OLD%[11C[3B             [0m%TMP.LOC_HP_OLD%[11C[2B             
 )
 SET TMP.LOC_HP_OLD=!LOC.HP.%INPUTATK%!
 FOR /F "TOKENS=1-2 DELIMS=," %%A IN ("!ENEMY.ATK.AMOUNT.%INPUTATK%!") DO (
