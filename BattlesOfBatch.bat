@@ -546,7 +546,7 @@ ECHO.[u Loading ... Audio Management
 IF NOT DEFINED AUDIO.VALUE CALL :SETT_ERR
 IF NOT DEFINED VOLUME CALL :SETT_ERR
 
-IF TRUE==TRUE (
+IF %RICHPRESENCE.VALUE%==TRUE (
 	START /MIN "RichManager" "%RichManager%"
 	START /MIN "RichManager" "%RichManager%" START
 )
