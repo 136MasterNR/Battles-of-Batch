@@ -1,5 +1,6 @@
 IF NOT DEFINED VERCODE EXIT
 CALL %PLAYERSKILLS.LOAD%
+START /MIN "RichManager" "%RichManager%" State=Upgrading skills;Details=Shop;LargeImage=preview_skills;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 TITLE %TITLE%Upgrades Shop
 (
 ECHO.[?25h[H[0m.---------------------------------------------.-------.-------.-------.---------------------------------------------.

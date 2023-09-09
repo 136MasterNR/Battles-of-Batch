@@ -30,7 +30,6 @@ IF "%DENIED_AUDIO%"=="TRUE" (
 )
 IF %AUDIO.VALUE%==TRUE ( SET NEW.VALUE=FALSE) ELSE ( 
 	SET NEW.VALUE=TRUE
-	START /MIN "" "%AudioManager%" /I
 )
 SET /A Line#ToSearch=1
 SET "Replacement=SET AUDIO.VALUE=%NEW.VALUE%"

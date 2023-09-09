@@ -36,7 +36,7 @@ IF NOT "=%WINVER:~0,3%" == "=10." (
 	CLS
 	ECHO.You are NOT running a supported OS or OS Version. Upgrade/Change your OS to Windows 10 or 11!
 	PAUSE>NUL
-	EXIT
+	EXIT 1
 )
 
 :: Check if game is already running by trying to access its error logging file.
@@ -47,35 +47,35 @@ IF EXIST ".\data\logs\errors.txt" (
 	EXIT 1
 )
 
-:: Check whether it's running on Windows Terminal or Command Prompt
-IF /I NOT "%1"=="-BYPASS" (
-	CHCP 437>NUL
-	POWERSHELL.EXE -nop -ep Bypass -c ^"$c=Add-Type -Name pInv -PassThru -MemberDefinition '^
-	%=% [DllImport^(\"user32.dll\"^)] public static extern IntPtr SendMessageW^(IntPtr hWnd,int Msg,IntPtr wParam,IntPtr lParam^);^
-	%=% [DllImport^(\"kernel32.dll\"^)] public static extern IntPtr GetConsoleWindow^(^); ';^
-	%=% exit [int]^($c::SendMessageW^($c::GetConsoleWindow^(^),^($WM_GETICON=0x7F^),[IntPtr]::Zero,[IntPtr]::Zero^) -ne [IntPtr]::Zero^);^" && (
-	  START "" conhost.exe -- "%~nx0" -BYPASS
-	  EXIT 0
-	)
-	CHCP 65001 >NUL
+IF NOT %1.==READY. IF %1.==LAUNCH. (
+	CLS
+	ECHO.This is the game's launcher, do not close.
+	START /WAIT "Launcher" conhost.exe -- "%~dpnx0" READY
+	ECHO.Shutting down...
+	TASKKILL /F /FI "WINDOWTITLE eq wscript.exe*" /T>NUL
+	TASKKILL /F /IM "easyrp.exe" /T>NUL
+	EXIT 0
+) ELSE (
+	START /MIN "Launcher" conhost.exe -- "%~dpnx0" LAUNCH
+	EXIT 0
 )
 
 :: Check if logs folder exist,
 IF NOT EXIST ".\data\logs" MD ".\data\logs"
 ::  start the logger and check if accessible,
-2>".\data\logs\errors.txt" ( SET RUNNING=TRUE&CALL :STARTUP-COMPLETE )
+2>".\data\logs\errors.txt" (
+	SET RUNNING=TRUE
+	CALL :STARTUP
+)
 ::   if not accessible then exit, else below command will be skipped.
 IF DEFINED RUNNING (
 	::If it enters this statement then throw an error,
 	::this usually means that the game's main function has crashed.
 	CALL :ERROR ERRLINE IDUNEXPECTED_CRASH    0
-	EXIT 1
-) ELSE (
-	ECHO.Game was already running at %TIME%>>".\data\logs\logs.txt"
-	EXIT 1
 )
+EXIT 1
 
-:STARTUP-COMPLETE
+:STARTUP
 :: Check if directory files are accessible, such as itself.
 IF NOT EXIST "%~nx0" (
 	CLS
@@ -216,7 +216,6 @@ SET "SFX.LASER=%DATA_AUDIO_G_P_SUB%\laser"
 SET "DATA_AUDIO_SYS=%CD%\data\audio\sys"
 SET "DATA_AUDIO_SYS_MENU=%CD%\data\audio\sys\menu"
 SET "DATA_TMP_A=%DATA_TMP%\TMP_AUDIO.vbs"
-SET "AudioManager=%DATA_SCRIPTS%\AudioManager.bat"
 SET "AUD.MENU=%DATA_AUD_S%\menu.mp3"
 SET "AUD.BATTLE.NORMAL=%DATA_AUDIO_G_B%\battle_normal.mp3"
 SET "AUD.BATTLE.BOSS=%DATA_AUDIO_G_B%\battle_bossfight.mp3"
@@ -305,6 +304,16 @@ SET "QDESC.TLVLS=[1;37mWin [4m%QMAX.TLVLS%[0m[1;37m battles."
 SET "DLC.DIR=%DATA%"
 SET "DLC.MAIN=%DLC.DIR%\1_example"
 SET "DLC.MAIN.AUDIO=%DLC.MAIN%\audio"
+::VAR:-Rich Presence
+SET "RichManager=%DATA_SCRIPTS%\rp\RichManager.bat"
+SET "State=nul"
+SET "Details=nul"
+SET "LargeImage=icon"
+SET "LargeImageTooltip=Battle of Batch"
+SET "SmallImage="
+SET "SmallImageTooltip="
+SET StartTimestamp=0
+SET EndTimestamp=0
 
 FOR /F "TOKENS=1* DELIMS==" %%A IN ('SET QMEM_') DO (
   SET "%%A="
@@ -441,17 +450,14 @@ DEL %SCSCRIPT%
 :: SETTINGS READER
 :SETT-MAKE
 ECHO.[u Loading ... Preferences     
-IF NOT EXIST "%DATA_SETTINGS%\settings.cmd" (
-	(
-		ECHO.SET AUDIO.VALUE=TRUE
-		ECHO.SET VOLUME=90
-		ECHO.SET SFX.VOLUME=90
-		ECHO.SET AUTOSAVE.VALUE=TRUE
-		ECHO.SET UPDATE.VALUE=TRUE
-		ECHO.SET SHOW.INTRO=TRUE
-		ECHO.EXIT /B 0
-	)>%SETTINGS.LOAD%
-)
+SET AUDIO.VALUE=
+SET VOLUME=
+SET SFX.VOLUME=
+SET AUTOSAVE.VALUE=
+SET UPDATE.VALUE=
+SET SHOW.INTRO=
+SET RICHPRESENCE.VALUE=
+IF NOT EXIST "%DATA_SETTINGS%\settings.cmd" CALL :SETT_ERR
 CALL %SETTINGS.LOAD%
 
 :: Detect any missing settings
@@ -461,6 +467,7 @@ IF NOT DEFINED SFX.VOLUME CALL :SETT_ERR
 IF NOT DEFINED AUTOSAVE.VALUE CALL :SETT_ERR
 IF NOT DEFINED UPDATE.VALUE CALL :SETT_ERR
 IF NOT DEFINED SHOW.INTRO CALL :SETT_ERR
+IF NOT DEFINED RICHPRESENCE.VALUE CALL :SETT_ERR
 
 REG QUERY "%REG_1%" > NUL
 IF ERRORLEVEL 1 SET REG_C1=TRUE
@@ -539,7 +546,10 @@ ECHO.[u Loading ... Audio Management
 IF NOT DEFINED AUDIO.VALUE CALL :SETT_ERR
 IF NOT DEFINED VOLUME CALL :SETT_ERR
 
-IF %AUDIO.VALUE%==TRUE START /MIN "" "%AudioManager%" /I
+IF TRUE==TRUE (
+	START /MIN "RichManager" "%RichManager%"
+	START /MIN "RichManager" "%RichManager%" START
+)
 
 MODE CON:COLS=%COLS% LINES=%LINES%
 ECHO. Loading ... Display Features
@@ -559,6 +569,7 @@ IF %SHOW.INTRO%==TRUE (
 CALL "%MENU.AUDIO%"
 CLS
 :S-MENU
+START /MIN "RichManager" "%RichManager%" State=nul;Details=Menu;LargeImage=preview_menu;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 TITLE %TITLE%Menu
 :REFRESH-MENU
 CALL "%PLAYERDATA.LOAD%"
@@ -754,6 +765,8 @@ GOTO S-MENU
 
 :CHARACTER
 TITLE %TITLE%Character ^& Equipment
+START /MIN "RichManager" "%RichManager%" State=nul;Details=Character [and] Equipment;LargeImage=preview_character;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
+
 COLOR 08
 ECHO.[?25l[1;37m[20H[49C
 ECHO.[45C.-------------------------.
@@ -1378,6 +1391,7 @@ SET "STR=%RGB.CYAN%Next Story[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= ! %RGB.GR
 CALL "%CENTER%" 195
 ENDLOCAL&SET "UI.MAP_DETAIL_C=%STR%"
 TITLE %TITLE%Map
+START /MIN "RichManager" "%RichManager%" State=nul;Details=Map;LargeImage=preview_map;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 
 (
 ECHO.[?25l[0m[H.+-----------------------------------------------------------------------------------------------------------------+.
@@ -1558,8 +1572,8 @@ ECHO.[45C^|   [1mReading Player Data[0m   ^|
 ECHO.[45C^|     [1mPlease Wait ...[0m     ^|
 ECHO.[45C'-------------------------'
 SET "INPUT_PART=craft"
-IF NOT DEFINED VERCODE EXIT
 TITLE %TITLE%Craft Shop
+START /MIN "RichManager" "%RichManager%" State=Crafting items;Details=Shop;LargeImage=preview_craft;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 CALL "%ITEMS.LOADER%" MATERIALS
 CALL "%ITEMS.LOADER%" WEAPONS
 >NUL FINDSTR /C:"Dustblade" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.1_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Dustblade%^)    ") || (SET "CRAFT.1_FOUND=   ^(Not Owned^)   ")
@@ -1731,6 +1745,7 @@ EXIT /B 0
 :QUESTS
 CALL "%QUEST.LOADER%" LOAD
 TITLE %TITLE%Quests
+START /MIN "RichManager" "%RichManager%" State=nul;Details=Quests;LargeImage=preview_quests;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 CALL "%DATA_SAVES%\QUESTS.cmd"
 IF A==A (
 ECHO.[?25l[H[0m.--------------------------------------------------.-------------.--------------------------------------------------.
@@ -1788,6 +1803,7 @@ GOTO S-MENU
 :SETTINGS
 CHCP 65001>NUL
 TITLE %TITLE%Settings
+START /MIN "RichManager" "%RichManager%" State=nul;Details=Settings;LargeImage=preview_settings;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 (
 CLS
 ECHO.[?25l[H[0m                                                [4m                    [0m                                                 
@@ -1897,6 +1913,7 @@ IF NOT EXIST "%LOAD.LEVEL_%%SELECTED%\setup.cmd" GOTO MAP
 ECHO.[2J[21;42H҉  Preparing Your Amazing Battle[17D[1B[s
 ECHO.[u  0%%
 TITLE %TITLE%Loading Battle ...
+START /MIN "RichManager" "%RichManager%" State=level %SELECTED%;Details=Currently in battle;LargeImage=preview_battle;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL 2>NUL
 SET "ERRORLEVEL="
 SET "ERRORLVL="
@@ -2233,10 +2250,24 @@ SET "INF_ERR=%~2"
 EXIT 1
 :SETT_ERR
 CLS
-ECHO.Found errors in your options!
-ECHO.Press any key to reset them.
-PAUSE>NUL
-DEL /Q "%DATA_SETTINGS%\settings.cmd"
+ECHO.[!] Fixing settings...
+IF NOT DEFINED AUDIO.VALUE SET AUDIO.VALUE=TRUE
+IF NOT DEFINED VOLUME SET VOLUME=90
+IF NOT DEFINED SFX.VOLUME SET SFX.VOLUME=90
+IF NOT DEFINED AUTOSAVE.VALUE SET AUTOSAVE.VALUE=TRUE
+IF NOT DEFINED UPDATE.VALUE SET UPDATE.VALUE=TRUE
+IF NOT DEFINED SHOW.INTRO SET SHOW.INTRO=TRUE
+IF NOT DEFINED RICHPRESENCE.VALUE SET RICHPRESENCE.VALUE=TRUE
+(
+	ECHO.SET AUDIO.VALUE=%AUDIO.VALUE%
+	ECHO.SET VOLUME=%VOLUME%
+	ECHO.SET SFX.VOLUME=%SFX.VOLUME%
+	ECHO.SET AUTOSAVE.VALUE=%AUTOSAVE.VALUE%
+	ECHO.SET UPDATE.VALUE=%UPDATE.VALUE%
+	ECHO.SET SHOW.INTRO=%SHOW.INTRO%
+	ECHO.SET RICHPRESENCE.VALUE=%RICHPRESENCE.VALUE%
+	ECHO.EXIT /B 0
+)>%SETTINGS.LOAD%
 GOTO RESTART
 :VERIFY-FILE-IDENTITY
 CLS
