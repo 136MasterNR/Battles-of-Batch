@@ -72,6 +72,7 @@ IF EXIST "%VBS%" DEL /F /Q "%VBS%"
 IF EXIST "%UPDZIP.LOC%" DEL /F /Q "%UPDZIP.LOC%"
 ENDLOCAL
 ECHO.Update seems to be successful.
+ECHO.Press any key to clean up temp files ^& exit.
 PAUSE>NUL
 DEL /F /Q "%tmp%\%~nx0"&&EXIT
 :INSTANT_UPDATE

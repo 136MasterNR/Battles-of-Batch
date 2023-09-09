@@ -2122,6 +2122,12 @@ IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
 	GOTO IN-BATTLE
 )
 
+IF /I %CHOICE.INPUT%.==. IF %terminal% EQU 1 (
+	CALL ".\data\cmd\LevelEditor.cmd" OUT
+	CLS
+	GOTO PRE_LOAD
+)
+
 GOTO BATTLE-SEL_CHOICE
 :CLEAR_INFO_SELECTION
 :: Clears the info that appear on the right side when focusing on an enemy.

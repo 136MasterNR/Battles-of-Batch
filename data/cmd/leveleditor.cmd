@@ -1,6 +1,13 @@
 @ECHO OFF
+:leveleditor.cmd [<"Integer": Level Selection> or <"OUT": Disable Terminal Support>]
+
 IF NOT DEFINED VERCODE EXIT
-PUSHD "../.."
+IF NOT %1.==OUT. (
+	PUSHD "../.."
+	IF NOT %1.==. (
+		SET SELECTED=%1
+	)
+)
 
 :EDITOR
 COLOR 0F
@@ -44,7 +51,7 @@ ECHO.[u[1B:   %RGB.COIN%Select an enemy to edit:[0m   :
 ECHO.[u[2B:    Navigate using %RGB.CYAN%U[0m and %RGB.CYAN%J[0m.   :
 ECHO.[u[3B:  Press %RGB.CYAN%C[0m to create an enemy![0m :
 ECHO.[u[4B:------------------------------:
-ECHO.[u[5B         %RGB.GREEN%^> Your Turn ^<[0m         
+ECHO.[u[5B         %RGB.AQUAMARINE%^> Edit Mode ^<[0m         
 ECHO.[42;4H[s                                                          
 ECHO.[u[1B:-------------------------------:
 ECHO.[u[2B  %RGB.GREEN%Once done[0m[1m, press %RGB.CYAN%P[0m[1m to export.[0m
@@ -116,7 +123,7 @@ IF /I "%CHOICE.INPUT%"=="" (
 )
 IF /I "%CHOICE.INPUT%"=="P" (
 	CALL :EXPORT
-)
+) ELSE ECHO.[44;44H                                             
 
 IF /I "%CHOICE.INPUT%"=="R" (
 	CLS
@@ -146,7 +153,7 @@ ENDLOCAL
 ECHO.
 ECHO.[49C%RGB.GRAY%[Use A to select][0m
 ECHO.[45C%RGB.GRAY%[Use W and S to navigate][0m
-ECHO.[43C%RGB.GRAY%[Press Q or CANCEL to cancel][0m
+ECHO.[48C%RGB.GRAY%[Press Q to return][0m
 ECHO.[%TMP.NAV%;41H[1m^>[s[33C^<[0m
 %CHOICE%
 IF %CHOICE.INPUT%.==. GOTO EDIT-RE
@@ -158,7 +165,7 @@ IF /I NOT %CHOICE.INPUT%==A GOTO EDIT-RE
 :EDIT-INPUT
 SET /A "TMP.SELECTED=((%TMP.NAV% - 20) / 2) + 1"
 SETLOCAL ENABLEDELAYEDEXPANSION
-%INPUT% "PROMPT=[0m[?25h[u[12C[1m" "length=7"
+%INPUT% "PROMPT=[u[?25h[12C[0m[1m" "length=7"
 ENDLOCAL&SET UDERFINE=%UDERFINE: =_%
 IF "%UDERFINE%"==")_" GOTO EDIT-INPUT
 IF %TMP.SELECTED% EQU 1 (
@@ -194,11 +201,12 @@ IF DEFINED LOAD.ERR GOTO EDIT-RE
 
 :: Setup for the enemy.
 SETLOCAL ENABLEDELAYEDEXPANSION
-FOR /F "TOKENS=1-2 DELIMS=," %%A IN ("!ENEMY.HP.AMOUNT.%EN.MAX%!") DO (
+FOR /F "TOKENS=1-2 DELIMS=," %%A IN ("!ENEMY.HP.AMOUNT.%INPUTATK%!") DO (
 	ENDLOCAL
-	CALL :RAND %EN.MAX% %%A %%B
+	CALL :RAND %INPUTATK% %%A %%B
 )
-SET /A ENEMY.HP.FULL.%EN.MAX%=ENEMY.HP.NOW.%EN.MAX%
+SET /A ENEMY.HP.FULL.%INPUTATK%=ENEMY.HP.NOW.%INPUTATK%
+FOR /L %%X IN (90,-10,10) DO CALL :CREATE-HPBAR %INPUTATK% %%X %%ENEMY.HP.FULL.%INPUTATK%%%
 COLOR 08
 GOTO EDIT-RE
 
@@ -400,6 +408,7 @@ ECHO.
 ECHO.::END
 ECHO.EXIT /B 0
 )>"data\levels\lvl%SELECTED%\setup.cmd"
+ECHO.[44;44H%RGB.GREEN%√ %RGB.TRUE%Level has been exported at "lvl%SELECTED%\setup.cmd"[0m
 ENDLOCAL
 EXIT /B 0
 
@@ -452,7 +461,9 @@ SET /A "ENEMY.HP.NOW.%1=%random% %% %2 %3"
 EXIT /B 0
 
 :EXIT
-POPD
-CLEAR
-ECHO ON
+IF NOT %1.==OUT. (
+	POPD
+	CLEAR
+	ECHO ON
+)
 @EXIT /B 0

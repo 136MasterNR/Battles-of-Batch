@@ -15,8 +15,6 @@ FOR %%A IN (%ARGS%) DO (
 )
 ECHO.[34C┃                                             ┃
 ECHO.[34C┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-ECHO.
-ECHO.[43C%RGB.GRAY%[Enter Q or CANCEL to cancel]
 )
 PAUSE>NUL
 EXIT /B 0
