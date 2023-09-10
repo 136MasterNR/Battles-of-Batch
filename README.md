@@ -48,9 +48,9 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
     - ***C***: View and upgrade your Skills.
     - ***V***: View the [Credits](https://github.com/136MasterNR/Battles-of-Batch#credits).
     - ***P***: Manage your profiles.
-    - ***CTRL*** + ***Q***: Exit safely.
+    - ***CTRL*** + ***Q***: Exit the game.
     - ***CTRL*** + ***R***: Restart the game.
-    - ***CTRL*** + ***SHIFT*** + ***6***: Reset your player data.
+    - ***CTRL*** + ***SHIFT*** + ***6***: Reset all saved data.
     - ***CTRL*** + ***SHIFT*** + ***-***: LGBTQIA+
   - **Character**
     - ***A***: Equip items.
@@ -323,9 +323,6 @@ Material Items [Released]
   - Saves encryption:
     - Coming Soon!
 
-### Audio Manager (#7.1)
-  - The audio is played by a Visual Basic script, which is managed by the Audio Manager, a batch file. The Audio Manager is always running in the background as a seperate task as long audio is turned on. It detects whether the game is running every single second, and if it's not, it stops the audio tasks, and then itself. The way it detects whether the game is running is by listing all tasks and finding the process by the game's title. It also makes sure that the process runs in a terminal.
-
 ### Auto Updater (#7.2)
   - When you start the game, the updater will launch at some point in the startup and check for an update. It pulls information from [get-update](https://github.com/136MasterNR/HTS-Studios/tree/main/get-update), compares your local game's version with the online version and then prompts you to whether you wish to update or not before completely loading into the game. After you confirm to update, the updater will pull the whole game from [get-download](https://github.com/136MasterNR/HTS-Studios/tree/main/get-download) and will replace all your old game files with the new game files. This will not reset your saves, but if the next update requires you to reset your saves, you will be prompted for a second confirmation.
 
@@ -334,8 +331,8 @@ Material Items [Released]
 
 # For Developers
 *When developing something on your own, you should use the DLC packs. **DO NOT** edit the game itself as it may corrupt it entirely or cause misbehaviour! Follow the guides provided in the example DLC pack or below.*
-### Code your own levels (#8.0)
-  - Coming Soon!
+### Create your own levels using the Level Editor (#8.0)
+  - The [LevelEditor.cmd](data/cmd/leveleditor.cmd) lets you to create your own levels, with a user friendly interface, making is extremely simple to create new enemies and edit their data. To enter the Level Editor, you must unlock the terminal as mentioned [here](https://github.com/136MasterNR/Battles-of-Batch#use-commands-for-devs-83), then enter a level and press ***CTRL + P***. First, start with creating your new enemy by pressing C, you will be prompted to enter the enemy's type and level. You can find the list of enemies in [enemy.cmd](data/scripts/game/enemy.cmd). Using ***W A S D J*** and ***L*** you can move the enemy around, changing their screen position. You can use ***CTRL + R*** to undo all changes, and ***R*** to refresh the menu. Once you are done editing the level, you have to press ***P*** to save all changes permanently.
 
 ### Create your own enemies (#8.1)
   - Coming Soon!
@@ -345,9 +342,9 @@ Material Items [Released]
 
 ### Use Commands for Devs (#8.3)
   - To unlock the terminal, go to the settings and type in "IAMADEVELOPER", all in caps.
-  - For shortcut, go to the menu and hit CTRL + T to access the game's terminal. Exit using `exit`.
+  - For shortcut, go to the menu and hit ***CTRL + T*** to access the game's terminal. Exit using `exit`.
   - After entering the terminal, type in `commands` to show all available commands and their information. Below you can read some extra information about a few commands.
-    - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, reverts some User Interfaces back to preDev versions and creastes debug files. Created for developing purposes.
+    - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, reverts some User Interfaces back to preDev versions and creastes debug files. Created for development purposes.
     - **import**: Display an [ANSI](https://www.robvanderwoude.com/ansi.php) text file. Use `.ans` as a file type. Use an argument after the command, e.g. `import mysupertxt`. Make sure to move your ansi text in the directory `.\data\cmds\`.
 #### Example commands (#8.4)
   - **Set player money**: ECHO OFF & CALL "%SAVE%" "FILE=%DATA_SAVES%\PLAYERDATA.cmd" 1 /A PLAYER.MONEY= 50000 & ECHO ON

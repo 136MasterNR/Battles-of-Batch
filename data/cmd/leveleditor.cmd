@@ -15,6 +15,8 @@ MODE CON:COLS=%COLS% LINES=%LINES%
 
 IF NOT DEFINED SELECTED GOTO EXIT
 
+START /MIN "RichManager" "%RichManager%" State=Level %SELECTED% - Chapter %CHAPTER%;Details=Editing a level;LargeImage=preview_battle;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
+
 ECHO.[2J[21;42H҉  Preparing Your Amazing Battle[17D[1B[s
 ECHO.[u  0%%
 CALL "%SCRIPTS_GAME%\loader.cmd"
@@ -278,11 +280,27 @@ IF /I %TMP.LVL%==CANCEL EXIT /B 0
 
 :: Register Enemy
 SET /A EN.MAX+=1
+SET "EN.%EN.MAX%.LINE.1=
+SET "EN.%EN.MAX%.LINE.2=
+SET "EN.%EN.MAX%.LINE.3=
+SET "EN.%EN.MAX%.LINE.4=
+SET "EN.%EN.MAX%.LINE.5=
+SET "EN.%EN.MAX%.LINE.6=
+SET "EN.%EN.MAX%.LINE.7=
+
 CALL "%ENEMY%" %TMP.TYPE% %EN.MAX% %TMP.LVL%
+
+IF NOT DEFINED EN.%EN.MAX%.LINE.1 (
+	CALL "%DEV_ERR%" Error registering enemy:Invalid Enemy.
+	SET LOAD.ERR=TRUE
+)
 IF DEFINED LOAD.ERR (
+	SET "ENEMY.TYPE.%EN.MAX%="
+	SET ENEMY.HP.NOW.%EN.MAX%=
 	SET /A EN.MAX-=1
 	EXIT /B 0
 )
+
 SET INPUTATK=%EN.MAX%
 :: Data Setup
 SET /A AV.%EN.MAX%=%EN.MAX%*10
@@ -308,6 +326,7 @@ IF %1==LEFT (
 
 IF %1==RIGHT (
 	SET /A LOC.W%INPUTATK%+=1%2
+	ECHO.%TMP.LOC_HP_OLD%[3B[2D    [3B[4D    [1B[4D    
 )
 
 IF %1==UP (
@@ -440,7 +459,7 @@ EXIT /B 0
 SETLOCAL ENABLEDELAYEDEXPANSION
 IF DEFINED TMP.LOC_HP_OLD (
 	:: Clears the info that appear on the right side when focusing on an enemy.
-	ECHO.!LOC.HP.%INPUTATK%![2D  [12C  !LOC.HP.%INPUTATK%![1A             !LOC.HP.%INPUTATK%![8B            %TMP.LOC_HP_OLD%[4B[2D   [1B[3D   %TMP.LOC_HP_OLD%[11C[5B             %TMP.LOC_HP_OLD%[11C[4B             %TMP.LOC_HP_OLD%[11C[3B             [0m%TMP.LOC_HP_OLD%[11C[2B             
+	ECHO.!LOC.HP.%INPUTATK%![2D  [12C  !LOC.HP.%INPUTATK%![1A             !LOC.HP.%INPUTATK%![8B            %TMP.LOC_HP_OLD%[4B[2D  [1B[3D  %TMP.LOC_HP_OLD%[11C[5B             %TMP.LOC_HP_OLD%[11C[4B             %TMP.LOC_HP_OLD%[11C[3B             [0m%TMP.LOC_HP_OLD%[11C[2B             
 )
 SET TMP.LOC_HP_OLD=!LOC.HP.%INPUTATK%!
 FOR /F "TOKENS=1-2 DELIMS=," %%A IN ("!ENEMY.ATK.AMOUNT.%INPUTATK%!") DO (

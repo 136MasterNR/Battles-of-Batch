@@ -8,14 +8,7 @@ EXIT /B 0
 IF "%1"=="TRUE" (SET NEW.VALUE=FALSE)ELSE SET NEW.VALUE=TRUE
 SET /A Line#ToSearch=%2
 SET "Replacement=SET %3=%NEW.VALUE%"
-(FOR /F "tokens=1*delims=:" %%a IN ('findstr /n "^" "%FILE%"') DO (
-	SET "Line=%%b"
-	IF %%a equ %Line#ToSearch% SET "Line=%Replacement%"
-	SETLOCAL ENABLEDELAYEDEXPANSION
-	ECHO(!Line!
-	ENDLOCAL
-))>"%FILE%.new"
-MOVE "%FILE%.new" "%FILE%">NUL
+CALL "%SAVE%" "FILE=%SETTINGS.LOAD%" %2 /S %3= %NEW.VALUE%
 CALL %SETTINGS.LOAD%
 EXIT /B 0
 
@@ -28,7 +21,10 @@ IF "%DENIED_AUDIO%"=="TRUE" (
 	DEL /Q "%DATA_TMP%\TMP_BOX.vbs"
 	GOTO SETTINGS
 )
-IF %AUDIO.VALUE%==TRUE ( SET NEW.VALUE=FALSE) ELSE ( 
+IF %AUDIO.VALUE%==TRUE (
+	TASKKILL /F /FI "WINDOWTITLE eq wscript.exe*" /T>NUL
+	SET NEW.VALUE=FALSE
+) ELSE ( 
 	SET NEW.VALUE=TRUE
 )
 SET /A Line#ToSearch=1

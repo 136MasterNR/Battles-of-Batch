@@ -1,37 +1,41 @@
 IF NOT DEFINED VERCODE EXIT
 
-::REWARDS
-SET REWARD.MONEY=137,26
-SET REWARD.XP=100,26
+::REWARDS - Start, End : In this example, it will randomize in the range of 84 to 96 (Why 96? Cuz 84+12)
+SET REWARD.MONEY=84,12
+SET REWARD.XP=50,15
 
 ::ENEMIES
-CALL "%ENEMY%" Y 1 1
-CALL "%ENEMY%" N 2 1
+REM - IMPORTANT - MER
+:: When adding more enemies, make sure to add the additional
+:: variables for the locations and anything else.
+:: Take for example the lvl2's setup config file.
 
-::DISPLAY
+CALL "%ENEMY%" Y 1 1
+CALL "%ENEMY%" Y 2 1
+CALL "%ENEMY%" Y 3 1
+
+::DISPLAY - W = Width Pos    H = Height Pos
 SET LOC.W1=87
 SET LOC.W2=92
+SET LOC.W3=86
 
-SET LOC.H1=11
-SET LOC.H2=22
+SET LOC.H1=10
+SET LOC.H2=19
+SET LOC.H3=28
 
-::LOOT TABLE
-SET LOOT.MAX=3
+::LOOT TABLE - Find the list of items inside scripts\list\items.txt
+:: Item name, Randomized Amount, Type(Materials, Items, Weapons), Claim only the first time?
+SET LOOT.MAX=2
 
-SET LOOT.1=Dustblade
-SET LOOT.1.X=1,0
-SET LOOT.1.SAV=WEAPONS
-SET LOOT.1.ONCE=TRUE
+SET LOOT.1=Stained_Dust
+SET LOOT.1.X=2,1
+SET LOOT.1.SAV=MATERIALS
+SET LOOT.1.ONCE=FALSE
 
-SET LOOT.2=Bomb
+SET LOOT.2=Branch
 SET LOOT.2.X=0,1
-SET LOOT.2.SAV=ITEMS
+SET LOOT.2.SAV=WEAPONS
 SET LOOT.2.ONCE=FALSE
-
-SET LOOT.3=Stained_Dust
-SET LOOT.3.X=0,1
-SET LOOT.3.SAV=MATERIALS
-SET LOOT.3.ONCE=FALSE
 
 ::END
 EXIT /B 0

@@ -49,6 +49,7 @@ IF EXIST ".\data\logs\errors.txt" (
 
 IF NOT %1.==READY. IF %1.==LAUNCH. (
 	CLS
+	TITLE Launcher
 	ECHO.This is the game's launcher, do not close.
 	START /WAIT "Launcher" conhost.exe -- "%~dpnx0" READY
 	ECHO.Shutting down...
@@ -682,7 +683,6 @@ IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
 	GOTO MENU
 )
 IF /I %CHOICE.INPUT%== (
-	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
 	POPD
 	EXIT 0
 )
@@ -718,13 +718,14 @@ FOR /F "DELIMS=" %%N IN ('DATE /T') DO (
 EXIT /B 0
 
 :TERMINAL
-PUSHD "%CD%\DATA\cmd"
 MODE CON:COLS=126 LINES=9216
 CLS
 TITLE %TITLE%Command Line Enviroment
+START /MIN "RichManager" "%RichManager%" State=nul;Details=Terminal;LargeImage=cmd;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mBattles of Batch [37m[Version %VERCODE% / %VERTYPE% %VERS%]
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mMicrosoft Windows [37m[Version %WINVER:]=%]
 ECHO.[38;2;235;64;52m^(^!^) [38;2;245;108;98mRun "EXIT" to return.[0m[3H[?25h
+PUSHD "%CD%\DATA\cmd"
 CMD /K "PROMPT $E[38;2;132;217;52mbob@terminal$E[0m$E[1m:$E[38;2;113;155;198m%%cd:~-9,9%%[0m$$$S"
 POPD
 MODE CON:COLS=%COLS% LINES=%LINES%
@@ -1824,9 +1825,10 @@ IF "%UPDATE.VALUE%"=="TRUE" ( ECHO.[u%RGB%163;255;177m√ %UPDATE.VALUE%[0m ) 
 ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
 ECHO. │      %RGB%187;203;250mShow Intro[0m      ║   [s           ║    %RGB%194;255;255mWhether to show the HTS intro on startup. %RGB.CYAN%Use "intro" to toggle.[0m       │ 
 IF "%SHOW.INTRO%"=="TRUE" ( ECHO.[u%RGB%163;255;177m√ %SHOW.INTRO%[0m ) ELSE ( ECHO.[u%RGB%255;89;89mΧ %SHOW.INTRO%[0m )
+ECHO. ╞══════════════════════╬══════════════╬═══════════════════════════════════════════════════════════════════════════╡ 
+ECHO. │    %RGB%187;203;250mRich Presence[0m     ║   [s           ║    %RGB%194;255;255mShow rich presence for discord. %RGB.CYAN%Use "rp" to toggle.[0m                    │ 
+IF "%RICHPRESENCE.VALUE%"=="TRUE" ( ECHO.[u%RGB%163;255;177m√ %RICHPRESENCE.VALUE%[0m ) ELSE ( ECHO.[u%RGB%255;89;89mΧ %RICHPRESENCE.VALUE%[0m )
 ECHO. ╞══════════════════════╩══════════════╩═══════════════════════════════════════════════════════════════════════════╡ 
-ECHO. │                                                                                                                 │ 
-ECHO. │                                                                                                                 │ 
 ECHO. │                                                                                                                 │ 
 ECHO. │                                                                                                                 │ 
 ECHO. │                                                                                                                 │ 
@@ -1890,6 +1892,11 @@ SET "INPUT_PART=nul"
  IF /I "%UDERFINE%"=="INTRO" CALL "%SETTING%" SET %SHOW.INTRO% 6 SHOW.INTRO
   IF /I "%UDERFINE%"=="SHOW" CALL "%SETTING%" SET %SHOW.INTRO% 6 SHOW.INTRO
    IF /I "%UDERFINE%"=="SHOW INTRO" CALL "%SETTING%" SET %SHOW.INTRO% 6 SHOW.INTRO
+ IF /I "%UDERFINE%"=="RP" CALL "%SETTING%" SET %RICHPRESENCE.VALUE% 7 RICHPRESENCE.VALUE
+  IF /I "%UDERFINE%"=="PRESENCE" CALL "%SETTING%" SET %RICHPRESENCE.VALUE% 7 RICHPRESENCE.VALUE
+   IF /I "%UDERFINE%"=="RICH PRESENCE" CALL "%SETTING%" SET %RICHPRESENCE.VALUE% 7 RICHPRESENCE.VALUE
+    IF /I "%UDERFINE%"=="RPC" CALL "%SETTING%" SET %RICHPRESENCE.VALUE% 7 RICHPRESENCE.VALUE
+	 IF /I "%UDERFINE%"=="RICH" CALL "%SETTING%" SET %RICHPRESENCE.VALUE% 7 RICHPRESENCE.VALUE
  IF "%UDERFINE%"=="IAMADEVELOPER" (
 	IF %terminal% EQU 0 (
 		START /WAIT "" "%CD%\data\cmd\TerminalGuidelines.txt"
@@ -1913,7 +1920,7 @@ IF NOT EXIST "%LOAD.LEVEL_%%SELECTED%\setup.cmd" GOTO MAP
 ECHO.[2J[21;42H҉  Preparing Your Amazing Battle[17D[1B[s
 ECHO.[u  0%%
 TITLE %TITLE%Loading Battle ...
-START /MIN "RichManager" "%RichManager%" State=level %SELECTED%;Details=Currently in battle;LargeImage=preview_battle;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
+START /MIN "RichManager" "%RichManager%" State=Level %SELECTED% - Chapter %CHAPTER%;Details=Currently in battle;LargeImage=preview_battle;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL 2>NUL
 SET "ERRORLEVEL="
 SET "ERRORLVL="
