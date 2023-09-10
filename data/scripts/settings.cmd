@@ -10,6 +10,14 @@ SET /A Line#ToSearch=%2
 SET "Replacement=SET %3=%NEW.VALUE%"
 CALL "%SAVE%" "FILE=%SETTINGS.LOAD%" %2 /S %3= %NEW.VALUE%
 CALL %SETTINGS.LOAD%
+
+:: Commands for specific settings
+IF %3==RICHPRESENCE.VALUE IF %RICHPRESENCE.VALUE%==FALSE (
+	TASKKILL /F /IM "easyrp.exe" /T>NUL
+) ELSE IF %RICHPRESENCE.VALUE%==TRUE (
+	START /MIN "RichManager" "%RichManager%"
+	START /MIN "RichManager" "%RichManager%" START
+)
 EXIT /B 0
 
 :AUDIO

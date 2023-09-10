@@ -570,7 +570,7 @@ IF %SHOW.INTRO%==TRUE (
 CALL "%MENU.AUDIO%"
 CLS
 :S-MENU
-START /MIN "RichManager" "%RichManager%" State=nul;Details=Menu;LargeImage=preview_menu;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
+IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Menu;LargeImage=preview_menu;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 TITLE %TITLE%Menu
 :REFRESH-MENU
 CALL "%PLAYERDATA.LOAD%"
@@ -721,7 +721,7 @@ EXIT /B 0
 MODE CON:COLS=126 LINES=9216
 CLS
 TITLE %TITLE%Command Line Enviroment
-START /MIN "RichManager" "%RichManager%" State=nul;Details=Terminal;LargeImage=cmd;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
+IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Terminal;LargeImage=cmd;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mBattles of Batch [37m[Version %VERCODE% / %VERTYPE% %VERS%]
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mMicrosoft Windows [37m[Version %WINVER:]=%]
 ECHO.[38;2;235;64;52m^(^!^) [38;2;245;108;98mRun "EXIT" to return.[0m[3H[?25h
@@ -766,7 +766,7 @@ GOTO S-MENU
 
 :CHARACTER
 TITLE %TITLE%Character ^& Equipment
-START /MIN "RichManager" "%RichManager%" State=nul;Details=Character [and] Equipment;LargeImage=preview_character;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
+IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Character [and] Equipment;LargeImage=preview_character;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 
 COLOR 08
 ECHO.[?25l[1;37m[20H[49C
@@ -1392,7 +1392,7 @@ SET "STR=%RGB.CYAN%Next Story[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= ! %RGB.GR
 CALL "%CENTER%" 195
 ENDLOCAL&SET "UI.MAP_DETAIL_C=%STR%"
 TITLE %TITLE%Map
-START /MIN "RichManager" "%RichManager%" State=nul;Details=Map;LargeImage=preview_map;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
+IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Map;LargeImage=preview_map;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 
 (
 ECHO.[?25l[0m[H.+-----------------------------------------------------------------------------------------------------------------+.
@@ -1574,7 +1574,7 @@ ECHO.[45C^|     [1mPlease Wait ...[0m     ^|
 ECHO.[45C'-------------------------'
 SET "INPUT_PART=craft"
 TITLE %TITLE%Craft Shop
-START /MIN "RichManager" "%RichManager%" State=Crafting items;Details=Shop;LargeImage=preview_craft;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
+IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=Crafting items;Details=Shop;LargeImage=preview_craft;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 CALL "%ITEMS.LOADER%" MATERIALS
 CALL "%ITEMS.LOADER%" WEAPONS
 >NUL FINDSTR /C:"Dustblade" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.1_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Dustblade%^)    ") || (SET "CRAFT.1_FOUND=   ^(Not Owned^)   ")
@@ -1746,7 +1746,7 @@ EXIT /B 0
 :QUESTS
 CALL "%QUEST.LOADER%" LOAD
 TITLE %TITLE%Quests
-START /MIN "RichManager" "%RichManager%" State=nul;Details=Quests;LargeImage=preview_quests;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
+IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Quests;LargeImage=preview_quests;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 CALL "%DATA_SAVES%\QUESTS.cmd"
 IF A==A (
 ECHO.[?25l[H[0m.--------------------------------------------------.-------------.--------------------------------------------------.
@@ -1804,7 +1804,7 @@ GOTO S-MENU
 :SETTINGS
 CHCP 65001>NUL
 TITLE %TITLE%Settings
-START /MIN "RichManager" "%RichManager%" State=nul;Details=Settings;LargeImage=preview_settings;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
+IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Settings;LargeImage=preview_settings;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 (
 CLS
 ECHO.[?25l[H[0m                                                [4m                    [0m                                                 
@@ -1920,7 +1920,7 @@ IF NOT EXIST "%LOAD.LEVEL_%%SELECTED%\setup.cmd" GOTO MAP
 ECHO.[2J[21;42H҉  Preparing Your Amazing Battle[17D[1B[s
 ECHO.[u  0%%
 TITLE %TITLE%Loading Battle ...
-START /MIN "RichManager" "%RichManager%" State=Level %SELECTED% - Chapter %CHAPTER%;Details=Currently in battle;LargeImage=preview_battle;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
+IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=Level %SELECTED% - Chapter %CHAPTER%;Details=Currently in battle;LargeImage=preview_battle;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL 2>NUL
 SET "ERRORLEVEL="
 SET "ERRORLVL="
