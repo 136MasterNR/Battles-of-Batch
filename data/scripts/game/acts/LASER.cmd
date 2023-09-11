@@ -1,6 +1,7 @@
 IF NOT DEFINED VERCODE EXIT
 SET W.TIME=0
 SET S.TIME=12
+IF "%AUDIO.VALUE%"=="TRUE" IF NOT %SFX.VOLUME% EQU 0 CALL "%AUDIOMANAGER%" START game\player\substat\laser.mp3 sfx False
 REM FRAME: 1
 ECHO.[H[17B^|  ^|       ,--.-.)    
 ECHO.^|   \     /  o \o\     
@@ -21,27 +22,6 @@ ECHO.^|     ^|     .-'  \
 ECHO.^|     ^|  .-'.-.-.-'   
 ECHO.^|     ^| (  ,_._._     
 ECHO.^|     ^|  `.___.'      
-
-REM SFX: 1
-IF "%AUDIO.VALUE%"=="TRUE" (
-	SETLOCAL ENABLEDELAYEDEXPANSION
-	FOR /F "DELIMS=:" %%A IN ('TASKLIST /FI "WINDOWTITLE eq wscript.exe%TARGETAEXT%"') DO IF NOT %%A==INFO TASKKILL /F /FI "WINDOWTITLE eq wscript.exe%TARGETAEXT%" /T>NUL
-	SET "TARGETAEXT=.sfx"
-	SET "TARGETAUDIO=%SFX.LASER%.mp3"
-	(
-		ECHO Set Sound = CreateObject^("WMPlayer.OCX.7"^)
-		ECHO Sound.URL = "!TARGETAUDIO!"
-		ECHO Sound.Controls.play
-		ECHO Sound.settings.volume = %SFX.VOLUME%
-		ECHO Sound.settings.setMode "loop", False
-		ECHO Sound.Controls.play
-		ECHO While Sound.playState ^<^> 1
-		ECHO      WScript.Sleep 100
-		ECHO Wend
-	) > "%DATA_TMP_A%"
-	START /min "wscript.exe%TARGETAEXT%" cmd /c START /min /wait "" "%DATA_TMP_A%"^|^|EXIT^&DEL /Q "%DATA_TMP_A%"^|^|EXIT^&EXIT
-	ENDLOCAL
-)
 
 REM FRAME: 3
 ECHO.[8A^|  ^|       ,--.-.)    

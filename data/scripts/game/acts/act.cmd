@@ -22,42 +22,16 @@ SET /A CRIT.CHANCE=%random% %% 100
 SET /A PLAYER.ATTACK.CNT1=((SKILL.ATK.BASE * SKILL.ATK) + EQUIP.BONUS_ATK + EFFECT.BONUS_ATK) / 2
 SET /A PLAYER.ATTACK.AMOUNT=%random% %% PLAYER.ATTACK.CNT1 +PLAYER.ATTACK.CNT1
 
+:: Sound Effects
 IF "%AUDIO.VALUE%"=="TRUE" IF NOT %SFX.VOLUME% EQU 0 (
 	SETLOCAL ENABLEDELAYEDEXPANSION
 	SET /A SFX.RANDOM.CRIT=%random% %% 3+1
 	SET /A SFX.RANDOM.ATK=%random% %% 5+1
-	SET "TARGETAEXT=.sfx"
-	FOR /F "DELIMS=:" %%A IN ('TASKLIST /FI "WINDOWTITLE eq wscript.exe!TARGETAEXT!"') DO IF NOT %%A==INFO TASKKILL /F /FI "WINDOWTITLE eq wscript.exe!TARGETAEXT!" /T>NUL
 	IF %CRIT.CHANCE% LEQ %CRIT.RATE% (
-		SET "TARGETAUDIO=%SFX.ATK.CRIT%!SFX.RANDOM.CRIT!.mp3"
-		(
-			ECHO Set Sound = CreateObject^("WMPlayer.OCX.7"^)
-			ECHO Sound.URL = "!TARGETAUDIO!"
-			ECHO Sound.Controls.play
-			ECHO Sound.settings.volume = %SFX.VOLUME%
-			ECHO Sound.settings.setMode "loop", False
-			ECHO Sound.Controls.play
-			ECHO While Sound.playState ^<^> 1
-			ECHO      WScript.Sleep 100
-			ECHO Wend
-		) > "%DATA_TMP_A%"
-		START /min "wscript.exe!TARGETAEXT!" cmd /c START /min /wait "" "%DATA_TMP_A%"^&DEL /Q "%DATA_TMP_A%"^&EXIT
+		CALL "%AUDIOMANAGER%" START game\player\attack\crit_%%SFX.RANDOM.CRIT%%.mp3 sfx False
 	) ELSE (
 		SET "TARGETAUDIO=%SFX.ATK%!SFX.RANDOM.ATK!.mp3"
-		IF EXIST "!TARGETAUDIO!" (
-			(
-				ECHO Set Sound = CreateObject^("WMPlayer.OCX.7"^)
-				ECHO Sound.URL = "!TARGETAUDIO!"
-				ECHO Sound.Controls.play
-				ECHO Sound.settings.volume = %SFX.VOLUME%
-				ECHO Sound.settings.setMode "loop", False
-				ECHO Sound.Controls.play
-				ECHO While Sound.playState ^<^> 1
-				ECHO      WScript.Sleep 100
-				ECHO Wend
-			) > "%DATA_TMP_A%"
-			START /min "wscript.exe!TARGETAEXT!" cmd /c START /min /wait "" "%DATA_TMP_A%"^&DEL /Q "%DATA_TMP_A%"^&EXIT
-		)
+		CALL "%AUDIOMANAGER%" START game\player\attack\swing_%%SFX.RANDOM.ATK%%.mp3 sfx False
 	)
 	ENDLOCAL
 )
@@ -92,25 +66,7 @@ IF NOT DEFINED ITEM.REG_LVL.BOMB (
 	PAUSE>NUL                        
 	EXIT /B 1
 )
-IF "%AUDIO.VALUE%"=="TRUE" IF NOT %SFX.VOLUME% EQU 0 (
-	SETLOCAL ENABLEDELAYEDEXPANSION
-	SET "TARGETAEXT=.sfx"
-	FOR /F "DELIMS=:" %%A IN ('TASKLIST /FI "WINDOWTITLE eq wscript.exe!TARGETAEXT!"') DO IF NOT %%A==INFO TASKKILL /F /FI "WINDOWTITLE eq wscript.exe!TARGETAEXT!" /T>NUL
-	SET "TARGETAUDIO=%SFX.BOMB%.mp3"
-	(
-		ECHO Set Sound = CreateObject^("WMPlayer.OCX.7"^)
-		ECHO Sound.URL = "!TARGETAUDIO!"
-		ECHO Sound.Controls.play
-		ECHO Sound.settings.volume = %SFX.VOLUME%
-		ECHO Sound.settings.setMode "loop", False
-		ECHO Sound.Controls.play
-		ECHO While Sound.playState ^<^> 1
-		ECHO      WScript.Sleep 100
-		ECHO Wend
-	) > "%DATA_TMP_A%"
-	START /min "wscript.exe%TARGETAEXT%" cmd /c START /min /wait "" "%DATA_TMP_A%"^|^|EXIT^&DEL /Q "%DATA_TMP_A%"^|^|EXIT^&EXIT
-	ENDLOCAL
-)
+IF "%AUDIO.VALUE%"=="TRUE" IF NOT %SFX.VOLUME% EQU 0 START "" /MIN CMD /C "%AUDIOMANAGER%" START game\player\substat\bomb.mp3 sfx False
 IF %ITEM.REG_LVL.BOMB% LEQ 1 (
 	(
 		TYPE "%PLAYERDATA.ITEMS%" | FINDSTR /V Bomb

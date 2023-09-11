@@ -24,7 +24,7 @@
 :LAUNCHER
 @SET OCD=%CD%
 @PUSHD "%~dp0"
-@TITLE Battles of Batch
+@TITLE Battles of Batch - Loading
 @CHCP 65001 >NUL
 @PROMPT !^>
 @VERIFY OFF
@@ -53,7 +53,7 @@ IF NOT %1.==READY. IF %1.==LAUNCH. (
 	ECHO.This is the game's launcher, do not close.
 	START /WAIT "Launcher" conhost.exe -- "%~dpnx0" READY
 	ECHO.Shutting down...
-	TASKKILL /F /FI "WINDOWTITLE eq wscript.exe*" /T>NUL
+	TASKKILL /F /FI "WINDOWTITLE eq WSAudio*" /T>NUL
 	TASKKILL /F /IM "easyrp.exe" /T>NUL
 	EXIT 0
 ) ELSE (
@@ -77,6 +77,8 @@ IF DEFINED RUNNING (
 EXIT 1
 
 :STARTUP
+TASKKILL /F /IM "wscript.exe"
+
 :: Check if directory files are accessible, such as itself.
 IF NOT EXIST "%~nx0" (
 	CLS
@@ -202,25 +204,15 @@ SET SKILL.CRIT_RATE.COST=825
 SET SKILL.HP.MAXLVL=5
 SET SKILL.HP.COST=6150
 ::VAR:-Audio
-SET "DATA_AUD=%DATA%\audio"
-SET "DATA_AUD_S=%DATA_AUD%\system"
-SET "DATA_AUDIO_G=%DATA_AUD%\game"
-SET "DATA_AUDIO_G_P=%DATA_AUDIO_G%\player"
-SET "DATA_AUDIO_G_B=%DATA_AUDIO_G%\battle"
-SET "DATA_AUDIO_G_P_SUB=%DATA_AUDIO_G_P%\substat"
-SET "DATA_AUDIO_G_P_ATK=%DATA_AUDIO_G_P%\attack"
-SET "SFX.ATK=%DATA_AUDIO_G_P_ATK%\swing_"
-SET "SFX.ATK.CRIT=%DATA_AUDIO_G_P_ATK%\crit_"
-SET "SFX.ATK.MISS=%DATA_AUDIO_G_P_ATK%\miss_"
-SET "SFX.BOMB=%DATA_AUDIO_G_P_SUB%\bomb"
-SET "SFX.LASER=%DATA_AUDIO_G_P_SUB%\laser"
-SET "DATA_AUDIO_SYS=%CD%\data\audio\sys"
-SET "DATA_AUDIO_SYS_MENU=%CD%\data\audio\sys\menu"
-SET "DATA_TMP_A=%DATA_TMP%\TMP_AUDIO.vbs"
-SET "AUD.MENU=%DATA_AUD_S%\menu.mp3"
-SET "AUD.BATTLE.NORMAL=%DATA_AUDIO_G_B%\battle_normal.mp3"
-SET "AUD.BATTLE.BOSS=%DATA_AUDIO_G_B%\battle_bossfight.mp3"
-SET "MENU.AUDIO=%DATA_SCRIPTS%\menuaudio.cmd"
+SET "AUDIOMANAGER=%DATA_SCRIPTS%\audiomanager.cmd"
+SET "SFX.ATK=game\player\attack\swing_"
+SET "SFX.ATK.CRIT=game\player\attack\crit_"
+SET "SFX.ATK.MISS=game\player\attack\miss_"
+SET "SFX.BOMB=game\player\substat\bomb"
+SET "SFX.LASER=game\player\substat\laser"
+SET "AUD.MENU=system\menu.mp3"
+SET "AUD.BATTLE.NORMAL=game\battle\winternight.mp3"
+SET "AUD.BATTLE.BOSS=%DATA_AUDIO_G_B%\dangerousplains.mp3"
 ::VAR:-Interface
 SET "INTERFACE=%DATA_SCRIPTS%\interface"
 SET "STAT.MONEY=%INTERFACE%\money.cmd"
@@ -339,7 +331,7 @@ IF NOT EXIST "%MAIN_GAME%\main.config" (
 	ECHO.[SYSTEM]
 	ECHO.profile=Wanderer
 	ECHO.unitsWarning=null
-	ECHO.licesneAgreed=none
+	ECHO.licenseAgreed=none
 	ECHO.terminal=0
 )>"%MAIN_GAME%\main.config"
 
@@ -409,7 +401,7 @@ IF NOT %licesneAgreed%==GNU_GPLv3 IF EXIST "%LICENSE%" (
 	ECHO.By closing the License text window you agree, and be
 	ECHO.able to continue playing the game.
 	START /WAIT "" "%LICENSE%"
-	CALL "%SAVE%" "FILE=%MAIN_GAME%\main.config" 4 licesneAgreed=GNU_GPLv3
+	CALL "%SAVE%" "FILE=%MAIN_GAME%\main.config" 4 licenseAgreed=GNU_GPLv3
 	CLS
 ) ELSE (
 	CLS
@@ -477,7 +469,7 @@ IF ERRORLEVEL 1 SET REG_C2=TRUE
 
 IF DEFINED REG_C1 (
 	IF DEFINED REG_C2 (
-		IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 CALL "%TOGGLE.SOUNDS%"
+		IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 CALL "%SETTING%" AUDIO
 		SET DENIED_AUDIO=TRUE
 		CALL "%SETTINGS.LOAD%"
 	)
@@ -567,7 +559,7 @@ IF %SHOW.INTRO%==TRUE (
 
 :MENU
 @CHCP 65001>NUL
-CALL "%MENU.AUDIO%"
+IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 START "" /MIN CMD /C "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
 CLS
 :S-MENU
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Menu;LargeImage=preview_menu;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
@@ -675,7 +667,7 @@ IF /I %CHOICE.INPUT%==. START "" "https://github.com/136MasterNR/Battles-of-Bat
 IF /I %CHOICE.INPUT%==I IF %ITEM.REG_CNT%==0 (SET /P "=[4C%RGB.FALSE%UI_ERR: ITEMS LIST IS EMPTY   [2G"<NUL) ELSE GOTO S-MENU
 IF /I %CHOICE.INPUT%==R (MODE CON:COLS=%COLS% LINES=%LINES%&GOTO MENU)
 IF /I %CHOICE.INPUT%== (
-	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
+	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 START "" /MIN CMD /C "%AUDIOMANAGER%" STOPALL
 	GOTO RESTART
 )
 IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
@@ -752,7 +744,7 @@ ECHO.[ SFX ]
 ECHO.Swing Sound Effects by "SOUND and IMAGE FX"
 ECHO.Other Sound Effects by "epicstockmedia.com"
 ECHO.
-ECHO.[ TESTERS ]: "bench", "BlackStorm", "2002Spiele"
+ECHO.[ TESTERS ]: "AboodXD", "bench", "BlackStorm", "2002Spiele"
 ECHO.      ^(OLD^): "AgentANP", "ComradeTurtle", "JayKayHere3987"
 ECHO.
 ECHO.
@@ -1183,7 +1175,7 @@ SET /P "=[2;3H[?25h"<NUL
 IF /I %CHOICE.INPUT%.==R. GOTO PROFILES
 IF /I %CHOICE.INPUT%.==Q. GOTO %RETURN_TO%
 IF /I %CHOICE.INPUT%.==A. (
-	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL
+	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 START "" /MIN CMD /C "%AUDIOMANAGER%" STOPALL
 	FOR /D %%I IN (%MAIN_GAME%\SAVES\*) DO CALL :APPLY %%~nI || GOTO RESTART
 )
 IF /I %CHOICE.INPUT%.==D. (
@@ -1901,6 +1893,7 @@ SET "INPUT_PART=nul"
 	IF %terminal% EQU 0 (
 		START /WAIT "" "%CD%\data\cmd\TerminalGuidelines.txt"
 		CALL "%SAVE%" "FILE=%MAIN_GAME%\main.config" 5 terminal=1
+		pause
 		SET terminal=1
 	)
 	CALL :TERMINAL
@@ -1921,41 +1914,8 @@ ECHO.[2J[21;42H҉  Preparing Your Amazing Battle[17D[1B[s
 ECHO.[u  0%%
 TITLE %TITLE%Loading Battle ...
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=Level %SELECTED% - Chapter %CHAPTER%;Details=Currently in battle;LargeImage=preview_battle;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
-IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL 2>NUL
-SET "ERRORLEVEL="
-SET "ERRORLVL="
-IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 TASKLIST /FI "IMAGENAME eq wscript.exe.battle" 2>NUL|FIND /I /N "wscript.exe">NUL&SET "ERRORLVL=%ERRORLEVEL%" & TASKKILL /F /IM wscript.exe.battle>NUL
-IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 IF %SELECTED%==7 (SET "TARGETAUDIO=%AUD.BATTLE.BOSS%") ELSE SET "TARGETAUDIO=%AUD.BATTLE.NORMAL%"
-IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
-	IF /I "%ERRORLVL%"=="0" (
-		TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL
-		(
-			ECHO Set Sound = CreateObject^("WMPlayer.OCX.7"^)
-			ECHO Sound.URL = "%TARGETAUDIO%"
-			ECHO Sound.Controls.play
-			ECHO Sound.settings.volume = %VOLUME%
-			ECHO Sound.settings.setMode "loop", True
-			ECHO Sound.Controls.play
-			ECHO While Sound.playState ^<^> 1
-			ECHO      WScript.Sleep 100
-			ECHO Wend
-		) > "%DATA_TMP_A%"
-		START /min "wscript.exe.battle" cmd /c START /min /wait "" "%DATA_TMP_A%"^&DEL /Q "%DATA_TMP_A%"^&EXIT
-	) ELSE IF /I "%ERRORLVL%"=="1" (
-		(
-			ECHO Set Sound = CreateObject^("WMPlayer.OCX.7"^)
-			ECHO Sound.URL = "%TARGETAUDIO%"
-			ECHO Sound.Controls.play
-			ECHO Sound.settings.volume = %VOLUME%
-			ECHO Sound.settings.setMode "loop", True
-			ECHO Sound.Controls.play
-			ECHO While Sound.playState ^<^> 1
-			ECHO      WScript.Sleep 100
-			ECHO Wend
-		) > "%DATA_TMP_A%%\TMP_AUDIO.vbs"
-		START /min "wscript.exe.battle" cmd /c START /min /wait "" "%DATA_TMP_A%"^&DEL /Q "%DATA_TMP_A%"^&EXIT
-	)
-)
+IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 START "" /MIN CMD /C "%AUDIOMANAGER%" STOP menu
+IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 START "" /MIN CMD /C "%AUDIOMANAGER%" START game\battle\winternight.mp3 battle True
 CALL "%SCRIPTS_GAME%\loader.cmd" || (
 	ECHO.[u[1A[10D[2K%RGB.RED%Failed to load the battle!
 	PAUSE>NUL
@@ -2013,16 +1973,20 @@ CALL "%SCRIPTS_GAME%\fade.cmd"
 :: If all enemies are dead, win
 IF %ENEMY.HP.NOW.T% LEQ 0 (
 	CALL "%SCRIPTS_POP%\win.cmd"
-	IF "%AUDIO.VALUE%"=="TRUE" IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
-	CALL "%MENU.AUDIO%"
+	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
+		START "" /MIN CMD /C "%AUDIOMANAGER%" STOP battle
+		START "" /MIN CMD /C "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
+	)
 	GOTO MAP
 )
 
 :: If the player is dead, lose
 IF %PLAYER.HP.NOW% LEQ 0 (
 	CALL "%SCRIPTS_POP%\lose.cmd"
-	IF "%AUDIO.VALUE%"=="TRUE" IF %VOLUME% NEQ 0 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
-	CALL "%MENU.AUDIO%"
+	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
+		START "" /MIN CMD /C "%AUDIOMANAGER%" STOP battle
+		START "" /MIN CMD /C "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
+	)
 	GOTO MAP
 )
 
@@ -2080,8 +2044,8 @@ IF %CHOICE.INPUT%.==. GOTO BATTLE-SEL_CHOICE
 IF /I %CHOICE.INPUT%==Q (
 	CALL :CLEAR_INFO_SELECTION
 	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
-		TASKKILL /F /FI "WINDOWTITLE eq wscript.exe.battle" /T>NUL 2>NUL
-		CALL "%MENU.AUDIO%"
+		START "" /MIN CMD /C "%AUDIOMANAGER%" STOP battle
+		START "" /MIN CMD /C "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
 	)
 	GOTO MAP
 )
