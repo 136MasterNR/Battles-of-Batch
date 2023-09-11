@@ -1,1 +1,1 @@
-WScript.Sleep ms WScript.Arguments(0)
+WScript.Sleep WScript.Arguments(0)

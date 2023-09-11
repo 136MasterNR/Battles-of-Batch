@@ -28,7 +28,7 @@ SET TMP.LOOP=%3
 	ECHO Sound.settings.setMode "loop", %TMP.LOOP%
 	ECHO Sound.Controls.play
 	ECHO While Sound.playState ^<^> 1
-	ECHO      WScript.Sleep 1000
+	ECHO      WScript.Sleep 400
 	ECHO Wend
 ) > "%DATA_TMP_A%"
 

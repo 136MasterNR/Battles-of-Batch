@@ -582,7 +582,7 @@ CALL "%CENTER%" STR 54
 SET "UI.MENU.MA=%STR%"
 (ECHO.[0m[H[?25l.-------------------------------------------------------------------------------------------------------------------.
 IF "%RAINBOWMODE%"=="TRUE" ( CALL "%INT.TITLE_R%" ) ELSE ( CALL "%INT.TITLE%" )
-ECHO.'-.--------[1;30m.[0m--[1;30m.[0m------------.                                                             .------------------------.-'[E.-'--------[1;30m^|[0m--[1;30m^|[0m------------'  [1m2nd Anniversary![0m  .---.-----------.---.                    '------------------------'-.
+ECHO.'-.--------[1;30m.[0m--[1;30m.[0m------------.                                                             .------------------------.-'[E.-'--------[1;30m^|[0m--[1;30m^|[0m------------'  [1m2nd Anniversary^^![0m  .---.-----------.---.                    '------------------------'-.
 ECHO.^|          [1;30m^|  ^|[0m             .------------------'    :   [1;34mSTATS[0m   :    '------------------.                           ^|
 ECHO.^|          [1;30m^|  ^|[0m             \                       '-----------'                       /        _   ,_,   _        ^|
 ECHO.^|  \_      [1;30m^|  ^|[0m      _/     /   !UI.MENU.XP!  \       / `'=^) ^(='` \       ^|
@@ -1393,7 +1393,7 @@ ECHO.^|     ^|    ^|^|    ^|                                                    
 ECHO.^|     ^|___o()o___^|                                                                                 ^|___o()o___^|     ^|
 ECHO.^|     ^|__((^<^>))__^|                                                                                 ^|__((^<^>))__^|     ^|
 ECHO.^|     \   o\/o   /                                                                                 \   o\/o   /     ^|
-ECHO.^|      \   ^|^|   /                            [0mPress %RGB.CYAN%[4mA[0m or %RGB.CYAN%[4mP[0m to begin the level.[0m                       \   ^|^|   /      ^|
+ECHO.^|      \   ^|^|   /                          [0mPress %RGB.CYAN%[4mA[0m or %RGB.CYAN%[4mSpace[0m to begin the level.[0m                     \   ^|^|   /      ^|
 ECHO.^|       \  ^|^|  /                 [0m Press %RGB.AQUAMARINE%[4mC[0m to jump [1m7[0m levels forward or %RGB.AQUAMARINE%[4mZ[0m to go backwards.[0m             \  ^|^|  /       ^|
 ECHO.^|        '.^|^|.'                     [0mPress %RGB.YELLOW%[4mD[0m to move to the next level, %RGB.YELLOW%[4mS[0m for previous.[0m                '.^|^|.'        ^|
 ECHO.^|          ''                                 Press %RGB.FALSE%[4mQ[0m to return to the menu.                            ''          ^|
