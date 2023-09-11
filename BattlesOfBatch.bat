@@ -51,13 +51,13 @@ IF NOT %1.==READY. IF %1.==LAUNCH. (
 	CLS
 	TITLE Launcher
 	ECHO.This is the game's launcher, do not close.
-	START /WAIT "Launcher" conhost.exe -- "%~dpnx0" READY
+	START /WAIT "Launcher" "conhost.exe" -- "%~dpnx0" READY
 	ECHO.Shutting down...
 	TASKKILL /F /IM "wscript.exe"
 	TASKKILL /F /IM "easyrp.exe" /T>NUL
 	EXIT 0
 ) ELSE (
-	START /MIN "Launcher" conhost.exe -- "%~dpnx0" LAUNCH
+	START "" ".\data\scripts\invisible.vbs" "%~dpnx0" LAUNCH
 	EXIT 0
 )
 
@@ -711,6 +711,7 @@ EXIT /B 0
 :TERMINAL
 MODE CON:COLS=126 LINES=9216
 CLS
+IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 START "" /MIN CMD /C "%AUDIOMANAGER%" STOPALL
 TITLE %TITLE%Command Line Enviroment
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Terminal;LargeImage=cmd;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mBattles of Batch [37m[Version %VERCODE% / %VERTYPE% %VERS%]

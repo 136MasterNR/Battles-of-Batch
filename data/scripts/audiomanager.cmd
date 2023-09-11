@@ -32,10 +32,6 @@ SET TMP.LOOP=%3
 	ECHO Wend
 ) > "%DATA_TMP_A%"
 
-START /MIN "WSAudio.%2" CMD /C ECHO.AudioPlayer.ID:"%2"^&START /MIN /WAIT "" "%DATA_TMP_A%"^&EXIT
+START /MIN "WSAudio.%2" CMD /C ECHO.WS.AudioPlayer.ID:"%2"^&START /MIN /WAIT "" "%DATA_TMP_A%"^&EXIT
 
 EXIT /B 0
-
-:: IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0
-
-::CALL "%audiomanager%" START game\battle\winternight.mp3
