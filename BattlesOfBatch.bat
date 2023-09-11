@@ -53,7 +53,7 @@ IF NOT %1.==READY. IF %1.==LAUNCH. (
 	ECHO.This is the game's launcher, do not close.
 	START /WAIT "Launcher" conhost.exe -- "%~dpnx0" READY
 	ECHO.Shutting down...
-	TASKKILL /F /FI "WINDOWTITLE eq WSAudio*" /T>NUL
+	TASKKILL /F /IM "wscript.exe"
 	TASKKILL /F /IM "easyrp.exe" /T>NUL
 	EXIT 0
 ) ELSE (
@@ -77,8 +77,6 @@ IF DEFINED RUNNING (
 EXIT 1
 
 :STARTUP
-TASKKILL /F /IM "wscript.exe"
-
 :: Check if directory files are accessible, such as itself.
 IF NOT EXIST "%~nx0" (
 	CLS
@@ -561,7 +559,7 @@ IF %SHOW.INTRO%==TRUE (
 
 :MENU
 @CHCP 65001>NUL
-IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 START "" /MIN CMD /C "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
+IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
 CLS
 :S-MENU
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Menu;LargeImage=preview_menu;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
@@ -669,7 +667,7 @@ IF /I %CHOICE.INPUT%==. START "" "https://github.com/136MasterNR/Battles-of-Bat
 IF /I %CHOICE.INPUT%==I IF %ITEM.REG_CNT%==0 (SET /P "=[4C%RGB.FALSE%UI_ERR: ITEMS LIST IS EMPTY   [2G"<NUL) ELSE GOTO S-MENU
 IF /I %CHOICE.INPUT%==R (MODE CON:COLS=%COLS% LINES=%LINES%&GOTO MENU)
 IF /I %CHOICE.INPUT%== (
-	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 START "" /MIN CMD /C "%AUDIOMANAGER%" STOPALL
+	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 CALL "%AUDIOMANAGER%" STOPALL
 	GOTO RESTART
 )
 IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
@@ -1177,7 +1175,7 @@ SET /P "=[2;3H[?25h"<NUL
 IF /I %CHOICE.INPUT%.==R. GOTO PROFILES
 IF /I %CHOICE.INPUT%.==Q. GOTO %RETURN_TO%
 IF /I %CHOICE.INPUT%.==A. (
-	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 START "" /MIN CMD /C "%AUDIOMANAGER%" STOPALL
+	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 CALL "%AUDIOMANAGER%" STOPALL
 	FOR /D %%I IN (%MAIN_GAME%\SAVES\*) DO CALL :APPLY %%~nI || GOTO RESTART
 )
 IF /I %CHOICE.INPUT%.==D. (
@@ -1917,10 +1915,10 @@ ECHO.[u  0%%
 TITLE %TITLE%Loading Battle ...
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=Level %SELECTED% - Chapter %CHAPTER%;Details=Currently in battle;LargeImage=preview_battle;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
-	START "" /MIN CMD /C "%AUDIOMANAGER%" STOP menu
+	CALL "%AUDIOMANAGER%" STOP menu
 	IF %SELECTED% EQU 7 (
-		START "" /MIN CMD /C "%AUDIOMANAGER%" START game\battle\dangerousplains.mp3 battle True
-	) ELSE START "" /MIN CMD /C "%AUDIOMANAGER%" START game\battle\winternight.mp3 battle True
+		CALL "%AUDIOMANAGER%" START game\battle\dangerousplains.mp3 battle True
+	) ELSE CALL "%AUDIOMANAGER%" START game\battle\winternight.mp3 battle True
 )
 CALL "%SCRIPTS_GAME%\loader.cmd" || (
 	ECHO.[u[1A[10D[2K%RGB.RED%Failed to load the battle!
@@ -1980,8 +1978,8 @@ CALL "%SCRIPTS_GAME%\fade.cmd"
 IF %ENEMY.HP.NOW.T% LEQ 0 (
 	CALL "%SCRIPTS_POP%\win.cmd"
 	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
-		START "" /MIN CMD /C "%AUDIOMANAGER%" STOP battle
-		START "" /MIN CMD /C "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
+		CALL "%AUDIOMANAGER%" STOP battle
+		CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
 	)
 	GOTO MAP
 )
@@ -1990,8 +1988,8 @@ IF %ENEMY.HP.NOW.T% LEQ 0 (
 IF %PLAYER.HP.NOW% LEQ 0 (
 	CALL "%SCRIPTS_POP%\lose.cmd"
 	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
-		START "" /MIN CMD /C "%AUDIOMANAGER%" STOP battle
-		START "" /MIN CMD /C "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
+		CALL "%AUDIOMANAGER%" STOP battle
+		CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
 	)
 	GOTO MAP
 )
@@ -2050,8 +2048,8 @@ IF %CHOICE.INPUT%.==. GOTO BATTLE-SEL_CHOICE
 IF /I %CHOICE.INPUT%==Q (
 	CALL :CLEAR_INFO_SELECTION
 	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
-		START "" /MIN CMD /C "%AUDIOMANAGER%" STOP battle
-		START "" /MIN CMD /C "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
+		CALL "%AUDIOMANAGER%" STOP battle
+		CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
 	)
 	GOTO MAP
 )
