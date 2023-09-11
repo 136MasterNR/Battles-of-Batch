@@ -69,15 +69,15 @@ ECHO.[0m[19;46H[1m.----' %RGB%84;255;130mDaily Reward[0m[1m '----.
 ECHO.[44C[1m.'                        '.[0m
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET "STR=Day %TMP.DAYS%: %RGB.COIN%[4m%TMP.ADD_MONEY% Coins[0m"
-CALL "%CENTER%" 51
+CALL "%CENTER%" STR 24
 ECHO.[44C[1m:                          :[27D%RGB%179;233;255m %STR%
 ECHO.[44C[1m:                          :[0m
 ECHO.[44C[1m: - - - : Materials : - - -:[0m
 SET "STR=%RGB.GREEN%%TMP.DROP_1:_= % [0mx%TMP.DROP_1_AMOUNT%"
-CALL "%CENTER%" 43
+CALL "%CENTER%" STR 21
 ECHO.[44C[1m:                          :[24D%STR%
 SET "STR=%RGB.GREEN%%TMP.DROP_2:_= % [0mx%TMP.DROP_2_AMOUNT%"
-CALL "%CENTER%" 43
+CALL "%CENTER%" STR 21
 ECHO.[44C[1m:                          :[24D%STR%
 ENDLOCAL
 ECHO.[44C[1m:                          :[0m

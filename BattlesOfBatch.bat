@@ -572,27 +572,25 @@ CALL "%UI.MONEY%"
 IF %PLAYER.LVL% LSS 60 ( SET "CRTLVL=%PLAYER.LVL%" ) ELSE (SET "CRTLVL=%PLAYER.LVL% MAX")
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET "STR=%RGB.GREEN%Money[0m: [1m%PLAYER.MONEY.INTF% %RGB.GREEN%$[0m"
-CALL "%CENTER%" 99
-ENDLOCAL&SET "UI.MENU.MO=%STR%"
-SETLOCAL ENABLEDELAYEDEXPANSION
-SET "STR=%RGB.LVL%Level[0m:[1m ↑%CRTLVL% %RGB.GRAY%([0mXP%RGB.GRAY%: [0m%PLAYER.XP%%RGB.GRAY%/[0m%PLAYER.XP.REQ%%RGB.GRAY%^)[0m"
-CALL "%CENTER%" 173
-ENDLOCAL&SET "UI.MENU.XP=%STR%"
-SETLOCAL ENABLEDELAYEDEXPANSION
-SET "STR=%RGB.RED%Next Battle[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= ! %RGB.GRAY%([0mTotal Wins%RGB.GRAY%: [0m%COMPLETED.MAPS%%RGB.GRAY%^^)[0m"
-CALL "%CENTER%" 148
-ENDLOCAL&SET "UI.MENU.MA=%STR%"
+CALL "%CENTER%" STR 54
+SET "UI.MENU.MO=%STR%"
+SET "STR=%RGB.LVL%Level[0m:[1m ↑%CRTLVL% %RGB.GRAY%([0mXP%RGB.GRAY%: [0m%PLAYER.XP%%RGB.GRAY%/[0m%PLAYER.XP.REQ%%RGB.GRAY%)[0m"
+CALL "%CENTER%" STR 54
+SET "UI.MENU.XP=%STR%"
+SET "STR=%RGB.RED%Next Battle[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= ! %RGB.GRAY%([0mTotal Wins%RGB.GRAY%: [0m%COMPLETED.MAPS%%RGB.GRAY%)[0m"
+CALL "%CENTER%" STR 54
+SET "UI.MENU.MA=%STR%"
 (ECHO.[0m[H[?25l.-------------------------------------------------------------------------------------------------------------------.
 IF "%RAINBOWMODE%"=="TRUE" ( CALL "%INT.TITLE_R%" ) ELSE ( CALL "%INT.TITLE%" )
 ECHO.'-.--------[1;30m.[0m--[1;30m.[0m------------.                                                             .------------------------.-'[E.-'--------[1;30m^|[0m--[1;30m^|[0m------------'  [1m2nd Anniversary![0m  .---.-----------.---.                    '------------------------'-.
 ECHO.^|          [1;30m^|  ^|[0m             .------------------'    :   [1;34mSTATS[0m   :    '------------------.                           ^|
 ECHO.^|          [1;30m^|  ^|[0m             \                       '-----------'                       /        _   ,_,   _        ^|
-ECHO.^|  \_      [1;30m^|  ^|[0m      _/     /   %UI.MENU.XP%  \       / `'=^) ^(='` \       ^|
-ECHO.^|   ]'--___[1;30m^|[0m__[1;30m^|[0m___--'[      \   %UI.MENU.MO%  /      /.-.-.\ /.-.-.\      ^|
-ECHO.^|   ^|       ^|^|       ^|      /   %UI.MENU.MA%  \      `      ^"      `      ^|
+ECHO.^|  \_      [1;30m^|  ^|[0m      _/     /   !UI.MENU.XP!  \       / `'=^) ^(='` \       ^|
+ECHO.^|   ]'--___[1;30m^|[0m__[1;30m^|[0m___--'[      \   !UI.MENU.MO!  /      /.-.-.\ /.-.-.\      ^|
+ECHO.^|   ^|       ^|^|       ^|      /   !UI.MENU.MA!  \      `      ^"      `      ^|
 ECHO.^|   \       ^|^|       /      \             .--------------------------------.            /                           ^|
 ECHO.^|    [      ^|^|      ]        '-----------'                                  '----------'                            ^|
-ECHO.^|    ^|______^(^)______^|                                  [1;37mWelcome![0m                                                     ^|
+ECHO.^|    ^|______^(^)______^|                                  [1;37mWelcome^^![0m                                                     ^|
 ECHO.^|    ^|----^(^(^<^>^)^)----^|                                                                                               ^|
 ECHO.^|    ]      ^(^)      [                                                                                               ^|
 ECHO.^|     \     ^|^|     /                              .--.----------.--.                                                ^|
@@ -620,6 +618,7 @@ ECHO.^|   \_]/_____\                                          \ ^" /            
 ECHO.^|     _\_^| ^|_/_                                          \./                              ___Y  ,    .'7 /^|         ^|
 ECHO.^|    ^(_,_^| ^|_,_^)                                          V                              ^(_,___/...-` ^(_/_/         ^|[E^|                                                                                         [1;30m2023©136MasterNR[0m          ^|[114D[1;30mBATTLES OF BATCH [0;33m%VERS%-%VERTYPE%[0m[?25h)
 ECHO.^|     .                              .    .                              .    .                              .      ^|[E^|     ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|    ^|       ^|       .       ^|      ^|      ^|[E'-----'-------'-------'-------'------'----'-------'-------'-------'------'----'-------'-------'-------'------'------'[2A
+ENDLOCAL
 IF NOT %OLD.PLAYER.LVL%==%PLAYER.LVL% CALL "%SCRIPTS_POP%\lvlup.cmd"
 CALL "%DATA_SCRIPTS%\pop\daily.cmd" || GOTO S-MENU
 CALL "%QUEST.LOADER%" LOAD
@@ -1246,7 +1245,7 @@ SET /A ATK=(SKILL.ATK.BASE * SKILL.ATK) + EQUIP.BONUS_ATK
 SET /A CRIT=SKILL.CRIT_RATE * 5
 
 SET "STR=%ITEM%"
-CALL "%CENTER%" 11
+CALL "%CENTER%" STR 11
 
 SET /A PROFILE_COUNTER+=1
 IF NOT DEFINED SELECTED_PROFILE IF %PROFILE%==%ITEM% SET SELECTED_PROFILE=%PROFILE_COUNTER%
@@ -1379,10 +1378,6 @@ RD /S /Q "%MAIN_GAME%\SAVES\%1"
 EXIT /B 0
 
 :MAP
-SETLOCAL ENABLEDELAYEDEXPANSION
-SET "STR=%RGB.CYAN%Next Story[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= ! %RGB.GRAY%#%PLAYER.MAP.LEVEL%[0m     %RGB.CYAN%Total Wins[0m: [1m%COMPLETED.MAPS%[0m"
-CALL "%CENTER%" 195
-ENDLOCAL&SET "UI.MAP_DETAIL_C=%STR%"
 TITLE %TITLE%Map
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Map;LargeImage=preview_map;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 
@@ -1595,11 +1590,11 @@ IF %CRAFT.SEL%==0 (SET CRAFT.UI_ITEM=Dustblade) ELSE IF %CRAFT.SEL%==1 (SET CRAF
 ) ELSE IF %CRAFT.SEL%==8 (SET CRAFT.UI_ITEM=Brainleader)
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET "STR=> [4m[s%CRAFT.UI_ITEM%[24m <"
-CALL "%CENTER%" 30
+CALL "%CENTER_OLD%" 30
 ENDLOCAL&&SET "CRAFT.UI.CENTER=%STR%"
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET "STR=!I.%CRAFT.UI_ITEM%.TYPE:_= !"
-CALL "%CENTER%" 12
+CALL "%CENTER%" STR 12
 ENDLOCAL&&SET "CRAFT.UI.TYPE=%STR%"
 ENDLOCAL
 FOR /F "TOKENS=1,2,3,4,5,6 DELIMS=?" %%A IN ('CALL ECHO.%%I.%CRAFT.UI_ITEM%.MAT%%') DO (	
@@ -1728,12 +1723,6 @@ IF /I %CHOICE.INPUT%==A (
 )
 IF /I %CHOICE.INPUT%.==. START "" "https://github.com/136MasterNR/Battles-of-Batch#shop-44"
 GOTO CRAFT-SHOP-RE
-:CRAFT-UI-CENTER
-SETLOCAL ENABLEDELAYEDEXPANSION
-SET "STR=%1"
-CALL "%CENTER%" 26
-ENDLOCAL&SET "CRAFT.UI.CENTER.%1=%STR%"
-EXIT /B 0
 
 :QUESTS
 CALL "%QUEST.LOADER%" LOAD
