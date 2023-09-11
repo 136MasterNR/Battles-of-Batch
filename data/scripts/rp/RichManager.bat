@@ -43,7 +43,7 @@ PUSHD "%CD%\data\scripts\rp"
 
 TASKLIST /IM "easyrp.exe" | find /i "cmd.exe" > nul
 IF ERRORLEVEL 1 (
-    IF EXIST "config.ini" START "" "..\invisible.vbs" CMD /C CALL easyrp.exe
+    IF EXIST "config.ini" START "" "..\invisible.vbs" easyrp.exe
 )
 
 POPD

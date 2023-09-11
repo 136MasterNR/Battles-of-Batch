@@ -1,4 +1,5 @@
 IF NOT DEFINED VERCODE EXIT
+SET "DATA_AUDPLAYER=%CD%\data\scripts\audioplayer.cmd"
 SET "DATA_TMP_A=%CD%\data\temp\TMP_AUDIO.vbs"
 SET "DATA_AUD=%CD%\data\audio"
 CALL :%*
@@ -32,6 +33,6 @@ SET TMP.LOOP=%3
 	ECHO Wend
 ) > "%DATA_TMP_A%"
 
-START /MIN "WSAudio.%2" CMD /C ECHO.WS.AudioPlayer.ID:"%2"^&START /MIN /WAIT "" "%DATA_TMP_A%"^&EXIT
+START "" ".\data\scripts\invisible.vbs" "%DATA_AUDPLAYER%" %2 %DATA_TMP_A%
 
 EXIT /B 0
