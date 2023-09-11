@@ -37,13 +37,14 @@ ECHO.SmallImageTooltip=%SmallImageTooltip%
 ) > "%CD%\data\scripts\rp\config.ini"
 EXIT 0
 
-:LAUNCH "config.ini"
+:LAUNCH
 TITLE RichManager
 PUSHD "%CD%\data\scripts\rp"
-@echo off
-TASKLIST /FI "WINDOWTITLE eq RichManager - Live Update*" | find /i "cmd.exe" > nul
+
+TASKLIST /IM "easyrp.exe" | find /i "cmd.exe" > nul
 IF ERRORLEVEL 1 (
-    IF EXIST "config.ini" START /MIN CMD /C "title RichManager - Live Update&ECHO.|call easyrp.exe&EXIT 0"
+    IF EXIST "config.ini" START "" "..\invisible.vbs" CMD /C CALL easyrp.exe
 )
+
 POPD
 EXIT /B 0

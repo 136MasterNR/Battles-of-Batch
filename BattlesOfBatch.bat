@@ -225,6 +225,7 @@ SET "UI.ITEMS=%INTERFACE%\shop\items.cmd"
 SET "UI.SKILLS=%INTERFACE%\shop\skills.cmd"
 SET "UI.CRAFT=%INTERFACE%\shop\craft.cmd"
 SET "CENTER=%INTERFACE%\center.cmd"
+SET "CENTER_OLD=%INTERFACE%\center_old.cmd"
 SET "CHARACTER=%INTERFACE%\characters.cmd"
 SET "UI.MONEY=%INTERFACE%\money_decimals.cmd"
 SET INV_CHOICE=1
@@ -582,7 +583,7 @@ CALL "%CENTER%" STR 54
 SET "UI.MENU.MA=%STR%"
 (ECHO.[0m[H[?25l.-------------------------------------------------------------------------------------------------------------------.
 IF "%RAINBOWMODE%"=="TRUE" ( CALL "%INT.TITLE_R%" ) ELSE ( CALL "%INT.TITLE%" )
-ECHO.'-.--------[1;30m.[0m--[1;30m.[0m------------.                                                             .------------------------.-'[E.-'--------[1;30m^|[0m--[1;30m^|[0m------------'  [1m2nd Anniversary^^![0m  .---.-----------.---.                    '------------------------'-.
+ECHO.'-.--------[1;30m.[0m--[1;30m.[0m------------.                                                             .------------------------.-'[E.-'--------[1;30m^|[0m--[1;30m^|[0m------------'                    .---.-----------.---.                    '------------------------'-.
 ECHO.^|          [1;30m^|  ^|[0m             .------------------'    :   [1;34mSTATS[0m   :    '------------------.                           ^|
 ECHO.^|          [1;30m^|  ^|[0m             \                       '-----------'                       /        _   ,_,   _        ^|
 ECHO.^|  \_      [1;30m^|  ^|[0m      _/     /   !UI.MENU.XP!  \       / `'=^) ^(='` \       ^|
@@ -1595,7 +1596,7 @@ CALL "%CENTER_OLD%" 30
 ENDLOCAL&&SET "CRAFT.UI.CENTER=%STR%"
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET "STR=!I.%CRAFT.UI_ITEM%.TYPE:_= !"
-CALL "%CENTER%" STR 12
+CALL "%CENTER_OLD%" 12
 ENDLOCAL&&SET "CRAFT.UI.TYPE=%STR%"
 ENDLOCAL
 FOR /F "TOKENS=1,2,3,4,5,6 DELIMS=?" %%A IN ('CALL ECHO.%%I.%CRAFT.UI_ITEM%.MAT%%') DO (	
