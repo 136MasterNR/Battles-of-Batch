@@ -5,17 +5,17 @@ CALL :%*
 EXIT /B 0
 
 :STOPALL
-TASKKILL /F /FI "WINDOWTITLE eq WSAudio*" /T>NUL
+TASKKILL /F /FI "WINDOWTITLE eq WSAudio*" /IM "cmd.exe" /T>NUL
 IF EXIST "%DATA_TMP_A%" DEL /Q "%DATA_TMP_A%"
 EXIT /B 0
 
 :STOP <"Identifier": String>
-TASKKILL /F /FI "WINDOWTITLE eq WSAudio.%1" /T>NUL
+TASKKILL /F /FI "WINDOWTITLE eq WSAudio.%1" /IM "cmd.exe" /T>NUL
 EXIT /B 0
 
 
 :START <"Path": String> <"Indetifier": String> <"Loop": Boolean>
-TASKKILL /F /FI "WINDOWTITLE eq WSAudio.%2" /T>NUL
+TASKKILL /F /FI "WINDOWTITLE eq WSAudio.%2" /IM "cmd.exe" /T>NUL
 SET "TARGETAUDIO=%DATA_AUD%\%1"
 IF NOT EXIST "%TARGETAUDIO%" EXIT /B 0
 
@@ -32,7 +32,7 @@ SET TMP.LOOP=%3
 	ECHO Wend
 ) > "%DATA_TMP_A%"
 
-START /MIN "WSAudio.%2" CMD /C ECHO.AudioPlayer.ID:"%2"^&START /MIN /WAIT "" "%DATA_TMP_A%"
+START /MIN "WSAudio.%2" CMD /C ECHO.AudioPlayer.ID:"%2"^&START /MIN /WAIT "" "%DATA_TMP_A%"^&EXIT
 
 EXIT /B 0
 

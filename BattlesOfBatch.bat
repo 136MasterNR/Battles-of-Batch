@@ -315,6 +315,15 @@ FOR /F "TOKENS=1* DELIMS==" %%A IN ('SET QMEM_') DO (
 ::VAR-Player Data
 ECHO.[u Loading ... System ^& Config
 
+IF NOT EXIST "%HTS_DATA%" MD "%HTS_DATA%"
+IF NOT EXIST "%HTS_DATA%" (
+	ECHO.Failed to create directory "HTS_DATA" on "%APPDATA%".
+	ECHO.Quitting ... Press Any Key
+	PAUSE>NUL
+	EXIT /B 1
+)
+
+
 IF NOT EXIST "%MAIN_GAME%" (
 	MD "%MAIN_GAME%"
 	IF NOT EXIST "%MAIN_GAME%" (
@@ -335,6 +344,7 @@ IF NOT EXIST "%MAIN_GAME%\main.config" (
 	ECHO.terminal=0
 )>"%MAIN_GAME%\main.config"
 
+:: Read the config file
 FOR /F "TOKENS=1,2DELIMS==" %%A IN (%MAIN_GAME%\main.config) DO (
 	IF NOT %%B.==. (
 		SET %%A=%%B
@@ -362,14 +372,6 @@ FOR /F "tokens=1,2" %%A IN ('mode con') do (
 	IF "%%A"=="Columns:" SET GETCOLS=%%B
 )
 
-IF NOT EXIST "%HTS_DATA%" MD "%HTS_DATA%"
-IF NOT EXIST "%HTS_DATA%" (
-	ECHO.Failed to create directory "HTS_DATA" on "%APPDATA%".
-	ECHO.Quitting ... Press Any Key
-	PAUSE>NUL
-	EXIT /B 1
-)
-
 IF NOT EXIST "%DATA_SAVES%" MD "%DATA_SAVES%"
 IF NOT EXIST "%DATA_SETTINGS%" MD "%DATA_SETTINGS%"
 IF NOT EXIST "%DATA_SAVES.INV%" MD "%DATA_SAVES.INV%"
@@ -395,7 +397,7 @@ IF %unitsWarning%==null (
 )
 
 :: Agree to the license.
-IF NOT %licesneAgreed%==GNU_GPLv3 IF EXIST "%LICENSE%" (
+IF NOT %licenseAgreed%==GNU_GPLv3 IF EXIST "%LICENSE%" (
 	CLS
 	ECHO.Please read and confirm that you agree with our License!
 	ECHO.By closing the License text window you agree, and be
@@ -1914,8 +1916,12 @@ ECHO.[2J[21;42H҉  Preparing Your Amazing Battle[17D[1B[s
 ECHO.[u  0%%
 TITLE %TITLE%Loading Battle ...
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=Level %SELECTED% - Chapter %CHAPTER%;Details=Currently in battle;LargeImage=preview_battle;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
-IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 START "" /MIN CMD /C "%AUDIOMANAGER%" STOP menu
-IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 START "" /MIN CMD /C "%AUDIOMANAGER%" START game\battle\winternight.mp3 battle True
+IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
+	START "" /MIN CMD /C "%AUDIOMANAGER%" STOP menu
+	IF %SELECTED% EQU 7 (
+		START "" /MIN CMD /C "%AUDIOMANAGER%" START game\battle\dangerousplains.mp3 battle True
+	) ELSE START "" /MIN CMD /C "%AUDIOMANAGER%" START game\battle\winternight.mp3 battle True
+)
 CALL "%SCRIPTS_GAME%\loader.cmd" || (
 	ECHO.[u[1A[10D[2K%RGB.RED%Failed to load the battle!
 	PAUSE>NUL
