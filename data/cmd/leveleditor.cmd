@@ -50,7 +50,7 @@ ECHO.[46;3H[1mYour AV: %RGB.PURPLE%%AV.PLAYER%[0m ^(Your Turn^)
 
 ECHO.[2;45H[s:---------: HELP - ^? :---------:
 ECHO.[u[1B:   %RGB.COIN%Select an enemy to edit:[0m   :
-ECHO.[u[2B:    Navigate using %RGB.CYAN%U[0m and %RGB.CYAN%J[0m.   :
+ECHO.[u[2B:    Navigate using %RGB.CYAN%I[0m and %RGB.CYAN%K[0m.   :
 ECHO.[u[3B:  Press %RGB.CYAN%C[0m to create an enemy![0m :
 ECHO.[u[4B:------------------------------:
 ECHO.[u[5B         %RGB.AQUAMARINE%^> Edit Mode ^<[0m         
@@ -62,7 +62,7 @@ ECHO.[u[3B:-------------------------------:
 ECHO.[30;4H .-----------: %RGB.PURPLE%GUIDE[0m :-----------.[1m
 ECHO.[4C Use [4mI[24m ^& [4mK[24m to %RGB.YELLOW%select[0m[1m an enemy.
 ECHO.[4C Use [4mW[24m [4mA[24m [4mS[24m ^& [4mD[24m to %RGB.YELLOW%move[0m[1m the enemy.
-ECHO.[4C Use [4mH[24m ^& [4mK[24m to %RGB.YELLOW%move[0m[1m an enemy left
+ECHO.[4C Use [4mJ[24m ^& [4mL[24m to %RGB.YELLOW%move[0m[1m an enemy left
 ECHO.[4C or right by just one character.
 ECHO.[4C Use [4mC[24m to %RGB.YELLOW%create[0m[1m a new enemy.
 ECHO.[4C Use [4mE[24m to %RGB.YELLOW%edit[0m[1m an enemy's %RGB.CYAN%data[0m[1m.
