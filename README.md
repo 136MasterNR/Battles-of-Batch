@@ -19,15 +19,15 @@ After the download is complete, simply extract and run the batch file `BattleOfB
 
 Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher.
 
-The game's launcher requires VBScript on your system. It uses VBScript to launch all additional tasks in the background. If you have a specific issue with it, delete the file [data\scripts\invisible.vbs](./data/scripts/invisible.vbs) and all invisible tasks should appear minimized on your taskbar instead.
-
 **Recommended Command Prompt settings**:
 - **Font size**: 18 or 20 (for 1080p displays), 13 (for 720p displays)
 - **Font family**: Consolas
 
-Please note that the Source Code version contains untested features, you should use a release instead, do not report issues otherwise.
+The game's launcher requires VBScript on your system. It uses VBScript to launch all additional tasks in the background. If you have a specific issue with it, delete the file [data\scripts\invisible.vbs](./data/scripts/invisible.vbs) and all invisible tasks should appear minimized on your taskbar instead.
 
 This project uses [ANSI](https://www.robvanderwoude.com/ansi.php) as a text formatter. It's used to manage displayed text and colors on the console. It's required for almost any display-related feature to work as intended.
+
+Please note that the Source Code version contains untested features, you should use a release instead, do not report issues otherwise.
 # About
 ### Contact (#1.0)
   - **Social Media**: [Reddit](https://www.reddit.com/r/BattlesOfBatch/) \(for Community & Support\)
