@@ -33,6 +33,8 @@ SET TMP.LOOP=%3
 	ECHO Wend
 ) > "%DATA_TMP_A%"
 
-START "" ".\data\scripts\invisible.vbs" "%DATA_AUDPLAYER%" %2 %DATA_TMP_A%
+IF EXIST ".\data\scripts\invisible.vbs" (
+	START "wscript.exe" ".\data\scripts\invisible.vbs" "%DATA_AUDPLAYER%" %2 %DATA_TMP_A%
+) ELSE START /MIN "WSAudio.%2" CMD /C "%DATA_AUDPLAYER%" %2 %DATA_TMP_A%
 
 EXIT /B 0

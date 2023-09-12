@@ -53,11 +53,15 @@ IF NOT %1.==READY. IF %1.==LAUNCH. (
 	ECHO.This is the game's launcher, do not close.
 	START /WAIT "Launcher" "conhost.exe" -- "%~dpnx0" READY
 	ECHO.Shutting down...
-	TASKKILL /F /IM "wscript.exe"
+	TASKKILL /F /FI "WINDOWTITLE eq WSAudio*" /IM "cmd.exe" /T>NUL
 	TASKKILL /F /IM "easyrp.exe" /T>NUL
 	EXIT 0
 ) ELSE (
-	START "" ".\data\scripts\invisible.vbs" "%~dpnx0" LAUNCH
+	IF EXIST ".\data\scripts\invisible.vbs" (
+		START "wscript.exe" ".\data\scripts\invisible.vbs" "%~dpnx0" LAUNCH
+	) ELSE (
+		START /MIN "Launcher" conhost.exe -- "%~dpnx0" LAUNCH
+	)
 	EXIT 0
 )
 
@@ -675,6 +679,8 @@ IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
 	GOTO MENU
 )
 IF /I %CHOICE.INPUT%== (
+	TASKKILL /F /FI "WINDOWTITLE eq WSAudio*" /IM "cmd.exe" /T>NUL
+	TASKKILL /F /IM "easyrp.exe" /T>NUL
 	POPD
 	EXIT 0
 )

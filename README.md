@@ -19,6 +19,8 @@ After the download is complete, simply extract and run the batch file `BattleOfB
 
 Battles of Batch is currently only available on Windows, with a required command line version at least 10.0.1 and higher.
 
+The game's launcher requires VBScript on your system. It uses VBScript to launch all additional tasks in the background. If you have a specific issue with it, delete the file [data\scripts\invisible.vbs](./data/scripts/invisible.vbs) and all invisible tasks should appear minimized on your taskbar instead.
+
 **Recommended Command Prompt settings**:
 - **Font size**: 18 or 20 (for 1080p displays), 13 (for 720p displays)
 - **Font family**: Consolas
@@ -46,7 +48,7 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
     - ***Z***: To Craft or Upgrade Items.
     - ***X***: Buy items from the in-game Workshop.
     - ***C***: View and upgrade your Skills.
-    - ***V***: View the [Credits](https://github.com/136MasterNR/Battles-of-Batch#credits).
+    - ***V***: View the [Credits](#credits).
     - ***P***: Manage your profiles.
     - ***CTRL*** + ***Q***: Exit the game.
     - ***CTRL*** + ***R***: Restart the game.

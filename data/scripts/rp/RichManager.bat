@@ -42,9 +42,9 @@ TITLE RichManager
 PUSHD "%CD%\data\scripts\rp"
 
 TASKLIST /IM "easyrp.exe" | find /i "cmd.exe" > nul
-IF ERRORLEVEL 1 (
-    IF EXIST "config.ini" START "" "..\invisible.vbs" easyrp.exe
-)
+IF ERRORLEVEL 1 IF EXIST "config.ini" IF EXIST "..\invisible.vbs" (
+	START "" "..\invisible.vbs" easyrp.exe
+) ELSE IF EXIST "config.ini" START /MIN "RichManager - Live Update" conhost -- CMD /C "easyrp.exe"
 
 POPD
 EXIT /B 0
