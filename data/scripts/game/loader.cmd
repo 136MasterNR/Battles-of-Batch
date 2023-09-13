@@ -12,9 +12,16 @@ CALL "%ITEMS.LOADER%" WEAPONS
 ECHO.[u 38%%
 CALL "%CMD.CLEARVAR%"
 
+FOR /F "TOKENS=1DELIMS==" %%A IN ('SET LOOT.') DO (
+	SET %%A=
+)
+
+:: Load the level contents
 ECHO.[u 41%%
 FOR /F "TOKENS=1DELIMS==" %%A IN ('SET ENEMY.TYPE.') DO SET %%A=
 CALL "%LOAD.LEVEL_%%SELECTED%\setup.cmd"
+
+SET "LOC.HP.P=[%LOC.HP%;%LOC.WP%H"
 
 :: Count how many enemies should exist in the battle
 SET EN.MAX=0
@@ -50,26 +57,28 @@ FOR /F "TOKENS=1DELIMS==" %%A IN ('SET EFF.') DO (
 FOR /F "TOKENS=1DELIMS==" %%A IN ('SET LOG.') DO (
 	SET %%A=
 )
+
 ECHO.[u 50%%
+
+SET LOOT.MAX=0
+FOR /F "TOKENS=1-3DELIMS==." %%1 IN ('SET LOOT.') DO (
+	IF NOT "%%2"=="MAX" IF NOT "%%3"=="ONCE" IF NOT "%%3"=="SAV" IF NOT "%%3"=="X" (
+		SET /A LOOT.MAX+=1
+	)
+)
+
+ECHO.[u 52%%
 
 FOR /L %%I IN (1,1,%EN.MAX%) DO (
 	CALL :CREATE-LOCATION %%I %%LOC.W%%I%% %%LOC.H%%I%%
 )
 
-SET /A "PLAYER.HP.FULL=100*%SKILL.HP%"
+SET /A "PLAYER.HP.FULL=SKILL.HP.BASE*SKILL.HP"
 SET "PLAYER.ATTACK.ENEMY.R=NONE"
 SET "GAME.STATUS=NUL"
 SET ENEMY.ATTACK.AMOUNT=0
 SET "HEAL.USES.NOW=%HEAL.USES%"
 SET "BOMB.USES.NOW=%BOMB.USES%"
-ECHO.[u 54%%
-FOR /L %%I IN (1, 1, %LOOT.MAX%) DO (
-	SETLOCAL ENABLEDELAYEDEXPANSION
-	FOR /F "TOKENS=1-2 DELIMS=," %%A IN ("!LOOT.%%I.X!") DO (
-		ENDLOCAL
-		SET /A "LOOT.%%I.X=%random% %% (1+%%B) +%%A"
-	)
-)
 ECHO.[u 61%%
 ::HP Bar Setup
 FOR /L %%I IN (1,1,%EN.MAX%) DO (

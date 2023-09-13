@@ -40,8 +40,9 @@ IF NOT "=%WINVER:~0,3%" == "=10." (
 )
 
 :: Check if game is already running by trying to access its error logging file.
-DEL /Q ".\data\logs\errors.txt" >NUL
+DEL /Q ".\data\logs\errors.txt" 1>NUL 2>NUL
 IF EXIST ".\data\logs\errors.txt" (
+	ECHO. Already running, failed to launch [X]
 	ECHO.Game was already running at %TIME%>>".\data\logs\logs.txt"
 	CSCRIPT "%CD%\data\scripts\focus.vbs" "Battles of Batch - " >NUL
 	EXIT 1
@@ -57,11 +58,11 @@ IF NOT %1.==READY. IF %1.==LAUNCH. (
 	TASKKILL /F /IM "easyrp.exe" /T>NUL
 	EXIT 0
 ) ELSE (
-	IF EXIST ".\data\scripts\invisible.vbs" (
+	(IF EXIST ".\data\scripts\invisible.vbs" (
 		START "wscript.exe" ".\data\scripts\invisible.vbs" "%~dpnx0" LAUNCH
 	) ELSE (
 		START /MIN "Launcher" conhost.exe -- "%~dpnx0" LAUNCH
-	)
+	)) && (ECHO. Launched [√]) || (ECHO. There was an unexpected error, failed to launch [X])
 	EXIT 0
 )
 
@@ -181,30 +182,6 @@ SET "IGNORE_ERRORS=FALSE"
 SET OLD.PLAYER.LVL=
 SET UDERFINE=
 SET RAINBOWMODE=
-::VAR:-Player Stats
-SET PLAYER.XP=
-SET PLAYER.XP.REQ=45
-SET PLAYER.LVL=0
-SET PLAYER.MAP.LEVEL=1
-SET PLAYER.MONEY=0
-SET CRIT.RATE=4
-SET "SEL.CHARACTER=SIMPSONS"
-::VAR:-Shop
-SET SHOP.PRICE.HEAL=10
-SET SHOP.MAX.HEAL=750
-SET SHOP.LVLREQ.HEAL=1
-SET SHOP.PRICE.BOMB=100
-SET SHOP.LVLREQ.BOMB=4
-SET SHOP.MAX.BOMB=25
-::VAR:-Skills
-SET "SKILL.UPGRADE=%DATA_SCRIPTS%\playerdata\upgrade.cmd"
-SET SKILL.ATK.BASE=25
-SET SKILL.ATK.MAXLVL=2
-SET SKILL.ATK.COST=265
-SET SKILL.CRIT_RATE.MAXLVL=4
-SET SKILL.CRIT_RATE.COST=825
-SET SKILL.HP.MAXLVL=5
-SET SKILL.HP.COST=6150
 ::VAR:-Audio
 SET "AUDIOMANAGER=%DATA_SCRIPTS%\audiomanager.cmd"
 SET "SFX.ATK=game\player\attack\swing_"
@@ -247,7 +224,6 @@ SET REG_C2=
 ::VAR:-Battle Loader
 SET "SCRIPTS_GAME=%DATA_SCRIPTS%\game"
 SET "LOAD.LEVEL_=%DATA%\levels\lvl"
-SET "LOC.HP.P=[12;4H"
 ::VAR:-Actions
 SET "SCRIPTS.ACT=%SCRIPTS_GAME%\acts"
 SET "ACT.ENEMY=%SCRIPTS.ACT%\enemy_act.cmd"
@@ -276,6 +252,32 @@ SET "RGB.GRAY=%RGB%169;169;169m"
 SET "RGB.BLACK=%RGB%69;69;69m"
 SET "RGB.AQUAMARINE=%RGB%127;255;212m"
 SET "RGB.BROWN=%RGB%255;176;79m"
+::VAR:-Player Stats
+SET PLAYER.XP=
+SET PLAYER.XP.REQ=45
+SET PLAYER.LVL=0
+SET PLAYER.MAP.LEVEL=1
+SET PLAYER.MONEY=0
+SET CRIT.RATE=4
+SET "SEL.CHARACTER=SIMPSONS"
+::VAR:-Shop
+SET SHOP.PRICE.HEAL=10
+SET SHOP.MAX.HEAL=5
+SET SHOP.LVLREQ.HEAL=1
+SET SHOP.PRICE.BOMB=100
+SET SHOP.LVLREQ.BOMB=4
+SET SHOP.MAX.BOMB=5
+::VAR:-Skills
+SET "SKILL.UPGRADE=%DATA_SCRIPTS%\playerdata\upgrade.cmd"
+SET SKILL.ATK.BASE=15
+SET SKILL.ATK.LVLS=1;3;6
+SET SKILL.ATK.COST=44;74;220
+SET SKILL.CRIT_RATE.BASE=4
+SET SKILL.CRIT_RATE.LVLS=1;3;5
+SET SKILL.CRIT_RATE.COST=50;70;100
+SET SKILL.HP.BASE=25
+SET SKILL.HP.LVLS=2
+SET SKILL.HP.COST=105
 ::VAR:-Quests
 SET "QUEST.LOADER=%DATA_SCRIPTS%\quests.cmd"
 SET "QNAME.TOTAL_MONSTERS=Sereal Killer"
@@ -287,8 +289,8 @@ SET "QNAME.MTYPE=All The Species"
 SET QMAX.MTYPE=29
 SET "QDESC.MTYPE=[1;37mKill every single type of enemy."
 SET "QNAME.LOSE=For God's Sake"
-SET QREW.MONEY.LOSE=750
-SET QREW.XP.LOSE=400
+SET QREW.MONEY.LOSE=250
+SET QREW.XP.LOSE=100
 SET QMAX.LOSE=4
 SET "QDESC.LOSE=[1;37mLose the battle [4m%QMAX.LOSE%[0m[1;37m times."
 SET "QNAME.TLVLS=The Champ"
@@ -810,9 +812,9 @@ IF !WEAPONS.REG_NAME.%WIELDING.WEAPON%!==Stylefi (
 	)
 ) ELSE ENDLOCAL
 
-SET /A STAT.NUM.HP=SKILL.HP * 100
+SET /A STAT.NUM.HP=SKILL.HP * SKILL.HP.BASE
 SET /A STAT.NUM.ATK=(SKILL.ATK.BASE * SKILL.ATK) + EQUIP.BONUS_ATK
-SET /A STAT.NUM.CRIT_RATE=(SKILL.CRIT_RATE * 5) + EFFECT.BONUS_CRIT
+SET /A STAT.NUM.CRIT_RATE=(SKILL.CRIT_RATE * SKILL.CRIT_RATE.BASE) + EFFECT.BONUS_CRIT
 ECHO.[u100%%
 (
 ECHO.[?25l[H[0m.---.---------------------------------------------------------------------------------------------------------------.
@@ -1248,9 +1250,9 @@ CALL "%MAIN_GAME%\SAVES\%ITEM%\PLAYERDATA.cmd"
 CALL "%MAIN_GAME%\SAVES\%ITEM%\SKILLS.cmd"
 CALL "%ITEMS.LOADER%" WEAPONS
 
-SET /A HP=SKILL.HP * 100
+SET /A HP=SKILL.HP * SKILL.HP.BASE
 SET /A ATK=(SKILL.ATK.BASE * SKILL.ATK) + EQUIP.BONUS_ATK
-SET /A CRIT=SKILL.CRIT_RATE * 5
+SET /A CRIT=SKILL.CRIT_RATE * SKILL.CRIT_RATE.BASE
 
 SET "STR=%ITEM%"
 CALL "%CENTER%" STR 11
@@ -1940,7 +1942,8 @@ ECHO.^| Press %RGB.PINK%Q[0m to retreat ^|[103C^|
 ECHO.^|--------------------'[95C^|
 FOR /L %%I IN (1, 1, 44) DO ECHO.^|[115C^|
 ECHO.'-------------------------------------------------------------------------------------------------------------------'[2A
-ECHO.[13;3H     ___             
+ECHO.%LOC.HP.P%
+ECHO.[2C     ___             
 ECHO.[2C    //_\\_          
 ECHO.[2C  ."\\    ".        
 ECHO.[2C /          \       

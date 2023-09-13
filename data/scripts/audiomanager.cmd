@@ -27,9 +27,10 @@ SET TMP.LOOP=%3
 	ECHO Sound.URL = "%TARGETAUDIO%"
 	ECHO Sound.settings.volume = %VOLUME%
 	ECHO Sound.settings.setMode "loop", %TMP.LOOP%
-	ECHO Sound.Controls.play
+	ECHO Sound.controls.currentPosition = 0
+	ECHO Sound.controls.play
 	ECHO While Sound.playState ^<^> 1
-	ECHO      WScript.Sleep 400
+	ECHO      WScript.Sleep 10000
 	ECHO Wend
 ) > "%DATA_TMP_A%"
 

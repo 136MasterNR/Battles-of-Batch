@@ -3,7 +3,8 @@ SET W.TIME=0
 SET S.TIME=12
 IF "%AUDIO.VALUE%"=="TRUE" IF NOT %SFX.VOLUME% EQU 0 CALL "%AUDIOMANAGER%" START game\player\substat\laser.mp3 sfx False
 REM FRAME: 1
-ECHO.[H[17B^|  ^|       ,--.-.)    
+ECHO.%LOC.HP.P%
+ECHO.[5B^|  ^|       ,--.-.)    
 ECHO.^|   \     /  o \o\     
 ECHO.^|   /\/\  \    /_/     
 ECHO.^|    (_.   `--'__)     

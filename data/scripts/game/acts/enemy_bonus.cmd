@@ -5,7 +5,19 @@ ENDLOCAL&SET TMP.ENEMY=%TMP.ENEMY%
 CALL :%TMP.ENEMY% %1 || EXIT /B 0
 EXIT /B 0
 
-:S <"Enemy ID": Integer>
+:Y <"Enemy ID": Integer>
+:: Extract the ATK values from the enemy
+SETLOCAL ENABLEDELAYEDEXPANSION
+FOR /F "TOKENS=1,2DELIMS=," %%A IN ("!ENEMY.ATK.AMOUNT.%1!") DO (
+	ENDLOCAL
+	SET /A "TMP.DMG=%random% %% %%A %%B"
+)
+SET /A "TMP.CHANCE=%random% %% 100"
+IF %TMP.CHANCE% LEQ 10 CALL "%SCRIPTS_GAME%\acts\effect.cmd" FIRE-CREATE PLAYER 2 %TMP.DMG%
+EXIT /B 0
+
+
+:S
 :: Extract the ATK values from the enemy
 SETLOCAL ENABLEDELAYEDEXPANSION
 FOR /F "TOKENS=1,2DELIMS=," %%A IN ("!ENEMY.ATK.AMOUNT.%1!") DO (

@@ -130,12 +130,12 @@ Weapon Items [Released]
 	Brainleader (Magic Ball) {Base Damage: 250} [Bonus Effects: An extra amount of 9750 damage is dealt to ALL enemies on every single round. Debuff: Loe -99% HP every time you make an action.]
 
 Artifact Items [Releasing]
-	Healing Potion (Lvl 1 Healing Item) {Effects: Heals you by 15% when used, and again 5% when the next round finishes}
-  Reactive Bomb (Lvl 4 Healing Item) {Effects: Deals an additinal 20% of your base damage to all enemies, and 100% normal damage to the selected enemy.}
-	Oracle Shield (Lvl 4 Buff Item) {Effects: Take 30% less damage for 4 rounds, 20% chance to stun all enemies, skipping their next round}
+	Healing Potion (Lvl 1 Buff Item) {Effects: Heals you by 25% when used, and another 4% for the next 2 turns, can stack}
+    Reactive Bomb (Lvl 4 Buff Item) {Effects: Deals an additinal 20% of your base damage to all enemies, and 100% normal damage to the selected enemy.}
+	Oracle Shield (Lvl 4 Buff Item) {Effects: Take 30% less damage for 2 rounds, 20% chance to stun each enemy, skipping their next round}
 	Cup of Misery (Lvl 8 Buff Item) {Effects: Extra 10% base damage for 4 rounds}
-	Totem of Salute (Lvl 10 Buff Item) {Effects: If you lose all your HP on the next round, your HP will be increased by 100%}
-	Barrel Bomb (Lvl 14 Explosive Item) {Effects: Deals an additinal 60% of your base damage to all enemies}
+	Totem of Salute (Lvl 10 Buff Item) {Effects: When used, it will increase your HP by 25% once it gets lower than 1%}
+	Barrel Bomb (Lvl 14 AoE Attack Item) {Effects: Deals an additinal 60% of your base damage to all enemies}
 
 Armour Items [Not Released]
 	Boots of the Aether (Lvl 45) {Effects: Increases HP by 20%, automatically heals you by 20% every 3 rounds, if HP already maxed then max HP increases by 20%}

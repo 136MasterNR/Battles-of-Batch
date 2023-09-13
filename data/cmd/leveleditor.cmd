@@ -55,20 +55,20 @@ ECHO.[u[3B:  Press %RGB.CYAN%C[0m to create an enemy![0m :
 ECHO.[u[4B:------------------------------:
 ECHO.[u[5B         %RGB.AQUAMARINE%^> Edit Mode ^<[0m         
 ECHO.[42;4H[s                                                          
-ECHO.[u[1B:-------------------------------:
-ECHO.[u[2B  %RGB.GREEN%Once done[0m[1m, press %RGB.CYAN%P[0m[1m to export.[0m
-ECHO.[u[3B:-------------------------------:
+ECHO.[u[1B:------------------------------------:
+ECHO.[u[2B  %RGB.GREEN%Once done[0m[1m, press %RGB.CYAN%CTRL[0m[1m + %RGB.CYAN%S[0m[1m to save.[0m
+ECHO.[u[3B:------------------------------------:
 
-ECHO.[30;4H .-----------: %RGB.PURPLE%GUIDE[0m :-----------.[1m
-ECHO.[4C Use [4mI[24m ^& [4mK[24m to %RGB.YELLOW%select[0m[1m an enemy.
-ECHO.[4C Use [4mW[24m [4mA[24m [4mS[24m ^& [4mD[24m to %RGB.YELLOW%move[0m[1m the enemy.
-ECHO.[4C Use [4mJ[24m ^& [4mL[24m to %RGB.YELLOW%move[0m[1m an enemy left
-ECHO.[4C or right by just one character.
-ECHO.[4C Use [4mC[24m to %RGB.YELLOW%create[0m[1m a new enemy.
-ECHO.[4C Use [4mE[24m to %RGB.YELLOW%edit[0m[1m an enemy's %RGB.CYAN%data[0m[1m.
-ECHO.[4C Use [4mCTRL[24m + [4mX[24m to %RGB.RED%delete[0m[1m an enemy.
-ECHO.[4C Use [4mR[24m to %RGB.YELLOW%refresh[0m[1m the menu.
-ECHO.[4C Use [4mCTRL[24m + [4mR[24m to %RGB.YELLOW%undo[0m[1m all changes.
+ECHO.[32;3H .-----------: %RGB.PURPLE%GUIDE[0m :-----------.[1m
+ECHO.[3C Use [4mI[24m ^& [4mK[24m to %RGB.YELLOW%select[0m[1m an enemy.
+ECHO.[3C Use [4mW[24m [4mA[24m [4mS[24m ^& [4mD[24m to %RGB.YELLOW%move[0m[1m the enemy.
+ECHO.[3C Use [4mJ[24m ^& [4mL[24m to %RGB.YELLOW%move[0m[1m an enemy left
+ECHO.[3C or right by just one character.
+ECHO.[3C Use [4mC[24m to %RGB.YELLOW%create[0m[1m a new enemy.
+ECHO.[3C Use [4mE[24m to %RGB.YELLOW%edit[0m[1m an enemy's %RGB.CYAN%data[0m[1m.
+ECHO.[3C Use [4mCTRL[24m + [4mX[24m to %RGB.RED%delete[0m[1m an enemy.
+ECHO.[3C Use [4mR[24m to %RGB.YELLOW%refresh[0m[1m the menu.
+ECHO.[3C Use [4mCTRL[24m + [4mR[24m to %RGB.YELLOW%undo[0m[1m all changes.
 )
 
 :: Calculate the HP of all enemies together
@@ -123,7 +123,7 @@ IF /I "%CHOICE.INPUT%"=="" (
 	CALL :DELETE
 	GOTO DISPLAY
 )
-IF /I "%CHOICE.INPUT%"=="P" (
+IF /I "%CHOICE.INPUT%"=="" (
 	CALL :EXPORT
 ) ELSE ECHO.[44;44H                                             
 
@@ -233,7 +233,7 @@ SET /A ENEMY.HP.NOW.%TMP.PREV_CNT%=ENEMY.HP.NOW.%2
 SET /A ENEMY.HP.FULL.%TMP.PREV_CNT%=ENEMY.HP.NOW.%TMP.PREV_CNT%
 SET /A LOC.W%TMP.PREV_CNT%=LOC.W%2
 SET /A LOC.H%TMP.PREV_CNT%=LOC.H%2
-CALL :CREATE-LOCATION %TMP.PREV_CNT% %%LOC.W%EN.MAX%%% %%LOC.H%EN.MAX%%%
+CALL :CREATE-LOCATION %TMP.PREV_CNT% %%LOC.W%2%% %%LOC.H%2%%
 FOR /L %%X IN (90,-10,10) DO CALL :CREATE-HPBAR %EN.MAX% %%X %%ENEMY.HP.FULL.%EN.MAX%%%
 EXIT /B 0
 
@@ -389,8 +389,8 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 ECHO.IF NOT DEFINED VERCODE EXIT
 ECHO.
 ECHO.::REWARDS
-ECHO.SET REWARD.MONEY=137,26
-ECHO.SET REWARD.XP=100,26
+ECHO.SET REWARD.MONEY=%REWARD.MONEY%
+ECHO.SET REWARD.XP=%REWARD.XP%
 ECHO.
 ECHO.::ENEMIES
 FOR /L %%I IN (1,1,%EN.MAX%) DO (
@@ -400,30 +400,20 @@ ECHO.
 ECHO.::DISPLAY
 FOR /L %%I IN (1,1,%EN.MAX%) DO (
 	ECHO.SET LOC.W%%I=!LOC.W%%I!
-)
-ECHO.
-FOR /L %%I IN (1,1,%EN.MAX%) DO (
 	ECHO.SET LOC.H%%I=!LOC.H%%I!
+	ECHO.
 )
+ECHO.SET LOC.WP=%LOC.WP%
+ECHO.SET LOC.HP=%LOC.HP%
 ECHO.
 ECHO.::LOOT TABLE
-ECHO.SET LOOT.MAX=3
-ECHO.
-ECHO.SET LOOT.1=Dustblade
-ECHO.SET LOOT.1.X=1,0
-ECHO.SET LOOT.1.SAV=WEAPONS
-ECHO.SET LOOT.1.ONCE=TRUE
-ECHO.
-ECHO.SET LOOT.2=Bomb
-ECHO.SET LOOT.2.X=0,1
-ECHO.SET LOOT.2.SAV=ITEMS
-ECHO.SET LOOT.2.ONCE=FALSE
-ECHO.
-ECHO.SET LOOT.3=Stained_Dust
-ECHO.SET LOOT.3.X=0,1
-ECHO.SET LOOT.3.SAV=MATERIALS
-ECHO.SET LOOT.3.ONCE=FALSE
-ECHO.
+FOR /L %%I IN (1,1,%LOOT.MAX%) DO (
+	ECHO.SET LOOT.%%I=!LOOT.%%I!
+	ECHO.SET LOOT.%%I.X=!LOOT.%%I.X!
+	ECHO.SET LOOT.%%I.SAV=!LOOT.%%I.SAV!
+	ECHO.SET LOOT.%%I.ONCE=!LOOT.%%I.ONCE!
+	ECHO.
+)
 ECHO.::END
 ECHO.EXIT /B 0
 )>"data\levels\lvl%SELECTED%\setup.cmd"

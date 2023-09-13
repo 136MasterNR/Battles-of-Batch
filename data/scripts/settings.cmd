@@ -69,7 +69,7 @@ SET "VAR="
 SETLOCAL ENABLEDELAYEDEXPANSION 
 FOR /F "DELIMS=0123456789" %%I IN ("%NEW.VALUE%") DO SET "DEFINEVOLUME=%%I"
 IF DEFINED DEFINEVOLUME (
-	ECHO.[1A[2C[1;31mPlease enter a number which is around 1 and 100.
+	ECHO.[1A[2C[1;31mPlease enter a number in range of 1 and 100.
 	TIMEOUT /T 5 >NUL
 	GOTO SETTINGS
 )
