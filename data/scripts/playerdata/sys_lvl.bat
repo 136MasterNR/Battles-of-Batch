@@ -6,7 +6,7 @@ IF %PLAYER.LVL% LSS 60 (
 	SET /A PLAYER.LVL+=1
 
 	:: Calculate the next player level
-	IF %PLAYER.LVL% LEQ 9 (
+	IF %PLAYER.LVL% LEQ 4 (
 		SET /A PLAYER.XP.REQ=PLAYER.XP.REQ * 5
 	) ELSE (
 		SET /A PLAYER.XP.REQ=PLAYER.XP.REQ * 3
