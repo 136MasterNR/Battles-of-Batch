@@ -13,7 +13,7 @@ IF %2 LSS 100 (
 ) ELSE CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m%TMP.ENEMY%[24m ^(#%INPUTATK%^) has been %RGB.PURPLE%stunned[0m[1m!%RGB.YELLOW%
 EXIT /B 0
 
-:POISON-CREATE <"Enemy/Player": Integer/String> <"Turns": Integer> <"Power": Integer>
+:POISON-CREATE <"Enemy/Player": Integer/String> <"Rounds": Integer> <"Power": Integer>
 SET EFF.POISON.%1=%2
 SET EFF.POISON.%1.POWER=%3
 :: Log the action
@@ -37,6 +37,10 @@ FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.POISON.') DO (
 				SET PLAYER.HP.NOW=0
 				SET EFF.POISON.%%1=
 				SET EFF.POISON.%%1.POWER=
+		) ELSE IF !EFF.POISON.%%1! LEQ 0 (
+			ENDLOCAL
+			SET EFF.POISON.%%1=
+			SET EFF.POISON.%%1.POWER=
 		) ELSE (
 			ENDLOCAL
 			SET /A EFF.POISON.%%1-=1
@@ -94,7 +98,7 @@ EXIT /B 0
 :FIRE-EFFECT
 FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.FIRE.') DO (
 	IF NOT %%2==POWER IF %%1==PLAYER (
-	:: Fire for player
+	:: Fire action for player
 		SET /A EFF.FIRE.%%1-=1
 		SETLOCAL ENABLEDELAYEDEXPANSION
 		IF %PLAYER.HP.NOW% LEQ 0 (
@@ -102,6 +106,10 @@ FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.FIRE.') DO (
 				SET PLAYER.HP.NOW=0
 				SET EFF.FIRE.%%1=
 				SET EFF.FIRE.%%1.POWER=
+		) ELSE IF !EFF.FIRE.%%1! LEQ 0 (
+			ENDLOCAL
+			SET EFF.FIRE.%%1=
+			SET EFF.FIRE.%%1.POWER=
 		) ELSE (
 			ENDLOCAL
 			SET /A EFF.FIRE.%%1-=1
@@ -109,7 +117,7 @@ FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.FIRE.') DO (
 		)
 		CALL "%SCRIPTS_GAME%\logger.cmd" ADD You took %RGB.ORANGE%%%TMP.DMG%% fire[0m[1m damage!%RGB.YELLOW%
 	) ELSE (
-	:: Fire for any enemy
+	:: Fire action for enemies
 		SETLOCAL ENABLEDELAYEDEXPANSION
 		IF NOT %%2==POWER IF NOT !ENEMY.HP.NOW.%%1! EQU 0 (
 			ENDLOCAL

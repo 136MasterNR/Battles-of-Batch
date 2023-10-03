@@ -270,20 +270,14 @@ SET SHOP.MAX.BOMB=5
 ::VAR:-Skills
 SET "SKILL.UPGRADE=%DATA_SCRIPTS%\playerdata\upgrade.cmd"
 SET SKILL.ATK.BASE=15
-SET SKILL.ATK.LVLS=1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
-REM SET SKILL.ATK.LVLS=1;3;6
-SET SKILL.ATK.COST=1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
-REM SET SKILL.ATK.COST=44;74;220
+SET SKILL.ATK.LVLS=1;3;6
+SET SKILL.ATK.COST=44;74;220
 SET SKILL.CRIT_RATE.BASE=4
-SET SKILL.CRIT_RATE.LVLS=1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
-REM SET SKILL.CRIT_RATE.LVLS=1;3;5
-SET SKILL.CRIT_RATE.COST=1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
-REM SET SKILL.CRIT_RATE.COST=50;70;100
+SET SKILL.CRIT_RATE.LVLS=4;5;6;7;8;9;12;13;14;15;16;17;18;20;21;22;23;25;30;35;45;50;60
+SET SKILL.CRIT_RATE.COST=50;70;100
 SET SKILL.HP.BASE=25
-SET SKILL.HP.LVLS=1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
-REM SET SKILL.HP.LVLS=2
-SET SKILL.HP.COST=1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1
-REM SET SKILL.HP.COST=105
+SET SKILL.HP.LVLS=2
+SET SKILL.HP.COST=105
 ::VAR:-Quests
 SET "QUEST.LOADER=%DATA_SCRIPTS%\quests.cmd"
 SET "QNAME.TOTAL_MONSTERS=Sereal Killer"
@@ -572,7 +566,7 @@ IF %SHOW.INTRO%==TRUE (
 
 :MENU
 @CHCP 65001>NUL
-IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
+IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True %VOLUME%
 CLS
 :S-MENU
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Menu;LargeImage=preview_menu;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
@@ -735,6 +729,7 @@ ECHO.[38;2;235;64;52m^(^!^) [38;2;245;108;98mRun "EXIT" to return.[0m[3H[?2
 PUSHD "%CD%\DATA\cmd"
 CMD /K "PROMPT $E[38;2;132;217;52mbob@terminal$E[0m$E[1m:$E[38;2;113;155;198m%%cd:~-9,9%%[0m$$$S"
 POPD
+IF ERRORLEVEL 2 GOTO STARTUP
 MODE CON:COLS=%COLS% LINES=%LINES%
 EXIT /B 0
 :CREDITS
@@ -1898,7 +1893,6 @@ SET "INPUT_PART=nul"
 	IF %terminal% EQU 0 (
 		START /WAIT "" "%CD%\data\cmd\TerminalGuidelines.txt"
 		CALL "%SAVE%" "FILE=%MAIN_GAME%\main.config" 5 terminal=1
-		pause
 		SET terminal=1
 	)
 	CALL :TERMINAL
@@ -1922,8 +1916,8 @@ IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=Lev
 IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
 	CALL "%AUDIOMANAGER%" STOP menu
 	IF %SELECTED% EQU 7 (
-		CALL "%AUDIOMANAGER%" START game\battle\dangerousplains.mp3 battle True
-	) ELSE CALL "%AUDIOMANAGER%" START game\battle\winternight.mp3 battle True
+		CALL "%AUDIOMANAGER%" START game\battle\dangerousplains.mp3 battle True %VOLUME%
+	) ELSE CALL "%AUDIOMANAGER%" START game\battle\winternight.mp3 battle True %VOLUME%
 )
 CALL "%SCRIPTS_GAME%\loader.cmd" || (
 	ECHO.[u[1A[10D[2K%RGB.RED%Failed to load the battle!
@@ -1985,7 +1979,7 @@ IF %ENEMY.HP.NOW.T% LEQ 0 (
 	CALL "%SCRIPTS_POP%\win.cmd"
 	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
 		CALL "%AUDIOMANAGER%" STOP battle
-		CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
+		CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True %VOLUME%
 	)
 	GOTO MAP
 )
@@ -1995,7 +1989,7 @@ IF %PLAYER.HP.NOW% LEQ 0 (
 	CALL "%SCRIPTS_POP%\lose.cmd"
 	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
 		CALL "%AUDIOMANAGER%" STOP battle
-		CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
+		CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True %VOLUME%
 	)
 	GOTO MAP
 )
@@ -2052,10 +2046,9 @@ CALL :BATTLE-DISPLAY_CHOICE
 %CHOICE%
 IF %CHOICE.INPUT%.==. GOTO BATTLE-SEL_CHOICE
 IF /I %CHOICE.INPUT%==Q (
-	CALL :CLEAR_INFO_SELECTION
 	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
 		CALL "%AUDIOMANAGER%" STOP battle
-		CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
+		CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True %VOLUME%
 	)
 	GOTO MAP
 )

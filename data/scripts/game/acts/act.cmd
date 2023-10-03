@@ -28,10 +28,10 @@ IF "%AUDIO.VALUE%"=="TRUE" IF NOT %SFX.VOLUME% EQU 0 (
 	SET /A SFX.RANDOM.CRIT=%random% %% 3+1
 	SET /A SFX.RANDOM.ATK=%random% %% 5+1
 	IF %CRIT.CHANCE% LEQ %CRIT.RATE% (
-		CALL "%AUDIOMANAGER%" START game\player\attack\crit_%%SFX.RANDOM.CRIT%%.mp3 sfx False
+		CALL "%AUDIOMANAGER%" START game\player\attack\crit_%%SFX.RANDOM.CRIT%%.mp3 sfx False %SFX.VOLUME%
 	) ELSE (
 		SET "TARGETAUDIO=%SFX.ATK%!SFX.RANDOM.ATK!.mp3"
-		CALL "%AUDIOMANAGER%" START game\player\attack\swing_%%SFX.RANDOM.ATK%%.mp3 sfx False
+		CALL "%AUDIOMANAGER%" START game\player\attack\swing_%%SFX.RANDOM.ATK%%.mp3 sfx False %SFX.VOLUME%
 	)
 	ENDLOCAL
 )

@@ -19,10 +19,6 @@
 @ECHO.%1 - [38;2;65;253;254mPlay the youtube music video "Dangerous Plains" by pedi me arxes.[0m (CMD)
 @EXIT /B 0
 
-:audio.cmd
-@ECHO.%1 - [38;2;65;253;254mTaskkill all audio tasks played by wscript.exe.[0m (CMD)
-@EXIT /B 0
-
 :clear.cmd
 @ECHO.%1 - [38;2;65;253;254mClear this console window, alternative for cls.[0m (CMD)
 @EXIT /B 0
@@ -70,3 +66,6 @@
 :leveleditor.cmd
 @ECHO.%1 - [38;2;65;253;254mEdit the selected level.[0m (CMD)
 @EXIT /B 0
+
+:cver.cmd
+@ECHO.%1 - [38;2;65;253;254mChange game version.[0m (CMD)

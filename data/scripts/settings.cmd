@@ -46,7 +46,7 @@ SET "Replacement=SET AUDIO.VALUE=%NEW.VALUE%"
 ))>"%FILE%.new"
 MOVE "%FILE%.new" "%FILE%">NUL
 CALL "%SETTINGS.LOAD%"
-IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
+IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True %VOLUME%
 EXIT /B 0
 
 
@@ -99,6 +99,6 @@ CALL %SETTINGS.LOAD%
 
 IF /I "%TMP.SETT: =%"=="VOLUME" IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
 	CALL "%AUDIOMANAGER%" STOPALL
-	CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True
+	CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True %VOLUME%
 ) ELSE START "" /MIN CMD /C "%AUDIOMANAGER%" STOPALL
 EXIT /B 0

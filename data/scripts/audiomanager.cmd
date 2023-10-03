@@ -15,7 +15,7 @@ TASKKILL /F /FI "WINDOWTITLE eq WSAudio.%1" /IM "cmd.exe" /T>NUL
 EXIT /B 0
 
 
-:START <"Path": String> <"Indetifier": String> <"Loop": Boolean>
+:START <"Path": String> <"Indetifier": String> <"Loop": Boolean> <"Volume": Integer>
 TASKKILL /F /FI "WINDOWTITLE eq WSAudio.%2" /IM "cmd.exe" /T>NUL
 SET "TARGETAUDIO=%DATA_AUD%\%1"
 IF NOT EXIST "%TARGETAUDIO%" EXIT /B 0
@@ -25,7 +25,7 @@ SET TMP.LOOP=%3
 (
 	ECHO Set Sound = CreateObject^("WMPlayer.OCX.7"^)
 	ECHO Sound.URL = "%TARGETAUDIO%"
-	ECHO Sound.settings.volume = %VOLUME%
+	ECHO Sound.settings.volume = %4
 	ECHO Sound.settings.setMode "loop", %TMP.LOOP%
 	ECHO Sound.controls.currentPosition = 0
 	ECHO Sound.controls.play

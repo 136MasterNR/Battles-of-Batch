@@ -31,3 +31,5 @@ FOR /D /R "%DATA%" %%I IN (*) DO (
 
 ECHO.Err: Directory "%1" was not found
 
+ECHO ON
+@EXIT /B 0

@@ -1,1 +1,0 @@
-@TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL 2>NUL

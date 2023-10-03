@@ -1,25 +1,31 @@
 IF NOT DEFINED VERCODE EXIT
 
-::REWARDS - Start, End : In this example, it will randomize in the range of 24 to 31 (Why 31? Cuz 24+7)
-SET REWARD.MONEY=24,7
+::REWARDS - Start, End : In this example, it will randomize in the range of 24 to 30 (Why 30? Cuz 24+6)
+SET REWARD.MONEY=24,6
 SET REWARD.XP=23,5
 
 ::ENEMIES
 :: When adding more enemies, make sure to add the additional variables for the locations.
 :: Take for example the lvl2's setup config file.
-
+::
 :: Arguments: Type, Identifier, Level
 CALL "%ENEMY%" Y 1 1
+CALL "%ENEMY%" Y 2 1
 
-:: Positions: W = Width, H = Height
+:: - DISPLAY -
+:: W = Width, H = Height
 SET LOC.W1=92
-SET LOC.H1=18
+SET LOC.H1=14
+
+SET LOC.W2=89
+SET LOC.H2=24
 
 :: Positions for Player
 SET LOC.WP=4
 SET LOC.HP=13
 
-:: LOOT TABLE - Find the list of items inside scripts\list\items.txt
+:: - LOOT TABLE -
+:: Find the list of items inside scripts\list\items.txt
 :: Item name, Randomized Amount, Type(Materials, Items, Weapons), Claim only the first time?
 SET LOOT.1=Stained_Dust
 SET LOOT.1.X=0,2
