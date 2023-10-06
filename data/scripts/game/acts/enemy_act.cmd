@@ -5,9 +5,12 @@ EXIT /B 0
 :INDIVIDUAL <Enemy>
 
 :: Reset variables
+SET LET_ENEMY_ATK=TRUE
+SET ENEMY_MISS=FALSE
 FOR /F "TOKENS=1DELIMS==" %%A IN ('SET ENEMY.ATTACK.AMOUNT.') DO (
 	SET %%A=
 )
+
 :: Get the enemy
 FOR /F "TOKENS=2DELIMS=." %%1 IN ("%1") DO (
 	SET TMP.EN=%%1
@@ -17,13 +20,11 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 SET TMP.ENEMY=!ENEMY.TYPE.%TMP.EN%!
 ENDLOCAL&SET TMP.ENEMY=%TMP.ENEMY%
 
-:: Miss chance
+:: Check if enemy missed
 SET /A "TMP.CHANCE=%random% %% 100"
 IF %TMP.CHANCE% LEQ 2 (
-	CALL "%SCRIPTS_GAME%\turn.cmd" AV-SINGLE %CURR_TURN% %TMP.EN%
 	CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m%TMP.ENEMY%[24m ^(#%TMP.EN%^) has %RGB.RED%missed[0m[1m!%RGB.YELLOW%[0m
-	CALL "%SCRIPTS_GAME%\turn.cmd"
-	EXIT /B 0
+	SET ENEMY_MISS=TRUE
 )
 
 :: Unique skills
@@ -41,6 +42,12 @@ IF !ENEMY.HP.NOW.%TMP.EN%! LEQ 0 (
 
 :: Update turns
 CALL "%SCRIPTS_GAME%\turn.cmd"
+
+:: Whether to initiate attack sequence, if FALSE then end here
+IF %LET_ENEMY_ATK%==FALSE EXIT /B 0
+
+:: If missed, end here
+IF %ENEMY_MISS%==TRUE EXIT /B 0
 
 :: Extract the ATK values from the enemy
 SETLOCAL ENABLEDELAYEDEXPANSION

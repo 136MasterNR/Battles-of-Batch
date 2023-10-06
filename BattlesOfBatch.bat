@@ -442,6 +442,7 @@ SET SCSCRIPT="%TEMP%\%random%-%random%-%random%-%random%.vbs"
 	ECHO oLink.TargetPath = "%cd%\%~n0"
 	ECHO oLink.WorkingDirectory = "%cd%"
 	ECHO oLink.IconLocation = "%DATA_IMAGES%\icon_256.ico"
+	ECHO oLink.WindowStyle = 7
 	ECHO oLink.Save
 ) > %SCSCRIPT%
 CSCRIPT /nologo %SCSCRIPT% || CALL :ERROR ERRLINE ID0003    -0
