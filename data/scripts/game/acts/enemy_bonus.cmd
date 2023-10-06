@@ -7,6 +7,9 @@ EXIT /B 0
 
 
 
+
+
+
 :Y <"Enemy ID": Integer>
 IF %ENEMY_MISS%==TRUE EXIT /B 0
 
@@ -23,9 +26,12 @@ EXIT /B 0
 
 
 
+
+
+
 :N
-SET /A TMP.RND=%random% %% 2 +1
-IF %TMP.RND% EQU 1 (
+SET /A TMP.RND=%random% %% 4 +1
+IF %TMP.RND% LEQ 3 (
 	SET LET_ENEMY_ATK=FALSE
 ) ELSE EXIT /B 0
 
@@ -62,6 +68,9 @@ EXIT /B 0
 
 
 
+
+
+
 :S
 IF %ENEMY_MISS%==TRUE EXIT /B 0
 
@@ -76,6 +85,9 @@ EXIT /B 0
 
 
 
+
+
+
 :Goblin
 IF %ENEMY_MISS%==TRUE EXIT /B 0
 
@@ -87,3 +99,6 @@ FOR /F "TOKENS=1,2DELIMS=," %%A IN ("!ENEMY.ATK.AMOUNT.%1!") DO (
 )
 CALL "%SCRIPTS_GAME%\acts\effect.cmd" FIRE-CREATE PLAYER 6 %TMP.DMG%
 EXIT /B 0
+
+
+
