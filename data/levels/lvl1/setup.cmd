@@ -2,7 +2,7 @@ IF NOT DEFINED VERCODE EXIT
 
 ::REWARDS - Start, End : In this example, it will randomize in the range of 24 to 30 (Why 30? Cuz 24+6)
 SET REWARD.MONEY=26,4
-SET REWARD.XP=23,5
+SET REWARD.XP=16,4
 
 ::ENEMIES
 :: When adding more enemies, make sure to add the additional variables for the locations.
@@ -28,7 +28,7 @@ SET LOC.HP=13
 :: Find the list of items inside scripts\list\items.txt
 :: Item name, Randomized Amount, Type(Materials, Items, Weapons), Claim only the first time?
 SET LOOT.1=Stained_Dust
-SET LOOT.1.X=0,2
+SET LOOT.1.X=1,1
 SET LOOT.1.SAV=MATERIALS
 SET LOOT.1.ONCE=FALSE
 

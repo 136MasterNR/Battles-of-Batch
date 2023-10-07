@@ -5,21 +5,23 @@ ECHO.[2;2H%STR%
 SET "STR=%RGB.CYAN%Next Story[0m: [1m!MAP.NAME.%PLAYER.MAP.LEVEL%:_= ! %RGB.GRAY%#%PLAYER.MAP.LEVEL%[0m     %RGB.CYAN%Total Wins[0m: [1m%COMPLETED.MAPS%[0m"
 CALL "%CENTER%" STR 114
 ECHO.[3;3H%STR%
-ENDLOCAL
 CALL :%1
+CALL "%CENTER%" STR 115
+ECHO.[1C%STR%
+ENDLOCAL
 EXIT /B 0
 
 :1
-ECHO.[1C%RGB.LVL%                              %RGB.TRUE%Recommended Lvl[0m: [1m1    %RGB.FALSE%Enemies[0m: [1mYara ↑1[0m, [1mYara ↑1[0m, [1mYara ↑2                    [0m
+SET "STR=%RGB.TRUE%Recommended Lvl[0m: [1m-    %RGB.FALSE%Enemies[0m: [1mYara ↑1[0m, [1mYara ↑1[0m"
 EXIT /B 0
 :2
-ECHO.[1C%RGB.LVL%                       %RGB.TRUE%Recommended Lvl[0m: [1m3       %RGB.FALSE%Enemies[0m: [1mJumpo ↑1[0m, [1mJumpo ↑1[0m, [1mYara ↑2[0m, [1mYara ↑2          [0m
+SET "STR=%RGB.TRUE%Recommended Lvl[0m: [1m1    %RGB.FALSE%Enemies[0m: [1mJumpo ↑1[0m, [1mYara ↑1[0m"
 EXIT /B 0
 :3
-ECHO.[1C%RGB.LVL%                            %RGB.TRUE%Recommended Lvl[0m: [1m5    %RGB.FALSE%Enemies[0m: [1mNimbo ↑1[0m, [1mNimbo ↑1[0m, [1mNimbo ↑1                   [0m
+SET "STR=%RGB.TRUE%Recommended Lvl[0m: [1m2    %RGB.FALSE%Enemies[0m: [1mYara ↑1[0m, [1mNimbo ↑1, [1mYara ↑2[0m"
 EXIT /B 0
 :4
-ECHO.[1C%RGB.LVL%                        %RGB.TRUE%Recommended Lvl[0m: [1m6    %RGB.FALSE%Enemies[0m: [1mFrench ↑1[0m, [1mFrench ↑1[0m, [1mNimbo ↑1[0m, [1mNimbo ↑1        [0m
+SET "STR=%RGB.TRUE%Recommended Lvl[0m: [1m2    %RGB.FALSE%Enemies[0m: [1mYara ↑1[0m, [1mFrench ↑1, [1mYara ↑2[0m"
 EXIT /B 0
 :5
 ECHO.[1C%RGB.LVL%                             %RGB.TRUE%Recommended Lvl[0m: [1m8    %RGB.FALSE%Enemies[0m: [1mFrench ↑2[0m, [1mSnek ↑1[0m, [1mSnek ↑1                    [0m
