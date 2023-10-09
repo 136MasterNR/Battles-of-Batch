@@ -212,6 +212,9 @@ SET "UI.MONEY=%INTERFACE%\money_decimals.cmd"
 SET INV_CHOICE=1
 SET INV_CHOICE_SLOT=1
 SET W_INV_CHOICE=1
+SET SEL_POS.Y=16
+SET SEL_POS.X=11
+SET UI_SEL=1
 ::VAR:-Craft
 SET "CRAFT.INFO=%INTERFACE%\shop\craft_info.cmd"
 SET CRAFT.SEL=0
@@ -236,19 +239,23 @@ SET "MAP.LOAD=%INTERFACE%\map"
 ::VAR:-ANSI Coloring
 SET "RGB=[38;2;"
 SET "RGB.COIN=%RGB%252;255;166m"
+SET "RGB.MONEY=%RGB%70;232;110m"
 SET "RGB.LVL=%RGB%128;200;255m"
+SET "RGB.BLUE=%RGB%128;200;255m"
 SET "RGB.TRUE=%RGB%163;255;177m"
 SET "RGB.FALSE=%RGB%255;89;89m"
 SET "RGB.CYAN=%RGB%133;222;255m"
 SET "RGB.AQUA=%RGB%0;254;254m"
 SET "RGB.YELLOW=%RGB%255;252;176m"
 SET "RGB.ORANGE=%RGB%255;209;143m"
+SET "RGB.VERMILION=%RGB%2242;97;53m"
 SET "RGB.RED=%RGB%255;61;51m"
 SET "RGB.PINK=%RGB%245;105;105m"
 SET "RGB.PURPLE=%RGB%194;200;255m"
 SET "RGB.GREEN=%RGB%102;255;0m"
-SET "RGB.LIME=%RGB%163;232;151m"
+SET "RGB.LIME=%RGB%146;224;157m"
 SET "RGB.GRAY=%RGB%169;169;169m"
+SET "RGB.LIGHTGRAY=%RGB%222;222;222m"
 SET "RGB.BLACK=%RGB%69;69;69m"
 SET "RGB.AQUAMARINE=%RGB%127;255;212m"
 SET "RGB.BROWN=%RGB%255;176;79m"
@@ -626,7 +633,7 @@ ECHO.^|      ^(^|ò ó^|^)    ^|^|                                 .    '    .  
 ECHO.^|    __/{\^^/}\____^|^|                                   _______                                                      ^|
 ECHO.^|   / \  {~}  /__^|_]                              _  .`_^|___^|_`.  _                                                 ^|
 ECHO.^|   ^| /\  ~  /    []                                  \ \   / /                             ___                     ^|
-ECHO.^|   ^|_^| ^)   ^(     ''                                   \ ' ' /                           __/_  `.  .-^"^"^"-. .        ^|
+ECHO.^|   ^|_^| ^)   ^(     ''                                   \ ' ' /                           __/_  `.  .-'''-. .        ^|
 ECHO.^|   \_]/_____\                                          \ ^" /                            \_,` ^| \-'  /   ^)`-'       ^|
 ECHO.^|     _\_^| ^|_/_                                          \./                              ___Y  ,    .'7 /^|         ^|
 ECHO.^|    ^(_,_^| ^|_,_^)                                          V                              ^(_,___/...-` ^(_/_/         ^|[E^|                                                                                         [1;30m2023©136MasterNR[0m          ^|[114D[1;30mBATTLES OF BATCH [0;33m%VERS%-%VERTYPE%[0m[?25h)
@@ -735,7 +742,7 @@ ECHO.[38;2;235;64;52m^(^!^) [38;2;245;108;98mRun "EXIT" to return.[0m[3H[?2
 PUSHD "%CD%\DATA\cmd"
 CMD /K "PROMPT $E[38;2;132;217;52mbob@terminal$E[0m$E[1m:$E[38;2;113;155;198m%%cd:~-9,9%%[0m$$$S"
 POPD
-IF ERRORLEVEL 2 GOTO STARTUP
+IF %ERRORLEVEL%==2 GOTO STARTUP
 MODE CON:COLS=%COLS% LINES=%LINES%
 EXIT /B 0
 :CREDITS
@@ -1486,19 +1493,20 @@ GOTO MAP-CHOICE
 :SHOP
 CALL "%PLAYERDATA.LOAD%"
 IF "%SHOP.TAB%"=="1" CALL "%UI.ITEMS%"
-IF "%SHOP.TAB%"=="2" CALL "%UI.SKILLS%"
 SET UDERFINE=
 :SHOP-RE
 IF "%SHOP.TAB%"=="1" SET "INPUT_PART=items"
-IF "%SHOP.TAB%"=="2" SET "INPUT_PART=skills"
+IF "%SHOP.TAB%"=="2" (
+	GOTO SKILLS-SHOP
+)
 IF "%SHOP.TAB%"=="3" (
 	GOTO CRAFT-SHOP
-) ELSE (
-	SETLOCAL ENABLEDELAYEDEXPANSION
-	%INPUT% "PROMPT=[u[0m[?25h" "length=13"
 )
+
+SETLOCAL ENABLEDELAYEDEXPANSION
+%INPUT% "PROMPT=[u[0m[?25h" "length=13"
 ENDLOCAL&SET UDERFINE=%UDERFINE%
-ENDLOCAL
+
 SET "INPUT_PART=nul"
  IF "%UDERFINE%"==") " (
 	IF NOT "%SHOP.TAB%"=="3" SET /P "=|"<NUL
@@ -1575,6 +1583,74 @@ IF "%SHOP.TAB%"=="1" (
 	)
 )
 GOTO SHOP
+:SKILLS-SHOP
+CALL "%UI.SKILLS%"
+
+:SKILLS-SHOP-RE
+SET OLD.POS_Y=%SEL_POS.Y%
+SET OLD.POS_X=%SEL_POS.X%
+
+SET UI_ITEM=
+
+FOR /F "TOKENS=%UI_SEL%DELIMS=;" %%I IN ("%UI_LIST%") DO (
+	SET UI_ITEM=%%I
+)
+
+IF "%UI_ITEM%"=="TRUE" (
+	ECHO.[0H[%SEL_POS.Y%B[%SEL_POS.X%C%RGB.TRUE%      ▲ ▲ ▲ ▲ ▲ ▲ ▲[1B[18D[0m[1m[sPress [4m%RGB.CYAN%SPACE[0m[1m to upgrade!
+) ELSE IF "%UI_ITEM%"=="FALSE" (
+	ECHO.[0H[%SEL_POS.Y%B[%SEL_POS.X%C%RGB.FALSE%      ▲ ▲ ▲ ▲ ▲ ▲ ▲[1B[17D[1m[sMissing requirements!
+) ELSE (
+	ECHO.[0H[%SEL_POS.Y%B[%SEL_POS.X%C[0m      ▲ ▲ ▲ ▲ ▲ ▲ ▲
+)
+
+%CHOICE%
+IF %CHOICE.INPUT%.==. GOTO SKILLS-SHOP
+
+IF /I %CHOICE.INPUT%==W IF NOT %SEL_POS.Y% LEQ 16 (
+	ECHO.[0H[%OLD.POS_Y%B[%OLD.POS_X%C                   [1B[18D                       
+	SET /A SEL_POS.Y-=12
+	SET /A UI_SEL-=3
+)
+IF /I %CHOICE.INPUT%==S IF NOT %SEL_POS.Y% GEQ 40 (
+	ECHO.[0H[%OLD.POS_Y%B[%OLD.POS_X%C                   [1B[18D                       
+	SET /A SEL_POS.Y+=12
+	SET /A UI_SEL+=3
+)
+IF /I %CHOICE.INPUT%==A IF NOT %SEL_POS.X% LEQ 15 (
+	ECHO.[0H[%OLD.POS_Y%B[%OLD.POS_X%C                   [1B[18D                       
+	SET /A SEL_POS.X-=36
+	SET /A UI_SEL-=1
+)
+IF /I %CHOICE.INPUT%==D IF NOT %SEL_POS.X% GEQ 83 (
+	ECHO.[0H[%OLD.POS_Y%B[%OLD.POS_X%C                   [1B[18D                       
+	SET /A SEL_POS.X+=36
+	SET /A UI_SEL+=1
+)
+
+IF /I %CHOICE.INPUT%==Q GOTO S-MENU
+IF /I %CHOICE.INPUT%==R (
+	MODE CON:COLS=%COLS% LINES=%LINES%
+	GOTO SHOP
+)
+IF /I %CHOICE.INPUT%==Z (
+	SET /A SHOP.TAB=1
+	GOTO SHOP
+)
+IF /I %CHOICE.INPUT%==C (
+	SET /A SHOP.TAB=3
+	GOTO SHOP
+)
+
+IF %CHOICE.INPUT%==SPACE (
+	IF %UI_SEL% EQU 1 CALL "%SKILL.UPGRADE%" ATK 1 && GOTO SKILLS-SHOP
+	IF %UI_SEL% EQU 2 CALL "%SKILL.UPGRADE%" HP 1 && GOTO SKILLS-SHOP
+	IF %UI_SEL% EQU 3 CALL "%SKILL.UPGRADE%" CRIT_RATE 1 && GOTO SKILLS-SHOP
+	IF %UI_SEL% EQU 3 CALL "%SKILL.UPGRADE%" STO 1 && GOTO SKILLS-SHOP
+)
+
+GOTO SKILLS-SHOP-RE
+
 :CRAFT-SHOP
 COLOR 08
 ECHO.[?25l[1;37m[20H[49C
@@ -1597,7 +1673,7 @@ CALL "%ITEMS.LOADER%" WEAPONS
 >NUL FINDSTR /C:"Ornate_Cobalt" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.8_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Ornate_Cobalt%^)    ") || (SET "CRAFT.8_FOUND=   ^(Not Owned^)   ")
 >NUL FINDSTR /C:"Brainleader" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.9_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Brainleader%^)    ") || (SET "CRAFT.9_FOUND=   ^(Not Owned^)   ")
 ECHO.[?25l[H[0m.---------------------------------------------.-------.-------.-------.---------------------------------------------.
-ECHO.^|                                           Q ^| [4m[1mCraft[0m ^| Items ^| Skill ^| E                                           ^|
+ECHO.^| %RGB.PINK%Q[0m                                         Z ^| [4m[1mCraft[0m ^| Items ^| Skill ^| C                                           ^|
 ECHO.^|                                             '-------'-------'-------'                                             ^|
 ECHO.[42H^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
@@ -1695,7 +1771,14 @@ SET /P "=[3A[13C[1m%CRAFT.UI.CENTER:_= %[0m[u"<NUL
 ENDLOCAL
 %CHOICE%
 IF %CHOICE.INPUT%.==. GOTO CRAFT-SHOP-RE
-IF /I %CHOICE.INPUT%==E SET /A SHOP.TAB=1&&GOTO SHOP
+IF /I %CHOICE.INPUT%==Z (
+	SET /A SHOP.TAB=2
+	GOTO SHOP
+)
+IF /I %CHOICE.INPUT%==C (
+	SET /A SHOP.TAB=1
+	GOTO SHOP
+)
 IF /I %CHOICE.INPUT%==Q GOTO S-MENU
 IF /I %CHOICE.INPUT%==W IF %CRAFT.SEL% GEQ 1 SET /A CRAFT.SEL-=1&GOTO CRAFT-SHOP-RE
 IF /I %CHOICE.INPUT%==S IF %CRAFT.SEL% LEQ 7 SET /A CRAFT.SEL+=1&GOTO CRAFT-SHOP-RE
