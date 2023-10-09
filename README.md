@@ -84,6 +84,7 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
   - **Slow Down**: This effect will increase the action value of the enemy or player, basically slowing them down by a bit.
   - **Fire**: This effect will damage the enemy or the player every registered turn, for a set amount of turns.
   - **Poison**: This effect will damage the enemy or the player every registered round, for a set amount of rounds.
+  - **Bleed**: This effect will damage the enemy or the player every registered turn, until the item Heal is used.
 
 ### How it Works : Enemies (#3.2)
   - Enemies spawn with a random amount of HP, the amount increases depending on the enemy's level.
@@ -98,7 +99,7 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
 
 ### How it Works : Items (#3.4)
   - **Bomb**: Stuns enemies, skipping their next round/action. Bosses cannot be stunned by this attack type. Effects, such as poison on the player, will still function (Not yet an implemented feature).
-  - **Heal**: Increases the HP of the player. This does not skip the next enemy round/action, and the player will still take damage as usual.
+  - **Heal**: Increases the HP of the player. This does not skip the next enemy round/action, and the player will still take damage as usual. Can stop bleeding effects.
   - More Coming Soon!
 
 <details><summary>
@@ -168,15 +169,14 @@ Material Items [Released]
 
   - Large amounts of enemies can be extremely difficult to fight, but they have their weaknesses too. For example, if their main weapon is too short there's much more chance for them to miss a hit (Not yet an implemented feature).
 
-### Easy Level (#4.1)
-  - **Yara**: It's the first enemy that a beginner will encouter during their first battle. It's one of the weakest enemies, and there is nothing special about them.
+### List of Enemies & their Traits
+  - **Yara**: This enemy has very low damage and health points. Has 20% chance to inflict you with fire for 1 to 2 turns.
   - **Jumpo**: It can be found on the second level. Its design gets inspiration from a Sea-Horse. It's very known for how strong it is, because of its very sharp, strong but small tail.
-  - **Nimbo**: This enemy is known for its defense power. It's very hard to kill, and can be very annoying.
-### Medium Level (#4.2)
+  - **Nimbo**: This enemy is a supporter. It has very strong defense system. It has 75% chance to advance forward other enemies, which basically lets them take action qucker than usual by resetting their action points back to 0.
+  - **French**: This enemy is the stronger version of Jumpo. Because of how hard and heavy it is, it deals a very large amount of damage, has a decent amount of defense, and can cause the bleeding effect with power value of 2.
   - **Weavy**: More Info Soon!
   - **Boi**: More Info Soon!
   - **Zorm**: More Info Soon!
-  - **French**: This enemy is the stronger version of Jumpo. Because of how hard and heavy it is, it deals a very large amount of damage, and has a decent amount of defense.
   - **Twu**: More Info Soon!
   - **Nein**: More Info Soon!
   - **Uno**: More Info Soon!
@@ -299,7 +299,7 @@ Material Items [Released]
 ### Shop (#6.4)
   - **Items**: Items require in-game currency and specific character level. The level requirement is displayed as the symbol "↑", and currency as the symbol "$". The UI is categorized in 3 categories, first is Weapons and other sources that deal damage, second is Crafting Materials which are used for crafting items or weapons, and third is Potions and Other, which are used as support items.
 ![](data/images/preview_shop.png)
-  - **Skills**: Upgrading skills is very important. It gives you an amount of permanent benefits in the game. To upgrade a skill, you first have to meet the requirements such as an amount of in-game currency, which is represented as the symbol "$", and a specific level, which is represented as the symbol "↑". The UI has a total of 5 upgradable skills. The first one is Base Attack which makes you deal more damage to enemies, second is Crit Rate which gives you more chance to make a critical strike, third is Max HP which gives you more total HP when in battle.
+  - **Skills**: Upgrading skills is very important. It gives you an amount of permanent benefits in the game. To upgrade a skill, you first have to meet the requirements such as an amount of in-game currency, which is represented as the symbol "$", and a specific player level, which is represented as the symbol "↑". Select a skill by moving using the keys `W` `A` `S` and `D`. If you meet the requirements to update the selected skill, press `A`.
 ![](data/images/preview_skills.png)
   - **Craft**: More Info Soon!
 ![](data/images/preview_craft.png)

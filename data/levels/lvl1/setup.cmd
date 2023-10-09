@@ -1,6 +1,6 @@
 IF NOT DEFINED VERCODE EXIT
 
-::REWARDS - Start, End : In this example, it will randomize in the range of 24 to 30 (Why 30? Cuz 24+6)
+::REWARDS - Start, End : In this example, it will randomize in the range of 26 to 30 (Why 30? Cuz 26+4)
 SET REWARD.MONEY=26,4
 SET REWARD.XP=16,4
 
