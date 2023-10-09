@@ -64,6 +64,8 @@ FOR /F "TOKENS=%TMP.RAND_DROP%DELIMS=," %%I IN ("%TMP.LIST%") DO (
 )
 
 CALL "%SAVE%" "FILE=%DATA_SAVES%\PLAYERDATA.cmd" 1 /A PLAYER.MONEY= %TMP.NEW_PLAYER_MONEY%
+CALL "%DATA_SAVES%\PLAYERDATA.cmd"
+
 COLOR 08
 ECHO.[0m[19;46H[1m.----' %RGB%84;255;130mDaily Reward[0m[1m '----.
 ECHO.[44C[1m.'                        '.[0m

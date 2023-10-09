@@ -20,7 +20,7 @@ FOR /F "TOKENS=1,2DELIMS=," %%A IN ("!ENEMY.ATK.AMOUNT.%1!") DO (
 	SET /A "TMP.DMG=%random% %% %%A %%B"
 )
 SET /A "TMP.CHANCE=%random% %% 100"
-SET /A "TMP.AMOUNT=%random% %% 2 +1"
+SET /A "TMP.AMOUNT=%random% %% 1 +1"
 IF %TMP.CHANCE% LEQ 20 CALL "%SCRIPTS_GAME%\acts\effect.cmd" FIRE-CREATE PLAYER %TMP.AMOUNT% %TMP.DMG%
 EXIT /B 0
 
@@ -64,6 +64,22 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 SET TMP.ENEMY=!ENEMY.TYPE.%1!
 ENDLOCAL&SET TMP.ENEMY=%TMP.ENEMY%
 CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m%TMP.ENEMY%[24m ^(#%1^) has %RGB.CYAN%advanced forward[0m[1m enemy [4m%TMP.ENEMY2%[24m ^(#%TMP.RND%^)![0m
+EXIT /B 0
+
+
+
+
+
+
+:F
+IF %ENEMY_MISS%==TRUE EXIT /B 0
+
+SET /A TMP.DMG=ENEMY.LVL.%1 * 5
+
+SET /A TMP.RND=%random% %% 4 +1
+IF %TMP.RND% LEQ 3 (
+	CALL "%SCRIPTS_GAME%\acts\effect.cmd" BLEED-CREATE PLAYER %TMP.DMG%
+)
 EXIT /B 0
 
 

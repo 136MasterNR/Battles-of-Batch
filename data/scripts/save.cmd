@@ -23,6 +23,5 @@ IF %3.==/A. (
 ))>"%FILE%.new"
 
 MOVE "%FILE%.new" "%FILE%">NUL
-CALL "%DATA_SAVES%\PLAYERDATA.cmd"
 
 EXIT /B 0

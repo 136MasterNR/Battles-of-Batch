@@ -257,6 +257,7 @@ SET "RGB.LIME=%RGB%146;224;157m"
 SET "RGB.GRAY=%RGB%169;169;169m"
 SET "RGB.LIGHTGRAY=%RGB%222;222;222m"
 SET "RGB.BLACK=%RGB%69;69;69m"
+SET "RGB.WHITE=%RGB%255;255;255m"
 SET "RGB.AQUAMARINE=%RGB%127;255;212m"
 SET "RGB.BROWN=%RGB%255;176;79m"
 ::VAR:-Player Stats
@@ -283,8 +284,8 @@ SET SKILL.CRIT_RATE.BASE=4
 SET SKILL.CRIT_RATE.LVLS=5;6;7;8;9;10;12;13;14;15;16;17;18;20;21;22;23;25;30;35;45;50;60
 SET SKILL.CRIT_RATE.COST=150;275;1100;1500;11250;17500;25000;55000;87500;125000;250000;500000
 SET SKILL.HP.BASE=25
-SET SKILL.HP.LVLS=10
-SET SKILL.HP.COST=1125
+SET SKILL.HP.LVLS=4;10
+SET SKILL.HP.COST=250;2400
 SET SKILL.STO.BASE=1
 SET SKILL.STO.LVLS=6
 SET SKILL.STO.COST=1200
@@ -1541,46 +1542,6 @@ IF "%SHOP.TAB%"=="1" (
 	IF /I "%UDERFINE:~0,8%"=="BUY BOMB" (
 		CALL "%ITEMS.LOADER%" SHOP-ADD Bomb %SHOP.MAX.BOMB% %SHOP.PRICE.BOMB% %SHOP.LVLREQ.BOMB% %UDERFINE:~9%
 	)
-) ELSE (
-	IF /I "%UDERFINE%"=="UP ATK" (
-		CALL "%SKILL.UPGRADE%" %LVL.REQ.ATK% %LVL.REQ.ATK% %SKILL.COST.ATK% 1 SKILL.ATK
-	)
-	IF /I "%UDERFINE%"=="UP ATTACK" (
-		CALL "%SKILL.UPGRADE%" %LVL.REQ.ATK% %LVL.REQ.ATK% %SKILL.COST.ATK% 1 SKILL.ATK
-	)
-	IF /I "%UDERFINE%"=="UP MAINATTACK" (
-		CALL "%SKILL.UPGRADE%" %LVL.REQ.ATK% %LVL.REQ.ATK% %SKILL.COST.ATK% 1 SKILL.ATK
-	)
-	IF /I "%UDERFINE%"=="UP MAIN ATTAC" (
-		CALL "%SKILL.UPGRADE%" %LVL.REQ.ATK% %LVL.REQ.ATK% %SKILL.COST.ATK% 1 SKILL.ATK
-	)
-	IF /I "%UDERFINE%"=="UP MAIN ATK" (
-		CALL "%SKILL.UPGRADE%" %LVL.REQ.ATK% %LVL.REQ.ATK% %SKILL.COST.ATK% 1 SKILL.ATK
-	)
-	IF /I "%UDERFINE%"=="UP CRIT" (
-		CALL "%SKILL.UPGRADE%" %LVL.REQ.CRIT_RATE% %LVL.REQ.CRIT_RATE% %SKILL.COST.CRIT_RATE% 2 SKILL.CRIT_RATE
-	)
-	IF /I "%UDERFINE%"=="UP CRIT RATE" (
-		CALL "%SKILL.UPGRADE%" %LVL.REQ.CRIT_RATE% %LVL.REQ.CRIT_RATE% %SKILL.COST.CRIT_RATE% 2 SKILL.CRIT_RATE
-	)
-	IF /I "%UDERFINE%"=="UP CRITRATE" (
-		CALL "%SKILL.UPGRADE%" %LVL.REQ.CRIT_RATE% %LVL.REQ.CRIT_RATE% %SKILL.COST.CRIT_RATE% 2 SKILL.CRIT_RATE
-	)
-	IF /I "%UDERFINE%"=="UP HP" (
-		CALL "%SKILL.UPGRADE%" %LVL.REQ.HP% %LVL.REQ.HP% %SKILL.COST.HP% 3 SKILL.HP
-	)
-	IF /I "%UDERFINE%"=="UP MAX HEALTH" (
-		CALL "%SKILL.UPGRADE%" %LVL.REQ.HP% %LVL.REQ.HP% %SKILL.COST.HP% 3 SKILL.HP
-	)
-	IF /I "%UDERFINE%"=="UP MAXHEALTH" (
-		CALL "%SKILL.UPGRADE%" %LVL.REQ.HP% %LVL.REQ.HP% %SKILL.COST.HP% 3 SKILL.HP
-	)
-	IF /I "%UDERFINE%"=="UP MAX HP" (
-		CALL "%SKILL.UPGRADE%" %LVL.REQ.HP% %LVL.REQ.HP% %SKILL.COST.HP% 3 SKILL.HP
-	)
-	IF /I "%UDERFINE%"=="UP STORAGE" (
-		CALL "%SKILL.UPGRADE%" %LVL.REQ.STO% %LVL.REQ.STO% %SKILL.COST.STO% 4 SKILL.STO
-	)
 )
 GOTO SHOP
 :SKILLS-SHOP
@@ -1604,6 +1565,7 @@ IF "%UI_ITEM%"=="TRUE" (
 	ECHO.[0H[%SEL_POS.Y%B[%SEL_POS.X%C[0m      ▲ ▲ ▲ ▲ ▲ ▲ ▲
 )
 
+SET /P "=[?25h[2;3H"<NUL
 %CHOICE%
 IF %CHOICE.INPUT%.==. GOTO SKILLS-SHOP
 
@@ -1644,9 +1606,9 @@ IF /I %CHOICE.INPUT%==C (
 
 IF %CHOICE.INPUT%==SPACE (
 	IF %UI_SEL% EQU 1 CALL "%SKILL.UPGRADE%" ATK 1 && GOTO SKILLS-SHOP
-	IF %UI_SEL% EQU 2 CALL "%SKILL.UPGRADE%" HP 1 && GOTO SKILLS-SHOP
-	IF %UI_SEL% EQU 3 CALL "%SKILL.UPGRADE%" CRIT_RATE 1 && GOTO SKILLS-SHOP
-	IF %UI_SEL% EQU 3 CALL "%SKILL.UPGRADE%" STO 1 && GOTO SKILLS-SHOP
+	IF %UI_SEL% EQU 2 CALL "%SKILL.UPGRADE%" HP 3 && GOTO SKILLS-SHOP
+	IF %UI_SEL% EQU 3 CALL "%SKILL.UPGRADE%" CRIT_RATE 2 && GOTO SKILLS-SHOP
+	IF %UI_SEL% EQU 3 CALL "%SKILL.UPGRADE%" STO 4 && GOTO SKILLS-SHOP
 )
 
 GOTO SKILLS-SHOP-RE
@@ -1672,9 +1634,9 @@ CALL "%ITEMS.LOADER%" WEAPONS
 >NUL FINDSTR /C:"Infernal_Blade" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.7_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Infernal_Blade%^)    ") || (SET "CRAFT.7_FOUND=   ^(Not Owned^)   ")
 >NUL FINDSTR /C:"Ornate_Cobalt" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.8_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Ornate_Cobalt%^)    ") || (SET "CRAFT.8_FOUND=   ^(Not Owned^)   ")
 >NUL FINDSTR /C:"Brainleader" "%PLAYERDATA.WEAPONS%" && (SET "CRAFT.9_FOUND=   ^(Owned ↑%WEAPONS.REG_LVL.Brainleader%^)    ") || (SET "CRAFT.9_FOUND=   ^(Not Owned^)   ")
-ECHO.[?25l[H[0m.---------------------------------------------.-------.-------.-------.---------------------------------------------.
-ECHO.^| %RGB.PINK%Q[0m                                         Z ^| [4m[1mCraft[0m ^| Items ^| Skill ^| C                                           ^|
-ECHO.^|                                             '-------'-------'-------'                                             ^|
+ECHO.[?25l[H[0m.---.-----------------------------------------.-------.-------.-------.---------------------------------------------.
+ECHO.^| %RGB.PINK%Q[0m ^|                                       Z ^| [4m[1mCraft[0m ^| Items ^| Skill ^| C                                           ^|
+ECHO.^|---'                                         '-------'-------'-------'                                             ^|
 ECHO.[42H^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
@@ -1719,7 +1681,7 @@ IF %MAT.2.OWNED% GEQ %MAT.2.X% (SET CRAFT.UI.2.OWNED=%MAT.2.OWNED% %RGB.TRUE%√
 IF %MAT.3.OWNED% GEQ %MAT.3.X% (SET CRAFT.UI.3.OWNED=%MAT.3.OWNED% %RGB.TRUE%√[0m) ELSE (SET CRAFT.UI.3.OWNED=%MAT.3.OWNED% %RGB.FALSE%X[0m)
 SET /A SEL.Y=(3*%CRAFT.SEL%)+8
 IF %CRAFT.NAV% EQU 0 (
-	ECHO.[4H[0m^|                                                                                                                   ^|
+	ECHO.[?25l[4H[0m^|                                                                                                                   ^|
 	ECHO.^|        .-------------------------.                                                                                ^|
 	ECHO.^|       /  [1;30m?  ← %RGB%255;204;153mCRAFT WEAPONS[1;30m →  ?[0m  \                   .-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+.                  ^|
 	ECHO.^|      :'- - - - - - - - - - - - - -':               .-'                                          '-.               ^|
@@ -1769,6 +1731,8 @@ IF %CRAFT.SEL%==3 (ECHO.[%SEL.Y%;37H '---------------'. [1B[20D              
 ) ELSE (ECHO.[%SEL.Y%;37H '---------------'[1B[18D                  [1B[18D                  [1B[17D----------------.)
 SET /P "=[3A[13C[1m%CRAFT.UI.CENTER:_= %[0m[u"<NUL
 ENDLOCAL
+
+SET /P "=[?25h[2;3H"<NUL
 %CHOICE%
 IF %CHOICE.INPUT%.==. GOTO CRAFT-SHOP-RE
 IF /I %CHOICE.INPUT%==Z (

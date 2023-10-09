@@ -3,9 +3,9 @@ CALL %PLAYERSKILLS.LOAD%
 START /MIN "RichManager" "%RichManager%" State=Upgrading skills;Details=Shop;LargeImage=preview_skills;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 TITLE %TITLE%Upgrades Shop
 (
-ECHO.[?25l[H[0m.---------------------------------------------.-------.-------.-------.---------------------------------------------.
-ECHO.^|                                             ^| Craft ^| Items ^| [4m[1mSkill[0m ^|                                             ^|
-ECHO.^|                                             '-------'-------'-------'                                             ^|
+ECHO.[?25l[H[0m.---.-----------------------------------------.-------.-------.-------.---------------------------------------------.
+ECHO.^| %RGB.PINK%Q[0m ^|                                       Z ^| Craft ^| Items ^| [4m[1mSkill[0m ^| C                                           ^|
+ECHO.^|---'                                         '-------'-------'-------'                                             ^|
 ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|[66D▸ %RGB.CYAN%Level[0m: [0m[1m↑%RGB.CYAN%%PLAYER.LVL%[0m
 ECHO.^|                                                                                                                   ^|[66D▸ %RGB.TRUE%Money[0m: %RGB.MONEY%$%PLAYER.MONEY%[0m
@@ -179,7 +179,7 @@ IF %PLAYER.MONEY% GEQ !SKILL.COST! (
 )
 
 IF !LVL.REQ!==MAX (
-	ECHO.[1B[%POS_X%C[4C%RGB.CYAN%Maximum Level[0m
+	ECHO.[1B[%POS_X%C[5C%RGB.CYAN%Maximum Level[0m
 ) ELSE (
 	ECHO.[%POS_X%C[1m- %RGB.YELLOW%Cost[0m: !C_MONELOCKED!!SKILL.COST![0m : !C_LVLLOCKED!!LVL.REQ![0m
 	ECHO.[%POS_X%C[1m+ %RGB.PURPLE%Level[0m: %RGB.LIME%▴!NEXT.LVL![0m

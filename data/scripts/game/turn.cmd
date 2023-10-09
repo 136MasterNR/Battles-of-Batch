@@ -9,6 +9,7 @@ SET /A TURNS.T+=1
 
 :: Execute commands every turn
 CALL "%SCRIPTS_GAME%\acts\effect.cmd" FIRE-EFFECT
+CALL "%SCRIPTS_GAME%\acts\effect.cmd" BLEED-EFFECT
 CALL "%SCRIPTS_GAME%\visual.cmd"
 
 :: Update the amount of enemies that are still alive
