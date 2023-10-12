@@ -81,16 +81,16 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
 
 ### How it Works : Effects (#3.1)
   - Some effects are turn-based damages, it can be applied on both the player and the enemy. Effects such as poison or fire are useful for damaging the enemies without the need of any more additional player actions. Other effects such as slow down or weakness, can be used to debuff the player or enemy for a set of turns.
-  - **Slow Down**: This effect will increase the action value of the enemy or player, basically slowing them down by a bit.
+  - **Slow Down**: This effect will increase the action value of the enemy or player, basically slowing them down by a bit. This can be useful to avoid double enemy attacks caused by support units.
   - **Fire**: This effect will damage the enemy or the player every registered turn, for a set amount of turns.
   - **Poison**: This effect will damage the enemy or the player every registered round, for a set amount of rounds.
-  - **Bleed**: This effect will damage the enemy or the player every registered turn, until the item Heal is used.
+  - **Bleed**: This effect will damage the enemy or the player every registered turn, until they are Healed.
 
 ### How it Works : Enemies (#3.2)
   - Enemies spawn with a random amount of HP, the amount increases depending on the enemy's level.
   - Enemies deal a random amount of damage to the player, the amount increases depending on the enemy's level.
   - Every enemy deals its own damage, which means once one enemy is dead it will no longer deal damage, dealing less total damage to the player.
-  - Some enemies have special ablities, such as poisoning the player, or other self-buffs.
+  - Some enemies have special ablities, such as poisoning the player, or literally anything else.
 
 ### How it Works : Skills (#3.3)
   - **Main Attack**: Increases your base damage.
@@ -170,17 +170,17 @@ Material Items [Released]
   - Large amounts of enemies can be extremely difficult to fight, but they have their weaknesses too. For example, if their main weapon is too short there's much more chance for them to miss a hit (Not yet an implemented feature).
 
 ### List of Enemies & their Traits
-  - **Yara**: This enemy has very low damage and health points. Has 20% chance to inflict you with fire for 1 to 2 turns.
+  - **Yara**: This enemy has very low damage and health points. Has 20% chance to inflict fire on you for 1 to 2 turns.
   - **Jumpo**: It can be found on the second level. Its design gets inspiration from a Sea-Horse. It's very known for how strong it is, because of its very sharp, strong but small tail.
   - **Nimbo**: This enemy is a supporter. It has very strong defense system. It has 75% chance to advance forward other enemies, which basically lets them take action qucker than usual by resetting their action points back to 0.
   - **French**: This enemy is the stronger version of Jumpo. Because of how hard and heavy it is, it deals a very large amount of damage, has a decent amount of defense, and can cause the bleeding effect with power value of 2.
+  - **Snek**: This enemy can poison you. More Info Soon!
   - **Weavy**: More Info Soon!
   - **Boi**: More Info Soon!
   - **Zorm**: More Info Soon!
   - **Twu**: More Info Soon!
   - **Nein**: More Info Soon!
   - **Uno**: More Info Soon!
-  - **Snek**: More Info Soon!
 ### Hard Level (#4.3)
   - More Coming Soon!
 
@@ -347,7 +347,7 @@ Material Items [Released]
   - For shortcut, go to the menu and hit ***CTRL + T*** to access the game's terminal. Exit using `exit`.
   - After entering the terminal, type in `commands` to show all available commands and their information. Below you can read some extra information about a few commands.
     - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, reverts some User Interfaces back to preDev versions and creastes debug files. Created for development purposes.
-    - **import**: Display an [ANSI](https://www.robvanderwoude.com/ansi.php) text file. Use `.ans` as a file type. Use an argument after the command, e.g. `import mysupertxt`. Make sure to move your ansi text in the directory `.\data\cmds\`.
+    - **save**: Dump the memory and carry it outside the terminal enviroment. This is useful when editing variables live.
 #### Example commands (#8.4)
   - **Set player money**: ECHO OFF & CALL "%SAVE%" "FILE=%DATA_SAVES%\PLAYERDATA.cmd" 1 /A PLAYER.MONEY= 50000 & ECHO ON
 

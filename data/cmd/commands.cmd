@@ -69,3 +69,12 @@
 
 :cver.cmd
 @ECHO.%1 - [38;2;65;253;254mChange game version.[0m (CMD)
+@EXIT /B 0
+
+:save.cmd
+@ECHO.%1 - [38;2;65;253;254mCarry all new or changed variables outside this CMD enviroment.[0m (CMD)
+@EXIT /B 0
+
+:say.cmd
+@ECHO.%1 - [38;2;65;253;254mAlternative for echo.[0m (CMD)
+@EXIT /B 0

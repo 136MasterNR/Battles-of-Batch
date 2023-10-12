@@ -742,10 +742,18 @@ ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mMicrosoft Windows [37m[Versi
 ECHO.[38;2;235;64;52m^(^!^) [38;2;245;108;98mRun "EXIT" to return.[0m[3H[?25h
 PUSHD "%CD%\DATA\cmd"
 CMD /K "PROMPT $E[38;2;132;217;52mbob@terminal$E[0m$E[1m:$E[38;2;113;155;198m%%cd:~-9,9%%[0m$$$S"
+IF EXIST memory.dmp (
+	CLS & ECHO.Carrying variables from the dump file ...
+	for /f "tokens=1,* delims==" %%a in (memory.dmp) do (
+		SET %%a=%%b
+	)
+	DEL "memory.dmp" /Q
+)
 POPD
 IF %ERRORLEVEL%==2 GOTO STARTUP
 MODE CON:COLS=%COLS% LINES=%LINES%
 EXIT /B 0
+
 :CREDITS
 TITLE %TITLE%Credits
 CLS
@@ -1407,11 +1415,10 @@ TITLE %TITLE%Map
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Map;LargeImage=preview_map;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 
 (
-ECHO.[?25l[0m[H.+-----------------------------------------------------------------------------------------------------------------+.
+ECHO.[?25l[0m[H.----------------------------------------------------: %RGB.ORANGE%Level Info[0m :-------------------------------------------------.
 ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
-ECHO.^|                                                                                                                   ^|
-ECHO.'+-----------------------------------------------------------------------------------------------------------------+'[s[33B
+ECHO.:-------------------------------------------------------------------------------------------------------------------:[s[34B
 ECHO.^|     ^|`-._/\_.-`^|                                                                                 ^|`-._/\_.-`^|     ^|
 ECHO.^|     ^|    ^|^|    ^|                                                                                 ^|    ^|^|    ^|     ^|)
 ECHO.^|     ^|___o()o___^|                                                                                 ^|___o()o___^|     ^|
@@ -1567,7 +1574,8 @@ IF "%UI_ITEM%"=="TRUE" (
 
 SET /P "=[?25h[2;3H"<NUL
 %CHOICE%
-IF %CHOICE.INPUT%.==. GOTO SKILLS-SHOP
+ECHO.[?25l
+IF %CHOICE.INPUT%.==. GOTO SKILLS-SHOP-RE
 
 IF /I %CHOICE.INPUT%==W IF NOT %SEL_POS.Y% LEQ 16 (
 	ECHO.[0H[%OLD.POS_Y%B[%OLD.POS_X%C                   [1B[18D                       

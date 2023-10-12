@@ -4,6 +4,7 @@ IF NOT "%1x"=="x" GOTO :%1
 ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                                                                                   ^|
+ECHO.^|                                                                                                                   ^|
 ECHO.^|                                                              __________                                           ^|
 ECHO.^|                                                            _╱          ╲                                          ^|
 ECHO.^|                                                         __╱             ╲                                         ^|

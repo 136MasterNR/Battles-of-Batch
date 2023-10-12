@@ -1,4 +1,5 @@
 IF NOT DEFINED VERCODE EXIT
+@ECHO OFF
 
 :save.cmd "FILE=<path>" <line> [/A] <variable> [<variable>]
 SET %1
