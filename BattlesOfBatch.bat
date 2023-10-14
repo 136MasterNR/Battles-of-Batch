@@ -278,7 +278,7 @@ SET SHOP.MAX.BOMB=1
 ::VAR:-Skills
 SET "SKILL.UPGRADE=%DATA_SCRIPTS%\playerdata\upgrade.cmd"
 SET SKILL.ATK.BASE=15
-SET SKILL.ATK.LVLS=1;5;7;12
+SET SKILL.ATK.LVLS=1;7;10;14
 SET SKILL.ATK.COST=44;784;1520;5800
 SET SKILL.CRIT_RATE.BASE=4
 SET SKILL.CRIT_RATE.LVLS=5;6;7;8;9;10;12;13;14;15;16;17;18;20;21;22;23;25;30;35;45;50;60
@@ -743,9 +743,12 @@ ECHO.[38;2;235;64;52m^(^!^) [38;2;245;108;98mRun "EXIT" to return.[0m[3H[?2
 PUSHD "%CD%\DATA\cmd"
 CMD /K "PROMPT $E[38;2;132;217;52mbob@terminal$E[0m$E[1m:$E[38;2;113;155;198m%%cd:~-9,9%%[0m$$$S"
 IF EXIST memory.dmp (
+	FOR /F "TOKENS=1DELIMS==" %%A IN ('set') DO (
+		SET %%A=
+	)
 	CLS & ECHO.Carrying variables from the dump file ...
-	for /f "tokens=1,* delims==" %%a in (memory.dmp) do (
-		SET %%a=%%b
+	FOR /F "TOKENS=*DELIMS=" %%I IN (memory.dmp) DO (
+		SET %%I
 	)
 	DEL "memory.dmp" /Q
 )
@@ -933,6 +936,12 @@ IF /I %CHOICE.INPUT%.==A. IF %ITEM.REG_CNT%==0 (SET /P "=[4C%RGB.FALSE%UI_ERR: 
 IF /I %CHOICE.INPUT%.==D. IF %WEAPONS.REG_CNT%==0 (SET /P "=[4C%RGB.FALSE%UI_ERR: WEAPONS LIST IS EMPTY   [2G"<NUL) ELSE GOTO INV-CHOOSE_WEAPON-RE
 IF /I %CHOICE.INPUT%.==. START "" "https://github.com/136MasterNR/Battles-of-Batch#character--equipment-63"
 IF /I %CHOICE.INPUT%==Q GOTO S-MENU
+
+IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
+	CALL :TERMINAL
+	GOTO CHARACTER
+)
+
 GOTO CHARACTER-RE
 
 :INVENTORY
@@ -1619,6 +1628,11 @@ IF %CHOICE.INPUT%==SPACE (
 	IF %UI_SEL% EQU 3 CALL "%SKILL.UPGRADE%" STO 4 && GOTO SKILLS-SHOP
 )
 
+IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
+	CALL :TERMINAL
+	GOTO SKILLS-SHOP
+)
+
 GOTO SKILLS-SHOP-RE
 
 :CRAFT-SHOP
@@ -1800,6 +1814,12 @@ IF /I %CHOICE.INPUT%==A (
 	)
 )
 IF /I %CHOICE.INPUT%.==. START "" "https://github.com/136MasterNR/Battles-of-Batch#shop-64"
+
+IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
+	CALL :TERMINAL
+	GOTO CRAFT-SHOP
+)
+
 GOTO CRAFT-SHOP-RE
 
 :QUESTS

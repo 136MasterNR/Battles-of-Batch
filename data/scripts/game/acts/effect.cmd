@@ -31,7 +31,7 @@ FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.POISON.') DO (
 	IF NOT %%2==POWER IF %%1==PLAYER (
 	:: Poison for player
 		SET /A EFF.POISON.%%1-=1
-		CALL "%SCRIPTS_GAME%\logger.cmd" ADD You took %RGB.LIME%%%EFF.POISON.%%1.POWER%% poison[0m[1m damage!%RGB.YELLOW%
+		CALL "%SCRIPTS_GAME%\logger.cmd" ADD You took %RGB.LIME%%%EFF.POISON.%%1.POWER%% poison[0m[1m damage!%RGB.YELLOW%[24m[24m
 		SETLOCAL ENABLEDELAYEDEXPANSION
 		IF %PLAYER.HP.NOW% LEQ 0 (
 			ENDLOCAL
@@ -77,7 +77,7 @@ FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.POISON.') DO (
 			SETLOCAL ENABLEDELAYEDEXPANSION
 			SET TMP.ENEMY=!ENEMY.TYPE.%%1!
 			ENDLOCAL&CALL SET TMP.ENEMY=%%TMP.ENEMY%%
-			CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m%%TMP.ENEMY%%[0m[1m ^(#%%1^) took %RGB.LIME%%%TMP.DMG%% poison[0m[1m damage![0m[0m[0m
+			CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m%%TMP.ENEMY%%[0m[1m ^(#%%1^) took %RGB.LIME%%%TMP.DMG%% poison[0m[1m damage![0m[0m[0m[24m[24m
 		) ELSE ENDLOCAL
 	)
 )
@@ -101,7 +101,7 @@ FOR /F "TOKENS=3,4DELIMS=.=" %%1 IN ('SET EFF.FIRE.') DO (
 	IF NOT %%2==POWER IF %%1==PLAYER (
 	:: Fire action for player
 		SET /A EFF.FIRE.%%1-=1
-		CALL "%SCRIPTS_GAME%\logger.cmd" ADD You took %RGB.ORANGE%%%EFF.FIRE.%%1.POWER%% fire[0m[1m damage!%RGB.YELLOW%
+		CALL "%SCRIPTS_GAME%\logger.cmd" ADD You took %RGB.ORANGE%%%EFF.FIRE.%%1.POWER%% fire[0m[1m damage!%RGB.YELLOW%[24m[24m
 		SETLOCAL ENABLEDELAYEDEXPANSION
 		IF %PLAYER.HP.NOW% LEQ 0 (
 			ENDLOCAL
