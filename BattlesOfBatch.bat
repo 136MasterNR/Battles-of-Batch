@@ -54,8 +54,10 @@ IF NOT %1.==READY. IF %1.==LAUNCH. (
 	ECHO.This is the game's launcher, do not close.
 	START /WAIT "Launcher" "conhost.exe" -- "%~dpnx0" READY
 	ECHO.Shutting down...
-	TASKKILL /F /FI "WINDOWTITLE eq WSAudio*" /IM "cmd.exe" /T>NUL
-	TASKKILL /F /IM "easyrp.exe" /T>NUL
+	(TASKKILL /F /FI "WINDOWTITLE eq WSAudio*" /IM "cmd.exe" /T | FINDSTR ":" && (
+		TASKKILL /F /FI "WINDOWTITLE eq Administrator:  WSAudio*" /IM "cmd.exe" /T
+	))
+	TASKKILL /F /IM "easyrp.exe" /T
 	EXIT 0
 ) ELSE (
 	(IF EXIST ".\data\scripts\invisible.vbs" (
@@ -178,6 +180,7 @@ SET "SAVE=%DATA_SCRIPTS%\save.cmd"
 SET "SETTINGS.LOAD=%DATA_SETTINGS%\settings.cmd"
 SET "SETTING=%DATA_SCRIPTS%\settings.cmd"
 SET "IGNORE_ERRORS=FALSE"
+SET "DENIED_AUDIO="
 ::VAR:-Cleanup
 SET OLD.PLAYER.LVL=
 SET UDERFINE=
@@ -493,6 +496,11 @@ IF DEFINED REG_C1 (
 		CALL "%SETTINGS.LOAD%"
 	)
 )
+IF NOT DEFINED DENIED_AUDIO IF NOT EXIST ".\data\audio" (
+	IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 CALL "%SETTING%" AUDIO
+	SET DENIED_AUDIO=TRUE
+	CALL "%SETTINGS.LOAD%"
+)
 
 IF "%UPDATE.VALUE%"=="TRUE" (
 	ECHO.[u Loading ... Retrieving updates
@@ -695,9 +703,11 @@ IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
 	GOTO MENU
 )
 IF /I %CHOICE.INPUT%== (
-	TASKKILL /F /FI "WINDOWTITLE eq WSAudio*" /IM "cmd.exe" /T>NUL
-	TASKKILL /F /IM "easyrp.exe" /T>NUL
+	CLS
+	ECHO.[1;31mEMERGENCY QUIT - FORCE KILLING ALL PROCESS
 	POPD
+	TASKKILL /F /IM "easyrp.exe" /T
+	TASKKILL /F /IM "wscript.exe" /T
 	EXIT 0
 )
 IF /I %CHOICE.INPUT%== GOTO RESET

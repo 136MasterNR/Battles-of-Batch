@@ -6,17 +6,23 @@ CALL :%*
 EXIT /B 0
 
 :STOPALL
-TASKKILL /F /FI "WINDOWTITLE eq WSAudio*" /IM "cmd.exe" /T>NUL
+(TASKKILL /F /FI "WINDOWTITLE eq WSAudio*" /IM "cmd.exe" /T | FINDSTR ":" && (
+	TASKKILL /F /FI "WINDOWTITLE eq Administrator:  WSAudio*" /IM "cmd.exe" /T>NUL
+)) >NUL
 IF EXIST "%DATA_TMP_A%" DEL /Q "%DATA_TMP_A%"
 EXIT /B 0
 
 :STOP <"Identifier": String>
-TASKKILL /F /FI "WINDOWTITLE eq WSAudio.%1" /IM "cmd.exe" /T>NUL
+(TASKKILL /F /FI "WINDOWTITLE eq WSAudio.%1" /IM "cmd.exe" /T | FINDSTR ":" && (
+	TASKKILL /F /FI "WINDOWTITLE eq Administrator:  WSAudio.%1" /IM "cmd.exe" /T>NUL
+)) >NUL
 EXIT /B 0
 
 
 :START <"Path": String> <"Indetifier": String> <"Loop": Boolean> <"Volume": Integer>
-TASKKILL /F /FI "WINDOWTITLE eq WSAudio.%2" /IM "cmd.exe" /T>NUL
+(TASKKILL /F /FI "WINDOWTITLE eq WSAudio.%2" /IM "cmd.exe" /T | FINDSTR ":" && (
+	TASKKILL /F /FI "WINDOWTITLE eq Administrator:  WSAudio.%2" /IM "cmd.exe" /T
+)) >NUL
 SET "TARGETAUDIO=%DATA_AUD%\%1"
 IF NOT EXIST "%TARGETAUDIO%" EXIT /B 0
 

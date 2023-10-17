@@ -1,7 +1,7 @@
 Branch$Stick$1
 Dustblade$Short_Blade$7$No_bonus_effects$_$_$Unknown$_$_$_$Stained_Dust?7?none?0?none?0
-Cold_Twill$Short_Bow$20$Slows_down_the_enemy_by_25_action_points$_$_$Unknown$_$_$_$Black_Wood?12?Stained_Dust?10?none?0
-Comrade_Hammer$Large_Hammer$45$50%%%%_Chance_to_deal_a_total_amount_of$350%%%%_damage_of_its_own_base_damage$_$Unknown$_$_$_$Black_Wood?28?Francium?6?none?0
+Cold_Twill$Short_Bow$13$Slows_down_the_enemy_by_25_action_points$_$_$Unknown$_$_$_$Black_Wood?9?Stained_Dust?10?none?0
+Comrade_Hammer$Large_Hammer$45$50%%%%_Chance_to_deal_a_total_amount_of$350%%%%_damage_of_its_own_base_damage$_$Unknown$_$_$_$Black_Wood?24?Francium?6?none?0
 Stylefi$Long_Bow$60$Extra_10%%%%_Crit_Rate$_$_$Unknown$_$_$_$Black_Wood?45?Light_Resin?5?none?0
 Flora_Thrower$Magic_Wand$75$60%%%%_Chance_to_Poison_the_enemy_dealing$26%%%%_of_your_base_damage_on_that_enemy$for_4_rounds$Unknown$_$_$_$Exalted_Nickel?30?Prism_Dust?20?Stained_Dust?60
 Trident_of_Gawra$Trident$80$40%%%%_Chance_to_stun_a_single_enemy$skipping_their_next_round$_$Unknown$_$_$_$Stained_Dust?86?Prism_Dust?45?Double_Marble?30

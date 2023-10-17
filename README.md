@@ -50,7 +50,7 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
     - ***C***: View and upgrade your Skills.
     - ***V***: View the [Credits](#credits).
     - ***P***: Manage your profiles.
-    - ***CTRL*** + ***Q***: Exit the game.
+    - ***CTRL*** + ***Q***: Emergency quit. *(Shouldn't be used under normal circumstances)*
     - ***CTRL*** + ***R***: Restart the game.
     - ***CTRL*** + ***SHIFT*** + ***6***: Reset all saved data.
     - ***CTRL*** + ***SHIFT*** + ***-***: LGBTQIA+
@@ -122,7 +122,7 @@ About
 Weapon Items [Released]
 	Dustblade (Short Blade) {Base Damage: 8}
 	Cold Twill (Short Bow) {Base Damage: 20} [Bonus Effects: Slows down the enemy by 25 action points]
-	Comrade Hammer (Kusarigama) {Base Damage: 45} [Bonus Effects: 50% Chance to deal a total amount of 350% damage)
+	Comrade Hammer (Kusarigama) {Base Damage: 45} [Bonus Effects: 50% Chance to deal a total amount of 350% damage]
 	Stylefi (Long Bow) {Base Damage: 60} [Bonus Effects: Extra 10% Crit Rate]
 	Flora Thrower (Magic Wand) {Base Damage: 75} [Bonus Effects: 10% Chance to Poison a single enemy, lasts for a total of 2 rounds]
 	Trident of Gawra (Trident) {Base Damage: 80} [Bonus Effects: 40% Chance to stun the targeted enemy, skipping their next round]
@@ -132,7 +132,7 @@ Weapon Items [Released]
 
 Artifact Items [Releasing]
 	Healing Potion (Lvl 1 Buff Item) {Effects: Heals you by 25% when used, and another 4% for the next 2 turns, can stack}
-    Reactive Bomb (Lvl 4 Buff Item) {Effects: Deals an additinal 20% of your base damage to all enemies, and 100% normal damage to the selected enemy.}
+	Reactive Bomb (Lvl 4 Buff Item) {Effects: Deals an additinal 20% of your base damage to all enemies, and 100% normal damage to the selected enemy.}
 	Oracle Shield (Lvl 4 Buff Item) {Effects: Take 30% less damage for 2 rounds, 20% chance to stun each enemy, skipping their next round}
 	Cup of Misery (Lvl 8 Buff Item) {Effects: Extra 10% base damage for 4 rounds}
 	Totem of Salute (Lvl 10 Buff Item) {Effects: When used, it will increase your HP by 25% once it gets lower than 1%}
@@ -184,7 +184,7 @@ Material Items [Released]
 ### Hard Level (#4.3)
   - More Coming Soon!
 
-# Levels & Story
+## Levels & Story
 
 <details><summary>
 
@@ -279,7 +279,7 @@ Material Items [Released]
 
 </details>
 
-# User Interfaces
+## User Interfaces
 ### Menu (#6.0)
   - The menu is decorated with various ASCII art, and the title at the top. In the middle, you can view your general stats such as your Level, your Money and your Next Battle. Below you can see the commands which let you navigate to other user interfaces. When shortcut keys enabled, press to A to navigate to the [Map](https://github.com/136MasterNR/Battles-of-Batch#map-61) interface, Q (which stands for Quests) to the [Quests](https://github.com/136MasterNR/Battles-of-Batch#quests-65) interface, W (which stands for Workshop) to the [Workshop](https://github.com/136MasterNR/Battles-of-Batch#shop-64) interface, E (which stands for Equipment) to the [Character & Equipment](https://github.com/136MasterNR/Battles-of-Batch#character--equipment-63) interface, S (which stands for Settings) to the [Settigns](https://github.com/136MasterNR/Battles-of-Batch#settings-66) interface.
 ![](data/images/preview_menu.png)
