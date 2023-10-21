@@ -334,7 +334,7 @@ Material Items [Released]
 # For Developers
 *When developing something on your own, you should use the DLC packs. **DO NOT** edit the game itself as it may corrupt it entirely or cause misbehaviour! Follow the guides provided in the example DLC pack or below.*
 ### Create your own levels using the Level Editor (#8.0)
-  - The [LevelEditor.cmd](data/cmd/leveleditor.cmd) lets you to create your own levels, with a user friendly interface, making is extremely simple to create new enemies and edit their data. To enter the Level Editor, you must unlock the terminal as mentioned [here](https://github.com/136MasterNR/Battles-of-Batch#use-commands-for-devs-83), then enter a level and press ***CTRL + P***. First, start with creating your new enemy by pressing C, you will be prompted to enter the enemy's type and level. You can find the list of enemies in [enemy.cmd](data/scripts/game/enemy.cmd). Using ***W A S D J*** and ***L*** you can move the enemy around, changing their screen position. You can use ***CTRL + R*** to undo all changes, and ***R*** to refresh the menu. Once you are done editing the level, you have to press ***P*** to save all changes permanently.
+  - The [LevelEditor.cmd](data/cmd/leveleditor.cmd) lets you to create your own levels, with a user friendly interface, making it extremely simple to create new enemies and edit their data. To enter the Level Editor, you must unlock the terminal as mentioned [here](https://github.com/136MasterNR/Battles-of-Batch#use-commands-for-devs-83), then enter a level and press ***CTRL + P***. First, start with creating your new enemy by pressing C, you will be prompted to enter the enemy's type and level. You can find the list of enemies in [enemy.cmd](data/scripts/game/enemy.cmd). Using ***W A S D J*** and ***L*** you can move the enemy around, changing their screen position. You can use ***CTRL + R*** to undo all changes, and ***R*** to refresh the menu. Once you are done editing the level, you have to press ***P*** to save all changes permanently.
 
 ### Create your own enemies (#8.1)
   - Coming Soon!
@@ -344,7 +344,7 @@ Material Items [Released]
 
 ### Use Commands for Devs (#8.3)
   - To unlock the terminal, go to the settings and type in "IAMADEVELOPER", all in caps.
-  - For shortcut, go to the menu and hit ***CTRL + T*** to access the game's terminal. Exit using `exit`.
+  - For shortcut, hit ***CTRL + T*** in any interface to access the game's terminal. Exit using `exit`.
   - After entering the terminal, type in `commands` to show all available commands and their information. Below you can read some extra information about a few commands.
     - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, reverts some User Interfaces back to preDev versions and creastes debug files. Created for development purposes.
     - **save**: Dump the memory and carry it outside the terminal enviroment. This is useful when editing variables live.
@@ -353,9 +353,11 @@ Material Items [Released]
 
 # FAQ
   - Q: **Why in Batch?**
-    - A: **I started this project as a challenge for myself. Making a game in such a tricky and weirdly-made langauge might have been hell, but a great challenge. But I ended up being a masochist, so here we are now.**
+    - A: **I started this project as a challenge for myself. Making a game in such a tricky and weirdly-made langauge might have been hell, but a great challenge. I don't know why I am still working on this.**
   - Q: **Should I contribute into the project?**
-    - A: **For your own fucking good, DO NOT contribute unless you hate yourself more than I hate myself. Contributing is worse than creating a batch project from scratch for this very simple reason; unreadability.**
+    - A: **Simply not recommended.**
+  - Q: **Where can I make suggestions?**
+    - A: **You can suggest changes or ideas on my team's discord server.**
 
 # Credits
   - **Programmed** by
