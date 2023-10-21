@@ -32,6 +32,7 @@ ECHO(%ARG% | FINDSTR /I /C:"/ALL">NUL && (
 )
 EXIT /B 0
 
+
 :?
 ECHO.Show the weather report.
 ECHO.  weather [/all^|/today]
