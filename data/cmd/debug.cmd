@@ -1,9 +1,10 @@
 @ECHO OFF
 
-SET ARG=%1
+SET ARGS=%*
 IF DEFINED ARG (
 	CLS
-	GOTO %ARG%
+	CALL :%ARGS%
+	EXIT /B 0
 )
 
 IF NOT DEFINED DM (
@@ -15,7 +16,18 @@ IF EXIST "%DM%\LET.DEBUG" (DEL "%DM%\LET.DEBUG"&&ECHO.Debug mode disabled.&SET "
 ECHO ON
 @EXIT /B 0
 
-:wscript
-ECHO.[H
-TASKLIST /FO LIST | FINDSTR /C:"wscript"
+:wscript <[RAW]>
+IF /I NOT %1.==RAW. (
+	ECHO.[H-----------------------------------------------------------------------------
+	FOR /F "TOKENS=1,9DELIMS=," %%1 IN ('TASKLIST /V /FO CSV ^| FINDSTR /C:"wscript"') DO (
+		ECHO.Process: %%1
+		ECHO.[1A[34CTitle: %%2
+		ECHO.-----------------------------------------------------------------------------
+	)
+) ELSE (
+	ECHO.[H
+	TASKLIST /V /FO CSV | FINDSTR /C:"wscript"
+)
+
+
 GOTO wscript
