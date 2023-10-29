@@ -141,7 +141,7 @@ IF %TMP.MIN% EQU 2147483647 (
 
 :: And finally, initiate the unique effect
 SET LET_ENEMY_ATK=FALSE
-SET /A "TMP.AMOUNT=%random% %% (ENEMY.HP.FULL.%1 * 5 / 100) +(ENEMY.HP.FULL.%1 * 15 / 100)"
+SET /A "TMP.AMOUNT=%random% %% (ENEMY.HP.FULL.%1 * 2 / 100) +(ENEMY.HP.FULL.%1 * 8 / 100)"
 
 SET /A "ENEMY.HP.NOW.%1-=TMP.AMOUNT"
 SET /A "ENEMY.HP.NOW.%TMP.TARGET%+=TMP.AMOUNT"
