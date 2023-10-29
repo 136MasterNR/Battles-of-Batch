@@ -32,7 +32,7 @@ EXIT /B 0
 
 
 
-:N
+:N <"Enemy ID": Integer>
 SET /A TMP.RND=%random% %% 4 +1
 IF %TMP.RND% LEQ 3 (
 	SET LET_ENEMY_ATK=FALSE
@@ -82,7 +82,7 @@ EXIT /B 0
 
 
 
-:F
+:F <"Enemy ID": Integer>
 IF %ENEMY_MISS%==TRUE EXIT /B 0
 
 SET /A TMP.DMG=ENEMY.LVL.%1 * 2
@@ -100,7 +100,7 @@ EXIT /B 0
 
 
 
-:S
+:S <"Enemy ID": Integer>
 IF %ENEMY_MISS%==TRUE EXIT /B 0
 
 :: Extract the ATK values from the enemy
@@ -120,7 +120,21 @@ EXIT /B 0
 
 
 
-:Goblin
+:D <"Enemy ID": Integer>
+SET /A TMP.RND=%random% %% %EN.MAX% +1
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET TMP.ENEMY2=!ENEMY.TYPE.%TMP.RND%!
+SET TMP.ENEMY=!ENEMY.TYPE.%1!
+ENDLOCAL&SET TMP.ENEMY=%TMP.ENEMY%&SET TMP.ENEMY2=%TMP.ENEMY2%
+CALL "%SCRIPTS_GAME%\logger.cmd" ADD Enemy [4m%TMP.ENEMY%[24m ^(#%1^) %RGB.PINK%sacrificed[0m[1m %RGB.GREEN%0[0m[1m HP to %RGB.YELLOW%heal[0m[1m [4m%TMP.ENEMY2%[24m ^(#%TMP.RND%^)!
+EXIT /B 0
+
+
+
+
+
+
+:Goblin <"Enemy ID": Integer>
 IF %ENEMY_MISS%==TRUE EXIT /B 0
 
 :: Extract the ATK values from the enemy
@@ -131,6 +145,8 @@ FOR /F "TOKENS=1,2DELIMS=," %%A IN ("!ENEMY.ATK.AMOUNT.%1!") DO (
 )
 CALL "%SCRIPTS_GAME%\acts\effect.cmd" FIRE-CREATE PLAYER 6 %TMP.DMG%
 EXIT /B 0
+
+
 
 
 

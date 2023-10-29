@@ -3,8 +3,8 @@ set cnt=1
 
 :label
 
-set /a result=%1*%cnt%
-echo.%1 * %cnt% = %result%
+set /a result=(%cnt% * 3) / %1
+echo.(%cnt% * 3) / %1 = %result%
 
 set /a cnt+=1
 if %cnt% lss 100 goto label

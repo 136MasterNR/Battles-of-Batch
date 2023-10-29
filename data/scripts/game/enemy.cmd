@@ -90,16 +90,16 @@ EXIT /B 0
 :D <Derp>
 SET /A TEMP.EN_ATK=1*%3
 SET /A TEMP.EN_ATK_RAND=1*%3
-SET /A TEMP.EN_HP=219*%3
+SET /A TEMP.EN_HP=419*%3
 SET /A TEMP.EN_HP_RAND=15*%3
 SET "ENEMY.LVL.%2=%3"
-SET "EN.%2.LINE.1=     _   "
-SET "EN.%2.LINE.2=   _||\  "
-SET "EN.%2.LINE.3=  (_o\   "
-SET "EN.%2.LINE.4=  / |(\  "
-SET "EN.%2.LINE.5= (( | |  "
-SET "EN.%2.LINE.6=  \\| |  "
-SET "EN.%2.LINE.7=   \__/  "
+SET "EN.%2.LINE.1=       _    "
+SET "EN.%2.LINE.2=     _||\   "
+SET "EN.%2.LINE.3=    (_o\    "
+SET "EN.%2.LINE.4=    / |(\   "
+SET "EN.%2.LINE.5=   (( | |   "
+SET "EN.%2.LINE.6=    \\| |   "
+SET "EN.%2.LINE.7=     \__/   "
 EXIT /B 0
 
 :9 <Nine>

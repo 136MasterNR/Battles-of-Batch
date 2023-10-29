@@ -9,7 +9,8 @@ ECHO.[u 27%%
 CALL "%ITEMS.LOADER%" LIST_EQ
 ECHO.[u 34%%
 CALL "%ITEMS.LOADER%" WEAPONS
-ECHO.[u 38%%
+ECHO.[u 37%%
+:: Clean-up
 CALL "%CMD.CLEARVAR%"
 
 FOR /F "TOKENS=1DELIMS==" %%A IN ('SET LOOT.') DO (
@@ -17,10 +18,9 @@ FOR /F "TOKENS=1DELIMS==" %%A IN ('SET LOOT.') DO (
 )
 
 :: Load the level contents
-ECHO.[u 41%%
 FOR /F "TOKENS=1DELIMS==" %%A IN ('SET ENEMY.TYPE.') DO SET %%A=
+ECHO.[u 40%%
 CALL "%LOAD.LEVEL_%%SELECTED%\setup.cmd"
-
 SET "LOC.HP.P=[%LOC.HP%;%LOC.WP%H"
 
 :: Count how many enemies should exist in the battle
