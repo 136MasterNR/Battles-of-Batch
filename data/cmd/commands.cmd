@@ -78,3 +78,7 @@
 :say.cmd
 @ECHO.%1 - [38;2;65;253;254mAlternative for echo.[0m (CMD)
 @EXIT /B 0
+
+:garbagecollector.cmd
+@ECHO.%1 - [38;2;65;253;254mLists all useless variables. Use the "clear" argument to remove them.[0m (CMD)
+@EXIT /B 0
