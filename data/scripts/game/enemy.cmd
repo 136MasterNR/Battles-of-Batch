@@ -87,10 +87,10 @@ SET "EN.%2.LINE.6=   |  `--.   "
 SET "EN.%2.LINE.7=    `--.._)  "
 EXIT /B 0
 
-:D <Derp>
-SET /A TEMP.EN_ATK=1*%3
+:D <Deffy>
+SET /A TEMP.EN_ATK=3*%3
 SET /A TEMP.EN_ATK_RAND=1*%3
-SET /A TEMP.EN_HP=419*%3
+SET /A TEMP.EN_HP=219*%3
 SET /A TEMP.EN_HP_RAND=15*%3
 SET "ENEMY.LVL.%2=%3"
 SET "EN.%2.LINE.1=       _    "
