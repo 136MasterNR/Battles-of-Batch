@@ -1,7 +1,7 @@
 @ECHO OFF
 
 SET ARGS=%*
-IF DEFINED ARG (
+IF DEFINED ARGS (
 	CLS
 	CALL :%ARGS%
 	EXIT /B 0
@@ -16,6 +16,10 @@ IF EXIST "%DM%\LET.DEBUG" (DEL "%DM%\LET.DEBUG"&&ECHO.Debug mode disabled.&SET "
 ECHO ON
 @EXIT /B 0
 
+
+
+
+
 :wscript <[RAW]>
 IF /I NOT %1.==RAW. (
 	ECHO.[H-----------------------------------------------------------------------------
@@ -29,5 +33,16 @@ IF /I NOT %1.==RAW. (
 	TASKLIST /V /FO CSV | FINDSTR /C:"wscript"
 )
 
-
 GOTO wscript
+
+
+
+
+
+:choice <[RAW]>
+%CHOICE%
+ECHO.%CHOICE.INPUT%
+ECHO.%CHOICE.INPUT% | CLIP
+IF %CHOICE.INPUT%==TIMEOUT EXIT /B 0
+
+GOTO choice
