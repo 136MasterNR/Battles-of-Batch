@@ -1636,7 +1636,7 @@ IF %CHOICE.INPUT%==SPACE (
 	IF %UI_SEL% EQU 1 CALL "%SKILL.UPGRADE%" ATK 1 && GOTO SKILLS-SHOP
 	IF %UI_SEL% EQU 2 CALL "%SKILL.UPGRADE%" HP 3 && GOTO SKILLS-SHOP
 	IF %UI_SEL% EQU 3 CALL "%SKILL.UPGRADE%" CRIT_RATE 2 && GOTO SKILLS-SHOP
-	IF %UI_SEL% EQU 3 CALL "%SKILL.UPGRADE%" STO 4 && GOTO SKILLS-SHOP
+	IF %UI_SEL% EQU 4 CALL "%SKILL.UPGRADE%" STO 4 && GOTO SKILLS-SHOP
 )
 
 IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
@@ -2007,7 +2007,7 @@ PAUSE>NUL
 GOTO S-MENU
 :PRE_LOAD
 IF NOT EXIST "%LOAD.LEVEL_%%SELECTED%\setup.cmd" GOTO MAP
-ECHO.[2J[21;42H҉  Preparing Your Amazing Battle[17D[1B[s
+ECHO.[2J[21;42H[0m[1m҉  Preparing Your Amazing Battle[17D[1B[s
 ECHO.[u  0%%
 TITLE %TITLE%Loading Battle ...
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=Level %SELECTED% - Chapter %CHAPTER%;Details=Currently in battle;LargeImage=preview_battle;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
