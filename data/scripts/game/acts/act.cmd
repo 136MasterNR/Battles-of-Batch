@@ -76,7 +76,7 @@ IF NOT DEFINED ITEM.REG_LVL.BOMB (
 )
 
 :: Play SFX
-IF "%AUDIO.VALUE%"=="TRUE" IF NOT %SFX.VOLUME% EQU 0 START "" /MIN CMD /C "%AUDIOMANAGER%" START game\player\substat\bomb.mp3 sfx False
+IF "%AUDIO.VALUE%"=="TRUE" IF NOT %SFX.VOLUME% EQU 0 START "" /MIN CMD /C "%AUDIOMANAGER%" START game\player\substat\bomb.mp3 sfx False %SFX.VOLUME%
 
 IF %ITEM.REG_LVL.BOMB% LEQ 1 (
 	(
