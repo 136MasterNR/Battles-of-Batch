@@ -102,7 +102,7 @@ SET "EN.%2.LINE.6=   |  `--.   "
 SET "EN.%2.LINE.7=    `--.._)  "
 EXIT /B 0
 
-:D <Deffy>
+:D <Darp>
 SET /A TEMP.EN_ATK=2
 SET /A TEMP.EN_ATK_RAND=1
 SET /A TEMP.EN_HP=289
@@ -133,8 +133,8 @@ EXIT /B 0
 :L <Lose>
 SET /A TEMP.EN_ATK=5
 SET /A TEMP.EN_ATK_RAND=2
-SET /A TEMP.EN_HP=495
-SET /A TEMP.EN_HP_RAND=5
+SET /A TEMP.EN_HP=651
+SET /A TEMP.EN_HP_RAND=6
 SET "EN.%2.LINE.1=    W  W     "
 SET "EN.%2.LINE.2=   (O)(O)    "
 SET "EN.%2.LINE.3=     ||      "

@@ -73,38 +73,73 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
     - ***Q***: Retreat current battle and go back to the map UI.
 	- ***CTRL*** + ***R***: Restart battle.
 
-## Strategy & Details
-
-### How it Works : Combat (#3.0)
+## About Combat (#3.0)
   - Battles of Batch features a turn based combat mechanic, with various features associated within it.
   - Both players and enemies have AVs (Action Values), AV indicates who has the next turn, and in which order. It's important to take note of one's AV so you can make your plan.
 
-### How it Works : Effects (#3.1)
+## About Effects (#3.1)
   - Some effects are turn-based damages, it can be applied on both the player and the enemy. Effects such as poison or fire are useful for damaging the enemies without the need of any more additional player actions. Other effects such as slow down or weakness, can be used to debuff the player or enemy for a set of turns.
   - **Slow Down**: This effect will increase the action value of the enemy or player, basically slowing them down by a bit. This can be useful to avoid double enemy attacks caused by support units.
   - **Fire**: This effect will damage the enemy or the player every registered turn, for a set amount of turns.
   - **Poison**: This effect will damage the enemy or the player every registered round, for a set amount of rounds.
   - **Bleed**: This effect will damage the enemy or the player every registered turn, until they are Healed.
 
-### How it Works : Enemies (#3.2)
+## About Enemies (#3.2)
   - Enemies spawn with a random amount of HP, the amount increases depending on the enemy's level.
   - Enemies deal a random amount of damage to the player, the amount increases depending on the enemy's level.
   - Every enemy deals its own damage, which means once one enemy is dead it will no longer deal damage, dealing less total damage to the player.
   - Some enemies have special ablities, such as poisoning the player, or literally anything else.
+### How Enemies Were Designed (#4.0)
+  - The design of the enemies were inspired by the Latin characters and other references. These enemies are unable to wield any weapons, thus they could only upgrade their defense. That's the reason they have way too much HP. Enemies that seem to have something sharp on them can deal a much larger amount of damage compared to other enemies.
+  
+  - Additionally, some other enemeis have special abilities or combat skills that aren't based on damage but instead on other combat mechanic elements, this fact can make them extremely dangerous when fought unexpectedly.
 
-### How it Works : Skills (#3.3)
+  - Large amounts of enemies can be extremely difficult to fight, but they have their weaknesses too. For example, if their main weapon is too short there's much more chance for them to miss a hit (Not yet an implemented feature).
+
+### List of Enemies & their Traits
+  - **Yara**  has a very low amount of HP and deals minimum damage of 1 to 2. Has 20% chance to inflict fire on you for 1 to 2 turns, basically dealing its natural damage for the set amount of turns.
+  - **Jumpo** gets inspiration of its design from a Sea-Horse. It's very known for how strong it is because of its very sharp and strong but small tail.
+  - **Nimbo** has 75% chance to support a random enemy by advancing it forward (decreasing action value) by 100% (basically resetting its AV back to 0), no natural attack included. The other 25% chance will only naturally attack the player.
+  - **French** is the strongest type of enemy, an upgrade from Jumpo. Because of how hard and heavy it is, it deals a very large amount of damage, has a decent amount of defense, and has 75% chance to cause the bleeding effect on you.
+  - **Snek** is basically a snake, and has the ability to poison you for a few rounds.
+  - **Darp** is a healer type of enemy, which sacrifices 15~20% of its own health points to heal one of its allies with the lowest health points. It does not attack you, but if no enemy needs healing, it has no choice but to attack you.
+  - **Weavy** no info.
+  - **Boi** no info.
+  - **Zorm** no info.
+  - **Twu** no info.
+  - **Nein** no info.
+  - **Uno** no info.
+  - **Conk** no info.
+  - **Volve** no info.
+  - **Keesors** no info.
+  - **Tore** no info.
+  - **Rear** no info.
+  - **Hobot** no info.
+  - **Acid** no info.
+  - **Threed** no info.
+  - **Firth** no info.
+  - **Werm** no info.
+  - **Ugnet** no info.
+  - **Onkey** no info.
+  - **Lose** unknown.
+  - **Zoro** unknown.
+  - **Aight** unknown.
+  - **Qanana** unknown.
+  - **G????** #$%f@#6V.
+
+## About Skills (#3.3)
   - **Main Attack**: Increases your base damage.
   - **Crit Rate**: Increases the chance to throw a critical strike to an enemy.
   - **Max Health**: Increases maximum HP by 100.
 
-### How it Works : Items (#3.4)
+## About Items (#3.4)
   - **Bomb**: Stuns enemies, skipping their next round/action. Bosses cannot be stunned by this attack type. Effects, such as poison on the player, will still function (Not yet an implemented feature).
   - **Heal**: Increases the HP of the player. This does not skip the next enemy round/action, and the player will still take damage as usual. Can stop bleeding effects.
   - More Coming Soon!
 
 <details><summary>
 
-### List of all Items (Click) Items (#3.4.1)
+### List of all Items (Click)
 
 </summary>
 
@@ -157,71 +192,62 @@ Material Items [Released]
 
 </details>
 
-### How it Works : Crafting Items (#3.5)
+## Crafting Items (#3.5)
   - You can craft items by accessing the Shop, and switching to the Craft tab or otherwise by pressing Z on the menu. Every item requires materials for it to be crafted, once you gather all required materials, you will be able to craft your item.
   - Items serve a rich in-game usage. You can equip weapons and other items such bombs or healing pots through your inventory. Weapons usually give you a big boost when it's about fighting enemies, they can give you extra damage and bonus effects.
 
-## Enemy Details
-### How Enemies Were Designed (#4.0)
-  - The design of the enemies were inspired by the Latin characters and other references. These enemies are unable to wield any weapons, thus they could only upgrade their defense. That's the reason they have way too much HP. Enemies that seem to have something sharp on them can deal a much larger amount of damage compared to other enemies.
-  
-  - Additionally, some other enemeis have special abilities or combat skills that aren't based on damage but instead on other combat mechanic elements, this fact can make them extremely dangerous when fought unexpectedly.
-
-  - Large amounts of enemies can be extremely difficult to fight, but they have their weaknesses too. For example, if their main weapon is too short there's much more chance for them to miss a hit (Not yet an implemented feature).
-
-### List of Enemies & their Traits
-  - **Yara**: This enemy has very low damage and health points. Has 20% chance to inflict fire on you for 1 to 2 turns.
-  - **Jumpo**: It can be found on the second level. Its design gets inspiration from a Sea-Horse. It's very known for how strong it is, because of its very sharp, strong but small tail.
-  - **Nimbo**: This enemy is a supporter. It has very strong defense system. It has 75% chance to advance forward other enemies, which basically lets them take action qucker than usual by resetting their action points back to 0.
-  - **French**: This enemy is the stronger version of Jumpo. Because of how hard and heavy it is, it deals a very large amount of damage, has a decent amount of defense, and can cause the bleeding effect with power value of 2.
-  - **Snek**: This enemy can poison you. More Info Soon!
-  - **Weavy**: More Info Soon!
-  - **Boi**: More Info Soon!
-  - **Zorm**: More Info Soon!
-  - **Twu**: More Info Soon!
-  - **Nein**: More Info Soon!
-  - **Uno**: More Info Soon!
-### Hard Level (#4.3)
-  - More Coming Soon!
-
-## Levels & Story
+## Levels & Story (#5.0)
 
 <details><summary>
 
-### Chapter 1 [Click] (#5.0)
+### Chapter 1 (#5.1)
 
 </summary>
 
   - **Prologue**:
-    - Enemies: [Yara](https://github.com/136MasterNR/Battles-of-Batch#easy-level), [Yara](https://github.com/136MasterNR/Battles-of-Batch#easy-level), [Yara](https://github.com/136MasterNR/Battles-of-Batch#easy-level)
     - Story: More Info Soon!
   - **Level 1**:
-    - Enemies: More Info Soon!
-    - Story: More Info Soon!
-  - **Level 2**:
-    - Enemies: More Info Soon!
-    - Story: More Info Soon!
-  - **Level 3**:
-    - Enemies: More Info Soon!
-    - Story: More Info Soon!
-  - **Level 4**:
-    - Enemies: More Info Soon!
-    - Story: More Info Soon!
+    - Enemies: Y↑1, Y↑1
+    - Drops:
+      - 1~2 Stained Dust
+      - 0~1 Branch
+  - **Level 2**: 
+    - Summary: Reveals a new enemy striker type J (or Jumpo), first level requiring strategy making. The player also learns how to upgrade skills.
+    - Enemies: J↑1, Y↑1
+    - Drops:
+      - 1~1 Dust Balde (Once)
+      - 1~2 Double Marble
+  - **Level 3**: 
+    - Summary: Reveals a new enemy supporter type N (or Nimbo) that Advances Forward enemies, & first level UP for Yara (or Y). The player learns how to use the item Heal, and equips their first weapon before battle.
+    - Enemies: Y↑1, J↑1, Y↑2
+    - Drops:
+      - 1~1 Bomb (Once)
+      - 1~2 Black Wood
+      - 0~2 Stained Dust
+  - **Level 4**: 
+    - Summary: Reveals a new enemy striker type F (or French) that deals heavy damage and causes the Bleed effect. The player learns how to use the item Bomb and properly negate bleeding damage using the Heal item.
+    - Enemies: Y↑1, F↑1, Y↑2
+    - Drops:
+      - 1~2 Francium
+      - 0~2 Stained Dust
   - **Level 5**:
-    - Enemies: More Info Soon!
-    - Story: More Info Soon!
+    - Summary: Reveals a new enemy striker type S (or Snek) that effects the player with poison. The player is free to make any kind of strategy.
+    - Enemies: N↑1, J↑1, S↑1, N↑1
+    - Drops:
+      - 2~3 Light Resin
+      - 1~1 Prism Dust
   - **Level 6**:
-    - Enemies: More Info Soon!
-    - Story: More Info Soon!
+    - Summary: Reveals new enemy supporter type D (or Deffy). The player has to survive constant damage, as it is very difficult to kill the striker enemies due to support enemies healing them.
+    - Enemies: D↑1, Y↑3, D↑1
   - **Level 7**:
-    - Enemies: More Info Soon!
-    - Story: More Info Soon!
+    - ???
+
 
 </details>
 
 <details><summary>
 
-### Chapter 2 [Click] (#5.1)
+### Chapter 2 (#5.2)
 
 </summary>
 
@@ -251,7 +277,7 @@ Material Items [Released]
 
 <details><summary>
 
-### Chapter 3 [Click] (#5.2)
+### Chapter 3 (#5.3)
 
 </summary>
 

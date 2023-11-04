@@ -24,10 +24,10 @@ EXIT /B 0
 SET "STR=%RGB.TRUE%Recommended Lvl[0m: [1m4    %RGB.FALSE%Enemies[0m: [1mYara ↑1[0m, [1mSnek ↑1, [1mYara ↑2[0m"
 EXIT /B 0
 :6
-SET "STR=%RGB.TRUE%Recommended Lvl[0m: [1m5    %RGB.FALSE%Enemies[0m: [1mDeffy ↑1[0m, [1mYara ↑3, [1mDeffy ↑1[0m"
+SET "STR=%RGB.TRUE%Recommended Lvl[0m: [1m5    %RGB.FALSE%Enemies[0m: [1mDarp ↑1[0m, [1mYara ↑3, [1mDarp ↑1[0m"
 EXIT /B 0
 :7
-SET "STR=%RGB.TRUE%Recommended Lvl[0m: [1m5    %RGB.FALSE%Enemies[0m: [1mNoes ↑1[0m"
+SET "STR=%RGB.TRUE%Recommended Lvl[0m: [1m5    %RGB.FALSE%Enemies[0m: [1mLose ↑1[0m"
 EXIT /B 0
 :8
 SET "STR=- Corrupted Data -"
