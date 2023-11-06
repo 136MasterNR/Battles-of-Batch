@@ -154,11 +154,13 @@ REM Detect Errors
 IF NOT DEFINED VERCODE CALL :ERROR ERRLINE ID0001A    0
 IF NOT DEFINED VERS CALL :ERROR ERRLINE ID0001B    0
 IF NOT DEFINED VERTYPE CALL :ERROR ERRLINE ID0001C    0
+REM Other
 SET "HTS_DATA=%APPDATA%\HTS_DATA"
 SET "MAIN_GAME=%HTS_DATA%\BATTLESOFBATCH-%VERTYPE%-%VERCODE%"
 SET "DATA_SETTINGS=%MAIN_GAME%\SETTINGS"
 SET "HTSANI=%DATA_SCRIPTS%\htsani.cmd"
 SET "WAIT=%DATA_SCRIPTS%\wait.vbs"
+SET "TXT=%DATA_SCRIPTS%\txt.cmd"
 SET "TITLE=Battles of Batch - "
 SET "COPYRIGHT=copyright.txt"
 SET "LICENSE=license.txt"
@@ -2005,11 +2007,20 @@ CLS
 TYPE Copyright.txt
 PAUSE>NUL
 GOTO S-MENU
+
+
+
+
+
+
 :PRE_LOAD
-IF NOT EXIST "%LOAD.LEVEL_%%SELECTED%\setup.cmd" GOTO MAP
-ECHO.[2J[21;42H[0m[1m҉  Preparing Your Amazing Battle[17D[1B[s
-ECHO.[u  0%%
 TITLE %TITLE%Loading Battle ...
+IF EXIST "%LOAD.LEVEL_%%SELECTED%\story.cmd" CALL "%LOAD.LEVEL_%%SELECTED%\story.cmd"
+IF NOT EXIST "%LOAD.LEVEL_%%SELECTED%\setup.cmd" GOTO MAP
+SET /P "=[2J[21;42H" <NUL
+CALL "%TXT%" FADE-IN "҉  Preparing Your Amazing Battle" "҉  Preparing Your Amazing Battle" "҉  Preparing Your Amazing Battle" "҉  Preparing Your Amazing Battle" "҉  Preparing Your Amazing Battle" "҉  Preparing Your Amazing Battle" "҉  Preparing Your Amazing Battle" "҉  Preparing Your Amazing Battle"
+SET /P "=[17D[1B[s" <NUL
+ECHO.[u  0%%
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=Level %SELECTED% - Chapter %CHAPTER%;Details=Currently in battle;LargeImage=preview_battle;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
 	CALL "%AUDIOMANAGER%" STOP menu
