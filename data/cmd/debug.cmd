@@ -5,7 +5,7 @@ SET ARGS=%*
 :: Manual call handlers
 IF DEFINED ARGS (
 	IF /I %ARGS%.==LOG. START "" "%~dpfx0" __LIVE
-	IF %ARGS%.==__LIVE. GOTO :LIVE
+	IF %ARGS%.==__LIVE. GOTO :live
 )
 
 :: Automatic calls handler
@@ -59,7 +59,9 @@ GOTO choice
 
 
 
-:LIVE
+:live
+SET "logFile=..\logs\errors.txt"
+
 SET OZ=0
 SET CONN_TRUE=1
 SET CONN_FALSE=1
