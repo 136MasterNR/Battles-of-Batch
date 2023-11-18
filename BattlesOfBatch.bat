@@ -337,7 +337,7 @@ SET StartTimestamp=0
 SET EndTimestamp=0
 
 :: Reset some memory values
-FOR /F "TOKENS=1* DELIMS==" %%A IN ('SET QMEM_') DO (
+FOR /F "TOKENS=1* DELIMS==" %%A IN ('SET QMEM_ 2^>NUL') DO (
   SET "%%A="
 )
 

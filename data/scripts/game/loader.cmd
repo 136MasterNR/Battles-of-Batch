@@ -13,12 +13,12 @@ ECHO.[u 37%%
 :: Clean-up
 CALL "%CMD.CLEARVAR%"
 
-FOR /F "TOKENS=1DELIMS==" %%A IN ('SET LOOT.') DO (
+FOR /F "TOKENS=1DELIMS==" %%A IN ('SET LOOT. 2^>NUL') DO (
 	SET %%A=
 )
 
 :: Load the level contents
-FOR /F "TOKENS=1DELIMS==" %%A IN ('SET ENEMY.TYPE.') DO SET %%A=
+FOR /F "TOKENS=1DELIMS==" %%A IN ('SET ENEMY.TYPE. 2^>NUL') DO SET %%A=
 ECHO.[u 40%%
 CALL "%LOAD.LEVEL_%%SELECTED%\setup.cmd"
 SET "LOC.HP.P=[%LOC.HP%;%LOC.WP%H"
@@ -45,23 +45,23 @@ SET TURNS.T=1
 SET ROUNDS=1
 SET CNT=1
 
-FOR /F "TOKENS=1DELIMS==" %%A IN ('SET ENEMY.HP.NOW.') DO (
+FOR /F "TOKENS=1DELIMS==" %%A IN ('SET ENEMY.HP.NOW. 2^>NUL') DO (
 	SET /A %%A=0
 )
-FOR /F "TOKENS=1DELIMS==" %%A IN ('SET FRAME.FADE.') DO (
+FOR /F "TOKENS=1DELIMS==" %%A IN ('SET FRAME.FADE. 2^>NUL') DO (
 	SET %%A=
 )
-FOR /F "TOKENS=1DELIMS==" %%A IN ('SET EFF.') DO (
+FOR /F "TOKENS=1DELIMS==" %%A IN ('SET EFF. 2^>NUL') DO (
 	SET %%A=
 )
-FOR /F "TOKENS=1DELIMS==" %%A IN ('SET LOG.') DO (
+FOR /F "TOKENS=1DELIMS==" %%A IN ('SET LOG. 2^>NUL') DO (
 	SET %%A=
 )
 
 ECHO.[u 50%%
 
 SET LOOT.MAX=0
-FOR /F "TOKENS=1-3DELIMS==." %%1 IN ('SET LOOT.') DO (
+FOR /F "TOKENS=1-3DELIMS==." %%1 IN ('SET LOOT. 2^>NUL') DO (
 	IF NOT "%%2"=="MAX" IF NOT "%%3"=="ONCE" IF NOT "%%3"=="SAV" IF NOT "%%3"=="X" (
 		SET /A LOOT.MAX+=1
 	)
@@ -156,7 +156,7 @@ ECHO.[u 92%%
 CALL "%SCRIPTS_GAME%\rand_enemy.cmd"
 ECHO.[u 93%%
 ::Action Vlues
-FOR /F "TOKENS=1DELIMS==" %%A IN ('SET AV.') DO (
+FOR /F "TOKENS=1DELIMS==" %%A IN ('SET AV. 2^>NUL') DO (
 	SET %%A=
 )
 SET /A AV.PLAYER=0
