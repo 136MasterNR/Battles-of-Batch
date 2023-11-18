@@ -1,6 +1,14 @@
 @ECHO OFF
 
 SET ARGS=%*
+
+:: Manual call handlers
+IF DEFINED ARGS (
+	IF /I %ARGS%.==LOG. START "" "%~dpfx0" __LIVE
+	IF %ARGS%.==__LIVE. GOTO :LIVE
+)
+
+:: Automatic calls handler
 IF DEFINED ARGS (
 	CLS
 	CALL :%ARGS%
@@ -46,3 +54,43 @@ ECHO.%CHOICE.INPUT% | CLIP
 IF %CHOICE.INPUT%==TIMEOUT EXIT /B 0
 
 GOTO choice
+
+
+
+
+
+:LIVE
+SET OZ=0
+SET CONN_TRUE=1
+SET CONN_FALSE=1
+
+:LOGEXIST
+IF NOT EXIST "%logFile%" (
+	TITLE Waiting for log ... ^(%TIME%^)
+	TIMEOUT /T 1 1>NUL 2>NUL >NUL
+	GOTO LOGEXIST
+)
+TITLE Now Live Logging - %logFile%'
+
+:REPEAT
+IF NOT EXIST "%logFile%" (
+    ECHO.[0;1mERROR: The log file was not found.
+	PAUSE>NUL&EXIT
+) 1>NUL 2>NUL >NUL
+
+SET LL=
+COPY "%logFile%" ".\logLogger.txt" >NUL
+FOR /F "usebackq" %%A IN ('%logFile%') DO SET Z=%%~zA
+
+IF %OZ%==%Z% GOTO REPEAT
+
+SET OZ=%Z%
+TIMEOUT /T 1 >NUL
+CLS
+TYPE .\logLogger.txt
+TITLE Now Live Logging - %logFile%
+ENDLOCAL
+ECHO.
+ECHO.%LL%[1A
+
+GOTO REPEAT

@@ -6,3 +6,4 @@ data/cmd/movieNew.bat
 LET.DEBUG
 debug.log
 data/scripts/rp/config.ini
+data/cmd/logLogger.txt
