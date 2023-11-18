@@ -9,8 +9,8 @@ SET REWARD.XP=16,4
 :: Take for example the lvl2's setup config file.
 ::
 :: Arguments: Type, Identifier, Level
-CALL "%ENEMY%" Y 1 1
-CALL "%ENEMY%" Y 2 1
+CALL ENEMY Y 1 1
+CALL ENEMY Y 2 5
 
 :: - DISPLAY -
 :: W = Width, H = Height
