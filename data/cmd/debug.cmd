@@ -4,7 +4,7 @@ SET ARGS=%*
 
 :: Manual call handlers
 IF DEFINED ARGS (
-	IF /I %ARGS%.==LOG. START "" "%~dpfx0" __LIVE
+	IF /I %ARGS%.==LOG. START "" "%~dpfx0" __LIVE&EXIT /B
 	IF %ARGS%.==__LIVE. GOTO :live
 )
 

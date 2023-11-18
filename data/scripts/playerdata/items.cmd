@@ -67,7 +67,7 @@ EXIT /B 0
 
 
 :MATERIALS
-FOR /F "DELIMS==" %%A IN ('SET MAT.REG_') DO (
+FOR /F "DELIMS==" %%A IN ('SET MAT.REG_ 2^>NUL') DO (
 	SET %%A=
 )
 SET CNT=0
