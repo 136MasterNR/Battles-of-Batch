@@ -11,11 +11,11 @@ ECHO(%ARG% | FINDSTR /I /C:"/REG:">NUL && (
 )
 
 ECHO(%ARG% | FINDSTR /I /C:"/ALL">NUL && (
-	FOR /f "skip=7tokens=1delims=" %%I IN ('curl https://wttr.in/%REGION%') DO (
+	FOR /f "skip=7tokens=1delims=" %%I IN ('curl -s https://wttr.in/%REGION%') DO (
 		ECHO.%%I
 	)
 ) || ECHO(%ARG% | FINDSTR /I /C:"/TODAY">NUL && (
-	FOR /f "skip=7tokens=1delims=" %%I IN ('curl https://wttr.in/%REGION%') DO (
+	FOR /f "skip=7tokens=1delims=" %%I IN ('curl -s https://wttr.in/%REGION%') DO (
 		IF "%%I"=="└──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘" (
 			ECHO.%%I
 			EXIT /B 0
@@ -23,7 +23,7 @@ ECHO(%ARG% | FINDSTR /I /C:"/ALL">NUL && (
 		ECHO.%%I
 	)
 ) || (
-	FOR /f "tokens=1delims=" %%I IN ('curl https://wttr.in/%REGION%') DO (
+	FOR /f "tokens=1delims=" %%I IN ('curl -s https://wttr.in/%REGION%') DO (
 		IF "%%I"=="                                                       ┌─────────────┐                                                       " (
 			EXIT /B 0
 		)
