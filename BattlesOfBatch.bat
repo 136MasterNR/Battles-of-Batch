@@ -24,7 +24,7 @@
 :LAUNCHER
 @SET OCD=%CD%
 @PUSHD "%~dp0"
-@TITLE Battles of Batch - Loading
+@TITLE Battles of Batch
 @CHCP 65001 >NUL
 @PROMPT !^>
 @VERIFY OFF
@@ -134,6 +134,12 @@ FOR /F "TOKENS=*" %%I IN ('DIR /S /B /A-D ".\data\scripts"') DO IF NOT "%%~nI"==
 		PAUSE
 		EXIT /B 1
 	)
+)
+
+:: Set up working directories
+SET "PATH=%CD%\data\scripts;%PATH%"
+FOR /D %%I IN ("%CD%\data\scripts\*") DO (
+    CALL SET "PATH=%%I;%%PATH%%"
 )
 
 :RESTART
@@ -330,9 +336,12 @@ SET "SmallImageTooltip="
 SET StartTimestamp=0
 SET EndTimestamp=0
 
+:: Reset some memory values
 FOR /F "TOKENS=1* DELIMS==" %%A IN ('SET QMEM_') DO (
   SET "%%A="
 )
+
+TITLE Battles of Batch - Loading
 
 ::VAR-Player Data
 ECHO.[u Loading ... System ^& Config
@@ -507,7 +516,7 @@ IF NOT DEFINED DENIED_AUDIO IF NOT EXIST ".\data\audio" (
 
 IF "%UPDATE.VALUE%"=="TRUE" (
 	ECHO.[u Loading ... Retrieving updates
-	CALL "%UPDATER%" 2>NUL
+	CALL "UPDATER" 2>NUL
 	CLS
 )
 
@@ -694,7 +703,7 @@ IF /I %CHOICE.INPUT%==K (
 	GOTO S-MENU
 )
 IF /I %CHOICE.INPUT%==V GOTO CREDITS
-IF /I %CHOICE.INPUT%==. START "" "https://github.com/136MasterNR/Battles-of-Batch#menu-60"
+IF /I %CHOICE.INPUT%== START "" "https://github.com/136MasterNR/Battles-of-Batch#menu-60"
 IF /I %CHOICE.INPUT%==I IF %ITEM.REG_CNT%==0 (SET /P "=[4C%RGB.FALSE%UI_ERR: ITEMS LIST IS EMPTY   [2G"<NUL) ELSE GOTO S-MENU
 IF /I %CHOICE.INPUT%==R (MODE CON:COLS=%COLS% LINES=%LINES%&GOTO MENU)
 IF /I %CHOICE.INPUT%== (
@@ -715,7 +724,7 @@ IF /I %CHOICE.INPUT%== (
 )
 IF /I %CHOICE.INPUT%== GOTO RESET
 IF /I %CHOICE.INPUT%== (
-	CALL "%UPDATER%" MANUAL
+	CALL "UPDATER" MANUAL
 	GOTO MENU
 )
 IF /I %CHOICE.INPUT%== (
@@ -1450,7 +1459,7 @@ ECHO.^|      \   ^|^|   /                          [0mPress %RGB.CYAN%[4mA[0m
 ECHO.^|       \  ^|^|  /                 [0m Press %RGB.AQUAMARINE%[4mC[0m to jump [1m7[0m levels forward or %RGB.AQUAMARINE%[4mZ[0m to go backwards.[0m             \  ^|^|  /       ^|
 ECHO.^|        '.^|^|.'                     [0mPress %RGB.YELLOW%[4mD[0m to move to the next level, %RGB.YELLOW%[4mS[0m for previous.[0m                '.^|^|.'        ^|
 ECHO.^|          ''                                 Press %RGB.FALSE%[4mQ[0m to return to the menu.                            ''          ^|
-ECHO.'-._______________________________________________________________________________________________________________.-'[4A[u
+ECHO.'-._______________________________________________________________________________________________________________.-'[u
 )
 
 :MAP-RE
@@ -2017,10 +2026,7 @@ GOTO S-MENU
 TITLE %TITLE%Loading Battle ...
 IF EXIST "%LOAD.LEVEL_%%SELECTED%\story.cmd" CALL "%LOAD.LEVEL_%%SELECTED%\story.cmd"
 IF NOT EXIST "%LOAD.LEVEL_%%SELECTED%\setup.cmd" GOTO MAP
-SET /P "=[2J[21;42H" <NUL
-CALL "%TXT%" FADE-IN "҉  Preparing Your Amazing Battle" "҉  Preparing Your Amazing Battle" "҉  Preparing Your Amazing Battle" "҉  Preparing Your Amazing Battle" "҉  Preparing Your Amazing Battle" "҉  Preparing Your Amazing Battle" "҉  Preparing Your Amazing Battle" "҉  Preparing Your Amazing Battle"
-SET /P "=[17D[1B[s" <NUL
-ECHO.[u  0%%
+ECHO.[0m[1m[2J[21;42H҉  Preparing Your Amazing Battle[17D[1B[s[u  0%%
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=Level %SELECTED% - Chapter %CHAPTER%;Details=Currently in battle;LargeImage=preview_battle;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 (
 	CALL "%AUDIOMANAGER%" STOP menu
@@ -2039,6 +2045,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 TITLE %TITLE%!MAP.NAME.%SELECTED%:_= ! ^(#%SELECTED%^)
 ENDLOCAL
 ECHO.[u100%%
+CALL "%TXT%" fade-out "[2J[21;42H҉  Preparing Your Amazing Battle[17D[1B[s[u100$_PERC"
 CLS
 :IN-BATTLE
 IF EXIST LET.DEBUG (
