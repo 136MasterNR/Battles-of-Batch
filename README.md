@@ -29,15 +29,15 @@ This project uses [ANSI](https://www.robvanderwoude.com/ansi.php) as a text form
 
 Please note that the Source Code version contains untested features, you should use a release instead, do not report issues otherwise.
 # About
-### Contact (#1.0)
-  - **Social Media**: [Reddit](https://www.reddit.com/r/BattlesOfBatch/) \(for Community & Support\)
-### Copyright (#1.1)
-  - **Read**: [Copyright](copyright.txt)
-  - **Read**: [License](license.txt)
+### Social Media
+  - [Reddit](https://www.reddit.com/r/BattlesOfBatch/) - Community & Support
+  - [Youtube](https://www.youtube.com/@136masternr) - Additional Content
+### Copyright
+  - Read [Copyright](copyright.txt) & [License](license.txt).
 
 # Game Details & How To Play
 
-## Game Controls (#2.0)
+## Game Controls
 Press ***CTRL*** + ***W*** on some User Interfaces to get more information about it.
   - **Menu**: 
     - ***A***/***P***: Level Selection.
@@ -73,23 +73,23 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
     - ***Q***: Retreat current battle and go back to the map UI.
 	- ***CTRL*** + ***R***: Restart battle.
 
-## About Combat (#3.0)
+## About Combat
   - Battles of Batch features a turn based combat mechanic, with various features associated within it.
   - Both players and enemies have AVs (Action Values), AV indicates who has the next turn, and in which order. It's important to take note of one's AV so you can make your plan.
 
-## About Effects (#3.1)
+## About Effects
   - Some effects are turn-based damages, it can be applied on both the player and the enemy. Effects such as poison or fire are useful for damaging the enemies without the need of any more additional player actions. Other effects such as slow down or weakness, can be used to debuff the player or enemy for a set of turns.
   - **Slow Down**: This effect will increase the action value of the enemy or player, basically slowing them down by a bit. This can be useful to avoid double enemy attacks caused by support units.
   - **Fire**: This effect will damage the enemy or the player every registered turn, for a set amount of turns.
   - **Poison**: This effect will damage the enemy or the player every registered round, for a set amount of rounds.
   - **Bleed**: This effect will damage the enemy or the player every registered turn, until they are Healed.
 
-## About Enemies (#3.2)
+## About Enemies
   - Enemies spawn with a random amount of HP, the amount increases depending on the enemy's level.
   - Enemies deal a random amount of damage to the player, the amount increases depending on the enemy's level.
   - Every enemy deals its own damage, which means once one enemy is dead it will no longer deal damage, dealing less total damage to the player.
   - Some enemies have special ablities, such as poisoning the player, or literally anything else.
-### How Enemies Were Designed (#4.0)
+### How Enemies Were Designed
   - The design of the enemies were inspired by the Latin characters and other references. These enemies are unable to wield any weapons, thus they could only upgrade their defense. That's the reason they have way too much HP. Enemies that seem to have something sharp on them can deal a much larger amount of damage compared to other enemies.
   
   - Additionally, some other enemeis have special abilities or combat skills that aren't based on damage but instead on other combat mechanic elements, this fact can make them extremely dangerous when fought unexpectedly.
@@ -127,12 +127,12 @@ Press ***CTRL*** + ***W*** on some User Interfaces to get more information about
   - **Qanana** unknown.
   - **G????** #$%f@#6V.
 
-## About Skills (#3.3)
+## About Skills
   - **Main Attack**: Increases your base damage.
   - **Crit Rate**: Increases the chance to throw a critical strike to an enemy.
   - **Max Health**: Increases maximum HP by 100.
 
-## About Items (#3.4)
+## About Items
   - **Bomb**: Stuns enemies, skipping their next round/action. Bosses cannot be stunned by this attack type. Effects, such as poison on the player, will still function (Not yet an implemented feature).
   - **Heal**: Increases the HP of the player. This does not skip the next enemy round/action, and the player will still take damage as usual. Can stop bleeding effects.
   - More Coming Soon!
@@ -165,7 +165,7 @@ Weapon Items [Released]
 	Ornate Cobalt (Shield) {Main Damage: 200} [Bonus Effects: Shares an extra amount of 20% of your base damage to all enemies]
 	Brainleader (Magic Ball) {Base Damage: 250} [Bonus Effects: An extra amount of 9750 damage is dealt to ALL enemies on every single round. Debuff: Loe -99% HP every time you make an action.]
 
-Artifact Items [Releasing]
+Consumable Items [Releasing]
 	Healing Potion (Lvl 1 Buff Item) {Effects: Heals you by 25% when used, and another 4% for the next 2 turns, can stack}
 	Reactive Bomb (Lvl 4 Buff Item) {Effects: Deals an additinal 20% of your base damage to all enemies, and 100% normal damage to the selected enemy.}
 	Oracle Shield (Lvl 4 Buff Item) {Effects: Take 30% less damage for 2 rounds, 20% chance to stun each enemy, skipping their next round}
@@ -173,8 +173,8 @@ Artifact Items [Releasing]
 	Totem of Salute (Lvl 10 Buff Item) {Effects: When used, it will increase your HP by 25% once it gets lower than 1%}
 	Barrel Bomb (Lvl 14 AoE Attack Item) {Effects: Deals an additinal 60% of your base damage to all enemies}
 
-Armour Items [Not Released]
-	Boots of the Aether (Lvl 45) {Effects: Increases HP by 20%, automatically heals you by 20% every 3 rounds, if HP already maxed then max HP increases by 20%}
+Artifact Items [Not Released]
+	Boots of the Aether (Lvl 45) {Effects: Increases HP by 20%, automatically heals you by 20% every 3 rounds, if HP already maxed then max HP increases by 20% until the current round ends}
 
 Material Items [Released]
 	Stained Dust (Lvl 1 Material)
@@ -192,15 +192,15 @@ Material Items [Released]
 
 </details>
 
-## Crafting Items (#3.5)
+## Crafting Items
   - You can craft items by accessing the Shop, and switching to the Craft tab or otherwise by pressing Z on the menu. Every item requires materials for it to be crafted, once you gather all required materials, you will be able to craft your item.
   - Items serve a rich in-game usage. You can equip weapons and other items such bombs or healing pots through your inventory. Weapons usually give you a big boost when it's about fighting enemies, they can give you extra damage and bonus effects.
 
-## Levels & Story (#5.0)
+## Levels & Story
 
 <details><summary>
 
-### Chapter 1 (#5.1)
+### Chapter 1
 
 </summary>
 
@@ -245,65 +245,7 @@ Material Items [Released]
 
 </details>
 
-<details><summary>
-
-### Chapter 2 (#5.2)
-
-</summary>
-
-  - **Level 8**:
-    - Enemies: More Info Soon!
-    - Story: Coming Soon!
-  - **Level 9**:
-    - Enemies: More Info Soon!
-    - Story: Coming Soon!
-  - **Level 10**:
-    - Enemies: More Info Soon!
-    - Story: Coming Soon!
-  - **Level 11**:
-    - Enemies: More Info Soon!
-    - Story: Coming Soon!
-  - **Level 12**:
-    - Enemies: More Info Soon!
-    - Story: Coming Soon!
-  - **Level 13**:
-    - Enemies: More Info Soon!
-    - Story: Coming Soon!
-  - **Level 14**:
-    - Enemies: More Info Soon!
-    - Story: Coming Soon!
-
-</details>
-
-<details><summary>
-
-### Chapter 3 (#5.3)
-
-</summary>
-
-  - **Level 15**:
-    - Enemies: More Info Soon!
-    - Story: Coming Soon!
-  - **Level 16**:
-    - Enemies: More Info Soon!
-    - Story: Coming Soon!
-  - **Level 17**:
-    - Enemies: More Info Soon!
-    - Story: Coming Soon!
-  - **Level 18**:
-    - Enemies: More Info Soon!
-    - Story: Coming Soon!
-  - **Level 19**:
-    - Enemies: More Info Soon!
-    - Story: Coming Soon!
-  - **Level 20**:
-    - Enemies: More Info Soon!
-    - Story: Coming Soon!
-  - **Level 21**:
-    - Enemies: More Info Soon!
-    - Story: Coming Soon!
-
-</details>
+*More chapters coming soon.*
 
 ## User Interfaces
 ### Menu (#6.0)
@@ -311,7 +253,7 @@ Material Items [Released]
 ![](data/images/preview_menu.png)
 
 ### Map (#6.1)
-  - The Map interface allows you see all the available levels, and navigate through available chapters. At the top, you can view information about the current level & chapter, such as the Battle's title (Story Title), the next Battle, your Total Wins and more information about the selected level, such as the general difficulty, the recommended level and the enemies that will appear in battle.
+  - The Map interface allows you see all available levels, and navigate through available chapters. At the top, you can view information about the current level, such as the Battle's title (Story Title), the general difficulty, the recommended player level, and  the enemies that will appear in battle.
 ![](data/images/preview_map.png)
 
 ### Battle (#6.2)
@@ -338,8 +280,37 @@ Material Items [Released]
   - The settings UI lets you customize your preferences. By typing the name of an option, you can toggle it to true or false, or you can set a specific value to it.
 ![](data/images/preview_settings.png)
 
+# For Developers
+*When developing something on your own, you should use the DLC packs. **DO NOT** edit the game itself as it may corrupt it entirely or cause misbehaviour! Follow the guides provided in the example DLC pack or below.*
+### Create your own levels using the Level Editor
+  - The [LevelEditor.cmd](data/cmd/leveleditor.cmd) lets you to create your own levels, with a user friendly interface, making it extremely simple to delete or add additional enemies, and quickly edit their stats. To enter the Level Editor, you must unlock the terminal as mentioned [here](https://github.com/136MasterNR/Battles-of-Batch#use-commands-for-devs-83), then enter a level and press ***CTRL + P***. First, start with creating your new enemy by pressing C, you will be prompted to enter the enemy's type and level. You can find the list of enemies in [enemy.cmd](data/scripts/game/enemy.cmd). Using ***W A S D J*** and ***L*** you can move the enemy around, changing their screen position. You can use ***CTRL + R*** to undo all changes, and ***R*** to refresh the menu. Once you are done editing the level, you have to press ***P*** to save all changes permanently.
+
+### Create your own enemie
+  - Coming Soon!
+
+### Create your own items
+  - Coming Soon!
+
+### Terminal & Commands
+  - To unlock the terminal, go to the settings and type in "IAMADEVELOPER", all in caps.
+  - For shortcut, hit ***CTRL + T*** in any interface to access the game's terminal. Exit using `exit`.
+  - After entering the terminal, type in `commands` to show all available commands and their information. Below you can read some extra information about a few commands.
+
+    - **commands**: View infromation about all loaded commands.
+    - **save**: Dumps the memory and carry it outside the terminal enviroment. This is useful when editing variables in real-time.
+    - **debug**: Is the debug tool, which is useful for quickly testing something out or accessing developer-only interfaces. Use the command with no arguments to enable general debugging, this will transform some UIs to developer-view, showing more infromation about variables and removing most visual features, additionally it will always start a real-time logger cmd window at the start-up. Use the `log` argument to create a new cmd window that displays all logs, such as errors, in real-time. Use the `wscript` argument to monitor all wscript processes in real-time, mainly for audio debugging purposes. Use the `choice` argument to easily copy and paste special keys into your editor.
+    - **cver**: Is used to change game versions. This will effect the file versions.cmd and your saves location. You must give it at least 2 arguments, first is the version (e.g. 0440) and then th type (e.g. ALPHA), and optionally the switch /A which carries all current version's player data to the new version.
+    - **garbagecollector**: Is used to print all useless variables, or clear all of them using the `clear` argument.
+    - **open**: Searches in all directories and opens the requested directory. For example if you add the argument `scripts`, it will open the [scripts](data/scripts) directory. If no argument is given, it will open the [cmd](data/cmd) directory.
+    - **import**: Is used to display an ansi (ans) file.
+    - **bobfetch**: Basically neofetch, but made for this game. Use the switch /? for more information and arguments.
+  - All terminal commands are placed in the [cmd](data/cmd) directory.
+
+#### Useful console snippets
+  - **Set player money**: ECHO OFF & CALL "%SAVE%" "FILE=%DATA_SAVES%\PLAYERDATA.cmd" 1 /A PLAYER.MONEY= 50000 & ECHO ON
+
 # Explaining Technical Features
-### Saves Manager (#7.0)
+### Saves Manager
   - How your game data are stored:
     - All your game data are saved in a single local directory in your appdata; `%appdata%\HTS_DATA`. Battles of Batch's directory is named after its PHASE and VERSION. On `%appdata%\HTS_DATA`, you will find the game named as `BATTLESOFBATCH-%PHASE%-%VERSION%`, where `%PHASE%` stands for the stage of the project, and `%VERSION%` the game version, e.g. `BATTLESOFBATCH-INDEV-0400`. Under that directory are the child directories `SAVES`, `SETTINGS` and `main.config`. Under the SAVES directory, you will find your profile's player data. On your first start-up of the game, it automatically creates the player data saves under your game's appdata path directory.
   - How the saving system works:
@@ -351,31 +322,11 @@ Material Items [Released]
   - Saves encryption:
     - Coming Soon!
 
-### Auto Updater (#7.2)
+### Auto Updater
   - When you start the game, the updater will launch at some point in the startup and check for an update. It pulls information from [get-update](https://github.com/136MasterNR/HTS-Studios/tree/main/get-update), compares your local game's version with the online version and then prompts you to whether you wish to update or not before completely loading into the game. After you confirm to update, the updater will pull the whole game from [get-download](https://github.com/136MasterNR/HTS-Studios/tree/main/get-download) and will replace all your old game files with the new game files. This will not reset your saves, but if the next update requires you to reset your saves, you will be prompted for a second confirmation.
 
-### Error Handler (#7.3)
+### Error Handler
   - More Info Soon!
-
-# For Developers
-*When developing something on your own, you should use the DLC packs. **DO NOT** edit the game itself as it may corrupt it entirely or cause misbehaviour! Follow the guides provided in the example DLC pack or below.*
-### Create your own levels using the Level Editor (#8.0)
-  - The [LevelEditor.cmd](data/cmd/leveleditor.cmd) lets you to create your own levels, with a user friendly interface, making it extremely simple to create new enemies and edit their data. To enter the Level Editor, you must unlock the terminal as mentioned [here](https://github.com/136MasterNR/Battles-of-Batch#use-commands-for-devs-83), then enter a level and press ***CTRL + P***. First, start with creating your new enemy by pressing C, you will be prompted to enter the enemy's type and level. You can find the list of enemies in [enemy.cmd](data/scripts/game/enemy.cmd). Using ***W A S D J*** and ***L*** you can move the enemy around, changing their screen position. You can use ***CTRL + R*** to undo all changes, and ***R*** to refresh the menu. Once you are done editing the level, you have to press ***P*** to save all changes permanently.
-
-### Create your own enemies (#8.1)
-  - Coming Soon!
-
-### Create your own items (#8.2)
-  - Coming Soon!
-
-### Use Commands for Devs (#8.3)
-  - To unlock the terminal, go to the settings and type in "IAMADEVELOPER", all in caps.
-  - For shortcut, hit ***CTRL + T*** in any interface to access the game's terminal. Exit using `exit`.
-  - After entering the terminal, type in `commands` to show all available commands and their information. Below you can read some extra information about a few commands.
-    - **debug**: Enables manual debugging mode, it gives more information on some User Interfaces, reverts some User Interfaces back to preDev versions and creastes debug files. Created for development purposes.
-    - **save**: Dump the memory and carry it outside the terminal enviroment. This is useful when editing variables live.
-#### Example commands (#8.4)
-  - **Set player money**: ECHO OFF & CALL "%SAVE%" "FILE=%DATA_SAVES%\PLAYERDATA.cmd" 1 /A PLAYER.MONEY= 50000 & ECHO ON
 
 # FAQ
   - Q: **Why in Batch?**
