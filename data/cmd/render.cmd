@@ -62,6 +62,15 @@ EXIT /B 0
 
 
 
+:CLEAR
+ECHO.Clearing buffer...
+FOR /F "TOKENS=1DELIMS==" %%A IN ('SET BUFFER. 2^>NUL') DO SET "%%A="
+ECHO.Buffer cleared.
+EXIT /B 0
+
+
+
+
 :DISPLAY
 CLS
 
@@ -70,6 +79,7 @@ FOR /L %%F IN (1, 1, %FRAMES%) DO (
 	SET /P "=[H" <NUL
 	FOR /L %%L IN (1, 1, 48) DO (
 		ECHO.!BUFFER.%%F-%%L!
+		SET "BUFFER.%%F-%%L="
 	)
 )
 ENDLOCAL
@@ -79,12 +89,11 @@ EXIT /B 0
 
 
 
-:NOBUFFER-DISPLAY
+:NOBUFFER
 SET "FILE=%*"
 SET CNT=0
 
-SET /P "=[H" <NUL
-
+SET /P "=[H[?25l" <NUL
 FOR /F "DELIMS=" %%A IN (%FILE%.build) DO (
 	ECHO.%%A
 	SET /A CNT+=1
@@ -95,5 +104,5 @@ FOR /F "DELIMS=" %%A IN (%FILE%.build) DO (
 		SET /P "=[H" <NUL
 	) ELSE ENDLOCAL
 )
-GOTO :NOBUFFER-DISPLAY
+GOTO :NOBUFFER
 EXIT /B 0
