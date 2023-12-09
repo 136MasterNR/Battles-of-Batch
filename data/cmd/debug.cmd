@@ -66,13 +66,15 @@ SET OZ=0
 SET CONN_TRUE=1
 SET CONN_FALSE=1
 
+MODE CON:COLS=60 LINES=40
+
 :LOGEXIST
 IF NOT EXIST "%logFile%" (
 	TITLE Waiting for log ... ^(%TIME%^)
 	TIMEOUT /T 1 1>NUL 2>NUL >NUL
 	GOTO LOGEXIST
 )
-TITLE Now Live Logging - %logFile%'
+TITLE Now Live Logging - %logFile%
 
 :REPEAT
 IF NOT EXIST "%logFile%" (

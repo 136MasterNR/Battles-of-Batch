@@ -297,9 +297,9 @@ Material Items [Released]
   - After entering the terminal, type in `commands` to show all available commands and their information. Below you can read some extra information about a few commands.
 
     - **commands**: View infromation about all loaded commands.
-    - **save**: Dumps the memory and carry it outside the terminal enviroment. This is useful when editing variables in real-time.
+    - **save**: Dumps the memory and carries it outside the terminal enviroment. This is useful when editing variables in real-time.
     - **debug**: Is the debug tool, which is useful for quickly testing something out or accessing developer-only interfaces. Use the command with no arguments to enable general debugging, this will transform some UIs to developer-view, showing more infromation about variables and removing most visual features, additionally it will always start a real-time logger cmd window at the start-up. Use the `log` argument to create a new cmd window that displays all logs, such as errors, in real-time. Use the `wscript` argument to monitor all wscript processes in real-time, mainly for audio debugging purposes. Use the `choice` argument to easily copy and paste special keys into your editor.
-    - **cver**: Is used to change game versions. This will effect the file versions.cmd and your saves location. You must give it at least 2 arguments, first is the version (e.g. 0440) and then th type (e.g. ALPHA), and optionally the switch /A which carries all current version's player data to the new version.
+    - **cver**: Is used to change game versions. This will effect the file versions.cmd and your saves location. You must give it at least 2 arguments, first is the version (e.g. 0440) and then the type (e.g. ALPHA), and optionally the switch /A which carries all current version's player data to the new version.
     - **garbagecollector**: Is used to print all useless variables, or clear all of them using the `clear` argument.
     - **open**: Searches in all directories and opens the requested directory. For example if you add the argument `scripts`, it will open the [scripts](data/scripts) directory. If no argument is given, it will open the [cmd](data/cmd) directory.
     - **import**: Is used to display an ansi (ans) file.

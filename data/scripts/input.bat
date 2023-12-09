@@ -8,8 +8,8 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 SET "PROMPT="
 SET "SYMBOL="
 SET "LENGTH="
-SET "ALLOWED=qwertyuiopasdfghjklzxcmvbn1234567890_ +-$#@~"
-SET "INVALID="
+SET "ALLOWED="
+SET "INVALID==^^^(^)^"*^&?%%^!^|,.^>^</\"
 
 :FLAGS
 IF NOT "%~1" == "" (

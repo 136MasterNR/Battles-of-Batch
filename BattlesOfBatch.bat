@@ -58,6 +58,7 @@ IF NOT %1.==READY. IF %1.==LAUNCH. (
 		TASKKILL /F /FI "WINDOWTITLE eq Administrator:  WSAudio*" /IM "cmd.exe" /T
 	))
 	TASKKILL /F /IM "easyrp.exe" /T
+	TASKKILL /F /FI "WINDOWTITLE eq Now Live Logging - *" /IM "cmd.exe"
 	EXIT 0
 ) ELSE (
 	(IF EXIST ".\data\scripts\invisible.vbs" (
@@ -73,7 +74,7 @@ IF NOT EXIST ".\data\logs" MD ".\data\logs"
 ::  start the logger and check if accessible,
 2>".\data\logs\errors.txt" (
 	SET RUNNING=TRUE
-	CALL :STARTUP
+	CALL :MAIN
 )
 ::   if not accessible then exit, else below command will be skipped.
 IF DEFINED RUNNING (
@@ -83,7 +84,14 @@ IF DEFINED RUNNING (
 )
 EXIT 1
 
-:STARTUP
+:MAIN
+:: Debug
+IF EXIST LET.DEBUG (
+	PUSHD ".\data\cmd"
+	CMD /Q /C ".\debug.cmd" log
+	POPD
+)
+
 :: Check if directory files are accessible, such as itself.
 IF NOT EXIST "%~nx0" (
 	CLS
@@ -763,7 +771,7 @@ ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mBattles of Batch [37m[Versio
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mMicrosoft Windows [37m[Version %WINVER:]=%]
 ECHO.[38;2;235;64;52m^(^!^) [38;2;245;108;98mRun "EXIT" to return.[0m[3H[?25h
 PUSHD "%CD%\DATA\cmd"
-CMD /K "PROMPT $E[38;2;132;217;52mbob@terminal$E[0m$E[1m:$E[38;2;113;155;198m%%cd:~-9,9%%[0m$$$S"
+CMD /K "PROMPT $E[38;2;132;217;52mbob@terminal$E[0m$E[1m:$E[38;2;113;155;198m%%cd:~-9,9%%[0m$$$S[?25h"
 IF EXIST memory.dmp (
 	FOR /F "TOKENS=1DELIMS==" %%A IN ('set') DO (
 		SET %%A=
@@ -775,7 +783,7 @@ IF EXIST memory.dmp (
 	DEL "memory.dmp" /Q
 )
 POPD
-IF %ERRORLEVEL%==2 GOTO STARTUP
+IF %ERRORLEVEL%==2 GOTO MAIN
 MODE CON:COLS=%COLS% LINES=%LINES%
 EXIT /B 0
 
