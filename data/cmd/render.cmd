@@ -2,6 +2,7 @@
 CALL :%* || DEL /Q ".\tmp.cmd"
 EXIT /B 0
 
+REM Build for both buffer and no-buffer options.
 :BUILD <File>
 SET "FILE=%*"
 
@@ -12,14 +13,14 @@ IF NOT EXIST "%FILE%.ans" ECHO.ANSI not found.&EXIT /B 0
 
 BREAK > "%FILE%.filter"
 
-ECHO.[2KFiltering...
+ECHO.[2KFiltering...[1A
 
 (
 	ECHO.@ECHO OFF
 	ECHO.ECHO.
 	ECHO.:LOOP
 	ECHO.TIMEOUT /T 1 >NUL
-	ECHO.FOR %%%%A IN ^(^"%FILE%.filter^"^) DO ECHO.[A[G[2KProcessed %%%%~zA bytes
+	ECHO.FOR %%%%A IN ^(^"%FILE%.filter^"^) DO ECHO.[1A[G[14CProcessed %%%%~zA bytes
 	ECHO.GOTO LOOP
 )>"tmp.cmd"
 
@@ -58,7 +59,7 @@ EXIT /B 0
 
 
 
-
+REM Buffer for the display option.
 :BUFFER
 SET "FILE=%*"
 IF NOT DEFINED FRAME_CNT ECHO.Variable FRAME_CNT not defined.&EXIT /B 1
@@ -92,15 +93,19 @@ EXIT /B 0
 
 
 
+
+REM Render with buffer, directly from memory.
 :DISPLAY
 CLS
+
+ECHO.[?25l
 
 SETLOCAL ENABLEDELAYEDEXPANSION
 :DISPLAY-RE
 FOR /L %%F IN (1, 1, %FRAMES%) DO (
 	SET /P "=[H" <NUL
 	FOR /L %%L IN (1, 1, 48) DO (
-		ECHO.!BUFFER.%%F-%%L!
+		SET /P "=!BUFFER.%%F-%%L![E" <NUL
 	)
 )
 GOTO DISPLAY-RE
@@ -111,6 +116,8 @@ EXIT /B 0
 
 
 
+
+REM Render with no buffer, directly from file storage.
 :NOBUFFER
 SET "FILE=%*"
 
@@ -126,7 +133,7 @@ FOR /F "DELIMS=" %%A IN (%FILE%.build) DO (
 	ECHO.%%A
 	SET /A CNT+=1
 	SETLOCAL ENABLEDELAYEDEXPANSION
-	IF !CNT! EQU 48 (
+	IF !CNT! EQU %FRAME_CNT% (
 		ENDLOCAL
 		SET CNT=0
 		SET /P "=[H" <NUL
@@ -151,65 +158,7 @@ EXIT /B 0
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-:CLEAR
-ECHO.Clearing buffer...
-FOR /F "TOKENS=1DELIMS==" %%A IN ('SET BUFFER. 2^>NUL') DO SET "%%A="
-ECHO.Buffer cleared.
-ECHO.Deleting builds...
-DEL ".\renders\*.build" /Q 2>NUL
-ECHO.Builds deleted.
-EXIT /B 0
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+REM Compact builder, for the compact-display option.
 :CBUILD
 SET "FILE=%*"
 
@@ -222,14 +171,14 @@ BREAK > "%FILE%.filter"
 BREAK > "%FILE%.filtered"
 BREAK > "%FILE%.build"
 
-ECHO.[2KFiltering...
+ECHO.[2KFiltering...[1A
 
 (
 	ECHO.@ECHO OFF
 	ECHO.ECHO.
 	ECHO.:LOOP
 	ECHO.TIMEOUT /T 1 >NUL
-	ECHO.FOR %%%%A IN ^(^"%FILE%.filter^"^) DO ECHO.[A[G[2KProcessed %%%%~zA bytes
+	ECHO.FOR %%%%A IN ^(^"%FILE%.filter^"^) DO ECHO.[A[G[14CProcessed %%%%~zA bytes
 	ECHO.GOTO LOOP
 )>"tmp.cmd"
 
@@ -250,13 +199,13 @@ FINDSTR /R /V /C:"^;$" /C:"^}" /C:"frame[1-9]() {" /C:"frame[1-9][0-9]() {" /C:"
 
 DEL /Q ".\tmp.cmd"
 
-ECHO.[2KBuilding...
+ECHO.[2KBuilding...[1A
 (
 	ECHO.@ECHO OFF
 	ECHO.ECHO.
 	ECHO.:LOOP
 	ECHO.TIMEOUT /T 1 >NUL
-	ECHO.FOR %%%%A IN ^(^"%FILE%.build^"^) DO ECHO.[A[G[2KProcessed %%%%~zA bytes
+	ECHO.FOR %%%%A IN ^(^"%FILE%.build^"^) DO ECHO.[A[G[14CProcessed %%%%~zA bytes
 	ECHO.GOTO LOOP
 )>"tmp.cmd"
 
@@ -286,6 +235,10 @@ IF %CNT% EQU %FRAME_CNT% (
 
 EXIT /B 0
 
+
+
+
+REM Compact display option, feeds directly from file storage.
 :CDISPLAY
 SET "FILE=%*"
 
@@ -300,4 +253,25 @@ ECHO.[?25l
 TYPE "%FILE%.build" > CON
 GOTO :COMPACT-DISPLAY-RE
 
+EXIT /B 0
+
+
+
+
+
+
+
+
+
+
+
+
+REM Clean up stuff.
+:CLEAR
+ECHO.Clearing buffer...
+FOR /F "TOKENS=1DELIMS==" %%A IN ('SET BUFFER. 2^>NUL') DO SET "%%A="
+ECHO.Buffer cleared.
+ECHO.Deleting builds...
+DEL ".\renders\*.build" /Q 2>NUL
+ECHO.Builds deleted.
 EXIT /B 0
