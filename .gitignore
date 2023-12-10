@@ -7,3 +7,4 @@ LET.DEBUG
 debug.log
 data/scripts/rp/config.ini
 data/cmd/logLogger.txt
+*.build

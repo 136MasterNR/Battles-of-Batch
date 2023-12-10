@@ -1,22 +1,46 @@
 @ECHO OFF
-CALL :%*
+CALL :%* || DEL /Q ".\tmp.cmd"
 EXIT /B 0
 
-:FILTER <File>
-ECHO.Filtering...
+:BUILD <File>
 SET "FILE=%*"
+
+IF NOT DEFINED FILE ECHO.No argument provided.&EXIT /B 0
+
+SET "FILE=.\renders\%FILE%"
+IF NOT EXIST "%FILE%.ans" ECHO.ANSI not found.&EXIT /B 0
+
 BREAK > "%FILE%.filter"
 
+ECHO.[2KFiltering...
+
+(
+	ECHO.@ECHO OFF
+	ECHO.ECHO.
+	ECHO.:LOOP
+	ECHO.TIMEOUT /T 1 >NUL
+	ECHO.FOR %%%%A IN ^(^"%FILE%.filter^"^) DO ECHO.[A[G[2KProcessed %%%%~zA bytes
+	ECHO.GOTO LOOP
+)>"tmp.cmd"
+
+START /B "" CMD /C .\tmp.cmd ^& EXIT
 
 FOR /f "tokens=*delims=" %%A IN (%FILE%.ans) DO (
     CALL :FILTERER %%A
 )
 
-findstr /R /V /C:"^;$" /C:"^}" /C:"frame[1-9]() {" /C:"frame[1-9][0-9]() {" /C:"frame[1-9][0-9][0-9]() {" "%FILE%.filter" > "%FILE%.filter1"
+SET FRAME_CNT=-1
+for /f "delims=" %%A in (%FILE%.filter) do (
+    IF "%%A"=="}" (
+		GOTO :END-CNT
+	)
+	SET /A FRAME_CNT+=1
+)
+:END-CNT
 
+findstr /R /V /C:"^;$" /C:"^}" /C:"frame[1-9]() {" /C:"frame[1-9][0-9]() {" /C:"frame[1-9][0-9][0-9]() {" "%FILE%.filter" > "%FILE%.build"
 
-MOVE "%FILE%.filter1" "%FILE%.build" >NUL
-
+DEL /Q ".\tmp.cmd"
 DEL /Q "%FILE%.filter"
 DEL /Q "%FILE%.filter1"
 
@@ -36,8 +60,16 @@ EXIT /B 0
 
 
 :BUFFER
-ECHO.Adding all frames into the buffer...
 SET "FILE=%*"
+IF NOT DEFINED FRAME_CNT ECHO.Variable FRAME_CNT not defined.&EXIT /B 1
+
+IF NOT DEFINED FILE ECHO.No argument provided.&EXIT /B 0
+
+SET "FILE=.\renders\%FILE%"
+IF NOT EXIST "%FILE%.build" ECHO.Build not found.&EXIT /B 0
+
+ECHO.Adding all frames with %FRAME_CNT% lines each into the buffer...
+
 SET CNT=0
 SET FRAMES=0
 
@@ -45,7 +77,7 @@ FOR /F "DELIMS=" %%A IN (%FILE%.build) DO (
 	CALL SET "BUFFER.%%FRAMES%%-%%CNT%%=%%A"
 	SET /A CNT+=1
 	SETLOCAL ENABLEDELAYEDEXPANSION
-	IF !CNT! EQU 48 (
+	IF !CNT! EQU %FRAME_CNT% (
 		ENDLOCAL
 		SET CNT=0
 		SET /A FRAMES+=1
@@ -53,7 +85,6 @@ FOR /F "DELIMS=" %%A IN (%FILE%.build) DO (
 )
 
 SET BUFFER.FRAMES=%FRAMES%
-
 ECHO.Added %BUFFER.FRAMES% frames into the buffer.
 
 EXIT /B 0
@@ -65,12 +96,14 @@ EXIT /B 0
 CLS
 
 SETLOCAL ENABLEDELAYEDEXPANSION
+:DISPLAY-RE
 FOR /L %%F IN (1, 1, %FRAMES%) DO (
 	SET /P "=[H" <NUL
 	FOR /L %%L IN (1, 1, 48) DO (
 		ECHO.!BUFFER.%%F-%%L!
 	)
 )
+GOTO DISPLAY-RE
 ENDLOCAL
 
 EXIT /B 0
@@ -78,17 +111,14 @@ EXIT /B 0
 
 
 
-:CLEAR
-ECHO.Clearing buffer...
-FOR /F "TOKENS=1DELIMS==" %%A IN ('SET BUFFER. 2^>NUL') DO SET "%%A="
-ECHO.Buffer cleared.
-EXIT /B 0
-
-
-
-
 :NOBUFFER
 SET "FILE=%*"
+
+IF NOT DEFINED FILE ECHO.No argument provided.&EXIT /B 0
+
+SET "FILE=.\renders\%FILE%"
+IF NOT EXIST "%FILE%.build" ECHO.Build not found.&EXIT /B 0
+
 SET CNT=0
 
 SET /P "=[H[?25l" <NUL
@@ -108,82 +138,166 @@ EXIT /B 0
 
 
 
-@ECHO OFF
-CALL :%*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:CLEAR
+ECHO.Clearing buffer...
+FOR /F "TOKENS=1DELIMS==" %%A IN ('SET BUFFER. 2^>NUL') DO SET "%%A="
+ECHO.Buffer cleared.
+ECHO.Deleting builds...
+DEL ".\renders\*.build" /Q 2>NUL
+ECHO.Builds deleted.
 EXIT /B 0
 
-:COMPACT-BUILD
-ECHO.Filtering...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:CBUILD
 SET "FILE=%*"
+
+IF NOT DEFINED FILE ECHO.No argument provided.&EXIT /B 0
+
+SET "FILE=.\renders\%FILE%"
+IF NOT EXIST "%FILE%.ans" ECHO.ANSI not found.&EXIT /B 0
+
 BREAK > "%FILE%.filter"
 BREAK > "%FILE%.filtered"
 BREAK > "%FILE%.build"
 
+ECHO.[2KFiltering...
 
-FOR /f "tokens=*delims=" %%A IN (%FILE%.ans) DO CALL :FILTERER %%A
+(
+	ECHO.@ECHO OFF
+	ECHO.ECHO.
+	ECHO.:LOOP
+	ECHO.TIMEOUT /T 1 >NUL
+	ECHO.FOR %%%%A IN ^(^"%FILE%.filter^"^) DO ECHO.[A[G[2KProcessed %%%%~zA bytes
+	ECHO.GOTO LOOP
+)>"tmp.cmd"
 
-findstr /R /V /C:"^;$" /C:"^}" /C:"frame[1-9]() {" /C:"frame[1-9][0-9]() {" /C:"frame[1-9][0-9][0-9]() {" "%FILE%.filter" > "%FILE%.filtered"
+START /B "" CMD /C .\tmp.cmd ^& EXIT
 
-ECHO.Building...
+FOR /F "tokens=*delims=" %%A IN (%FILE%.ans) DO CALL :FILTERER %%A
+
+SET FRAME_CNT=-1
+for /f "delims=" %%A in (%FILE%.filter) do (
+    IF "%%A"=="}" (
+		GOTO :END-CNT
+	)
+	SET /A FRAME_CNT+=1
+)
+:END-CNT
+
+FINDSTR /R /V /C:"^;$" /C:"^}" /C:"frame[1-9]() {" /C:"frame[1-9][0-9]() {" /C:"frame[1-9][0-9][0-9]() {" "%FILE%.filter" > "%FILE%.filtered"
+
+DEL /Q ".\tmp.cmd"
+
+ECHO.[2KBuilding...
+(
+	ECHO.@ECHO OFF
+	ECHO.ECHO.
+	ECHO.:LOOP
+	ECHO.TIMEOUT /T 1 >NUL
+	ECHO.FOR %%%%A IN ^(^"%FILE%.build^"^) DO ECHO.[A[G[2KProcessed %%%%~zA bytes
+	ECHO.GOTO LOOP
+)>"tmp.cmd"
+
+START /B "" CMD /C .\tmp.cmd ^& EXIT
 
 SET CNT=0
-SET PART1=[H
-SET PART2=
-SET PART3=
-SET PART4=
-SET PART5=
-SET PART6=
 
+SET /P "=[H" <NUL >>"%FILE%.build"
 FOR /f "delims=" %%A IN (%FILE%.filtered) DO CALL :COMPACT-BUILDER %%A
-
 
 DEL /Q "%FILE%.filter"
 DEL /Q "%FILE%.filtered"
-
+DEL /Q ".\tmp.cmd"
 ECHO.Finished!
 EXIT /B 0
 
 :COMPACT-BUILDER
 SET /A CNT+=1
 
-IF %CNT% LEQ 9 (
-	SET "PART1=%PART1%[1B[G%*"
-) ELSE IF %CNT% LEQ 18 (
-	SET "PART2=%PART2%[1B[G%*"
-) ELSE IF %CNT% LEQ 27 (
-	SET "PART3=%PART3%[1B[G%*"
-) ELSE IF %CNT% LEQ 36 (
-	SET "PART4=%PART4%[1B[G%*"
-) ELSE IF %CNT% LEQ 45 (
-	SET "PART5=%PART5%[1B[G%*"
-) ELSE IF %CNT% LEQ 54 (
-	SET "PART6=%PART6%[1B[G%*"
+SET /P "=%*[B[G" <NUL >>"%FILE%.build"
+
+IF %CNT% EQU %FRAME_CNT% (
+	SET CNT=0
+	ECHO.>>"%FILE%.build"
+	SET /P "=[H" <NUL >>"%FILE%.build"
 )
 
-IF %CNT% EQU 48 CALL :COMPACT-BUILDER-FINISH
-
 EXIT /B 0
 
-:COMPACT-BUILDER-FINISH
-SET /P "=%PART1%" <NUL >>"%FILE%.build"
-SET /P "=%PART2%" <NUL >>"%FILE%.build"
-SET /P "=%PART3%" <NUL >>"%FILE%.build"
-SET /P "=%PART4%" <NUL >>"%FILE%.build"
-SET /P "=%PART5%" <NUL >>"%FILE%.build"
-ECHO.%PART6%>>"%FILE%.build"
-
-SET CNT=0
-SET PART1=[H
-SET PART2=
-SET PART3=
-SET PART4=
-SET PART5=
-SET PART6=
-EXIT /B 0
-
-:COMPACT-DISPLAY
+:CDISPLAY
 SET "FILE=%*"
 
+IF NOT DEFINED FILE ECHO.No argument provided.&EXIT /B 0
+
+SET "FILE=.\renders\%FILE%"
+IF NOT EXIST "%FILE%.build" ECHO.Build not found.&EXIT /B 0
+
+ECHO.[?25l
+
+:COMPACT-DISPLAY-RE
 TYPE "%FILE%.build" > CON
+GOTO :COMPACT-DISPLAY-RE
 
 EXIT /B 0
