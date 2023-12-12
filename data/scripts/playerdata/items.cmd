@@ -107,7 +107,6 @@ EXIT /B 0
 SET /A CNT+=1
 SET VAR.IS=%1
 FOR /F "tokens=1,2,3" %%1 IN ("%VAR.IS:$= %") DO (
-	SET UI.POS_%CNT%_W=%%1
 	SET LIST_NAME=%%1
 	SET LIST_LVL=%%2
 	SET IS.WEAPON=%%3

@@ -9,6 +9,7 @@ FOR %%A IN (%BUILD:,= %) DO (
 	ECHO.SET "MAP.NAME.!COUNT!=%%~A">>"%DATA_TMP%\tmprun.cmd"
 )
 ENDLOCAL
+SET BUILD=
 CALL "%DATA_TMP%\tmprun.cmd"
 DEL /Q "%DATA_TMP%\tmprun.cmd"
 EXIT /B 0
