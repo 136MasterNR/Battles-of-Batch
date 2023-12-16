@@ -129,6 +129,7 @@ IF NOT EXIST "%FILE%.build" ECHO.Build not found.&EXIT /B 0
 SET CNT=0
 
 SET /P "=[H[?25l" <NUL
+:NOBUFFER-RE
 FOR /F "DELIMS=" %%A IN (%FILE%.build) DO (
 	ECHO.%%A
 	SET /A CNT+=1
@@ -139,7 +140,7 @@ FOR /F "DELIMS=" %%A IN (%FILE%.build) DO (
 		SET /P "=[H" <NUL
 	) ELSE ENDLOCAL
 )
-GOTO :NOBUFFER
+GOTO :NOBUFFER-RE
 EXIT /B 0
 
 

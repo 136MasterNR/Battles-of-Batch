@@ -19,7 +19,7 @@ EXIT /B 0
 EXIT /B 0
 
 
-:START <"Path": String> <"Indetifier": String> <"Loop": Boolean> <"Volume": Integer>
+:START <"Path": String> <"Identifier": String> <"Loop": Boolean> <"Volume": Integer>
 (TASKKILL /F /FI "WINDOWTITLE eq WSAudio.%2" /IM "cmd.exe" /T | FINDSTR ":" && (
 	TASKKILL /F /FI "WINDOWTITLE eq Administrator:  WSAudio.%2" /IM "cmd.exe" /T
 )) >NUL

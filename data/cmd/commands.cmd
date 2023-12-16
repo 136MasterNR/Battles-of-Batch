@@ -48,15 +48,11 @@
 @EXIT /B 0
 
 :open.cmd
-@ECHO.%1 - [38;2;65;253;254mSearch for a folder, and open it. Can take up to 1 string argument.[0m (BAT)
+@ECHO.%1 - [38;2;65;253;254mSearch for a folder, and open it. Can take up to one argument.[0m (BAT)
 @EXIT /B 0
 
 :dlc.cmd
 @ECHO.%1 - [38;2;65;253;254mDLC Manager, for development purposes.[0m (CMD)
-@EXIT /B 0
-
-:anime.cmd
-@ECHO.%1 - [38;2;65;253;254mA multi-framed colored animation made in ANSI.[0m (CMD)
 @EXIT /B 0
 
 :image.cmd
@@ -79,6 +75,6 @@
 @ECHO.%1 - [38;2;65;253;254mAlternative for echo.[0m (CMD)
 @EXIT /B 0
 
-:garbagecollector.cmd
-@ECHO.%1 - [38;2;65;253;254mLists all useless variables. Use the "clear" argument to remove them.[0m (CMD)
+:memory.cmd
+@ECHO.%1 - [38;2;65;253;254mCan be used to manage the memory. Arguments: SIZE, CLEAR-ALL, GC, GC CLEAR[0m (CMD)
 @EXIT /B 0

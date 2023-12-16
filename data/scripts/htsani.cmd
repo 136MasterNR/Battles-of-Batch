@@ -674,30 +674,30 @@ ECHO.                                   \_%RGB%236;28;36m\/\\\[0m_______%RGB%23
 ECHO.                                    \_%RGB%236;28;36m\///[0m________%RGB%236;28;36m\///[0m________%RGB%255;127;39m\///[0m__________%RGB%0;168;243m\///////////[0m_____\
 ECHO.
 )
-CSCRIPT "%WAIT%" 50 >NUL
+CALL "%WAIT%" 50 >NUL
 ECHO.                                                          H[s
-CSCRIPT "%WAIT%" 10 >NUL
+CALL "%WAIT%" 10 >NUL
 ECHO.[uT[s
-CSCRIPT "%WAIT%" 10 >NUL
+CALL "%WAIT%" 10 >NUL
 ECHO.[uS[s
-CSCRIPT "%WAIT%" 10 >NUL
+CALL "%WAIT%" 10 >NUL
 ECHO.[u S[s
-CSCRIPT "%WAIT%" 10 >NUL
+CALL "%WAIT%" 10 >NUL
 ECHO.[uT[s
-CSCRIPT "%WAIT%" 10 >NUL
+CALL "%WAIT%" 10 >NUL
 ECHO.[uU[s
-CSCRIPT "%WAIT%" 10 >NUL
+CALL "%WAIT%" 10 >NUL
 ECHO.[uD[s
-CSCRIPT "%WAIT%" 10 >NUL
+CALL "%WAIT%" 10 >NUL
 ECHO.[uI[s
-CSCRIPT "%WAIT%" 10 >NUL
+CALL "%WAIT%" 10 >NUL
 ECHO.[uO[s
-CSCRIPT "%WAIT%" 10 >NUL
+CALL "%WAIT%" 10 >NUL
 ECHO.[uS[s
-CSCRIPT "%WAIT%" 125 >NUL
+CALL "%WAIT%" 125 >NUL
 ECHO.[u[8Do STUDIOS[s
-CSCRIPT "%WAIT%" 55 >NUL
+CALL "%WAIT%" 55 >NUL
 ECHO.[u[8Df STUDIOS[s
-CSCRIPT "%WAIT%" 55 >NUL
+CALL "%WAIT%" 55 >NUL
 ECHO.[u[8Dt STUDIOS[s
 EXIT /B 0

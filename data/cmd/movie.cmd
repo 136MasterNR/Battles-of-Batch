@@ -202,7 +202,7 @@ IF EXIST "%TARGETAUDIO%" (
 )
 :SKIPSONGO
 FOR /L %%I IN (1,1,1) DO (
-	CSCRIPT "%WAIT%" 120 >NUL
+	CALL "%WAIT%" 120 >NUL
 	ECHO.[48;58H-[1A
 	ECHO.[0;58H-[1A
 	CSCRIPT>NUL
@@ -386,7 +386,7 @@ FOR /L %%I IN (0,1,45) DO (
 	CSCRIPT>NUL
 	ECHO.[1A^|                                                                                                                   ^|[1A
 )
-CSCRIPT "%WAIT%" 775 >NUL
+CALL "%WAIT%" 775 >NUL
 SET /A "SETPOS.P=11"
 SET /A "SETPOS.EN.1=%random% %% 3 +85"
 SET /A "SETPOS.EN.2=%random% %% 3 +88"
@@ -503,7 +503,7 @@ ECHO.[1C    ^|  `.___.'
 ECHO.[1C    ^|  .         
 ECHO.[1C    '  '          
 ECHO.[1C                  
-IF NOT DEFINED RAN CSCRIPT "%WAIT%" 850 >NUL
+IF NOT DEFINED RAN CALL "%WAIT%" 850 >NUL
 ECHO.[7;%SETPOS.EN.1%H [ - - - - -]  
 ECHO.[%SETPOS.EN.1%C!EF.%R.EN.1%.LINE.1!
 ECHO.[%SETPOS.EN.1%C!EF.%R.EN.1%.LINE.2!
@@ -512,7 +512,7 @@ ECHO.[%SETPOS.EN.1%C!EF.%R.EN.1%.LINE.4!
 ECHO.[%SETPOS.EN.1%C!EF.%R.EN.1%.LINE.5!
 ECHO.[%SETPOS.EN.1%C!EF.%R.EN.1%.LINE.6!
 ECHO.[%SETPOS.EN.1%C!EF.%R.EN.1%.LINE.7!
-IF NOT DEFINED RAN CSCRIPT "%WAIT%" 850 >NUL
+IF NOT DEFINED RAN CALL "%WAIT%" 850 >NUL
 ECHO.[19;%SETPOS.EN.2%H [ - - - - -]  
 ECHO.[%SETPOS.EN.2%C!EF.%R.EN.2%.LINE.1!
 ECHO.[%SETPOS.EN.2%C!EF.%R.EN.2%.LINE.2!
@@ -521,7 +521,7 @@ ECHO.[%SETPOS.EN.2%C!EF.%R.EN.2%.LINE.4!
 ECHO.[%SETPOS.EN.2%C!EF.%R.EN.2%.LINE.5!
 ECHO.[%SETPOS.EN.2%C!EF.%R.EN.2%.LINE.6!
 ECHO.[%SETPOS.EN.2%C!EF.%R.EN.2%.LINE.7!
-IF NOT DEFINED RAN CSCRIPT "%WAIT%" 850 >NUL
+IF NOT DEFINED RAN CALL "%WAIT%" 850 >NUL
 ECHO.[30;%SETPOS.EN.3%H [ - - - - -]  
 ECHO.[%SETPOS.EN.3%C!EF.%R.EN.3%.LINE.1!
 ECHO.[%SETPOS.EN.3%C!EF.%R.EN.3%.LINE.2!
@@ -532,7 +532,7 @@ ECHO.[%SETPOS.EN.3%C!EF.%R.EN.3%.LINE.6!
 ECHO.[%SETPOS.EN.3%C!EF.%R.EN.3%.LINE.7!
 IF EXIST ../../LET.DEBUG (ECHO.^| EN.POS: %EN.METHOD.1%%SETPOS.EN.1%, %EN.METHOD.2%%SETPOS.EN.2%, %EN.METHOD.3%%SETPOS.EN.3%      P.POS: %POS.METHOD%%SETPOS.P%)
 IF NOT DEFINED RAN (
-	CSCRIPT "%WAIT%" 835 >NUL
+	CALL "%WAIT%" 835 >NUL
 	SET "RAN=DEFINED"
 )
 ECHO.[45;2H________________________.----------.______________.--------.____________.------.__________________________________.
@@ -554,6 +554,6 @@ GOTO PLAYBACKLOOP
 
 
 
-CSCRIPT "%WAIT%" 2000 >NUL
+CALL "%WAIT%" 2000 >NUL
 @ECHO ON
 ENDLOCAL
