@@ -5,10 +5,12 @@ ECHO.[20;66H.
 ECHO.[21;67H^|
 ECHO.[22;66H'
 SET /P "=[22;52H[0[1m" <NUL
-START /B "" CMD /Q /C CALL "%TXT%" FADE-IN "Ashes of Home"
+REN "%TXT%" "txt.cmd.cmd"
+START /B "" CMD /Q /C CALL "%TXT%.cmd" FADE-IN "Ashes of Home"
 TIMEOUT /T 3 >NUL
+REN "%TXT%.cmd" "txt.cmd"
 CLS
-ECHO.
+ECHO.[0m
 CALL "%TXT%" TYPE /A `This and that.`
 ECHO.
 ECHO.
