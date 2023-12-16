@@ -145,10 +145,10 @@ FOR /F "TOKENS=*" %%I IN ('DIR /S /B /A-D ".\data\scripts"') DO IF NOT "%%~nI"==
 )
 
 :: Set up working directories
-SET "PATH=%CD%\data\scripts;%PATH%"
-FOR /D %%I IN ("%CD%\data\scripts\*") DO (
-    CALL SET "PATH=%%I;%%PATH%%"
-)
+:: SET "PATH=%CD%\data\scripts;%PATH%"
+:: FOR /D %%I IN ("%CD%\data\scripts\*") DO (
+::     CALL SET "PATH=%%I;%%PATH%%"
+:: )
 
 :RESTART
 COLOR 0F
@@ -168,25 +168,17 @@ REM Detect Errors
 IF NOT DEFINED VERCODE CALL :ERROR ERRLINE ID0001A    0
 IF NOT DEFINED VERS CALL :ERROR ERRLINE ID0001B    0
 IF NOT DEFINED VERTYPE CALL :ERROR ERRLINE ID0001C    0
-REM Other
-SET "HTS_DATA=%APPDATA%\HTS_DATA"
-SET "MAIN_GAME=%HTS_DATA%\BATTLESOFBATCH-%VERTYPE%-%VERCODE%"
-SET "DATA_SETTINGS=%MAIN_GAME%\SETTINGS"
-SET "HTSANI=%DATA_SCRIPTS%\htsani.cmd"
-SET "WAIT=%DATA_SCRIPTS%\wait.vbs"
-SET "TXT=%DATA_SCRIPTS%\txt.cmd"
-SET "TITLE=Battles of Batch - "
+::VAR:-Anything
+SET "WAIT=%DATA_SCRIPTS%\wait.exe"
 SET "COPYRIGHT=copyright.txt"
 SET "LICENSE=license.txt"
 SET "UPDATER=%DATA_SCRIPTS%\updater.cmd"
-SET "ENEMY=%DATA_SCRIPTS%\game\enemy.cmd"
 SET "DEBUG.GAMELOADER=%DATA_SCRIPTS%\debug"
-SET SHOP.TAB=2
-SET "SCRIPTS_POP=%DATA_SCRIPTS%\pop"
-SET "DEV_ERR=%SCRIPTS_POP%\deverr.cmd"
 SET "CHOICE=CALL ^"%DATA_SCRIPTS%\choice.bat^""
-SET "INPUT_PART=nul"
 ::VAR:-Saves Manager
+SET "HTS_DATA=%APPDATA%\HTS_DATA"
+SET "MAIN_GAME=%HTS_DATA%\BATTLESOFBATCH-%VERTYPE%-%VERCODE%"
+SET "DATA_SETTINGS=%MAIN_GAME%\SETTINGS"
 SET "PLAYERDATA.LVL=%DATA_SCRIPTS%\playerdata\lvl.cmd"
 SET "ITEMS.LOADER=%DATA_SCRIPTS%\playerdata\items.cmd"
 SET "SYS_LVL=%DATA_SCRIPTS%\playerdata\sys_lvl"
@@ -213,6 +205,9 @@ SET "AUD.MENU=system\menu.mp3"
 SET "AUD.BATTLE.NORMAL=game\battle\winternight.mp3"
 SET "AUD.BATTLE.BOSS=%DATA_AUDIO_G_B%\dangerousplains.mp3"
 ::VAR:-Interface
+SET "TITLE=Battles of Batch - "
+SET "HTSANI=%DATA_SCRIPTS%\htsani.cmd"
+SET "SCRIPTS_POP=%DATA_SCRIPTS%\pop"
 SET "INTERFACE=%DATA_SCRIPTS%\interface"
 SET "STAT.MONEY=%INTERFACE%\money.cmd"
 SET "STAT.XP=%INTERFACE%\xp.cmd"
@@ -229,12 +224,16 @@ SET "CENTER=%INTERFACE%\center.cmd"
 SET "CENTER_OLD=%INTERFACE%\center_old.cmd"
 SET "CHARACTER=%INTERFACE%\characters.cmd"
 SET "UI.MONEY=%INTERFACE%\money_decimals.cmd"
+SET "DEV_ERR=%SCRIPTS_POP%\deverr.cmd"
+SET "TXT=%DATA_SCRIPTS%\txt.cmd"
 SET INV_CHOICE=1
 SET INV_CHOICE_SLOT=1
 SET W_INV_CHOICE=1
 SET SEL_POS.Y=16
 SET SEL_POS.X=11
 SET UI_SEL=1
+SET SHOP.TAB=2
+SET "INPUT_PART=nul"
 ::VAR:-Craft
 SET "CRAFT.INFO=%INTERFACE%\shop\craft_info.cmd"
 SET CRAFT.SEL=0
@@ -246,6 +245,7 @@ SET REG_C1=
 SET REG_C2=
 ::VAR:-Battle Loader
 SET "SCRIPTS_GAME=%DATA_SCRIPTS%\game"
+SET "ENEMY=%SCRIPTS_GAME%\enemy.cmd"
 SET "LOAD.LEVEL_=%DATA%\levels\lvl"
 ::VAR:-Actions
 SET "SCRIPTS.ACT=%SCRIPTS_GAME%\acts"
@@ -522,7 +522,7 @@ IF NOT DEFINED DENIED_AUDIO IF NOT EXIST ".\data\audio" (
 
 IF "%UPDATE.VALUE%"=="TRUE" (
 	ECHO.[u Loading ... Retrieving updates
-	CALL "UPDATER" 2>NUL
+	CALL "%UPDATER%" 2>NUL
 	CLS
 )
 
@@ -601,8 +601,11 @@ SET OLD.PLAYER.LVL=%PLAYER.LVL%
 IF %SHOW.INTRO%==TRUE (
 	TITLE %TITLE%HTS
 	CALL "%HTSANI%" || CALL :ERROR ERRLINE ID0007    -0
-	CSCRIPT "%WAIT%" 750 >NUL || CALL :ERROR ERRLINE ID0008    -0
+	CALL "%WAIT%" 750 >NUL || CALL :ERROR ERRLINE ID0008    -0
 )
+
+
+
 
 :MENU
 @CHCP 65001>NUL
@@ -731,7 +734,7 @@ IF /I %CHOICE.INPUT%== (
 )
 IF /I %CHOICE.INPUT%== GOTO RESET
 IF /I %CHOICE.INPUT%== (
-	CALL "UPDATER" MANUAL
+	CALL "%UPDATER%" MANUAL
 	GOTO MENU
 )
 IF /I %CHOICE.INPUT%== (
@@ -760,6 +763,9 @@ FOR /F "DELIMS=" %%N IN ('DATE /T') DO (
 )
 EXIT /B 0
 
+
+
+
 :TERMINAL
 MODE CON:COLS=126 LINES=9216
 CLS
@@ -785,6 +791,9 @@ POPD
 IF %ERRORLEVEL%==2 GOTO MAIN
 MODE CON:COLS=%COLS% LINES=%LINES%
 EXIT /B 0
+
+
+
 
 :CREDITS
 TITLE %TITLE%Credits
@@ -819,6 +828,9 @@ ECHO.
 ECHO.[0mPress any key to return...[?47l
 PAUSE>NUL
 GOTO S-MENU
+
+
+
 
 :CHARACTER
 TITLE %TITLE%Character ^& Equipment
@@ -1175,6 +1187,9 @@ SET /A TMP.DUPE_DMG=I.%1.DMG * WEAPONS.REG_LVL.%2
 ECHO.%RGB.YELLOW%%UI.POS%%TMP.NAME:_= %[0m %RGB.CYAN%↑[0m[1m!WEAPONS.REG_LVL.%2! %RGB%245;105;105m╀[0m[1m!TMP.DUPE_DMG!
 EXIT /B 0
 
+
+
+
 :PROFILES
 TITLE %TITLE%Profiles Manager
 SET PROFILE_COUNTER=0
@@ -1438,6 +1453,9 @@ IF %PROFILE%==%1 (
 RD /S /Q "%MAIN_GAME%\SAVES\%1"
 EXIT /B 0
 
+
+
+
 :MAP
 TITLE %TITLE%Map
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Map;LargeImage=preview_map;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
@@ -1524,6 +1542,10 @@ IF /I %CHOICE.INPUT%.==. IF %terminal% EQU 1 (
 	GOTO MAP
 )
 GOTO MAP-CHOICE
+
+
+
+
 :SHOP
 CALL "%PLAYERDATA.LOAD%"
 IF "%SHOP.TAB%"=="1" CALL "%UI.ITEMS%"
@@ -1577,6 +1599,10 @@ IF "%SHOP.TAB%"=="1" (
 	)
 )
 GOTO SHOP
+
+
+
+
 :SKILLS-SHOP
 CALL "%UI.SKILLS%"
 
@@ -1649,6 +1675,9 @@ IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
 )
 
 GOTO SKILLS-SHOP-RE
+
+
+
 
 :CRAFT-SHOP
 COLOR 08
@@ -1835,6 +1864,9 @@ IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
 
 GOTO CRAFT-SHOP-RE
 
+
+
+
 :QUESTS
 CALL "%QUEST.LOADER%" LOAD
 TITLE %TITLE%Quests
@@ -1893,6 +1925,10 @@ ECHO..---------------------------------------------------------.----------------
 CALL "%QUEST.LOADER%" NUL
 PAUSE>NUL
 GOTO S-MENU
+
+
+
+
 :SETTINGS
 CHCP 65001>NUL
 TITLE %TITLE%Settings
@@ -1998,17 +2034,23 @@ SET "INPUT_PART=nul"
 	CALL :TERMINAL
  )
 GOTO SETTINGS
+
+
+
+
 :RESET
 TASKKILL /F /FI "WINDOWTITLE eq wscript.exe" /T>NUL 2>NUL
 RD /S /Q "%MAIN_GAME%"
 GOTO RESTART
+
+
+
+
 :LICENSE
 CLS
 TYPE Copyright.txt
 PAUSE>NUL
 GOTO S-MENU
-
-
 
 
 
