@@ -16,8 +16,10 @@ SET TMP.I=0
 
 :TYPE-RE
 CALL SET TMP.OUT=%%TMP.ARG:~%TMP.I%,1%%
+IF "%TMP.OUT%"=="α" SET "TMP.OUT=%RGB.YELLOW%"
+IF "%TMP.OUT%"=="ς" SET "TMP.OUT=[0m"
 (
-	IF %TMP.OUT%.==. (SET /P "=[u [s") ELSE SET /P "=[u%TMP.OUT:`="%[s"
+	IF "%TMP.OUT%"=="" (SET /P "=[u [s") ELSE SET /P "=[u%TMP.OUT:`="%[s"
 ) <NUL
 IF DEFINED TMP.I_LINE IF "%TMP.I_LINE%"=="116" (
 	ECHO.
