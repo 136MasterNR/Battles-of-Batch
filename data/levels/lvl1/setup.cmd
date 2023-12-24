@@ -15,7 +15,7 @@ CALL "%ENEMY%" Y 2 5
 :: - DISPLAY -
 :: W = Width, H = Height
 SET LOC.W1=92
-SET LOC.H1=14
+SET LOC.H1=9
 
 SET LOC.W2=89
 SET LOC.H2=24

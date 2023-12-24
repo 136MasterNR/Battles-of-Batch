@@ -606,7 +606,7 @@ IF %SHOW.INTRO%==TRUE (
 
 
 
-
+DEL /Q ".\data\temp\running"
 :MENU
 @CHCP 65001>NUL
 IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 CALL "%AUDIOMANAGER%" START system\villageambiance.mp3 menu True %VOLUME%
@@ -614,6 +614,8 @@ CLS
 :S-MENU
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Menu;LargeImage=preview_menu;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 TITLE %TITLE%Menu
+ECHO.>".\data\temp\menu"
+START /B "" CMD /C "%DATA_SCRIPTS%\interface\title_c.cmd" ^& EXIT
 :REFRESH-MENU
 CALL "%PLAYERDATA.LOAD%"
 CALL "%SYS_LVL%"
@@ -686,6 +688,7 @@ IF EXIST LET.DEBUG (
 	ECHO.Pressed: '%CHOICE.INPUT%'>>"debug.log"
 )
 IF %CHOICE.INPUT%.==. GOTO CHOICE-INPUTS
+DEL /Q ".\data\temp\menu"
 IF /I %CHOICE.INPUT%==A GOTO MAP
 IF /I %CHOICE.INPUT%==E GOTO CHARACTER
 IF /I %CHOICE.INPUT%==P (
@@ -745,7 +748,7 @@ IF /I %CHOICE.INPUT%== (
 	CALL "%RUNTIME%"
 	GOTO MENU
 )
-
+ECHO.>".\data\temp\menu"
 GOTO CHOICE-INPUTS
 :DAILY
 FOR /F "DELIMS=" %%N IN ('DATE /T') DO (
