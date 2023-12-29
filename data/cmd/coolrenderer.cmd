@@ -19,7 +19,7 @@ IF EXIST ".\buffer_layer_!LAYERS!.cmd" GOTO RENDER-BUFFER
 FOR /L %%y IN (1, 1, %LINES%) DO (
 	:: ... display all additional layers linked to this line
 	FOR /L %%l in (1, 1, !LAYERS!) DO (
-		SET /p "=[%%yH!layermap[%%l,%%y]!" <NUL
+		IF DEFINED map[%%l.%%y] SET /p "=[%%yH!map[%%l.%%y]!" <NUL
 	)
 )
 :: Clear buffer memory
