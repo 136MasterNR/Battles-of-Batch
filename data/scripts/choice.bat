@@ -29,6 +29,7 @@ IF /I "%1."=="/T." TASKKILL /FI "WINDOWTITLE eq CHOICE_AUTO_SKIP*" /IM cmd.exe 1
 IF NOT DEFINED KEY SET KEY=BLANK
 IF "!KEY!"==" " SET KEY=SPACE
 IF "!KEY!"=="	" SET KEY=TAB
+IF "!KEY!"=="," SET KEY=COMMA
 
 ::Pass the key variable outside the current local enviroment
 ENDLOCAL&SET CHOICE.INPUT=%KEY%

@@ -8,7 +8,7 @@ SET "FILE=%*"
 
 IF NOT DEFINED FILE ECHO.No argument provided.&EXIT /B 0
 
-SET "FILE=.\renders\%FILE%"
+SET "FILE=.\video_ans\%FILE%"
 IF NOT EXIST "%FILE%.ans" ECHO.ANSI not found.&EXIT /B 0
 
 BREAK > "%FILE%.filter"
@@ -66,7 +66,7 @@ IF NOT DEFINED FRAME_CNT ECHO.Variable FRAME_CNT not defined.&EXIT /B 1
 
 IF NOT DEFINED FILE ECHO.No argument provided.&EXIT /B 0
 
-SET "FILE=.\renders\%FILE%"
+SET "FILE=.\video_ans\%FILE%"
 IF NOT EXIST "%FILE%.build" ECHO.Build not found.&EXIT /B 0
 
 ECHO.Adding all frames with %FRAME_CNT% lines each into the buffer...
@@ -123,7 +123,7 @@ SET "FILE=%*"
 
 IF NOT DEFINED FILE ECHO.No argument provided.&EXIT /B 0
 
-SET "FILE=.\renders\%FILE%"
+SET "FILE=.\video_ans\%FILE%"
 IF NOT EXIST "%FILE%.build" ECHO.Build not found.&EXIT /B 0
 
 SET CNT=0
@@ -165,7 +165,7 @@ SET "FILE=%*"
 
 IF NOT DEFINED FILE ECHO.No argument provided.&EXIT /B 0
 
-SET "FILE=.\renders\%FILE%"
+SET "FILE=.\video_ans\%FILE%"
 IF NOT EXIST "%FILE%.ans" ECHO.ANSI not found.&EXIT /B 0
 
 BREAK > "%FILE%.filter"
@@ -245,7 +245,7 @@ SET "FILE=%*"
 
 IF NOT DEFINED FILE ECHO.No argument provided.&EXIT /B 0
 
-SET "FILE=.\renders\%FILE%"
+SET "FILE=.\video_ans\%FILE%"
 IF NOT EXIST "%FILE%.build" ECHO.Build not found.&EXIT /B 0
 
 ECHO.[?25l
@@ -273,6 +273,6 @@ ECHO.Clearing buffer...
 FOR /F "TOKENS=1DELIMS==" %%A IN ('SET BUFFER. 2^>NUL') DO SET "%%A="
 ECHO.Buffer cleared.
 ECHO.Deleting builds...
-DEL ".\renders\*.build" /Q 2>NUL
+DEL ".\video_ans\*.build" /Q 2>NUL
 ECHO.Builds deleted.
 EXIT /B 0
