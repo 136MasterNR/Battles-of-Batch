@@ -10,8 +10,12 @@ CURL -S "https://136masternr.github.io/HTS-Studios/get-update/battlesofbatch.bat
 	CALL "%UPDATE.LOC%"
 	DEL /Q "%UPDATE.LOC%"
 )||(
-	FOR %%R IN ("%UPDATE.LOC%") DO IF %%~zR LSS 1 ( ECHO.UPDATER: Failed to check for updates because the information was empty.
-	) ELSE ( ECHO.UPDATER: Failed to check for updates because the information was not recognized. )
+	FOR %%R IN ("%UPDATE.LOC%") DO IF %%~zR LSS 1 (
+		IF DEFINED ARG IF "%ARG%"=="MANUAL" GOTO MANUAL
+		ECHO.UPDATER: Failed to check for updates because the information was empty.
+	) ELSE ( 
+		ECHO.UPDATER: Failed to check for updates because the information was not recognized.
+	)
 	IF EXIST "%UPDATE.LOC%" DEL /Q "%UPDATE.LOC%"
 	EXIT /B 0
 )
@@ -87,6 +91,11 @@ ECHO. Replacing new files ...
 SETLOCAL
 CALL :UNZIPFILE "%EXTRAC.LOC%" "%UPDZIP.LOC%"
 EXIT /B 0
+
+
+
+
+
 :MANUAL
 CLS
 @SETLOCAL ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION
@@ -94,19 +103,19 @@ CLS
 ECHO.{ CONNECTION }
 SET STATE=OFFLINE
 FOR /f "tokens=5,6,7" %%a IN ('PING -n 1 1.0.0.1') do (
-	IF "x%%b"=="xunreachable." CLS&ECHO.No internet connection.&PAUSE>NUL&EXIT /B 0
-    IF "x%%a"=="xReceived" IF "x%%c"=="x1," (ECHO.YOU: ONLINE) ELSE ECHO.Something went wrong.
+	IF "x%%b"=="xunreachable." CLS&ECHO.YOU: OFFLINE ^(1.0.0.1^).&PAUSE>NUL&EXIT /B 0
+    IF "x%%a"=="xReceived" IF "x%%c"=="x1," (ECHO.YOU: ONLINE ^(1.0.0.1^)) ELSE ECHO.YOU: OFFLINE ^(1.0.0.1^)
 )
 SET STATE=OFFLINE
 FOR /f "tokens=5,6,7" %%a IN ('PING -n 1 www.github.com') do (
     IF NOT "x%%b"=="xunreachable." IF "x%%a"=="xReceived" IF "x%%c"=="x1," SET STATE=ACTIVE
 )
-ECHO.HOST: !STATE!
+ECHO.HOST: !STATE! ^(www.github.com^)
 SET STATE=OFFLINE
 FOR /f "tokens=5,6,7" %%a IN ('PING -n 1 136masternr.github.io') do (
     IF NOT "x%%b"=="xunreachable." IF "x%%a"=="xReceived" IF "x%%c"=="x1," SET STATE=ACTIVE
 )
-ECHO.SERVICE: !STATE!
+ECHO.SERVICE: !STATE! ^(136masternr.github.io^)
 ECHO.
 ECHO.{ INSTALLED }
 ECHO.GAME: %VERS%, %VERTYPE% ^(%VERCODE%^)

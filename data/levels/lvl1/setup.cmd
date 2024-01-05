@@ -10,12 +10,12 @@ SET REWARD.XP=16,4
 ::
 :: Arguments: Type, Identifier, Level
 CALL "%ENEMY%" Y 1 1
-CALL "%ENEMY%" Y 2 5
+CALL "%ENEMY%" Y 2 1
 
 :: - DISPLAY -
 :: W = Width, H = Height
 SET LOC.W1=92
-SET LOC.H1=9
+SET LOC.H1=14
 
 SET LOC.W2=89
 SET LOC.H2=24

@@ -37,20 +37,13 @@ SET /A TEMP.EN_ATK=1
 SET /A TEMP.EN_ATK_RAND=1
 SET /A TEMP.EN_HP=39
 SET /A TEMP.EN_HP_RAND=2
-REM SET "EN.%2.LINE.1=  wWw  wWw   "
-REM SET "EN.%2.LINE.2=  (O)  (O)   "
-REM SET "EN.%2.LINE.3=  ( \  / )   "
-REM SET "EN.%2.LINE.4=   \ \/ /    "
-REM SET "EN.%2.LINE.5=    \o /     "
-REM SET "EN.%2.LINE.6=   _/ /      "
-REM SET "EN.%2.LINE.7=  (_.'       "
-SET "EN.%2.LINE.1=    __       "
-SET "EN.%2.LINE.2=   |  '-.    "
-SET "EN.%2.LINE.3=   |/>   \   "
-SET "EN.%2.LINE.4=   '/     \  "
-SET "EN.%2.LINE.5=   o-o -._|  "
-SET "EN.%2.LINE.6= /(_.-    /  "
-SET "EN.%2.LINE.7=|        ,'\ [13D[1B',__,_,-`   |[13D[1B',__,_,-`   |[13D[1B|=[_]====(,,)[13D[1B \____   .'  [13D[1B   _|-|- |   [13D[1B  (_(____|   "
+SET "EN.%2.LINE.1=  wWw  wWw   "
+SET "EN.%2.LINE.2=  (O)  (O)   "
+SET "EN.%2.LINE.3=  ( \  / )   "
+SET "EN.%2.LINE.4=   \ \/ /    "
+SET "EN.%2.LINE.5=    \o /     "
+SET "EN.%2.LINE.6=   _/ /      "
+SET "EN.%2.LINE.7=  (_.'       "
 EXIT /B 0
 
 :J <Jumpo>
