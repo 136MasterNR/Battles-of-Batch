@@ -26,7 +26,7 @@ SET SUCCESS=0
 :: Write
 IF !LINE_POS! EQU -1 (
 	%= Write at the end of the file =%
-	ECHO.!VAR_NAME!=!VAR_VALUE!>>"!FILE_PATH!
+	ECHO.!VAR_NAME!=!VAR_VALUE!>>"!FILE_PATH!"
 	SET SUCCESS=1
 ) ELSE FOR /F "usebackq" %%A IN ('!FILE_PATH!') DO IF %%~zA EQU 0 (
 	%= If file is empty, write as new file =%
@@ -67,8 +67,10 @@ SET VAR_NAME=%2
 SET VAR_VALUE=%3
 
 :: Clear
+IF EXIST "!FILE_PATH!.tmp" DEL /Q "!FILE_PATH!.tmp"
 SET SUCCESS=0
 
+:: Write
 FOR /F "TOKENS=1,*DELIMS==" %%1 IN ('TYPE "!FILE_PATH!"') DO (
 	IF !VAR_NAME!==%%1 (
 		ECHO.%%1=!VAR_VALUE!>>"!FILE_PATH!.tmp"
@@ -81,6 +83,25 @@ FOR /F "TOKENS=1,*DELIMS==" %%1 IN ('TYPE "!FILE_PATH!"') DO (
 IF !SUCCESS! EQU 0 EXIT /B 2
 
 IF EXIST "!FILE_PATH!.tmp" MOVE /Y "!FILE_PATH!.tmp" "!FILE_PATH!" 1>NUL
+
+ENDLOCAL
+EXIT /B 0
+
+
+
+
+:update <"Path": Quoted String>
+SETLOCAL ENABLEDELAYEDEXPANSION
+
+:: Clear
+IF EXIST "!FILE_PATH!.tmp" DEL /Q "!FILE_PATH!.tmp"
+
+:: Write
+FOR /F "TOKENS=1DELIMS==" %%1 IN ('TYPE "%1"') DO (
+	ECHO.%%1=!%%1!>>"%1.tmp"
+)
+
+IF EXIST "%1.tmp" MOVE /Y "%1.tmp" "%1" 1>NUL
 
 ENDLOCAL
 EXIT /B 0
