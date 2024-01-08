@@ -25,7 +25,7 @@ SET LOC.WP=4
 SET LOC.HP=13
 
 :: - LOOT TABLE -
-:: Find the list of items inside scripts\list\items.txt
+:: Find the list of items inside scripts\raw\items.txt
 :: Item name, Randomized Amount, Type(Materials, Items, Weapons), Claim only the first time?
 SET LOOT.1=Stained_Dust
 SET LOOT.1.X=1,1

@@ -1,5 +1,5 @@
 IF NOT DEFINED DATA_TMP EXIT
-TITLE %TITLE%HTS
+%TITLE%HTS
 SET "TIMEOUT_METHOD=HELP>NUL"
 ::__/\\\________/\\\__/\\\\\\\\\\\\\\\_____/\\\\\\\\\\\___        
 :: _\/\\\_______\/\\\_\///////\\\/////____/\\\/////////\\\_       

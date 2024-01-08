@@ -163,6 +163,7 @@ SET "DATA_TMP=%DATA%\temp"
 IF NOT EXIST "%DATA_TMP%" MD "%DATA_TMP%"
 SET "DATA_IMAGES=%DATA%\images"
 SET "DATA_SCRIPTS=%DATA%\scripts"
+::VAR:-Get Versions
 CALL "%DATA_SCRIPTS%\versions.cmd" || CALL :ERROR ERRLINE ID0001    0
 REM Detect Errors
 IF NOT DEFINED VERCODE CALL :ERROR ERRLINE ID0001A    0
@@ -170,11 +171,7 @@ IF NOT DEFINED VERS CALL :ERROR ERRLINE ID0001B    0
 IF NOT DEFINED VERTYPE CALL :ERROR ERRLINE ID0001C    0
 ::VAR:-Anything
 SET "WAIT=%DATA_SCRIPTS%\wait.exe"
-SET "COPYRIGHT=copyright.txt"
-SET "LICENSE=license.txt"
-SET "UPDATER=%DATA_SCRIPTS%\updater.cmd"
 SET "DEBUG.GAMELOADER=%DATA_SCRIPTS%\debug"
-SET "CHOICE=CALL ^"%DATA_SCRIPTS%\choice.bat^""
 ::VAR:-Saves Manager
 SET "HTS_DATA=%APPDATA%\HTS_DATA"
 SET "MAIN_GAME=%HTS_DATA%\BATTLESOFBATCH-%VERTYPE%-%VERCODE%"
@@ -183,17 +180,14 @@ SET "PLAYERDATA.LVL=%DATA_SCRIPTS%\playerdata\lvl.cmd"
 SET "ITEMS.LOADER=%DATA_SCRIPTS%\playerdata\items.cmd"
 SET "SYS_LVL=%DATA_SCRIPTS%\playerdata\sys_lvl"
 SET "SAVE=%DATA_SCRIPTS%\save.cmd"
+SET "IO=%DATA_SCRIPTS%\io.cmd"
 ::VAR:-Settings
 SET "SETTINGS.LOAD=%DATA_SETTINGS%\settings.cmd"
 SET "SETTING=%DATA_SCRIPTS%\settings.cmd"
 SET "IGNORE_ERRORS=FALSE"
 SET "DENIED_AUDIO="
-::VAR:-Cleanup
-SET OLD.PLAYER.LVL=
-SET UDERFINE=
-SET RAINBOWMODE=
-::VAR:-Runtime
-SET "RUNTIME=%DATA_SCRIPTS%\runtime.cmd"
+::VAR-Updater
+SET "UPDATER=%DATA_SCRIPTS%\updater.cmd"
 ::VAR:-Audio
 SET "AUDIOMANAGER=%DATA_SCRIPTS%\audiomanager.cmd"
 SET "SFX.ATK=game\player\attack\swing_"
@@ -205,7 +199,6 @@ SET "AUD.MENU=system\menu.mp3"
 SET "AUD.BATTLE.NORMAL=game\battle\winternight.mp3"
 SET "AUD.BATTLE.BOSS=%DATA_AUDIO_G_B%\dangerousplains.mp3"
 ::VAR:-Interface
-SET "TITLE=Battles of Batch - "
 SET "HTSANI=%DATA_SCRIPTS%\htsani.cmd"
 SET "SCRIPTS_POP=%DATA_SCRIPTS%\pop"
 SET "INTERFACE=%DATA_SCRIPTS%\interface"
@@ -235,7 +228,6 @@ SET UI_SEL=1
 SET SHOP.TAB=2
 SET "INPUT_PART=nul"
 ::VAR:-Craft
-SET "CRAFT.INFO=%INTERFACE%\shop\craft_info.cmd"
 SET CRAFT.SEL=0
 SET CRAFT.NAV=0
 ::VAR:-Registry
@@ -310,25 +302,8 @@ SET SKILL.STO.BASE=1
 SET SKILL.STO.LVLS=6;15;30
 SET SKILL.STO.COST=1250;20000;125000
 ::VAR:-Quests
-SET "QUEST.LOADER=%DATA_SCRIPTS%\quests.cmd"
-SET "QNAME.TOTAL_MONSTERS=Sereal Killer"
-SET QREW.MONEY.TOTAL_MONSTERS=9750
-SET QREW.XP.TOTAL_MONSTERS=18000
-SET QMAX.TOTAL_MONSTERS=200
-SET "QDESC.TOTAL_MONSTERS=[1;37mKill a total of [4m%QMAX.TOTAL_MONSTERS%[0m[1;37m enemies."
-SET "QNAME.MTYPE=All The Species"
-SET QMAX.MTYPE=29
-SET "QDESC.MTYPE=[1;37mKill every single type of enemy."
-SET "QNAME.LOSE=For God's Sake"
-SET QREW.MONEY.LOSE=125
-SET QREW.XP.LOSE=50
-SET QMAX.LOSE=4
-SET "QDESC.LOSE=[1;37mLose the battle [4m%QMAX.LOSE%[0m[1;37m times."
-SET "QNAME.TLVLS=The Champ"
-SET QREW.MONEY.TLVLS=18000
-SET QREW.XP.TLVLS=45000
-SET QMAX.TLVLS=120
-SET "QDESC.TLVLS=[1;37mWin [4m%QMAX.TLVLS%[0m[1;37m battles."
+SET "QUESTS=%DATA_SCRIPTS%\quests.cmd"
+SET EARNED_QUEST=FALSE
 ::VAR:-DLC
 SET "DLC.DIR=%DATA%"
 SET "DLC.MAIN=%DLC.DIR%\1_example"
@@ -343,15 +318,18 @@ SET "SmallImage="
 SET "SmallImageTooltip="
 SET StartTimestamp=0
 SET EndTimestamp=0
+::VAR:-Macros
+SET "TITLE=TITLE Battles of Batch - "
+SET "CHOICE=CALL ^"%DATA_SCRIPTS%\choice.bat^""
 
 :: Reset some memory values
-FOR /F "TOKENS=1* DELIMS==" %%A IN ('SET QMEM_ 2^>NUL') DO (
-  SET "%%A="
-)
+SET OLD.PLAYER.LVL=
+SET UDERFINE=
+SET RAINBOWMODE=
+REM FOR /F "TOKENS=1* DELIMS==" %%A IN ('SET QMEM_ 2^>NUL') DO SET "%%A="
 
-TITLE Battles of Batch - Loading
+%TITLE% Loading
 
-::VAR-Player Data
 ECHO.[u Loading ... System ^& Config
 
 IF NOT EXIST "%HTS_DATA%" MD "%HTS_DATA%"
@@ -462,7 +440,7 @@ FOR /F %%A IN ('COPY /Z "%COMSPEC%" NUL') DO SET "CR=%%A"
 FOR /F %%A IN ('"PROMPT $H$E&FOR %%B IN (1) DO REM"') DO SET "BS=%%A" 
 
 REM Window Size Detector
-START /B "" CMD /C "%DATA_SCRIPTS%\windowmanager.cmd" %COLS% %LINES% ^& EXIT
+::START /B "" CMD /C "%DATA_SCRIPTS%\windowmanager.cmd" %COLS% %LINES% ^& EXIT
 
 REM Shortcut
 IF EXIST "Battles of Batch.lnk" GOTO SETT-MAKE
@@ -531,9 +509,11 @@ CALL "%ITEMS.LOADER%" REGISTER
 ECHO.[u Loading ... Registering Items ^(2/2)
 CALL "%ITEMS.LOADER%" LIST
 
-ECHO.[u Loading ... Player Data            
-
+ECHO.[u Loading ... Processing Raw Data    
+CALL "%QUESTS%" BUFFER
 CALL "%DATA_SCRIPTS%\mapnames.cmd"
+
+ECHO.[u Loading ... Player Data            
 CALL "%DATA_SAVES%\PLAYERDATA.cmd" || CALL :ResetPlayerData
 SET /A "SELECTED=%PLAYER.MAP.LEVEL%"
 IF %SELECTED% GTR 13 SET SELECTED=1
@@ -554,15 +534,6 @@ IF NOT EXIST "%PLAYERDATA.EQ%" (
 	ECHO.EMPTY>>"%PLAYERDATA.EQ%"
 )
 
-CALL "%DATA_SAVES%\QUESTS.cmd"||((
-		ECHO.SET Q.TOTAL_MONSTERS=0
-		ECHO.SET Q.MONSTER_TYPE=0
-		ECHO.SET Q.LOSE=0
-		ECHO.EXIT /B 0
-	)>"%DATA_SAVES%\QUESTS.cmd"
-	CALL "%DATA_SAVES%\QUESTS.cmd"
-)
-
 SET SKILL.ATK=
 SET SKILL.CRIT_RATE=
 SET SKILL.HP=
@@ -576,6 +547,10 @@ IF NOT DEFINED SKILL.ATK CALL :ResetSkills
 IF NOT DEFINED SKILL.CRIT_RATE CALL :ResetSkills
 IF NOT DEFINED SKILL.HP CALL :ResetSkills
 IF NOT DEFINED SKILL.STO CALL :ResetSkills
+
+IF EXIST "%DATA_SAVES%\QUESTS" ( CALL "%QUESTS%" READ ) ELSE (
+	BREAK>"%DATA_SAVES%\QUESTS"
+)
 
 ECHO.[u Loading ... Player Inventory ^(1/2)
 CALL "%ITEMS.LOADER%" LIST_EQ
@@ -599,7 +574,7 @@ CALL "%SYS_LVL%" || CALL :ERROR ERRLINE ID0006    -0
 SET OLD.PLAYER.LVL=%PLAYER.LVL%
 
 IF %SHOW.INTRO%==TRUE (
-	TITLE %TITLE%HTS
+	%TITLE%HTS
 	CALL "%HTSANI%" || CALL :ERROR ERRLINE ID0007    -0
 	CALL "%WAIT%" 750 >NUL || CALL :ERROR ERRLINE ID0008    -0
 )
@@ -613,7 +588,7 @@ IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 CALL "%AUDIOMANAGER%" START system\vill
 CLS
 :S-MENU
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Menu;LargeImage=preview_menu;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
-TITLE %TITLE%Menu
+%TITLE%Menu
 :REFRESH-MENU
 CALL "%PLAYERDATA.LOAD%"
 CALL "%SYS_LVL%"
@@ -671,7 +646,6 @@ ECHO.^|     .                              .    .                              .
 ENDLOCAL
 IF NOT %OLD.PLAYER.LVL%==%PLAYER.LVL% CALL "%SCRIPTS_POP%\lvlup.cmd"
 CALL "%DATA_SCRIPTS%\pop\daily.cmd" || GOTO S-MENU
-CALL "%QUEST.LOADER%" LOAD
 IF DEFINED Q.POPUP.IS (
 	SET "Q.POPUP.IS="
 	GOTO S-MENU
@@ -770,7 +744,7 @@ EXIT /B 0
 MODE CON:COLS=126 LINES=9216
 CLS
 IF %AUDIO.VALUE%==TRUE IF %VOLUME% NEQ 0 START "" /MIN CMD /C "%AUDIOMANAGER%" STOPALL
-TITLE %TITLE%Command Line Enviroment
+%TITLE%Command Line Enviroment
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Terminal;LargeImage=cmd;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mBattles of Batch [37m[Version %VERCODE% / %VERTYPE% %VERS%]
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mMicrosoft Windows [37m[Version %WINVER:]=%]
@@ -796,7 +770,7 @@ EXIT /B 0
 
 
 :CREDITS
-TITLE %TITLE%Credits
+%TITLE%Credits
 CLS
 ECHO.[ PROGRAMMING ]
 ECHO.Everything by "136MasterNR"
@@ -833,7 +807,7 @@ GOTO S-MENU
 
 
 :CHARACTER
-TITLE %TITLE%Character ^& Equipment
+%TITLE%Character ^& Equipment
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Character [and] Equipment;LargeImage=preview_character;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 
 COLOR 08
@@ -975,7 +949,7 @@ IF /I %CHOICE.INPUT%== IF %terminal% EQU 1 (
 GOTO CHARACTER-RE
 
 :INVENTORY
-TITLE %TITLE%Inventory
+%TITLE%Inventory
 ECHO.%ITEMS.IS%
 IF DEFINED ITEMS.IS IF NOT DEFINED WEAPON.IS (
 	ENDLOCAL
@@ -1018,7 +992,7 @@ ECHO. Press A to confirm the item you want to add.                        Press 
 ECHO. Press Q after selecting an item to reselect an item.                Press Q to return to the character ui.  
 ECHO. Press CTRL X to clear your equipped items.                                                [s%RGB.COIN%
 :INV-CHOOSE_ITEM
-TITLE %TITLE%Inventory [%INV_CHOICE%^|%INV_CHOICE_SLOT%]
+%TITLE%Inventory [%INV_CHOICE%^|%INV_CHOICE_SLOT%]
 SET /A INV_CHOICE.UI=%INV_CHOICE%+2
 SET /P "=[%INV_CHOICE.UI%;2H>[1C"<NUL
 %CHOICE%
@@ -1054,7 +1028,7 @@ IF /I %CHOICE.INPUT%==R (
 )
 IF /I NOT %CHOICE.INPUT%==A GOTO INV-CHOOSE_ITEM
 :INV-CHOOSE_SLOT
-TITLE %TITLE%Inventory [%INV_CHOICE%^|%INV_CHOICE_SLOT%]
+%TITLE%Inventory [%INV_CHOICE%^|%INV_CHOICE_SLOT%]
 SET /A INV_CHOICE_SLOT.UI=%ITEM.REG_CNT%+5
 SET /A INV_CHOICE_SLOT_MAX.UI=%ITEM.REG_CNT%+4+%ITEM.EQ_CNT%
 SET /A INV_CHOICE_SLOT.POS=%ITEM.REG_CNT%+4+%INV_CHOICE_SLOT%
@@ -1114,7 +1088,7 @@ CALL "%ITEMS.LOADER%" WEAPONS
 :INV-CHOOSE_WEAPON-RE
 CLS
 ::ECHO.[?25l[0m[HFYI: This user interface is a [1;31mprototype[0m. Any minor visual bugs that were found will not be fixed in the near future.
-TITLE %TITLE%Inventory [%W_INV_CHOICE%]
+%TITLE%Inventory [%W_INV_CHOICE%]
 ECHO.[?25l[2J[0m[H{Prototype} Press Q to return[E
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET UI.POS=[3C
@@ -1191,7 +1165,7 @@ EXIT /B 0
 
 
 :PROFILES
-TITLE %TITLE%Profiles Manager
+%TITLE%Profiles Manager
 SET PROFILE_COUNTER=0
 SET SELECTED_PROFILE=
 SET CNT=0
@@ -1457,7 +1431,7 @@ EXIT /B 0
 
 
 :MAP
-TITLE %TITLE%Map
+%TITLE%Map
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Map;LargeImage=preview_map;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 
 (
@@ -1485,7 +1459,6 @@ CALL "%MAP.LOAD%\details.cmd" %SELECTED% %CHAPTER%
 
 CALL "%SYS_LVL%"
 IF NOT %OLD.PLAYER.LVL%==%PLAYER.LVL% CALL "%SCRIPTS_POP%\lvlup.cmd"
-CALL "%QUEST.LOADER%" LOAD
 IF DEFINED Q.POPUP.IS SET "Q.POPUP.IS="&GOTO MAP
 :MAP-CHOICE
 SET /P "=[44;44H"<NUL
@@ -1687,7 +1660,7 @@ ECHO.[45C^|   [1mReading Player Data[0m   ^|
 ECHO.[45C^|     [1mPlease Wait ...[0m     ^|
 ECHO.[45C'-------------------------'
 SET "INPUT_PART=craft"
-TITLE %TITLE%Craft Shop
+%TITLE%Craft Shop
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=Crafting items;Details=Shop;LargeImage=preview_craft;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 CALL "%ITEMS.LOADER%" MATERIALS
 CALL "%ITEMS.LOADER%" WEAPONS
@@ -1868,61 +1841,9 @@ GOTO CRAFT-SHOP-RE
 
 
 :QUESTS
-CALL "%QUEST.LOADER%" LOAD
-TITLE %TITLE%Quests
+%TITLE%Quests
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Quests;LargeImage=preview_quests;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
-CALL "%DATA_SAVES%\QUESTS.cmd"
-IF A==A (
-ECHO.[?25l[H[0m.--------------------------------------------------.-------------.--------------------------------------------------.
-ECHO.^|                                                  ^| SIDE QUESTS ^|                                                  ^|
-ECHO.'--------------------------------------------------'------.------'--------------------------------------------------'
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          ^|                                                          
-ECHO.                                                          '                                                          
-ECHO.                                      [1;37mComplete all quests to unlock new quests![0m                                      
-ECHO..---------------------------------------------------------.---------------------------------------------------------.[H
-)
-CALL "%QUEST.LOADER%" NUL
+CALL "%INTERFACE%\quests_display.cmd"
 PAUSE>NUL
 GOTO S-MENU
 
@@ -1931,7 +1852,7 @@ GOTO S-MENU
 
 :SETTINGS
 CHCP 65001>NUL
-TITLE %TITLE%Settings
+%TITLE%Settings
 IF %RICHPRESENCE.VALUE%==TRUE START /MIN "RichManager" "%RichManager%" State=nul;Details=Settings;LargeImage=preview_settings;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 (
 CLS
@@ -2056,7 +1977,7 @@ GOTO S-MENU
 
 
 :PRE_LOAD
-TITLE %TITLE%Loading Battle ...
+%TITLE%Loading Battle ...
 IF EXIST "%LOAD.LEVEL_%%SELECTED%\story.cmd" CALL "%LOAD.LEVEL_%%SELECTED%\story.cmd"
 IF NOT EXIST "%LOAD.LEVEL_%%SELECTED%\setup.cmd" GOTO MAP
 ECHO.[0m[1m[2J[21;42H҉  Preparing Your Amazing Battle[17D[1B[s[u  0%%
@@ -2075,7 +1996,7 @@ CALL "%SCRIPTS_GAME%\loader.cmd" || (
 IF DEFINED LOAD.ERR GOTO MENU
 ECHO.[u 98%%
 SETLOCAL ENABLEDELAYEDEXPANSION
-TITLE %TITLE%!MAP.NAME.%SELECTED%:_= ! ^(#%SELECTED%^)
+%TITLE%!MAP.NAME.%SELECTED%:_= ! ^(#%SELECTED%^)
 ENDLOCAL
 ECHO.[u100%%
 CALL "%TXT%" fade-out "[2J[21;42H҉  Preparing Your Amazing Battle[17D[1B[s[u100$_PERC"

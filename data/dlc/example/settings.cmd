@@ -7,6 +7,6 @@ SET "PACK.AUTHOR=136MasterNR"
 SET "PACK.DESCRIPTION=An example."
 
 :: Pack Loader Instructions
-SET "PACK.LOADER.ADD.ITEMS=\lists\items.txt;\list\items.txt"
+SET "PACK.LOADER.ADD.ITEMS=\lists\items.txt;\raw\items.txt"
 SET "PACK.LOADER.PLACE.MY_COOL_FILE=\coolfile.cmd;\"
 SET "PACK.LOADER.PLACE_CONTENTS.SCRIPTS=\scripts;\"
