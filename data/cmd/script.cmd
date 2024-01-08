@@ -1,19 +1,19 @@
 @ECHO OFF
-SET ARG=%*
-IF NOT DEFINED ARG SET ARG=0
-IF "%ARG%"=="0" GOTO ?
-ECHO(%ARG% | FINDSTR /C:"/?">NUL && GOTO ?
+SET ARG=%1
+IF NOT DEFINED ARG GOTO ?
+ECHO.%* | FINDSTR /C:"/?" >NUL && GOTO ?
+
 IF NOT EXIST "..\scripts" (
 	ECHO.Error: Directory not found
 	EXIT /B 1
 )
 
-ECHO(%ARG% | FINDSTR /I /C:"/T">NUL && GOTO T
-ECHO(%ARG% | FINDSTR /I /C:"/L">NUL && GOTO L
+ECHO.%1 | FINDSTR /I /C:"/T" >NUL && GOTO T
+ECHO.%1 | FINDSTR /I /C:"/L" >NUL && GOTO L
 
 SET P=
 FOR /F "TOKENS=1,* DELIMS= " %%A IN ("%*") DO SET ARGS=%%B
-FOR /R "..\scripts" %%a IN (*) DO IF "%%~nxa"=="%1.cmd" SET P=%%~dpnxa
+FOR /R "..\scripts" %%A IN (*) DO IF "%%~nxA"=="%1.cmd" SET P=%%~dpnxA
 
 IF NOT DEFINED P (
 	ECHO.Script not found.
@@ -21,8 +21,12 @@ IF NOT DEFINED P (
 )
 
 CALL "%P%" %ARGS%
+
 ECHO ON
 @EXIT /B 0
+
+
+
 
 :?
 ECHO.
@@ -53,6 +57,7 @@ ECHO ON
 @EXIT /B 0
 
 :T
+SET ARG=%2
 SET "ARG=%ARG:/T =%"
 SET "ARG=%ARG: /T=%"
 SET "ARG=%ARG:/T=%"

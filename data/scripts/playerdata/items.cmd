@@ -4,7 +4,7 @@ GOTO %1
 
 :REGISTER
 SET TMP.NAME=
-FOR /F "DELIMS=" %%A IN ('TYPE "%DATA_SCRIPTS%\list\items.txt"') DO (
+FOR /F "DELIMS=" %%A IN ('TYPE "%DATA_SCRIPTS%\raw\items.txt"') DO (
 	CALL :REGISTER_ALT %%A
 )
 EXIT /B 0

@@ -1,5 +1,5 @@
 IF NOT DEFINED VERCODE EXIT
-TITLE %TITLE%Items Shop
+%TITLE%Items Shop
 START /MIN "RichManager" "%RichManager%" State=Buying items;Details=Shop;LargeImage=preview_shop;LargeImageTooltip=;SmallImage=icon;SmallImageTooltip=Battles of Batch
 CALL "%ITEMS.LOADER%" LIST
 (

@@ -1,5 +1,5 @@
 @ECHO OFF
-TITLE %TITLE%Command Line Enviroment
+%TITLE%Command Line Enviroment
 MODE CON:COLS=126 LINES=9216
 CLS
 COLOR 07
