@@ -330,7 +330,29 @@ REM FOR /F "TOKENS=1* DELIMS==" %%A IN ('SET QMEM_ 2^>NUL') DO SET "%%A="
 
 %TITLE% Loading
 
-ECHO.[u Loading ... System ^& Config
+ECHO.[u Loading ... Conifg
+
+IF NOT EXIST "%MAIN_GAME%\main.config" (
+	ECHO.[SYSTEM]
+	ECHO.profile=Wanderer
+	ECHO.unitsWarning=null
+	ECHO.licenseAgreed=none
+	ECHO.terminal=0
+)>"%MAIN_GAME%\main.config"
+
+:: Read the config file
+FOR /F "TOKENS=1,2DELIMS==" %%A IN (%MAIN_GAME%\main.config) DO (
+	IF NOT %%B.==. (
+		SET %%A=%%B
+	)
+)
+
+IF NOT DEFINED profile (
+	DEL /Q "%MAIN_GAME%\main.config"
+	GOTO RESTART
+)
+
+ECHO.[u Loading ... System
 
 IF NOT EXIST "%HTS_DATA%" MD "%HTS_DATA%"
 IF NOT EXIST "%HTS_DATA%" (
@@ -351,26 +373,6 @@ IF NOT EXIST "%MAIN_GAME%" (
 		PAUSE>NUL
 		EXIT 1
 	)
-)
-
-IF NOT EXIST "%MAIN_GAME%\main.config" (
-	ECHO.[SYSTEM]
-	ECHO.profile=Wanderer
-	ECHO.unitsWarning=null
-	ECHO.licenseAgreed=none
-	ECHO.terminal=0
-)>"%MAIN_GAME%\main.config"
-
-:: Read the config file
-FOR /F "TOKENS=1,2DELIMS==" %%A IN (%MAIN_GAME%\main.config) DO (
-	IF NOT %%B.==. (
-		SET %%A=%%B
-	)
-)
-
-IF NOT DEFINED profile (
-	DEL /Q "%MAIN_GAME%\main.config"
-	GOTO RESTART
 )
 
 SET "DATA_SAVES=%MAIN_GAME%\SAVES\%profile%"
@@ -409,12 +411,12 @@ IF %unitsWarning%==null (
 )
 
 :: Agree to the license.
-IF NOT %licenseAgreed%==GNU_GPLv3 IF EXIST "%LICENSE%" (
+IF NOT %licenseAgreed%==GNU_GPLv3 IF EXIST ".\license.txt" (
 	CLS
 	ECHO.Please read and confirm that you agree with our License!
 	ECHO.By closing the License text window you agree, and be
 	ECHO.able to continue playing the game.
-	START /WAIT "" "%LICENSE%"
+	START /WAIT "" ".\license.txt"
 	CALL "%SAVE%" "FILE=%MAIN_GAME%\main.config" 4 licenseAgreed=GNU_GPLv3
 	CLS
 ) ELSE (
@@ -548,9 +550,8 @@ IF NOT DEFINED SKILL.CRIT_RATE CALL :ResetSkills
 IF NOT DEFINED SKILL.HP CALL :ResetSkills
 IF NOT DEFINED SKILL.STO CALL :ResetSkills
 
-IF EXIST "%DATA_SAVES%\QUESTS" ( CALL "%QUESTS%" READ ) ELSE (
-	BREAK>"%DATA_SAVES%\QUESTS"
-)
+IF NOT EXIST "%DATA_SAVES%\QUESTS" BREAK>"%DATA_SAVES%\QUESTS"
+CALL "%QUESTS%" READ
 
 ECHO.[u Loading ... Player Inventory ^(1/2)
 CALL "%ITEMS.LOADER%" LIST_EQ
@@ -750,7 +751,7 @@ ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mBattles of Batch [37m[Versio
 ECHO.[38;2;166;255;245m^(•^) [38;2;207;255;250mMicrosoft Windows [37m[Version %WINVER:]=%]
 ECHO.[38;2;235;64;52m^(^!^) [38;2;245;108;98mRun "EXIT" to return.[0m[3H[?25h
 PUSHD "%CD%\DATA\cmd"
-CMD /K "PROMPT $E[38;2;132;217;52mbob@terminal$E[0m$E[1m:$E[38;2;113;155;198m%%cd:~-9,9%%[0m$$$S[?25h"
+CMD /K "PROMPT $E[38;2;132;217;52mbob@terminal$E[0m$E[1m:$E[38;2;113;155;198m%%cd:~-9,9%%[0m$$$S[?25h&SET ^"PATH=%CD%\;%PATH%^""
 IF EXIST memory.dmp (
 	FOR /F "TOKENS=1DELIMS==" %%A IN ('set') DO (
 		SET %%A=
