@@ -30,6 +30,7 @@ IF NOT DEFINED KEY SET KEY=BLANK
 IF "!KEY!"==" " SET KEY=SPACE
 IF "!KEY!"=="	" SET KEY=TAB
 IF "!KEY!"=="," SET KEY=COMMA
+IF "!KEY!"=="=" SET KEY=EQUAL
 
 ::Pass the key variable outside the current local enviroment
 ENDLOCAL&SET CHOICE.INPUT=%KEY%
